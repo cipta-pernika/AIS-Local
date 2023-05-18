@@ -9,18 +9,18 @@ const useAsideTouch = () => {
 
 	const mobileDesign =
 		typeof deviceScreen?.width !== 'undefined' &&
-		deviceScreen?.width <= Number(process.env.REACT_APP_MOBILE_BREAKPOINT_SIZE);
+		deviceScreen?.width <= Number(import.meta.env.REACT_APP_MOBILE_BREAKPOINT_SIZE);
 	const hasTouchButton =
 		typeof deviceScreen?.width !== 'undefined' &&
-		deviceScreen?.width > Number(process.env.REACT_APP_ASIDE_MINIMIZE_BREAKPOINT_SIZE);
+		deviceScreen?.width > Number(import.meta.env.REACT_APP_ASIDE_MINIMIZE_BREAKPOINT_SIZE);
 
 	const asideWidthWithSpace =
-		(parseInt(String(process.env.REACT_APP_ASIDE_WIDTH_PX), 10) +
-			parseInt(String(process.env.REACT_APP_SPACER_PX), 10)) *
+		(parseInt(String(import.meta.env.REACT_APP_ASIDE_WIDTH_PX), 10) +
+			parseInt(String(import.meta.env.REACT_APP_SPACER_PX), 10)) *
 		-1;
 
 	const x = useMotionValue(
-		process.env.REACT_APP_ASIDE_TOUCH_STATUS === 'true' ? 0 : asideWidthWithSpace,
+		import.meta.env.REACT_APP_ASIDE_TOUCH_STATUS === 'true' ? 0 : asideWidthWithSpace,
 	);
 	const [touchStatus, setTouchStatus] = useState(!x.get());
 	const left = useTransform(

@@ -19,24 +19,24 @@ const Chart: FC<IChartProps> = ({ series, options, type, width, height, classNam
 			<ReactApexChart
 				options={{
 					colors: [
-						process.env.REACT_APP_PRIMARY_COLOR,
-						process.env.REACT_APP_SECONDARY_COLOR,
-						process.env.REACT_APP_SUCCESS_COLOR,
-						process.env.REACT_APP_INFO_COLOR,
-						process.env.REACT_APP_WARNING_COLOR,
-						process.env.REACT_APP_DANGER_COLOR,
+						import.meta.env.VITE_REACT_APP_PRIMARY_COLOR,
+						import.meta.env.VITE_REACT_APP_SECONDARY_COLOR,
+						import.meta.env.VITE_REACT_APP_SUCCESS_COLOR,
+						import.meta.env.VITE_REACT_APP_INFO_COLOR,
+						import.meta.env.VITE_REACT_APP_WARNING_COLOR,
+						import.meta.env.VITE_REACT_APP_DANGER_COLOR,
 					],
 					plotOptions: {
 						candlestick: {
 							colors: {
-								upward: process.env.REACT_APP_SUCCESS_COLOR,
-								downward: process.env.REACT_APP_DANGER_COLOR,
+								upward: import.meta.env.VITE_REACT_APP_SUCCESS_COLOR,
+								downward: import.meta.env.VITE_REACT_APP_DANGER_COLOR,
 							},
 						},
 						boxPlot: {
 							colors: {
-								upper: process.env.REACT_APP_SUCCESS_COLOR,
-								lower: process.env.REACT_APP_DANGER_COLOR,
+								upper: import.meta.env.VITE_REACT_APP_SUCCESS_COLOR,
+								lower: import.meta.env.VITE_REACT_APP_DANGER_COLOR,
 							},
 						},
 					},

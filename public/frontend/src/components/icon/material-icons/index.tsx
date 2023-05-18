@@ -12,7 +12,6 @@ export { default as AccountBalanceWallet } from './AccountBalanceWallet';
 export { default as AccountBox } from './AccountBox';
 export { default as AccountCircle } from './AccountCircle';
 export { default as AccountTree } from './AccountTree';
-export { default as AdUnits } from './AdUnits';
 export { default as Adb } from './Adb';
 export { default as Add } from './Add';
 export { default as AddAPhoto } from './AddAPhoto';

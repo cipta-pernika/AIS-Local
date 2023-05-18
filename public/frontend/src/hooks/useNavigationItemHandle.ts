@@ -7,7 +7,7 @@ const useNavigationItemHandle = () => {
 	const { width } = useWindowSize();
 
 	return () => {
-		if (width < Number(process.env.REACT_APP_MOBILE_BREAKPOINT_SIZE)) setAsideStatus(false);
+		if (width < Number(import.meta.env.REACT_APP_MOBILE_BREAKPOINT_SIZE)) setAsideStatus(false);
 		setLeftMenuStatus(false);
 		setRightMenuStatus(false);
 	};

@@ -74,7 +74,7 @@ const Header: FC<IHeaderProps> = ({ children, hasLeftMobileMenu, hasRightMobileM
 	useLayoutEffect(() => {
 		if (
 			(asideStatus || leftMenuStatus || rightMenuStatus) &&
-			windowsWidth < Number(process.env.REACT_APP_MOBILE_BREAKPOINT_SIZE)
+			windowsWidth < Number(import.meta.env.REACT_APP_MOBILE_BREAKPOINT_SIZE)
 		)
 			document.body.classList.add('overflow-hidden');
 		return () => {

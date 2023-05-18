@@ -25,12 +25,12 @@ interface IThemeContextProviderProps {
 export const ThemeContextProvider: FC<IThemeContextProviderProps> = ({ children }) => {
 	const deviceScreen = useDeviceScreen();
 	// @ts-ignore
-	const mobileDesign = deviceScreen?.width <= process.env.REACT_APP_MOBILE_BREAKPOINT_SIZE;
+	const mobileDesign = deviceScreen?.width <= import.meta.env.REACT_APP_MOBILE_BREAKPOINT_SIZE;
 
 	const [darkModeStatus, setDarkModeStatus] = useState(
 		localStorage.getItem('facit_darkModeStatus')
 			? localStorage.getItem('facit_darkModeStatus') === 'true'
-			: process.env.REACT_APP_DARK_MODE === 'true',
+			: import.meta.env.REACT_APP_DARK_MODE === 'true',
 	);
 
 	useLayoutEffect(() => {
@@ -45,7 +45,7 @@ export const ThemeContextProvider: FC<IThemeContextProviderProps> = ({ children 
 		localStorage.getItem('facit_asideStatus')
 			? localStorage.getItem('facit_asideStatus') === 'true'
 			: // @ts-ignore
-			  deviceScreen?.width >= process.env.REACT_APP_ASIDE_MINIMIZE_BREAKPOINT_SIZE,
+			  deviceScreen?.width >= import.meta.env.REACT_APP_ASIDE_MINIMIZE_BREAKPOINT_SIZE,
 	);
 	useLayoutEffect(() => {
 		localStorage.setItem('facit_asideStatus', asideStatus?.toString());
@@ -55,7 +55,7 @@ export const ThemeContextProvider: FC<IThemeContextProviderProps> = ({ children 
 
 	useLayoutEffect(() => {
 		// @ts-ignore
-		if (deviceScreen?.width >= process.env.REACT_APP_ASIDE_MINIMIZE_BREAKPOINT_SIZE) {
+		if (deviceScreen?.width >= import.meta.env.REACT_APP_ASIDE_MINIMIZE_BREAKPOINT_SIZE) {
 			if (localStorage.getItem('facit_asideStatus') === 'true') setAsideStatus(true);
 			setLeftMenuStatus(false);
 			setRightMenuStatus(false);

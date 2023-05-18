@@ -2,6 +2,8 @@ import { defineConfig } from "vite";
 import laravel from "laravel-vite-plugin";
 import react from "@vitejs/plugin-react";
 
+const host = "localhost";
+
 export default defineConfig({
     plugins: [
         laravel({
@@ -24,20 +26,12 @@ export default defineConfig({
                     }
                 },
             },
-            optimization: {
-                splitChunks: {
-                    cacheGroups: {
-                        vendor: {
-                            test: /[\\/]node_modules[\\/]/,
-                            name: "vendor",
-                            chunks: "all",
-                            enforce: true,
-                        },
-                    },
-                },
-            },
         },
         chunkSizeWarningLimit: 5800,
         reportCompressedSize: false,
+    },
+    server: {
+        host,
+        hmr: { host },
     },
 });
