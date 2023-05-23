@@ -11,19 +11,24 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ais_datas', function (Blueprint $table) {
+        Schema::create('ais_data_positions', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('sensor_data_id');
-            $table->foreign('sensor_data_id')->references('id')->on('sensor_datas');
-            $table->string('vessel_name');
-            $table->string('vessel_type');
-            $table->string('mmsi');
+            $table->unsignedBigInteger('vessel_id');
+            $table->unsignedBigInteger('port_id');
             $table->decimal('latitude', 10, 7);
             $table->decimal('longitude', 10, 7);
-            $table->float('speed');
-            $table->float('course');
+            $table->decimal('speed', 8, 2);
+            $table->integer('course');
+            $table->integer('heading');
             $table->string('status');
             $table->timestamp('timestamp');
+
+            // Foreign key constraints
+            $table->foreign('sensor_data_id')->references('id')->on('sensor_data')->onDelete('cascade');
+            $table->foreign('vessel_id')->references('id')->on('vessels')->onDelete('cascade');
+            $table->foreign('port_id')->references('id')->on('ports')->onDelete('cascade');
+
             $table->timestamps();
         });
     }
@@ -33,6 +38,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ais_datas');
+        Schema::dropIfExists('ais_data_positions');
     }
 };

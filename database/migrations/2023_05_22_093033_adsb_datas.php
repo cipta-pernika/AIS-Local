@@ -11,18 +11,23 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('adsb_datas', function (Blueprint $table) {
+        Schema::create('adsb_data_positions', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('sensor_data_id');
-            $table->foreign('sensor_data_id')->references('id')->on('sensor_datas');
-            $table->string('aircraft_id');
+            $table->unsignedBigInteger('aircraft_id');
+            $table->string('flight_id');
             $table->decimal('latitude', 10, 7);
             $table->decimal('longitude', 10, 7);
-            $table->float('altitude');
-            $table->float('ground_speed');
-            $table->float('vertical_rate');
-            $table->float('track');
+            $table->decimal('altitude', 8, 2);
+            $table->decimal('ground_speed', 8, 2);
+            $table->decimal('vertical_rate', 8, 2);
+            $table->decimal('track', 8, 2);
             $table->timestamp('timestamp');
+
+            // Foreign key constraints
+            $table->foreign('sensor_data_id')->references('id')->on('sensor_data')->onDelete('cascade');
+            $table->foreign('aircraft_id')->references('id')->on('adsb_data_aircrafts')->onDelete('cascade');
+
             $table->timestamps();
         });
     }
@@ -32,6 +37,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('adsb_datas');
+        Schema::dropIfExists('adsb_data_positions');
     }
 };

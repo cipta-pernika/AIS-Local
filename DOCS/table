@@ -26,19 +26,39 @@ sensor_id
 payload
 timestamp
 
-ais_datas
----------
+ais_data_positions
+------------------
 id
 sensor_data_id
-vessel_name
-vessel_type
-mmsi
+vessel_id
+port_id
 latitude
 longitude
 speed
 course
+heading
 status
 timestamp
+
+ais_data_vessels
+----------------
+id
+vessel_name
+vessel_type
+mmsi
+flag
+imo
+length
+width
+
+ais_data_ports
+--------------
+id
+port_name
+country
+un_locode
+latitude
+longitude
 
 data_transfer_logs
 ------------------
@@ -61,11 +81,12 @@ speed
 heading
 timestamp
 
-adsb_datas
-----------
+adsb_data_positions
+-------------------
 id
 sensor_data_id
 aircraft_id
+flight_id
 latitude
 longitude
 altitude
@@ -73,3 +94,25 @@ ground_speed
 vertical_rate
 track
 timestamp
+
+adsb_data_aircrafts
+-------------------
+id
+aircraft_name
+aircraft_type
+acid (aircraft_id)
+registration (tail number)
+country
+
+adsb_data_flights
+-----------------
+id
+aircraft_id
+flight_number
+date
+from
+to
+flight_time
+std (Schedule Time of Departure)
+atd (Actual Time Departure)
+sta (Scheduled Time Of Arrival)
