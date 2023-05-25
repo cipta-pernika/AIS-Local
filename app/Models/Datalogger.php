@@ -18,4 +18,9 @@ class Datalogger extends Model
         'installation_date',
         'last_online',
     ];
+
+    public function sensors()
+    {
+        return $this->hasMany(Sensor::class);
+    }
 }

@@ -59,4 +59,13 @@ class HelperController extends Controller
             'sensorData' => $sensorData,
         ], 201);
     }
+
+    public function getaisdata()
+    {
+        $aisData = AisDataPosition::with('vessel', 'sensorData.sensor.datalogger')->get();
+
+        return response()->json([
+            'aisdata' => $aisData,
+        ], 201);
+    }
 }

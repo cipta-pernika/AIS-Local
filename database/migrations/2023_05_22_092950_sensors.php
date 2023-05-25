@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('sensors', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('data_logger_id');
-            $table->foreign('data_logger_id')->references('id')->on('dataloggers');
+            $table->unsignedBigInteger('datalogger_id');
+            $table->foreign('datalogger_id')->references('id')->on('dataloggers');
             $table->string('name');
             $table->string('status');
             $table->integer('interval');

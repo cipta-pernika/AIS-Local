@@ -11,3 +11,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('aisdata', [HelperController::class, 'aisdata']);
 
 Route::apiResource('dataloggers', DataloggerController::class);
+Route::get('aisdata', [HelperController::class, 'getaisdata']);

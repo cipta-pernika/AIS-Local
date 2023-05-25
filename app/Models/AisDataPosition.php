@@ -29,7 +29,7 @@ class AisDataPosition extends Model
 
     public function vessel()
     {
-        return $this->belongsTo(Vessel::class);
+        return $this->belongsTo(AisDataVessel::class);
     }
 
     public function port()

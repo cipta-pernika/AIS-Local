@@ -16,4 +16,16 @@ class SensorData extends Model
         'payload',
         'timestamp',
     ];
+
+    // Relationship with AisDataPosition
+    public function position()
+    {
+        return $this->hasOne(AisDataPosition::class);
+    }
+
+    // Relationship with Sensor
+    public function sensor()
+    {
+        return $this->belongsTo(Sensor::class);
+    }
 }

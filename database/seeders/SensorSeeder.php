@@ -14,7 +14,7 @@ class SensorSeeder extends Seeder
     public function run(): void
     {
         Sensor::create([
-            'data_logger_id' => 1,
+            'datalogger_id' => 1,
             'name' => 'AIS',
             'status' => 'Active',
             'interval' => 10,
