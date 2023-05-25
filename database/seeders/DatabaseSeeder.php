@@ -13,8 +13,8 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([DataloggerSeeder::class, SensorSeeder::class]);
+        $this->call(SensorDatasTableSeeder::class);
         $this->call(AisDataVesselsTableSeeder::class);
         $this->call(AisDataPositionsTableSeeder::class);
-        $this->call(SensorDatasTableSeeder::class);
     }
 }

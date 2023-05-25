@@ -2,22 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AisDataPort;
 use App\Models\AisDataPosition;
 use App\Models\AisDataVessel;
 use App\Models\Sensor;
 use App\Models\SensorData;
-use App\Models\Vessel;
 use Carbon\Carbon;
 
 class HelperController extends Controller
 {
-    function isValidLatitude($latitude)
+    public function isValidLatitude($latitude)
     {
         return ($latitude >= -90 && $latitude <= 90);
     }
 
-    function isValidLongitude($longitude)
+    public function isValidLongitude($longitude)
     {
         return ($longitude >= -180 && $longitude <= 180);
     }
@@ -65,7 +63,8 @@ class HelperController extends Controller
         $aisData = AisDataPosition::with('vessel', 'sensorData.sensor.datalogger')->get();
 
         return response()->json([
-            'aisdata' => $aisData,
+            'success' => true,
+            'message' => $aisData,
         ], 201);
     }
 }
