@@ -15,13 +15,13 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('sensor_data_id');
             $table->unsignedBigInteger('vessel_id');
-            $table->unsignedBigInteger('port_id');
+            $table->unsignedBigInteger('port_id')->nullable();
             $table->decimal('latitude', 10, 7);
             $table->decimal('longitude', 10, 7);
             $table->decimal('speed', 8, 2);
-            $table->integer('course');
-            $table->integer('heading');
-            $table->string('status');
+            $table->integer('course')->nullable();
+            $table->integer('heading')->nullable();
+            $table->string('status')->nullable();
             $table->timestamp('timestamp');
 
             // Foreign key constraints

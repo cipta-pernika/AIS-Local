@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('ais_data_vessels', function (Blueprint $table) {
             $table->id();
-            $table->string('vessel_name');
-            $table->string('vessel_type');
+            $table->string('vessel_name')->nullable();
+            $table->string('vessel_type')->nullable();
             $table->string('mmsi')->unique();
-            $table->string('flag');
+            $table->string('flag')->nullable();
             $table->string('imo')->nullable();
             $table->decimal('length', 8, 2)->nullable();
             $table->decimal('width', 8, 2)->nullable();

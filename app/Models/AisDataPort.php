@@ -5,15 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class SensorData extends Model
+class AisDataPort extends Model
 {
     use HasFactory;
 
-    protected $table = 'sensor_datas';
-
     protected $fillable = [
-        'sensor_id',
-        'payload',
-        'timestamp',
+        'port_name',
+        'country',
+        'un_locode',
+        'latitude',
+        'longitude',
     ];
 }
