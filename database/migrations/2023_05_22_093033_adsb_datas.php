@@ -25,7 +25,7 @@ return new class extends Migration
             $table->timestamp('timestamp');
 
             // Foreign key constraints
-            $table->foreign('sensor_data_id')->references('id')->on('sensor_data')->onDelete('cascade');
+            $table->foreign('sensor_data_id')->references('id')->on('sensor_datas')->onDelete('cascade');
             $table->foreign('aircraft_id')->references('id')->on('adsb_data_aircrafts')->onDelete('cascade');
 
             $table->timestamps();

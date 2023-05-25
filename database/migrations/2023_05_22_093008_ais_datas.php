@@ -25,9 +25,9 @@ return new class extends Migration
             $table->timestamp('timestamp');
 
             // Foreign key constraints
-            $table->foreign('sensor_data_id')->references('id')->on('sensor_data')->onDelete('cascade');
-            $table->foreign('vessel_id')->references('id')->on('vessels')->onDelete('cascade');
-            $table->foreign('port_id')->references('id')->on('ports')->onDelete('cascade');
+            $table->foreign('sensor_data_id')->references('id')->on('sensor_datas')->onDelete('cascade');
+            $table->foreign('vessel_id')->references('id')->on('ais_data_vessels')->onDelete('cascade');
+            $table->foreign('port_id')->references('id')->on('ais_data_ports')->onDelete('cascade');
 
             $table->timestamps();
         });
