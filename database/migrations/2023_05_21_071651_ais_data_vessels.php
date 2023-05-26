@@ -24,8 +24,10 @@ return new class extends Migration
             $table->string('dimension_to_port')->nullable();
             $table->string('dimension_to_starboard')->nullable();
             $table->string('reported_destination')->nullable();
-            $table->string('reported_eta')->nullable();
+            $table->timestamp('reported_eta')->nullable();
             $table->timestamps();
+
+            $table->index('mmsi');
         });
     }
 

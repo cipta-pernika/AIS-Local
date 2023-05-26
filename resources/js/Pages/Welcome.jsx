@@ -12,12 +12,12 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
     const [longitude, setLongitude] = useState(106.83637314148093);
     const fetchAisData = async () => {
         try {
-            const response = await axios.get("/api/aisdata");
+            const response = await axios.get("/api/aisdataunique");
             if (response.data.success) {
                 setAisData(response.data.message);
                 setFilteredAisData(response.data.message);
-                setLatitude(response.data[0].latitude);
-                setLongitude(response.data[0].longitude);
+                setLatitude(response.data.message[0]?.latitude);
+                setLongitude(response.data.message[0]?.longitude);
             }
         } catch (error) {
             console.log({ error });

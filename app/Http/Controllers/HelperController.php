@@ -72,7 +72,7 @@ class HelperController extends Controller
                 'dimension_to_stern' => request('dimensionToStern'),
                 'dimension_to_port' => request('dimensionToPort'),
                 'dimension_to_starboard' => request('dimensionToStarboard'),
-                'reported_eta' => request('eta'),
+                'reported_eta' => Carbon::parse(request('eta')),
             ]);
         }
 
@@ -87,6 +87,18 @@ class HelperController extends Controller
     public function getaisdata()
     {
         $aisData = AisDataPosition::with('vessel', 'sensorData.sensor.datalogger')->get();
+
+        return response()->json([
+            'success' => true,
+            'message' => $aisData,
+        ], 201);
+    }
+
+    public function aisdataunique()
+    {
+        $aisData = AisDataPosition::with('vessel', 'sensorData.sensor.datalogger')
+            ->groupBy('vessel_id')
+            ->get();
 
         return response()->json([
             'success' => true,

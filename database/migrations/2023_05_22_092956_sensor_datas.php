@@ -18,6 +18,8 @@ return new class extends Migration
             $table->text('payload');
             $table->timestamp('timestamp');
             $table->timestamps();
+
+            $table->index('sensor_id');
         });
     }
 

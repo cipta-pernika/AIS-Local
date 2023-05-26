@@ -12,3 +12,4 @@ Route::post('aisdata', [HelperController::class, 'aisdata']);
 
 Route::apiResource('dataloggers', DataloggerController::class);
 Route::get('aisdata', [HelperController::class, 'getaisdata']);
+Route::get('aisdataunique', [HelperController::class, 'aisdataunique']);

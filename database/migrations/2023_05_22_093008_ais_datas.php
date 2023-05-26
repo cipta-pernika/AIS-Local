@@ -19,11 +19,11 @@ return new class extends Migration
             $table->decimal('latitude', 10, 7);
             $table->decimal('longitude', 10, 7);
             $table->decimal('speed', 8, 2);
-            $table->integer('course')->nullable();
-            $table->integer('heading')->nullable();
+            $table->unsignedSmallInteger('course')->nullable();
+            $table->unsignedSmallInteger('heading')->nullable();
             $table->string('navigation_status')->nullable();
             $table->integer('turning_rate')->nullable();
-            $table->integer('turning_direction')->nullable();
+            $table->unsignedTinyInteger('turning_direction')->nullable();
             $table->timestamp('timestamp');
 
             // Foreign key constraints
@@ -32,6 +32,10 @@ return new class extends Migration
             // $table->foreign('port_id')->references('id')->on('ais_data_ports')->onDelete('cascade');
 
             $table->timestamps();
+
+            $table->index('sensor_data_id');
+            $table->index('vessel_id');
+            $table->index('timestamp');
         });
     }
 
