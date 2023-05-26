@@ -18,7 +18,7 @@ class AisData extends Model
         'longitude',
         'speed',
         'course',
-        'status',
+        'navigation_status',
         'timestamp',
     ];
 }

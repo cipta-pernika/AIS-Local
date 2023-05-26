@@ -18,8 +18,10 @@ class AisDataPosition extends Model
         'speed',
         'course',
         'heading',
-        'status',
+        'navigation_status',
         'timestamp',
+        'turning_rate',
+        'turning_direction',
     ];
 
     public function sensorData()

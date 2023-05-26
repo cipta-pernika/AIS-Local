@@ -15,19 +15,21 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('sensor_data_id');
             $table->unsignedBigInteger('vessel_id');
-            $table->unsignedBigInteger('port_id')->nullable();
+            // $table->unsignedBigInteger('port_id')->nullable();
             $table->decimal('latitude', 10, 7);
             $table->decimal('longitude', 10, 7);
             $table->decimal('speed', 8, 2);
             $table->integer('course')->nullable();
             $table->integer('heading')->nullable();
-            $table->string('status')->nullable();
+            $table->string('navigation_status')->nullable();
+            $table->integer('turning_rate')->nullable();
+            $table->integer('turning_direction')->nullable();
             $table->timestamp('timestamp');
 
             // Foreign key constraints
             $table->foreign('sensor_data_id')->references('id')->on('sensor_datas')->onDelete('cascade');
             $table->foreign('vessel_id')->references('id')->on('ais_data_vessels')->onDelete('cascade');
-            $table->foreign('port_id')->references('id')->on('ais_data_ports')->onDelete('cascade');
+            // $table->foreign('port_id')->references('id')->on('ais_data_ports')->onDelete('cascade');
 
             $table->timestamps();
         });

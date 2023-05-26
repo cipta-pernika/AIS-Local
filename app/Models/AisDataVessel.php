@@ -13,10 +13,15 @@ class AisDataVessel extends Model
         'vessel_name',
         'vessel_type',
         'mmsi',
-        'flag',
         'imo',
-        'length',
-        'width',
+        'callsign',
+        'draught',
+        'reported_destination',
+        'reported_eta',
+        'dimension_to_bow',
+        'dimension_to_stern',
+        'dimension_to_port',
+        'dimension_to_starboard',
     ];
 
     // Define relationships

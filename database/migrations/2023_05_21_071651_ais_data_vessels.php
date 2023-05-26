@@ -16,10 +16,15 @@ return new class extends Migration
             $table->string('vessel_name')->nullable();
             $table->string('vessel_type')->nullable();
             $table->string('mmsi')->unique();
-            $table->string('flag')->nullable();
-            $table->string('imo')->nullable();
-            $table->decimal('length', 8, 2)->nullable();
-            $table->decimal('width', 8, 2)->nullable();
+            $table->integer('imo')->nullable()->comment('ship id');
+            $table->string('callsign')->nullable();
+            $table->integer('draught')->nullable()->comment('Draught Reported (m)');
+            $table->string('dimension_to_bow')->nullable();
+            $table->string('dimension_to_stern')->nullable();
+            $table->string('dimension_to_port')->nullable();
+            $table->string('dimension_to_starboard')->nullable();
+            $table->string('reported_destination')->nullable();
+            $table->string('reported_eta')->nullable();
             $table->timestamps();
         });
     }
