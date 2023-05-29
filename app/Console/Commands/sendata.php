@@ -71,9 +71,13 @@ class sendata extends Command
             ]);
             $createlog = new DataTransferLog();
             $createlog->timestamp = Carbon::now();
-            $createlog->response_code = $response;
-            $createlog->response_time = $response;
-            $createlog->additional_info = $response; //error message like 404 or 500
+            $createlog->response_code = $response->status();
+            if ($response->successful()) {
+                $createlog->response_time = $response->header('X-Response-Time');
+            } else {
+                $createlog->response_time = null;
+                $createlog->additional_info = $response->body();
+            }
             $createlog->save();
             dd($response);
         }

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->timestamp('timestamp');
             $table->integer('response_code');
-            $table->integer('response_time');
+            $table->integer('response_time')->nullable();
             $table->text('additional_info')->nullable();
             $table->timestamps();
         });
