@@ -18,8 +18,8 @@ class SensorSeeder extends Seeder
             'name' => 'AIS',
             'status' => 'Active',
             'interval' => 10,
-            'jarak' => 100,
-            'jumlah_data' => 500,
+            'jarak' => 5,
+            'jumlah_data' => 200,
         ]);
     }
 }

@@ -17,9 +17,9 @@ return new class extends Migration
             $table->foreign('datalogger_id')->references('id')->on('dataloggers');
             $table->string('name');
             $table->string('status');
-            $table->integer('interval');
-            $table->decimal('jarak', 10, 2);
-            $table->integer('jumlah_data');
+            $table->integer('interval')->comment('minute');
+            $table->integer('jarak')->comment('nm; 0 untuk unlimited');
+            $table->integer('jumlah_data')->comment('0 untuk unlimited');
             $table->timestamps();
         });
     }
