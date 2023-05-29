@@ -13,8 +13,6 @@ return new class extends Migration
     {
         Schema::create('data_transfer_logs', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('sensor_data_id');
-            $table->foreign('sensor_data_id')->references('id')->on('sensor_datas');
             $table->timestamp('timestamp');
             $table->integer('response_code');
             $table->integer('response_time');

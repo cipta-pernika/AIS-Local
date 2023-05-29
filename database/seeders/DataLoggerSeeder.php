@@ -16,8 +16,8 @@ class DataLoggerSeeder extends Seeder
         Datalogger::create([
             'name' => 'Datalogger 1',
             'serial_number' => 'DL001',
-            'latitude' => 123.456789,
-            'longitude' => 987.654321,
+            'latitude' => -6.225699225611818,
+            'longitude' => 106.85030818477665,
             'status' => 'Online',
             'installation_date' => '2022-01-01',
             'last_online' => '2023-05-24 12:34:56',
