@@ -17,7 +17,7 @@ class SensorSeeder extends Seeder
             'datalogger_id' => 1,
             'name' => 'AIS',
             'status' => 'Active',
-            'interval' => 10,
+            'interval' => 5,
             'jarak' => 20,
             'jumlah_data' => 200,
         ]);
