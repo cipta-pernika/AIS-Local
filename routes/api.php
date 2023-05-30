@@ -10,16 +10,14 @@ use Illuminate\Support\Facades\Route;
 Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 Route::post('/register', [RegisteredUserController::class, 'store']);
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware('auth:sanctum')->group(function () {
+    //CRUD
+    Route::apiResource('dataloggers', DataloggerController::class);
+
+    //FE
+    Route::get('aisdata', [HelperController::class, 'getaisdata']);
+    Route::get('aisdataunique', [HelperController::class, 'aisdataunique']);
 });
 
 //dari sensor
 Route::post('aisdata', [HelperController::class, 'aisdata']);
-
-//CRUD
-Route::apiResource('dataloggers', DataloggerController::class);
-
-//FE
-Route::get('aisdata', [HelperController::class, 'getaisdata']);
-Route::get('aisdataunique', [HelperController::class, 'aisdataunique']);
