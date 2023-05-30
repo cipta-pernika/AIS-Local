@@ -25,7 +25,7 @@ return new class extends Migration
             $table->integer('turning_rate')->nullable();
             $table->unsignedTinyInteger('turning_direction')->nullable();
             $table->timestamp('timestamp');
-
+            $table->decimal('distance', 8, 2)->nullable(); //distance from sensor
             // Foreign key constraints
             $table->foreign('sensor_data_id')->references('id')->on('sensor_datas')->onDelete('cascade');
             $table->foreign('vessel_id')->references('id')->on('ais_data_vessels')->onDelete('cascade');

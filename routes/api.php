@@ -17,6 +17,7 @@ Route::middleware('auth:sanctum')->group(function () {
     //FE
     Route::get('aisdata', [HelperController::class, 'getaisdata']);
     Route::get('aisdataunique', [HelperController::class, 'aisdataunique']);
+    Route::get('playbackais', [HelperController::class, 'playbackais']);
 });
 
 //dari sensor

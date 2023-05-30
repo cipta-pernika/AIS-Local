@@ -105,4 +105,16 @@ class HelperController extends Controller
             'message' => $aisData,
         ], 201);
     }
+
+    public function playbackais()
+    {
+        $aisData = AisDataPosition::with('vessel', 'sensorData.sensor.datalogger')
+            ->groupBy('vessel_id')
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'message' => $aisData,
+        ], 201);
+    }
 }
