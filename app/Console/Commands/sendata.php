@@ -51,11 +51,15 @@ class sendata extends Command
 
                 // // Wait for the remaining seconds until the next interval
                 // sleep($remainingSeconds);
+                $endTimestamp = Carbon::now();
+                $startTimestamp = $endTimestamp->copy()->subMinutes($interval);
                 if ($sensor->jumlah_data === 0) {
                     $aisData = AisDataPosition::with('vessel', 'sensorData.sensor.datalogger')
+                        ->whereBetween('timestamp', [$startTimestamp, $endTimestamp])
                         ->get();
                 } else {
                     $aisData = AisDataPosition::with('vessel', 'sensorData.sensor.datalogger')
+                        ->whereBetween('timestamp', [$startTimestamp, $endTimestamp])
                         ->limit($sensor->jumlah_data)
                         ->get();
                 }
