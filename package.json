@@ -11,6 +11,10 @@
 		"lint:fix-scss": "stylelint --fix **/*.scss"
 	},
 	"dependencies": {
+		"@fortawesome/fontawesome-svg-core": "^6.4.0",
+		"@fortawesome/free-regular-svg-icons": "^6.4.0",
+		"@fortawesome/free-solid-svg-icons": "^6.4.0",
+		"@fortawesome/react-fontawesome": "^0.2.0",
 		"@hello-pangea/dnd": "^16.2.0",
 		"@omtanke/react-use-event-outside": "^1.0.1",
 		"@popperjs/core": "^2.11.7",

@@ -5,8 +5,7 @@
 @use 'sass:map';
 
 .scroll-margin {
-	scroll-margin-top: map.get($header, height) + map.get($subheader, height) +
-		map.get($page, padding-y);
+	scroll-margin-top: map.get($header, height) + map.get($subheader, height) + map.get($page, padding-y);
 }
 
 .sticky-top-size {
@@ -15,4 +14,43 @@
 
 .border-transparent {
 	--#{$prefix}border-opacity: 0;
+}
+
+.round-controller {
+	height: 196px;
+	width: 196px;
+	border-radius: 105px;
+	background: white;
+	align-content: space-around;
+	justify-content: space-between;
+}
+
+.round-controller-disable {
+	height: 196px;
+	width: 196px;
+	border-radius: 105px;
+	background: gray;
+	align-content: space-around;
+	justify-content: space-between;
+	cursor: not-allowed;
+}
+
+.cust-post-2 {
+	right: 11px;
+	bottom: 4px;
+}
+
+.cust-pos-zoom {
+	margin-top: 10px !important;
+}
+
+.menu-camera {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.cust-post {
+	left: 11px;
+	bottom: 4px;
 }

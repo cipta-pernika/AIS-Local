@@ -6,6 +6,13 @@ export const dashboardPagesMenu = {
 		icon: 'Dashboard',
 		subMenu: null,
 	},
+	camera: {
+		id: 'camera',
+		text: 'Camera View',
+		path: 'page-layouts/camera-view',
+		icon: 'WebAsset',
+		subMenu: null,
+	},
 };
 
 export const demoPagesMenu = {
