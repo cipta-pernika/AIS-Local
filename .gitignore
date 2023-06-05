@@ -37,3 +37,8 @@ next-env.d.ts
 
 # WebStorm
 .idea
+
+/vendor
+/storage
+/public
+/bootstrap
