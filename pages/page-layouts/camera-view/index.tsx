@@ -32,6 +32,8 @@ const Index: NextPage = () => {
 	const [wipers, setWipers] = useState(false);
 	const [autopans, setAutopans] = useState(false);
 	const [continuesMode, setContinuesMode] = useState(false);
+	const [imgError, setImgError] = useState(false)
+	const [imgSelect, setImgSelect] = useState('http://192.168.55.222/ISAPI/Streaming/channels/102/httpPreview?auth=YWRtaW46QW10ZWsxMjM0NQ==%22')
 
 	return (
 		<PageWrapper>
@@ -40,7 +42,26 @@ const Index: NextPage = () => {
 			</Head>
 			<Page>
 				<div className='row d-flex align-items-center h-100'>
-					<div className='col-md-8'></div>
+					<div className='col-md-8'>
+						{imgError ? (
+							<div
+								dangerouslySetInnerHTML={{
+									__html: `<iframe src="${imgSelect}" frameborder="0" height="663" scrolling="no" width="100%"></iframe>`,
+								}}
+							/>
+						) : (
+							<img
+								onError={() => setImgError(true)}
+								style={{
+									WebkitUserSelect: 'none',
+									margin: 'auto',
+									width: 'inherit',
+									height: '85vh'
+								}}
+								src={imgSelect}
+							/>
+						)}
+					</div>
 					<div className='col-md-4'>
 						<div className='row'>
 							<div className='col-md-12 align-self-center'>
