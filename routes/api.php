@@ -13,6 +13,7 @@ Route::post('/register', [RegisteredUserController::class, 'store']);
 Route::middleware('auth:sanctum')->group(function () {
     //CRUD
     Route::apiResource('dataloggers', DataloggerController::class);
+    Route::apiResource('sensors', DataloggerController::class);
 
     //FE
     Route::get('aisdata', [HelperController::class, 'getaisdata']);
