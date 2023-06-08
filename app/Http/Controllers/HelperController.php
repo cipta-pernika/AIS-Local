@@ -117,4 +117,566 @@ class HelperController extends Controller
             'message' => $aisData,
         ], 201);
     }
+
+    public function camzoomminus()
+    {
+        $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
+            '<zoom>-10</zoom>' .
+            '<Momentary>' .
+            '<duration> 1000 </duration>' .
+            '</Momentary>' .
+            '</PTZData>';
+
+        $url = 'http://admin:Amtek12345@192.168.55.222/PTZCtrl/channels/1/momentary';
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+        curl_exec($ch);
+        curl_close($ch);
+
+        return response()->json([
+            'success' => true,
+        ], 200);
+    }
+
+    public function camzoomminuscon()
+    {
+        $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
+            '<zoom>-10</zoom>' .
+            '</PTZData>';
+
+        $url = 'http://admin:Amtek12345@192.168.55.222/PTZCtrl/channels/1/continuous';
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+        curl_exec($ch);
+        curl_close($ch);
+
+        return response()->json([
+            'success' => true,
+        ], 200);
+    }
+
+    public function camstopzoom()
+    {
+        $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
+            '<zoom>0</zoom>' .
+            '</PTZData>';
+
+        $url = 'http://admin:Amtek12345@192.168.55.222/PTZCtrl/channels/1/momentary';
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+        curl_exec($ch);
+        curl_close($ch);
+
+        return response()->json([
+            'success' => true,
+        ], 200);
+    }
+
+    public function camup()
+    {
+        $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
+            '<tilt> 20 </tilt>' .
+            '<Momentary>' .
+            '<duration> 1000 </duration>' .
+            '</Momentary>' .
+            '</PTZData>';
+
+        $url = 'http://admin:Amtek12345@192.168.55.222/PTZCtrl/channels/1/momentary';
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+        curl_exec($ch);
+        curl_close($ch);
+
+        return response()->json([
+            'success' => true,
+        ], 200);
+    }
+
+    public function camupcon()
+    {
+        $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
+            '<tilt> 20 </tilt>' .
+            '</PTZData>';
+
+        $url = 'http://admin:Amtek12345@192.168.55.222/PTZCtrl/channels/1/continuous';
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+        curl_exec($ch);
+        curl_close($ch);
+
+        return response()->json([
+            'success' => true,
+        ], 200);
+    }
+
+    public function camzoomplus()
+    {
+        $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
+            '<zoom>10</zoom>' .
+            '<Momentary>' .
+            '<duration> 1000 </duration>' .
+            '</Momentary>' .
+            '</PTZData>';
+
+        $url = 'http://admin:Amtek12345@192.168.55.222/PTZCtrl/channels/1/momentary';
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+        curl_exec($ch);
+        curl_close($ch);
+
+        return response()->json([
+            'success' => true,
+        ], 200);
+    }
+
+    public function camzoompluscon()
+    {
+        $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
+            '<zoom>10</zoom>' .
+            '</PTZData>';
+
+        $url = 'http://admin:Amtek12345@192.168.55.222/PTZCtrl/channels/1/continuous';
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+        curl_exec($ch);
+        curl_close($ch);
+
+        return response()->json([
+            'success' => true,
+        ], 200);
+    }
+
+    public function camleft()
+    {
+        $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
+            '<pan> -20 </pan>' .
+            '<Momentary>' .
+            '<duration> 1000 </duration>' .
+            '</Momentary>' .
+            '</PTZData>';
+
+        $url = 'http://admin:Amtek12345@192.168.55.222/PTZCtrl/channels/1/momentary';
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+        curl_exec($ch);
+        curl_close($ch);
+        return response()->json([
+            'success' => true,
+        ], 200);
+    }
+
+    public function camleftcon()
+    {
+        $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
+            '<pan> -20 </pan>' .
+            '</PTZData>';
+
+        $url = 'http://admin:Amtek12345@192.168.55.222/PTZCtrl/channels/1/continuous';
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+        curl_exec($ch);
+        curl_close($ch);
+        return response()->json([
+            'success' => true,
+        ], 200);
+    }
+
+    public function camleftup()
+    {
+        $xml_data = '<PTZData>' .
+            '<pan>-60</pan>' .
+            '<tilt>60</tilt>' .
+            '</PTZData>';
+
+        $url = 'http://admin:Amtek12345@192.168.55.222/PTZCtrl/channels/1/continuous';
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+        curl_exec($ch);
+        curl_close($ch);
+        return response()->json([
+            'success' => true,
+        ], 200);
+    }
+
+    public function camleftupcon()
+    {
+        $xml_data = '<PTZData>' .
+            '<pan>-60</pan>' .
+            '<tilt>60</tilt>' .
+            '</PTZData>';
+
+        $url = 'http://admin:Amtek12345@192.168.55.222/PTZCtrl/channels/1/continuous';
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+        curl_exec($ch);
+        curl_close($ch);
+        return response()->json([
+            'success' => true,
+        ], 200);
+    }
+
+    public function camstop()
+    {
+        $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
+            '<pan> 0 </pan>' .
+            '<tilt> 0 </tilt>' .
+            '</PTZData>';
+
+        $url = 'http://admin:Amtek12345@192.168.55.222/PTZCtrl/channels/1/continuous';
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+        curl_exec($ch);
+        curl_close($ch);
+        return response()->json([
+            'success' => true,
+        ], 200);
+    }
+
+    public function camright()
+    {
+        $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
+            '<pan> 20 </pan>' .
+            '<Momentary>' .
+            '<duration> 1000 </duration>' .
+            '</Momentary>' .
+            '</PTZData>';
+
+        $url = 'http://admin:Amtek12345@192.168.55.222/PTZCtrl/channels/1/momentary';
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+        curl_exec($ch);
+        curl_close($ch);
+        return response()->json([
+            'success' => true,
+        ], 200);
+    }
+
+    public function camrightup()
+    {
+        $xml_data = '<PTZData>' .
+            '<pan>60</pan>' .
+            '<tilt>60</tilt>' .
+            '</PTZData>';
+
+        $url = 'http://admin:Amtek12345@192.168.55.222/PTZCtrl/channels/1/continuous';
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+        curl_exec($ch);
+        curl_close($ch);
+        return response()->json([
+            'success' => true,
+        ], 200);
+    }
+
+    public function camrightdown()
+    {
+        $xml_data = '<PTZData>' .
+            '<pan>60</pan>' .
+            '<tilt>-60</tilt>' .
+            '</PTZData>';
+
+        $url = 'http://admin:Amtek12345@192.168.55.222/PTZCtrl/channels/1/continuous';
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+        curl_exec($ch);
+        curl_close($ch);
+        return response()->json([
+            'success' => true,
+        ], 200);
+    }
+
+    public function camdown()
+    {
+        $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
+            '<tilt> -20 </tilt>' .
+            '<Momentary>' .
+            '<duration> 1000 </duration>' .
+            '</Momentary>' .
+            '</PTZData>';
+
+        $url = 'http://admin:Amtek12345@192.168.55.222/PTZCtrl/channels/1/momentary';
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+        curl_exec($ch);
+        curl_close($ch);
+        return response()->json([
+            'success' => true,
+        ], 200);
+    }
+
+    public function camautopan()
+    {
+        $xml_data = '<autoPanData>' .
+            '<autoPan>1</autoPan>' .
+            '</autoPanData>';
+
+        $url = 'http://admin:Amtek12345@192.168.55.222/ISAPI/PTZCtrl/channels/1/autoPan';
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+        curl_exec($ch);
+        curl_close($ch);
+        return response()->json([
+            'success' => true,
+        ], 200);
+    }
+
+    public function camautopanstop()
+    {
+        $xml_data = '<autoPanData>' .
+            '<autoPan>0</autoPan>' .
+            '</autoPanData>';
+
+        $url = 'http://admin:Amtek12345@192.168.55.222/ISAPI/PTZCtrl/channels/1/autoPan';
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+        curl_exec($ch);
+        curl_close($ch);
+        return response()->json([
+            'success' => true,
+        ], 200);
+    }
+
+    public function camfocusmin()
+    {
+        $xml_data = '<FocusData>' .
+            '<focus>-60</focus>' .
+            '</FocusData>';
+
+        $url = 'http://admin:Amtek12345@192.168.55.222/ISAPI/System/Video/inputs/channels/1/focus';
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+        curl_exec($ch);
+        curl_close($ch);
+        return response()->json([
+            'success' => true,
+        ], 200);
+    }
+
+    public function camfocusplus()
+    {
+        $xml_data = '<FocusData>' .
+            '<focus>60</focus>' .
+            '</FocusData>';
+
+        $url = 'http://admin:Amtek12345@192.168.55.222/ISAPI/System/Video/inputs/channels/1/focus';
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+        curl_exec($ch);
+        curl_close($ch);
+        return response()->json([
+            'success' => true,
+        ], 200);
+    }
+
+    public function camfocusstop()
+    {
+        $xml_data = '<FocusData>' .
+            '<focus>0</focus>' .
+            '</FocusData>';
+
+        $url = 'http://admin:Amtek12345@192.168.55.222/ISAPI/System/Video/inputs/channels/1/focus';
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+        curl_exec($ch);
+        curl_close($ch);
+        return response()->json([
+            'success' => true,
+        ], 200);
+    }
+
+    public function camleftdown()
+    {
+        $xml_data = '<PTZData>' .
+            '<pan>-60</pan>' .
+            '<tilt>-60</tilt>' .
+            '</PTZData>';
+
+        $url = 'http://admin:Amtek12345@192.168.55.222/ISAPI/PTZCtrl/channels/1/continuous';
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+        curl_exec($ch);
+        curl_close($ch);
+        return response()->json([
+            'success' => true,
+        ], 200);
+    }
+
+    public function camirismin()
+    {
+        $xml_data = '<IrisData>' .
+            '<iris>-60</iris>' .
+            '</IrisData>';
+
+        $url = 'http://admin:Amtek12345@192.168.55.222/ISAPI/System/Video/inputs/channels/1/iris';
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+        curl_exec($ch);
+        curl_close($ch);
+        return response()->json([
+            'success' => true,
+        ], 200);
+    }
+
+    public function camirisplus()
+    {
+        $xml_data = '<IrisData>' .
+            '<iris>-60</iris>' .
+            '</IrisData>';
+
+        $url = 'http://admin:Amtek12345@192.168.55.222/ISAPI/System/Video/inputs/channels/1/iris';
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+        curl_exec($ch);
+        curl_close($ch);
+        return response()->json([
+            'success' => true,
+        ], 200);
+    }
+
+    public function camirisstop()
+    {
+        $xml_data = '<IrisData>' .
+            '<iris>0</iris>' .
+            '</IrisData>';
+
+        $url = 'http://admin:Amtek12345@192.168.55.222/ISAPI/System/Video/inputs/channels/1/iris';
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+        curl_exec($ch);
+        curl_close($ch);
+        return response()->json([
+            'success' => true,
+        ], 200);
+    }
+
+    public function camwiper()
+    {
+        $xml_data = '<PTZAux>' .
+            '<id>1</id>' .
+            '<type>WIPER</type>' .
+            '<status>on</status>' .
+            '</PTZAux>';
+
+        $url = 'http://admin:Amtek12345@192.168.55.222/ISAPI/PTZCtrl/channels/1/auxcontrols/1';
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+        curl_exec($ch);
+        curl_close($ch);
+        return response()->json([
+            'success' => true,
+        ], 200);
+    }
+
+    public function camstopwiper()
+    {
+        $xml_data = '<PTZAux>' .
+            '<id>1</id>' .
+            '<type>WIPER</type>' .
+            '<status>off</status>' .
+            '</PTZAux>';
+
+        $url = 'http://admin:Amtek12345@192.168.55.222/ISAPI/PTZCtrl/channels/1/auxcontrols/1';
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+        curl_exec($ch);
+        curl_close($ch);
+        return response()->json([
+            'success' => true,
+        ], 200);
+    }
+
+    public function cammenu()
+    {
+        $url = 'http://admin:Amtek12345@192.168.55.222/ISAPI/PTZCtrl/channels/1/presets/95/goto';
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+        curl_exec($ch);
+        curl_close($ch);
+        return response()->json([
+            'success' => true,
+        ], 200);
+    }
 }
