@@ -13,6 +13,13 @@ export const dashboardPagesMenu = {
 		icon: 'WebAsset',
 		subMenu: null,
 	},
+	setting: {
+		id: 'setting',
+		text: 'Setting',
+		path: 'page-layouts/setting',
+		icon: 'WebAsset',
+		subMenu: null,
+	},
 };
 
 export const demoPagesMenu = {
