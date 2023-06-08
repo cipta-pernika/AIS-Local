@@ -4,6 +4,7 @@ use App\Http\Controllers\DataloggerController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\HelperController;
+use App\Http\Controllers\SensorController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -13,12 +14,13 @@ Route::post('/register', [RegisteredUserController::class, 'store']);
 Route::middleware('auth:sanctum')->group(function () {
     //CRUD
     Route::apiResource('dataloggers', DataloggerController::class);
-    Route::apiResource('sensors', DataloggerController::class);
 
     //FE
     Route::get('aisdata', [HelperController::class, 'getaisdata']);
     Route::get('playbackais', [HelperController::class, 'playbackais']);
 });
+
+Route::apiResource('sensors', SensorController::class);
 
 //dari sensor
 Route::post('aisdata', [HelperController::class, 'aisdata']);

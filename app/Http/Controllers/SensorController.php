@@ -19,12 +19,11 @@ class SensorController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
-            'serial_number' => 'required|string|unique:dataloggers',
-            'latitude' => 'required|numeric',
-            'longitude' => 'required|numeric',
+            'datalogger_id' => 'required|exists:dataloggers,id',
             'status' => 'required|string',
-            'installation_date' => 'required|date',
-            'last_online' => 'required|date',
+            'interval' => 'required|integer',
+            'jarak' => 'required|integer',
+            'jumlah_data' => 'required|integer',
         ]);
 
         if ($validator->fails()) {
