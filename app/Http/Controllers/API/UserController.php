@@ -43,18 +43,20 @@ class UserController extends Controller
         return response()->json($datalogger);
     }
 
-    public function update(Request $request, User $datalogger)
+    public function update(Request $request, User $user)
     {
-        if (!$datalogger) {
+        if (!$user) {
             return response()->json(['error' => 'Data not found'], 404);
         }
 
         $validator = Validator::make($request->all(), [
             'name' => 'string',
-            'serial_number' => [
+            'email' => [
                 'string',
-                Rule::unique('dataloggers')->ignore($datalogger->id),
+                'email',
+                Rule::unique('users')->ignore($user->id),
             ],
+            'password' => 'string',
             'latitude' => 'numeric',
             'longitude' => 'numeric',
             'status' => 'string',
@@ -66,8 +68,11 @@ class UserController extends Controller
             return response()->json(['error' => $validator->errors()], 422);
         }
 
-        $datalogger->update($request->all());
-        return response()->json($datalogger);
+        $user->update($request->all());
+        return response()->json([
+            'message' => 'User updated successfully',
+            'data' => $user
+        ]);
     }
 
     public function destroy(User $datalogger)
@@ -77,6 +82,6 @@ class UserController extends Controller
         }
 
         $datalogger->delete();
-        return response()->noContent();
+        return response()->json(['message' => 'Data deleted successfully']);
     }
 }

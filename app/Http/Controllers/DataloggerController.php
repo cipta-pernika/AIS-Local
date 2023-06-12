@@ -78,6 +78,6 @@ class DataloggerController extends Controller
         }
 
         $datalogger->delete();
-        return response()->noContent();
+        return response()->json(['message' => 'Data deleted successfully']);
     }
 }

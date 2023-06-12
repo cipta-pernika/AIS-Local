@@ -43,9 +43,9 @@ class SensorController extends Controller
         return response()->json($datalogger);
     }
 
-    public function update(Request $request, Sensor $datalogger)
+    public function update(Request $request, Sensor $sensor)
     {
-        if (!$datalogger) {
+        if (!$sensor) {
             return response()->json(['error' => 'Data not found'], 404);
         }
 
@@ -53,7 +53,7 @@ class SensorController extends Controller
             'name' => 'string',
             'serial_number' => [
                 'string',
-                Rule::unique('dataloggers')->ignore($datalogger->id),
+                Rule::unique('sensors')->ignore($sensor->id),
             ],
             'latitude' => 'numeric',
             'longitude' => 'numeric',
@@ -66,8 +66,8 @@ class SensorController extends Controller
             return response()->json(['error' => $validator->errors()], 422);
         }
 
-        $datalogger->update($request->all());
-        return response()->json($datalogger);
+        $sensor->update($request->all());
+        return response()->json($sensor);
     }
 
     public function destroy(Sensor $datalogger)
@@ -77,6 +77,6 @@ class SensorController extends Controller
         }
 
         $datalogger->delete();
-        return response()->noContent();
+        return response()->json(['message' => 'Data deleted successfully']);
     }
 }

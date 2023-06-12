@@ -21,7 +21,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     //FE
     Route::get('aisdata', [HelperController::class, 'getaisdata']);
-    Route::get('playbackais', [HelperController::class, 'playbackais']);
+    // Route::get('playbackais', [HelperController::class, 'playbackais']);
 });
 
 Route::apiResource('sensors', SensorController::class);
