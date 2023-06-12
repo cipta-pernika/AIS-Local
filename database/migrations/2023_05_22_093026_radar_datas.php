@@ -18,9 +18,12 @@ return new class extends Migration
             $table->string('target_id');
             $table->decimal('latitude', 10, 7);
             $table->decimal('longitude', 10, 7);
-            $table->float('altitude');
-            $table->float('speed');
-            $table->float('heading');
+            $table->float('altitude')->nullable();
+            $table->float('speed')->nullable();
+            $table->float('heading')->nullable();
+            $table->float('course')->nullable();
+            $table->float('range')->nullable();
+            $table->float('bearing')->nullable();
             $table->timestamp('timestamp');
             $table->timestamps();
         });

@@ -17,6 +17,9 @@ class RadarData extends Model
         'altitude',
         'speed',
         'heading',
+        'course',
+        'range',
+        'bearing',
         'timestamp',
     ];
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\AisDataPosition;
 use App\Models\AisDataVessel;
+use App\Models\RadarData;
 use App\Models\Sensor;
 use App\Models\SensorData;
 use Carbon\Carbon;
@@ -678,5 +679,44 @@ class HelperController extends Controller
         return response()->json([
             'success' => true,
         ], 200);
+    }
+
+    public function radardata()
+    {
+        if (empty(request()->source)) {
+            return response()->json([
+                'error' => 'No request payload provided.',
+            ], 400);
+        }
+
+        $sensor = Sensor::find(2);
+
+        $sensorData = new SensorData([
+            'sensor_id' => $sensor->id,
+            'payload' => request()->source,
+            'timestamp' => Carbon::parse(request()->isoDate),
+        ]);
+        $sensorData->save();
+
+        $vesselPosition = new RadarData([
+            'sensor_data_id' => $sensorData->id,
+            'target_id' => request()->target_id,
+            'latitude' => request()->latitude,
+            'longitude' => request()->longitude,
+            'altitude' => request()->altitude,
+            'speed' => request()->speed,
+            'heading' => request()->heading,
+            'course' => request()->course,
+            'range' => request()->range,
+            'bearing' => request()->bearing,
+            'timestamp' => Carbon::parse(request()->isoDate),
+        ]);
+        $vesselPosition->save();
+
+        return response()->json([
+            'sensor' => $sensor,
+            'sensorData' => $sensorData,
+            'vesselPosition' => $vesselPosition ?? null
+        ], 201);
     }
 }

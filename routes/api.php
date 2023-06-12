@@ -25,11 +25,13 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 Route::apiResource('sensors', SensorController::class);
+Route::get('aisdataunique', [HelperController::class, 'aisdataunique']);
 
 //dari sensor
 Route::post('aisdata', [HelperController::class, 'aisdata']);
-Route::get('aisdataunique', [HelperController::class, 'aisdataunique']);
+Route::post('radardata', [HelperController::class, 'radardata']);
 
+//map
 Route::post('breadcrumb', [MapController::class, 'breadcrumb']);
 Route::post('playback', [MapController::class, 'playback']);
 
