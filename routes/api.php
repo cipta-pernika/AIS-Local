@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\MapController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\DataloggerController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
@@ -11,7 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [AuthController::class, 'login']);
-Route::post('/register', [RegisteredUserController::class, 'store']);
+// Route::post('/register', [RegisteredUserController::class, 'store']);
 
 Route::middleware('auth:sanctum')->group(function () {
     //CRUD
@@ -28,6 +29,9 @@ Route::apiResource('sensors', SensorController::class);
 //dari sensor
 Route::post('aisdata', [HelperController::class, 'aisdata']);
 Route::get('aisdataunique', [HelperController::class, 'aisdataunique']);
+
+Route::post('breadcrumb', [MapController::class, 'breadcrumb']);
+Route::post('playback', [MapController::class, 'playback']);
 
 //camera
 Route::post('camzoomminus', [HelperController::class, 'camzoomminus']);
