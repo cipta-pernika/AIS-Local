@@ -28,4 +28,9 @@ class SensorData extends Model
     {
         return $this->belongsTo(Sensor::class);
     }
+
+    public function radar()
+    {
+        return $this->hasOne(Radar::class);
+    }
 }

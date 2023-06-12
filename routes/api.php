@@ -26,6 +26,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
 Route::apiResource('sensors', SensorController::class);
 Route::get('aisdataunique', [HelperController::class, 'aisdataunique']);
+Route::get('radardataunique', [HelperController::class, 'radardataunique']);
 
 //dari sensor
 Route::post('aisdata', [HelperController::class, 'aisdata']);

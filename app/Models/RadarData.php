@@ -9,6 +9,8 @@ class RadarData extends Model
 {
     use HasFactory;
 
+    protected $table = 'radar_datas';
+
     protected $fillable = [
         'sensor_data_id',
         'target_id',
@@ -22,4 +24,9 @@ class RadarData extends Model
         'bearing',
         'timestamp',
     ];
+
+    public function sensorData()
+    {
+        return $this->belongsTo(SensorData::class);
+    }
 }

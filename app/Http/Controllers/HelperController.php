@@ -107,6 +107,18 @@ class HelperController extends Controller
         ], 201);
     }
 
+    public function radardataunique()
+    {
+        $aisData = RadarData::with('sensorData.sensor.datalogger')
+            ->groupBy('target_id')
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'message' => $aisData,
+        ], 201);
+    }
+
     public function playbackais()
     {
         $aisData = AisDataPosition::with('vessel', 'sensorData.sensor.datalogger')
@@ -698,7 +710,7 @@ class HelperController extends Controller
         ]);
         $sensorData->save();
 
-        $vesselPosition = new RadarData([
+        $radarData = new RadarData([
             'sensor_data_id' => $sensorData->id,
             'target_id' => request()->target_id,
             'latitude' => request()->latitude,
@@ -711,12 +723,12 @@ class HelperController extends Controller
             'bearing' => request()->bearing,
             'timestamp' => Carbon::parse(request()->isoDate),
         ]);
-        $vesselPosition->save();
+        $radarData->save();
 
         return response()->json([
             'sensor' => $sensor,
             'sensorData' => $sensorData,
-            'vesselPosition' => $vesselPosition ?? null
+            'radarData' => $radarData ?? null
         ], 201);
     }
 }
