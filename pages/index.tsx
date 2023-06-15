@@ -15,13 +15,26 @@ import useDarkMode from '../hooks/useDarkMode';
 import Page from '../layout/Page/Page';
 import Popovers from '../components/bootstrap/Popovers';
 import dynamic from "next/dynamic"
+import useWebSocket, { ReadyState } from 'react-use-websocket';
 
-const Maps = dynamic(() => import("../components/Maps"), { ssr:false })
+const Maps = dynamic(() => import("../components/Maps"), { ssr: false })
 
 const Index: NextPage = () => {
 	const { mobileDesign } = useContext(ThemeContext);
 
+	// const wsUrl = 'ws://127.0.0.1:1880/ws/sensordata';
+	const wsUrl = 'wss://nr.cakrawala.id/ws/sensordata';
 	const { setIsOpen } = useTour();
+	const [socketUrl, setSocketUrl] = useState<string>(wsUrl);
+	const [messageHistory, setMessageHistory] = useState<MessageEvent<any>[]>([]);
+
+	const { sendMessage, lastMessage, readyState } = useWebSocket(socketUrl);
+
+	useEffect(() => {
+		if (lastMessage !== null) {
+			setMessageHistory(prev => [...prev, lastMessage]);
+		}
+	}, [lastMessage, setMessageHistory]);
 
 	useEffect(() => {
 		if (
@@ -39,7 +52,7 @@ const Index: NextPage = () => {
 	}, []);
 
 	const { themeStatus } = useDarkMode();
-
+	console.log(lastMessage)
 	return (
 		<PageWrapper>
 			<Head>
