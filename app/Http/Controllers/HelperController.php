@@ -7,10 +7,26 @@ use App\Models\AisDataVessel;
 use App\Models\RadarData;
 use App\Models\Sensor;
 use App\Models\SensorData;
+use App\Models\Vessel;
 use Carbon\Carbon;
 
 class HelperController extends Controller
 {
+    public function detailvessel()
+    {
+        $vesselId = AisDataVessel::where('mmsi', request('mmsi'))->first();
+
+        $aisData = AisDataPosition::where('vessel_id', $vesselId->id)
+            ->with('vessel', 'sensorData.sensor.datalogger')
+            ->latest()
+            ->first();
+
+        return response()->json([
+            'success' => true,
+            'message' => $aisData,
+        ], 201);
+    }
+
     public function isValidLatitude($latitude)
     {
         return ($latitude >= -90 && $latitude <= 90);
