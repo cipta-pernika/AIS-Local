@@ -34,8 +34,10 @@ class SensorController extends Controller
         return response()->json($datalogger, 201);
     }
 
-    public function show(Sensor $datalogger)
+    public function show($id)
     {
+        $datalogger = Sensor::find($id);
+
         if (!$datalogger) {
             return response()->json(['error' => 'Data not found'], 404);
         }

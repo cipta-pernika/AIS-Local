@@ -34,8 +34,10 @@ class UserController extends Controller
         return response()->json($datalogger, 201);
     }
 
-    public function show(User $datalogger)
+    public function show($id)
     {
+        $datalogger = User::find($id);
+
         if (!$datalogger) {
             return response()->json(['error' => 'Data not found'], 404);
         }
