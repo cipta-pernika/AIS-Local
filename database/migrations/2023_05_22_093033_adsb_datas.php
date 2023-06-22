@@ -14,15 +14,16 @@ return new class extends Migration
         Schema::create('adsb_data_positions', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('sensor_data_id');
-            $table->unsignedBigInteger('aircraft_id');
-            $table->string('flight_id');
-            $table->decimal('latitude', 10, 7);
-            $table->decimal('longitude', 10, 7);
-            $table->decimal('altitude', 8, 2);
-            $table->decimal('ground_speed', 8, 2);
-            $table->decimal('vertical_rate', 8, 2);
-            $table->decimal('track', 8, 2);
+            $table->unsignedBigInteger('aircraft_id')->nullable();
+            $table->string('flight_id')->nullable();
+            $table->decimal('latitude', 10, 7)->nullable();
+            $table->decimal('longitude', 10, 7)->nullable();
+            $table->decimal('altitude', 8, 2)->nullable();
+            $table->decimal('ground_speed', 8, 2)->nullable();
+            $table->decimal('vertical_rate', 8, 2)->nullable();
+            $table->decimal('track', 8, 2)->nullable();
             $table->timestamp('timestamp');
+            $table->string('transmission_type')->nullable();
 
             // Foreign key constraints
             $table->foreign('sensor_data_id')->references('id')->on('sensor_datas')->onDelete('cascade');

@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AdsbData;
+use App\Models\AdsbDataAircraft;
+use App\Models\AdsbDataFlight;
+use App\Models\AdsbDataPosition;
 use App\Models\AisDataPosition;
 use App\Models\AisDataVessel;
 use App\Models\RadarData;
@@ -206,6 +210,73 @@ class HelperController extends Controller
                 ]);
             }
         }
+
+        return response()->json([
+            'sensor' => $sensor,
+            'sensorData' => $sensorData,
+            'vessel' => $vessel ?? null,
+            'vesselPosition' => $vesselPosition ?? null
+        ], 201);
+    }
+
+    public function adsbdatav2()
+    {
+        if (empty(request())) {
+            return response()->json([
+                'error' => 'No request payload provided.',
+            ], 400);
+        }
+
+        $sensor = Sensor::find(3);
+
+            $sensorData = new SensorData([
+                'sensor_id' => $sensor->id,
+                'payload' => request()->msgSbs,
+                'timestamp' => Carbon::parse(request('generated_date') . ' ' .  request('generated_time')),
+            ]);
+            $sensorData->save();
+
+            if (request()->callsign) {
+                $vessel = AdsbDataAircraft::updateOrCreate(['callsign' => request()->callsign]);
+
+                $flight = AdsbDataFlight::updateOrCreate(['flight_number' => request()->flight_id]);
+
+                $latitude = request()->latitude;
+                $longitude = request()->longitude;
+                if ($this->isValidLatitude($latitude) && $this->isValidLongitude($longitude)) {
+                    $vesselPosition = new AdsbDataPosition([
+                        'sensor_data_id' => $sensorData->id,
+                        'aircraft_id' => $vessel->id,
+                        'flight_id' => $flight->id,
+                        'latitude' => request()->latitude,
+                        'longitude' => request()->longitude,
+                        'speed' => request()->speedOverGround,
+                        'course' => request()->courseOverGround,
+                        'heading' => request()->trueHeading,
+                        'navigation_status' => request()->navigationStatus,
+                        'turning_rate' => request()->turningRate ?? request()->rateOfTurn,
+                        'turning_direction' => request()->turningDirection,
+                        'timestamp' => Carbon::parse(request()->isoDate),
+                    ]);
+                    $vesselPosition->save();
+                }
+            } else if (request()->senderMmsi) {
+                $vessel = AisDataVessel::updateOrCreate([
+                    'mmsi' => request()->senderMmsi
+                ], [
+                    'vessel_name' => request('name'),
+                    'vessel_type' => request('shipType_text'),
+                    'imo' => request('shipId'),
+                    'callsign' => request('callsign'),
+                    'draught' => request('draught'),
+                    'reported_destination' => request('destination'),
+                    'dimension_to_bow' => request('dimensionToBow'),
+                    'dimension_to_stern' => request('dimensionToStern'),
+                    'dimension_to_port' => request('dimensionToPort'),
+                    'dimension_to_starboard' => request('dimensionToStarboard'),
+                    'reported_eta' => Carbon::parse(request('eta')),
+                ]);
+            }
 
         return response()->json([
             'sensor' => $sensor,

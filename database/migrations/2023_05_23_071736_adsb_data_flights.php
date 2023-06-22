@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('adsb_data_flights', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('aircraft_id');
-            $table->string('flight_number');
-            $table->date('date');
-            $table->string('from');
-            $table->string('to');
-            $table->decimal('flight_time', 8, 2);
+            $table->unsignedBigInteger('aircraft_id')->nullable();
+            $table->string('flight_number')->nullable();
+            $table->date('date')->nullable();
+            $table->string('from')->nullable();
+            $table->string('to')->nullable();
+            $table->decimal('flight_time', 8, 2)->nullable();
             $table->timestamp('std')->nullable();
             $table->timestamp('atd')->nullable();
             $table->timestamp('sta')->nullable();
