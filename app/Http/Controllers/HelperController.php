@@ -127,6 +127,20 @@ class HelperController extends Controller
         ], 201);
     }
 
+    public function livefeed()
+    {
+        $aisData = AisDataPosition::with('vessel', 'sensorData.sensor.datalogger')
+            ->groupBy('vessel_id')
+            ->limit(10)
+            ->orderBy('created_at', 'DESC')
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'message' => $aisData,
+        ], 201);
+    }
+
     public function adsbunique()
     {
         $aisData = AdsbDataPosition::with('aircraft', 'sensorData.sensor.datalogger')

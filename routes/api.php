@@ -29,6 +29,7 @@ Route::post('detailvessel', [HelperController::class, 'detailvessel']);
 Route::get('aisdataunique', [HelperController::class, 'aisdataunique']);
 Route::get('radardataunique', [HelperController::class, 'radardataunique']);
 Route::get('adsbunique', [HelperController::class, 'adsbunique']);
+Route::get('livefeed', [HelperController::class, 'livefeed']);
 
 //dari sensor
 Route::post('aisdata', [HelperController::class, 'aisdata']);
