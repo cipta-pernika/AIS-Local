@@ -127,6 +127,18 @@ class HelperController extends Controller
         ], 201);
     }
 
+    public function adsbunique()
+    {
+        $aisData = AdsbDataPosition::with('aircraft', 'sensorData.sensor.datalogger')
+            ->groupBy('aircraft_id')
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'message' => $aisData,
+        ], 201);
+    }
+
     public function radardataunique()
     {
         $aisData = RadarData::with('sensorData.sensor.datalogger')
