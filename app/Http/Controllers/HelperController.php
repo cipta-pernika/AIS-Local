@@ -236,8 +236,9 @@ class HelperController extends Controller
             ]);
             $sensorData->save();
 
-            if (request()->callsign) {
-                $vessel = AdsbDataAircraft::updateOrCreate(['callsign' => request()->callsign]);
+            if (request()->hex_ident) {
+                $vessel = AdsbDataAircraft::updateOrCreate(['hex_ident' => request()->hex_ident],
+                 ['callsign'  => request()->callsign]);
 
                 $flight = AdsbDataFlight::updateOrCreate(['flight_number' => request()->flight_id]);
 

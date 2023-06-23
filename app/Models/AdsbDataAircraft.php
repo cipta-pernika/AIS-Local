@@ -17,6 +17,7 @@ class AdsbDataAircraft extends Model
         'acid',
         'registration',
         'country',
-        'callsign'
+        'callsign',
+        'hex_ident'
     ];
 }
