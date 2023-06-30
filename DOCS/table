@@ -55,7 +55,7 @@ ais_data_ports
 --------------
 id
 port_name
-country
+ownop
 un_locode
 latitude
 longitude
@@ -98,11 +98,11 @@ timestamp
 adsb_data_aircrafts
 -------------------
 id
-aircraft_name
-aircraft_type
+manufacturer
+model
 acid (aircraft_id)
 registration (tail number)
-country
+ownop
 
 adsb_data_flights
 -----------------

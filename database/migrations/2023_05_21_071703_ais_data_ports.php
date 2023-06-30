@@ -14,7 +14,7 @@ return new class extends Migration
         // Schema::create('ais_data_ports', function (Blueprint $table) {
         //     $table->id();
         //     $table->string('port_name');
-        //     $table->string('country');
+        //     $table->string('ownop');
         //     $table->string('un_locode')->unique();
         //     $table->decimal('latitude', 10, 7);
         //     $table->decimal('longitude', 10, 7);

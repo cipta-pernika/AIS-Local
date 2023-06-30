@@ -12,12 +12,12 @@ class AdsbDataAircraft extends Model
     protected $table = 'adsb_data_aircrafts';
 
     protected $fillable = [
-        'aircraft_name',
-        'aircraft_type',
-        'acid',
+        'manufacturer',
+        'model',
         'registration',
-        'country',
+        'ownop',
         'callsign',
-        'hex_ident'
+        'hex_ident',
+        'year'
     ];
 }

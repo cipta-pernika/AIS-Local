@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('adsb_data_aircrafts', function (Blueprint $table) {
             $table->id();
-            $table->string('hex_ident');
-            $table->string('aircraft_name')->nullable();
-            $table->string('aircraft_type')->nullable();
-            $table->string('acid')->unique()->nullable();
+            $table->string('hex_ident')->comment('icao/mode-s');
+            $table->string('manufacturer')->nullable();
+            $table->string('model')->nullable();
             $table->string('registration')->nullable();
-            $table->string('country')->nullable();
+            $table->string('ownop')->nullable();
             $table->string('callsign')->nullable();
+            $table->string('year')->nullable();
             $table->timestamps();
         });
     }
