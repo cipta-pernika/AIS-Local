@@ -28,7 +28,7 @@ class AdsbDataAircraftSeeder extends Seeder
                         'registration' => $aircraft['reg'],
                         'ownop' => $aircraft['ownop'],
                         'callsign' => null,
-                        'hex_ident' => $aircraft['icao'],
+                        'hex_ident' => strtoupper($aircraft['icao']),
                         'year' => $aircraft['year'],
                     ]);
                 } else {
