@@ -129,7 +129,7 @@ class HelperController extends Controller
     public function aisdatalist()
     {
         $aisData = AisDataPosition::with('vessel', 'sensorData.sensor.datalogger')
-            ->orderBy('created_at', 'DESC')
+            ->orderBy('ais_data_positions.created_at', 'DESC')
             ->get();
 
         return response()->json([
