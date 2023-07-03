@@ -896,4 +896,8 @@ class HelperController extends Controller
             'radarData' => $radarData ?? null
         ], 201);
     }
+
+    public function radarimage() {
+        
+    }
 }
