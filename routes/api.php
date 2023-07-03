@@ -4,11 +4,8 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\MapController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\DataloggerController;
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\HelperController;
 use App\Http\Controllers\SensorController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [AuthController::class, 'login']);
@@ -31,6 +28,11 @@ Route::get('radardataunique', [HelperController::class, 'radardataunique']);
 Route::get('adsbunique', [HelperController::class, 'adsbunique']);
 Route::get('livefeed', [HelperController::class, 'livefeed']);
 Route::get('radarimage', [HelperController::class, 'radarimage']);
+
+//tablelist
+Route::get('aisdatalist', [HelperController::class, 'aisdatalist']);
+Route::get('adsbdatalist', [HelperController::class, 'adsbdatalist']);
+Route::get('radardatalist', [HelperController::class, 'radardatalist']);
 
 //dari sensor
 Route::post('aisdata', [HelperController::class, 'aisdata']);

@@ -11,7 +11,6 @@ use App\Models\AisDataVessel;
 use App\Models\RadarData;
 use App\Models\Sensor;
 use App\Models\SensorData;
-use App\Models\Vessel;
 use Carbon\Carbon;
 
 class HelperController extends Controller
@@ -81,7 +80,7 @@ class HelperController extends Controller
             }
         } else if (request()->senderMmsi) {
             $vessel = AisDataVessel::updateOrCreate([
-                'mmsi' => request()->senderMmsi
+                'mmsi' => request()->senderMmsi,
             ], [
                 'vessel_name' => request('name'),
                 'vessel_type' => request('shipType_text'),
@@ -101,7 +100,7 @@ class HelperController extends Controller
             'sensor' => $sensor,
             'sensorData' => $sensorData,
             'vessel' => $vessel ?? null,
-            'vesselPosition' => $vesselPosition ?? null
+            'vesselPosition' => $vesselPosition ?? null,
         ], 201);
     }
 
@@ -119,6 +118,43 @@ class HelperController extends Controller
     {
         $aisData = AisDataPosition::with('vessel', 'sensorData.sensor.datalogger')
             ->groupBy('vessel_id')
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'message' => $aisData,
+        ], 201);
+    }
+
+    public function aisdatalist()
+    {
+        $aisData = AisDataPosition::with('vessel', 'sensorData.sensor.datalogger')
+            ->groupBy('vessel_id')
+            ->orderBy('created_at', 'DESC')
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'message' => $aisData,
+        ], 201);
+    }
+
+    public function adsbdatalist()
+    {
+        $aisData = AdsbDataPosition::with('aircraft', 'sensorData.sensor.datalogger')
+            ->orderBy('created_at', 'DESC')
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'message' => $aisData,
+        ], 201);
+    }
+
+    public function radardatalist()
+    {
+        $aisData = RadarData::with('sensorData.sensor.datalogger')
+            ->orderBy('created_at', 'DESC')
             ->get();
 
         return response()->json([
@@ -220,7 +256,7 @@ class HelperController extends Controller
                 }
             } else if (request()->senderMmsi) {
                 $vessel = AisDataVessel::updateOrCreate([
-                    'mmsi' => request()->senderMmsi
+                    'mmsi' => request()->senderMmsi,
                 ], [
                     'vessel_name' => request('name'),
                     'vessel_type' => request('shipType_text'),
@@ -241,7 +277,7 @@ class HelperController extends Controller
             'sensor' => $sensor,
             'sensorData' => $sensorData,
             'vessel' => $vessel ?? null,
-            'vesselPosition' => $vesselPosition ?? null
+            'vesselPosition' => $vesselPosition ?? null,
         ], 201);
     }
 
@@ -251,48 +287,48 @@ class HelperController extends Controller
             return response()->json([
                 'error' => 'No request payload provided.',
             ], 400);
-        }        
+        }
 
         $sensor = Sensor::find(3);
 
-            $sensorData = new SensorData([
-                'sensor_id' => $sensor->id,
-                'payload' => request()->msgSbs,
-                'timestamp' => Carbon::parse(request('generated_date') . ' ' .  request('generated_time')),
-            ]);
-            $sensorData->save();
+        $sensorData = new SensorData([
+            'sensor_id' => $sensor->id,
+            'payload' => request()->msgSbs,
+            'timestamp' => Carbon::parse(request('generated_date') . ' ' . request('generated_time')),
+        ]);
+        $sensorData->save();
 
-            if (request()->hex_ident) {
-                $vessel = AdsbDataAircraft::updateOrCreate(['hex_ident' => request()->hex_ident],
-                 ['callsign'  => request()->callsign]);
+        if (request()->hex_ident) {
+            $vessel = AdsbDataAircraft::updateOrCreate(['hex_ident' => request()->hex_ident],
+                ['callsign' => request()->callsign]);
 
-                $flight = AdsbDataFlight::updateOrCreate(['flight_number' => request()->flight_id]);
+            $flight = AdsbDataFlight::updateOrCreate(['flight_number' => request()->flight_id]);
 
-                $latitude = request()->lat;
-                $longitude = request()->lon;
-                if ($this->isValidLatitude($latitude) && $this->isValidLongitude($longitude)) {
-                    $vesselPosition = new AdsbDataPosition([
-                        'sensor_data_id' => $sensorData->id,
-                        'aircraft_id' => $vessel->id,
-                        'flight_id' => $flight->id,
-                        'latitude' => $latitude,
-                        'longitude' => $longitude,
-                        'altitude' => request()->altitude,
-                        'ground_speed' => request()->ground_speed,
-                        'vertical_rate' => request()->vertical_rate,
-                        'track' => request()->track,
-                        'timestamp' => Carbon::parse(request('generated_date') . ' ' .  request('generated_time')),
-                        'transmission_type' => request()->transmission_type,
-                    ]);
-                    $vesselPosition->save();
-                }
+            $latitude = request()->lat;
+            $longitude = request()->lon;
+            if ($this->isValidLatitude($latitude) && $this->isValidLongitude($longitude)) {
+                $vesselPosition = new AdsbDataPosition([
+                    'sensor_data_id' => $sensorData->id,
+                    'aircraft_id' => $vessel->id,
+                    'flight_id' => $flight->id,
+                    'latitude' => $latitude,
+                    'longitude' => $longitude,
+                    'altitude' => request()->altitude,
+                    'ground_speed' => request()->ground_speed,
+                    'vertical_rate' => request()->vertical_rate,
+                    'track' => request()->track,
+                    'timestamp' => Carbon::parse(request('generated_date') . ' ' . request('generated_time')),
+                    'transmission_type' => request()->transmission_type,
+                ]);
+                $vesselPosition->save();
             }
+        }
 
         return response()->json([
             'sensor' => $sensor,
             'sensorData' => $sensorData,
             'vessel' => $vessel ?? null,
-            'vesselPosition' => $vesselPosition ?? null
+            'vesselPosition' => $vesselPosition ?? null,
         ], 201);
     }
 
@@ -893,7 +929,7 @@ class HelperController extends Controller
         return response()->json([
             'sensor' => $sensor,
             'sensorData' => $sensorData,
-            'radarData' => $radarData ?? null
+            'radarData' => $radarData ?? null,
         ], 201);
     }
 
