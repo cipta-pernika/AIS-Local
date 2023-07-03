@@ -128,7 +128,8 @@ class HelperController extends Controller
 
     public function aisdatalist()
     {
-        $aisData = AisDataPosition::with('vessel')
+        $aisData = AisDataPosition::with('vessel', 'sensorData.sensor.datalogger')
+            ->groupBy('vessel_id')
             ->get();
 
         return response()->json([
