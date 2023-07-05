@@ -171,9 +171,16 @@ class HelperController extends Controller
             ->orderBy('created_at', 'DESC')
             ->get();
 
+        $adsb = AdsbDataPosition::with('vessel', 'sensorData.sensor.datalogger')
+            ->groupBy('aircraft_id')
+            ->limit(10)
+            ->orderBy('created_at', 'DESC')
+            ->get();
+
         return response()->json([
             'success' => true,
             'message' => $aisData,
+            'liveadsb' => $adsb,
         ], 201);
     }
 
@@ -299,8 +306,10 @@ class HelperController extends Controller
         $sensorData->save();
 
         if (request()->hex_ident) {
-            $vessel = AdsbDataAircraft::updateOrCreate(['hex_ident' => request()->hex_ident],
-                ['callsign' => request()->callsign]);
+            $vessel = AdsbDataAircraft::updateOrCreate(
+                ['hex_ident' => request()->hex_ident],
+                ['callsign' => request()->callsign]
+            );
 
             $flight = AdsbDataFlight::updateOrCreate(['flight_number' => request()->flight_id]);
 
@@ -933,7 +942,7 @@ class HelperController extends Controller
         ], 201);
     }
 
-    public function radarimage() {
-        
+    public function radarimage()
+    {
     }
 }
