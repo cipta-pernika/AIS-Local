@@ -35,6 +35,7 @@ Route::get('adsbdatalist', [HelperController::class, 'adsbdatalist']);
 Route::get('radardatalist', [HelperController::class, 'radardatalist']);
 
 //dari sensor
+Route::post('aisstatic', [HelperController::class, 'aisstatic']);
 Route::post('aisdata', [HelperController::class, 'aisdata']);
 Route::post('adsbdatav2', [HelperController::class, 'adsbdatav2']);
 Route::post('adsbdata', [HelperController::class, 'adsbdata']);

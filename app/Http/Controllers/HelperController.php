@@ -104,6 +104,30 @@ class HelperController extends Controller
         ], 201);
     }
 
+    public function aisstatic()
+    {
+
+            $vessel = AisDataVessel::updateOrCreate([
+                'mmsi' => request()->senderMmsi,
+            ], [
+                'vessel_name' => request('name'),
+                'vessel_type' => request('shipType_text'),
+                'imo' => request('shipId'),
+                'callsign' => request('callsign'),
+                'draught' => request('draught'),
+                'reported_destination' => request('destination'),
+                'dimension_to_bow' => request('dimensionToBow'),
+                'dimension_to_stern' => request('dimensionToStern'),
+                'dimension_to_port' => request('dimensionToPort'),
+                'dimension_to_starboard' => request('dimensionToStarboard'),
+                'reported_eta' => Carbon::parse(request('eta')),
+            ]);
+            
+        return response()->json([
+            'vessel' => $vessel ?? null,
+        ], 201);
+    }
+
     public function getaisdata()
     {
         $aisData = AisDataPosition::with('vessel', 'sensorData.sensor.datalogger')->get();
