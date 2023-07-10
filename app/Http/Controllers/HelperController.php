@@ -104,6 +104,30 @@ class HelperController extends Controller
         ], 201);
     }
 
+    public function aisstatic()
+    {
+
+            $vessel = AisDataVessel::updateOrCreate([
+                'mmsi' => request()->senderMmsi,
+            ], [
+                'vessel_name' => request('name'),
+                'vessel_type' => request('shipType_text'),
+                'imo' => request('shipId'),
+                'callsign' => request('callsign'),
+                'draught' => request('draught'),
+                'reported_destination' => request('destination'),
+                'dimension_to_bow' => request('dimensionToBow'),
+                'dimension_to_stern' => request('dimensionToStern'),
+                'dimension_to_port' => request('dimensionToPort'),
+                'dimension_to_starboard' => request('dimensionToStarboard'),
+                'reported_eta' => Carbon::parse(request('eta')),
+            ]);
+            
+        return response()->json([
+            'vessel' => $vessel ?? null,
+        ], 201);
+    }
+
     public function getaisdata()
     {
         $aisData = AisDataPosition::with('vessel', 'sensorData.sensor.datalogger')->get();
@@ -171,9 +195,16 @@ class HelperController extends Controller
             ->orderBy('created_at', 'DESC')
             ->get();
 
+        $adsb = AdsbDataPosition::with('vessel', 'sensorData.sensor.datalogger')
+            ->groupBy('aircraft_id')
+            ->limit(10)
+            ->orderBy('created_at', 'DESC')
+            ->get();
+
         return response()->json([
             'success' => true,
             'message' => $aisData,
+            'liveadsb' => $adsb,
         ], 201);
     }
 
@@ -299,8 +330,10 @@ class HelperController extends Controller
         $sensorData->save();
 
         if (request()->hex_ident) {
-            $vessel = AdsbDataAircraft::updateOrCreate(['hex_ident' => request()->hex_ident],
-                ['callsign' => request()->callsign]);
+            $vessel = AdsbDataAircraft::updateOrCreate(
+                ['hex_ident' => request()->hex_ident],
+                ['callsign' => request()->callsign]
+            );
 
             $flight = AdsbDataFlight::updateOrCreate(['flight_number' => request()->flight_id]);
 
@@ -933,7 +966,7 @@ class HelperController extends Controller
         ], 201);
     }
 
-    public function radarimage() {
-        
+    public function radarimage()
+    {
     }
 }
