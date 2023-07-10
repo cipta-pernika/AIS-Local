@@ -13,8 +13,6 @@ return new class extends Migration
     {
         Schema::create('radar_datas', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('sensor_data_id');
-            $table->foreign('sensor_data_id')->references('id')->on('sensor_datas')->onDelete('cascade');
             $table->string('target_id');
             $table->decimal('latitude', 10, 7);
             $table->decimal('longitude', 10, 7);
@@ -27,7 +25,6 @@ return new class extends Migration
             $table->timestamp('timestamp');
             $table->timestamps();
 
-            $table->index('sensor_data_id');
             $table->index('target_id');
             $table->index('timestamp');
         });

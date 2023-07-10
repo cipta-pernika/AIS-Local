@@ -12,7 +12,6 @@ class RadarData extends Model
     protected $table = 'radar_datas';
 
     protected $fillable = [
-        'sensor_data_id',
         'target_id',
         'latitude',
         'longitude',
