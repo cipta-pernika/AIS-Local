@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Storage;
 
 class radarpng extends Command
 {
@@ -11,7 +12,7 @@ class radarpng extends Command
      *
      * @var string
      */
-    protected $signature = 'app:radarpng';
+    protected $signature = 'radarpng';
 
     /**
      * The console command description.
@@ -26,7 +27,7 @@ class radarpng extends Command
     public function handle()
     {
         //
-        $contents = file_get_contents('http://127.0.0.1:8080/radar.png');
+        $contents = file_get_contents('http://127.0.0.1:8160/radar.png');
         Storage::disk('public')->put('radar/radar.png', $contents);
     }
 }

@@ -968,5 +968,11 @@ class HelperController extends Controller
 
     public function radarimage()
     {
+        //http://bst.cakrawala.id/radarfolder/radar.png
+
+        return response()->json([
+            'success' => true,
+            'message' => 'http://bst.cakrawala.id/radarfolder/radar.png',
+        ], 201);
     }
 }
