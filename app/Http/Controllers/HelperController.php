@@ -19,6 +19,19 @@ use Location\Distance\Vincenty;
 
 class HelperController extends Controller
 {
+    public function position()
+    {
+        $datalogger = Datalogger::find(1);
+        $datalogger->latitude = request('lat'); 
+        $datalogger->longitude = request('lon');
+        $datalogger->update();
+
+        return response()->json([
+            'success' => true,
+            'message' => $datalogger,
+        ], 201);
+    }
+    
     public function movebylatlng()
     {
         $datalogger = Datalogger::find(1);
@@ -190,7 +203,9 @@ class HelperController extends Controller
     public function aisdataunique()
     {
         $aisData = AisDataPosition::with('vessel', 'sensorData.sensor.datalogger')
+        ->orderBy('created_at', 'DESC')
             ->groupBy('vessel_id')
+            // ->whereBetween('created_at', [now()->subHours(24), now()])
             ->get();
 
         return response()->json([

@@ -26,7 +26,7 @@
         "id": "1446c5fc.44f50a",
         "type": "tab",
         "label": "Flow 3",
-        "disabled": false,
+        "disabled": true,
         "info": ""
     },
     {
@@ -670,11 +670,10 @@
         "authType": "",
         "senderr": false,
         "headers": [],
-        "x": 130,
-        "y": 180,
+        "x": 1370,
+        "y": 120,
         "wires": [
             [
-                "ccf51952ea456cec",
                 "fcaf63889957b44c"
             ]
         ]
@@ -690,46 +689,14 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 460,
+        "x": 1200,
         "y": 120,
         "wires": [
             [
                 "1da7314332964c35",
-                "2bbd67fd9ba4049f"
+                "df0655d411bdc740"
             ]
         ]
-    },
-    {
-        "id": "ccf51952ea456cec",
-        "type": "debug",
-        "z": "60ae057330bf1123",
-        "name": "debug 2",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 300,
-        "y": 180,
-        "wires": []
-    },
-    {
-        "id": "2bbd67fd9ba4049f",
-        "type": "debug",
-        "z": "60ae057330bf1123",
-        "name": "debug 3",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 660,
-        "y": 120,
-        "wires": []
     },
     {
         "id": "b88f29485f5399f3",
@@ -743,10 +710,11 @@
         "stream": true,
         "addname": "",
         "x": 310,
-        "y": 40,
+        "y": 100,
         "wires": [
             [
-                "12e57052df21851b"
+                "12e57052df21851b",
+                "c507853a7877dee4"
             ]
         ]
     },
@@ -761,7 +729,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 120,
+        "x": 900,
         "y": 120,
         "wires": [
             [
@@ -782,7 +750,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 460,
-        "y": 240,
+        "y": 260,
         "wires": []
     },
     {
@@ -798,7 +766,7 @@
         "oldrc": false,
         "name": "",
         "x": 270,
-        "y": 240,
+        "y": 260,
         "wires": [
             [
                 "156465b0a3cdb9c7"
@@ -820,8 +788,8 @@
         "method": "post",
         "upload": false,
         "swaggerDoc": "",
-        "x": 140,
-        "y": 340,
+        "x": 120,
+        "y": 540,
         "wires": [
             [
                 "0529daef582fa6b6",
@@ -841,8 +809,8 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 400,
-        "y": 340,
+        "x": 380,
+        "y": 540,
         "wires": []
     },
     {
@@ -852,8 +820,8 @@
         "name": "",
         "statusCode": "200",
         "headers": {},
-        "x": 360,
-        "y": 420,
+        "x": 340,
+        "y": 620,
         "wires": []
     },
     {
@@ -862,7 +830,7 @@
         "z": "60ae057330bf1123",
         "name": "",
         "x": 610,
-        "y": 60,
+        "y": 120,
         "wires": [
             [
                 "39ea497470eea857"
@@ -874,12 +842,11 @@
         "type": "ais-decoder",
         "z": "60ae057330bf1123",
         "name": "",
-        "x": 290,
+        "x": 1050,
         "y": 120,
         "wires": [
             [
-                "78820bb2a137ca09",
-                "e6d531b21dc47c0a"
+                "78820bb2a137ca09"
             ]
         ]
     },
@@ -887,7 +854,8 @@
         "id": "47f1429dcf712b3e",
         "type": "cronplus",
         "z": "60ae057330bf1123",
-        "name": "",
+        "d": true,
+        "name": "sendata",
         "outputField": "payload",
         "timeZone": "",
         "persistDynamic": false,
@@ -898,7 +866,7 @@
                 "name": "schedule1",
                 "topic": "topic1",
                 "payloadType": "str",
-                "payload": "php \"C:\\Users\\user\\Documents\\GitHub\\AIS-Local\\artisan\" app:sendata",
+                "payload": "C:\\laragon\\bin\\php\\php-8.1.10-Win32-vs16-x64\\php \"C:\\Users\\user\\Documents\\GitHub\\AIS-Local\\artisan\" app:sendata",
                 "expressionType": "cron",
                 "expression": "0 * * * * * *",
                 "location": "",
@@ -908,7 +876,7 @@
             }
         ],
         "x": 100,
-        "y": 240,
+        "y": 260,
         "wires": [
             [
                 "6bd2503b49267246"
@@ -931,30 +899,10 @@
         "base64": false,
         "tls": "",
         "x": 120,
-        "y": 40,
+        "y": 100,
         "wires": [
             [
                 "b88f29485f5399f3"
-            ]
-        ]
-    },
-    {
-        "id": "e6d531b21dc47c0a",
-        "type": "function",
-        "z": "60ae057330bf1123",
-        "name": "function 5",
-        "func": "msg.method = \"POST\"\nmsg.url = \"http://siege.cakrawala.id:8000/api/aisdata\"\nconst aisdata1 = flow.get(\"dataais\")\nconst aisdata2 = msg.payload\nconst joinedObject = { ...aisdata2, ...aisdata1 };\nmsg.payload = joinedObject;\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 520,
-        "y": 180,
-        "wires": [
-            [
-                "1da7314332964c35",
-                "df0655d411bdc740"
             ]
         ]
     },
@@ -965,8 +913,8 @@
         "name": "",
         "server": "1c1f8cfd334d35f0",
         "client": "",
-        "x": 710,
-        "y": 180,
+        "x": 1570,
+        "y": 120,
         "wires": []
     },
     {
@@ -983,8 +931,8 @@
         "correl": "",
         "expiry": "",
         "broker": "eb6a4ab96323976e",
-        "x": 720,
-        "y": 240,
+        "x": 1380,
+        "y": 60,
         "wires": []
     },
     {
@@ -999,7 +947,7 @@
         "finalize": "",
         "libs": [],
         "x": 460,
-        "y": 40,
+        "y": 60,
         "wires": [
             [
                 "63ca08908ef94b97",
@@ -1026,7 +974,7 @@
         "repair": false,
         "outputs": 1,
         "x": 750,
-        "y": 60,
+        "y": 120,
         "wires": [
             [
                 "ab5656a0a4f50a27"
@@ -1089,7 +1037,7 @@
         "wires": [
             [
                 "2dae381be8a57783",
-                "890e18afb8a30f43"
+                "0e0ec701b116f6d6"
             ]
         ]
     },
@@ -1104,7 +1052,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1030,
+        "x": 1070,
         "y": 20,
         "wires": [
             [
@@ -1135,26 +1083,6 @@
         ]
     },
     {
-        "id": "890e18afb8a30f43",
-        "type": "function",
-        "z": "60ae057330bf1123",
-        "name": "function 12",
-        "func": "msg.method = \"POST\"\nmsg.url = \"http://siege.cakrawala.id:8000/api/aisstatic\"\nconst aisdata2 = msg.payload\nmsg.payload = aisdata2;\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1030,
-        "y": 60,
-        "wires": [
-            [
-                "a79f6b622f70c960",
-                "0e0ec701b116f6d6"
-            ]
-        ]
-    },
-    {
         "id": "0e0ec701b116f6d6",
         "type": "mqtt out",
         "z": "60ae057330bf1123",
@@ -1168,9 +1096,285 @@
         "correl": "",
         "expiry": "",
         "broker": "eb6a4ab96323976e",
-        "x": 1240,
+        "x": 1080,
         "y": 60,
         "wires": []
+    },
+    {
+        "id": "82203aa59964e86a",
+        "type": "debug",
+        "z": "60ae057330bf1123",
+        "name": "debug 23",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 460,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "c6608555516227aa",
+        "type": "exec",
+        "z": "60ae057330bf1123",
+        "command": "",
+        "addpay": "payload",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 270,
+        "y": 360,
+        "wires": [
+            [
+                "82203aa59964e86a"
+            ],
+            [
+                "82203aa59964e86a"
+            ],
+            [
+                "82203aa59964e86a"
+            ]
+        ]
+    },
+    {
+        "id": "5b4b109b8b202103",
+        "type": "cronplus",
+        "z": "60ae057330bf1123",
+        "d": true,
+        "name": "radar image",
+        "outputField": "payload",
+        "timeZone": "",
+        "persistDynamic": false,
+        "commandResponseMsgOutput": "output1",
+        "outputs": 1,
+        "options": [
+            {
+                "name": "schedule1",
+                "topic": "topic1",
+                "payloadType": "str",
+                "payload": "C:\\laragon\\bin\\php\\php-8.1.10-Win32-vs16-x64\\php \"C:\\Users\\user\\Documents\\GitHub\\AIS-Local\\artisan\" radarpng",
+                "expressionType": "cron",
+                "expression": "0 * * * * * *",
+                "location": "",
+                "offset": "0",
+                "solarType": "all",
+                "solarEvents": "sunrise,sunset"
+            }
+        ],
+        "x": 110,
+        "y": 360,
+        "wires": [
+            [
+                "c6608555516227aa"
+            ]
+        ]
+    },
+    {
+        "id": "e6c18900e632e232",
+        "type": "debug",
+        "z": "60ae057330bf1123",
+        "name": "debug 24",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 460,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "16c90bbe7fb51970",
+        "type": "exec",
+        "z": "60ae057330bf1123",
+        "command": "",
+        "addpay": "payload",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 270,
+        "y": 440,
+        "wires": [
+            [
+                "e6c18900e632e232"
+            ],
+            [
+                "e6c18900e632e232"
+            ],
+            [
+                "e6c18900e632e232"
+            ]
+        ]
+    },
+    {
+        "id": "bb41f9346af70308",
+        "type": "cronplus",
+        "z": "60ae057330bf1123",
+        "d": true,
+        "name": "radar data",
+        "outputField": "payload",
+        "timeZone": "",
+        "persistDynamic": false,
+        "commandResponseMsgOutput": "output1",
+        "outputs": 1,
+        "options": [
+            {
+                "name": "schedule1",
+                "topic": "topic1",
+                "payloadType": "str",
+                "payload": "C:\\laragon\\bin\\php\\php-8.1.10-Win32-vs16-x64\\php \"C:\\Users\\user\\Documents\\GitHub\\AIS-Local\\artisan\" fetchradar",
+                "expressionType": "cron",
+                "expression": "0 * * * * * *",
+                "location": "",
+                "offset": "0",
+                "solarType": "all",
+                "solarEvents": "sunrise,sunset"
+            }
+        ],
+        "x": 110,
+        "y": 440,
+        "wires": [
+            [
+                "16c90bbe7fb51970"
+            ]
+        ]
+    },
+    {
+        "id": "4024bc194bd3b45c",
+        "type": "switch",
+        "z": "60ae057330bf1123",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "regex",
+                "v": "GPRMC",
+                "vt": "str",
+                "case": false
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 630,
+        "y": 180,
+        "wires": [
+            [
+                "6a03ed6a6c39f8d1"
+            ]
+        ]
+    },
+    {
+        "id": "1af2407bfd34dde8",
+        "type": "nmea",
+        "z": "60ae057330bf1123",
+        "name": "",
+        "property": "payload",
+        "outputProperty": "payload",
+        "x": 910,
+        "y": 180,
+        "wires": [
+            [
+                "75c71eecfa8ef5bb"
+            ]
+        ]
+    },
+    {
+        "id": "6a03ed6a6c39f8d1",
+        "type": "function",
+        "z": "60ae057330bf1123",
+        "name": "function 14",
+        "func": "var pl = String(msg.payload);\nmsg.payload = pl;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 770,
+        "y": 180,
+        "wires": [
+            [
+                "1af2407bfd34dde8"
+            ]
+        ]
+    },
+    {
+        "id": "c507853a7877dee4",
+        "type": "delay",
+        "z": "60ae057330bf1123",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "25",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 480,
+        "y": 180,
+        "wires": [
+            [
+                "4024bc194bd3b45c"
+            ]
+        ]
+    },
+    {
+        "id": "75c71eecfa8ef5bb",
+        "type": "function",
+        "z": "60ae057330bf1123",
+        "name": "function 15",
+        "func": "msg.method = \"POST\"\nmsg.url = \"http://127.0.0.1:8000/api/position\"\nmsg.payload = msg.payload;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1070,
+        "y": 180,
+        "wires": [
+            [
+                "de74e39e5189f6a4"
+            ]
+        ]
+    },
+    {
+        "id": "de74e39e5189f6a4",
+        "type": "http request",
+        "z": "60ae057330bf1123",
+        "name": "",
+        "method": "use",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1250,
+        "y": 180,
+        "wires": [
+            []
+        ]
     },
     {
         "id": "332b5b7d2bafee43",
@@ -1178,7 +1382,7 @@
         "z": "e733239f313eee68",
         "name": "",
         "server": "client",
-        "host": "192.168.5.254",
+        "host": "192.168.5.150",
         "port": "32459",
         "datamode": "stream",
         "datatype": "utf8",
@@ -1188,7 +1392,7 @@
         "base64": false,
         "tls": "",
         "x": 210,
-        "y": 80,
+        "y": 100,
         "wires": [
             [
                 "afebd8093ebea737"
@@ -1200,14 +1404,14 @@
         "type": "debug",
         "z": "e733239f313eee68",
         "name": "debug 6",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 900,
+        "x": 1040,
         "y": 40,
         "wires": []
     },
@@ -1219,7 +1423,7 @@
         "pauseType": "rate",
         "timeout": "5",
         "timeoutUnits": "seconds",
-        "rate": "1",
+        "rate": "2",
         "nbRateUnits": "1",
         "rateUnits": "second",
         "randomFirst": "1",
@@ -1229,7 +1433,7 @@
         "allowrate": false,
         "outputs": 1,
         "x": 450,
-        "y": 80,
+        "y": 100,
         "wires": [
             [
                 "1a6cf7b9bbad8ba9"
@@ -1247,10 +1451,9 @@
         "msg_payload": "return_val",
         "function_name": "parseSbs1Message",
         "x": 770,
-        "y": 80,
+        "y": 100,
         "wires": [
             [
-                "9c96b1cd01229211",
                 "09416418f12594ee"
             ]
         ]
@@ -1284,7 +1487,7 @@
         "z": "e733239f313eee68",
         "name": "",
         "server": "client",
-        "host": "192.168.100.2",
+        "host": "192.168.100.4",
         "port": "32458",
         "datamode": "stream",
         "datatype": "utf8",
@@ -1297,7 +1500,8 @@
         "y": 400,
         "wires": [
             [
-                "8f1e6811897b838e"
+                "8f1e6811897b838e",
+                "2b3a977c655c7ac0"
             ]
         ]
     },
@@ -1444,7 +1648,8 @@
         "y": 140,
         "wires": [
             [
-                "fc11efe23f0746e5"
+                "fc11efe23f0746e5",
+                "5e13aff2cc3d9a78"
             ]
         ]
     },
@@ -1477,7 +1682,7 @@
         "type": "debug",
         "z": "e733239f313eee68",
         "name": "debug 9",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -1500,7 +1705,7 @@
         "finalize": "",
         "libs": [],
         "x": 620,
-        "y": 80,
+        "y": 100,
         "wires": [
             [
                 "8a529345c8ed32bd"
@@ -1529,7 +1734,7 @@
         "z": "e733239f313eee68",
         "name": "",
         "server": "client",
-        "host": "192.168.100.2",
+        "host": "192.168.100.4",
         "port": "32459",
         "datamode": "stream",
         "datatype": "utf8",
@@ -1542,7 +1747,9 @@
         "y": 40,
         "wires": [
             [
-                "b3c3aea9926afefe"
+                "b3c3aea9926afefe",
+                "afebd8093ebea737",
+                "6094be41067af41c"
             ]
         ]
     },
@@ -1576,6 +1783,79 @@
         "msg_payload": "return_val",
         "function_name": "parseSbs1Message",
         "x": 610,
+        "y": 40,
+        "wires": [
+            [
+                "4f502615c3cf4739"
+            ]
+        ]
+    },
+    {
+        "id": "5e13aff2cc3d9a78",
+        "type": "mqtt out",
+        "z": "e733239f313eee68",
+        "name": "",
+        "topic": "adsbdataloggerfak",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "eb6a4ab96323976e",
+        "x": 1170,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "2b3a977c655c7ac0",
+        "type": "debug",
+        "z": "e733239f313eee68",
+        "name": "debug 20",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 460,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "6094be41067af41c",
+        "type": "debug",
+        "z": "e733239f313eee68",
+        "name": "debug 21",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 440,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "4f502615c3cf4739",
+        "type": "switch",
+        "z": "e733239f313eee68",
+        "name": "",
+        "property": "payload.lat",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nnull"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 810,
         "y": 40,
         "wires": [
             [
