@@ -390,21 +390,32 @@ class HelperController extends Controller
             $longitude = request()->lon;
             if ($this->isValidLatitude($latitude) && $this->isValidLongitude($longitude)) {
                 $heading = '';
-            if (!request('tracking_heading')) {
-                $curr = AdsbDataPosition::where('aircraft_id', request('tracking_device_imei'))->latest('id')->first();
-                $pointA = new Coordinate($curr['latitude'], $curr['longitude']);
-                $pointB = new Coordinate(request('tracking_latitude'), request('tracking_longitude'));
-                $bearingCalculator = new BearingSpherical();
-                $heading = number_format($bearingCalculator->calculateBearing($pointA, $pointB), 0, '', '');
-            }
+                $speed = 0;
+                $curr = AdsbDataPosition::where('aircraft_id', $vessel->id)->latest('id')->first();
+                if ($curr) {
+                    $pointA = new Coordinate($curr['latitude'], $curr['longitude']);
+                    $pointB = new Coordinate($latitude, $longitude);
+                    $bearingCalculator = new BearingSpherical();
+                    $heading = number_format($bearingCalculator->calculateBearing($pointA, $pointB), 0, '', '');
+
+                    $timeA = Carbon::parse($curr['created_at']);
+                    $timeB = Carbon::now();
+                    $distance = number_format($pointA->getDistance($pointB, new Vincenty()), 0, 0, 0) / 1000;
+                    $speedOnMPH = $distance / $timeA->floatDiffInHours($timeB);
+                    if ($speedOnMPH >= 250) {
+                        $speedOnMPH = 0;
+                    }
+                    $speed = str_replace(',', '', number_format($speedOnMPH / 1.852, 2));
+                }
                 $vesselPosition = new AdsbDataPosition([
                     'sensor_data_id' => $sensorData->id,
                     'aircraft_id' => $vessel->id,
                     'flight_id' => $flight->id,
                     'latitude' => $latitude,
                     'longitude' => $longitude,
+                    'heading' => $heading,
                     'altitude' => request()->altitude,
-                    'ground_speed' => request()->ground_speed,
+                    'ground_speed' => request()->ground_speed ?? $speed,
                     'vertical_rate' => request()->vertical_rate,
                     'track' => request()->track,
                     'timestamp' => Carbon::parse(request('generated_date') . ' ' . request('generated_time')),
