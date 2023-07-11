@@ -27,26 +27,26 @@ class fetchradar extends Command
     public function handle()
     {
         $contents = file_get_contents('http://127.0.0.1:8160/tracks.json');
-$data = json_decode($contents);
+        $data = json_decode($contents);
 
-foreach ($data->features as $feature) {
-    $properties = $feature->properties;
-    $geometry = $feature->geometry->coordinates;
+        foreach ($data->features as $feature) {
+            $properties = $feature->properties;
+            $geometry = $feature->geometry->coordinates;
 
-    RadarData::updateOrCreate(
-        ['target_id' => $properties->name],
-        [
-            'latitude' => $geometry[1],
-            'longitude' => $geometry[0],
-            'altitude' => $properties->altitude,
-            'speed' => $properties->speed,
-            'course' => $properties->course,
-            'heading' => $properties->heading,
-            'range' => $properties->range,
-            'bearing' => $properties->bearing,
-        ]
-    );
-}
+            RadarData::updateOrCreate(
+                ['target_id' => $properties->name],
+                [
+                    'latitude' => $geometry[1],
+                    'longitude' => $geometry[0],
+                    'altitude' => $properties->altitude,
+                    'speed' => $properties->speed,
+                    'course' => $properties->course,
+                    'heading' => $properties->heading,
+                    'range' => $properties->range,
+                    'bearing' => $properties->bearing,
+                ]
+            );
+        }
 
     }
 }
