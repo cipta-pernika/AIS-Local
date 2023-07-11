@@ -74,3 +74,5 @@ Route::post('camwiper', [HelperController::class, 'camwiper']);
 Route::post('camstopwiper', [HelperController::class, 'camstopwiper']);
 Route::post('cammenu', [HelperController::class, 'cammenu']);
 Route::post('camstopzoom', [HelperController::class, 'camstopzoom']);
+
+Route::post('movebylatlng', [HelperController::class, 'movebylatlng']);

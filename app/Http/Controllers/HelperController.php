@@ -8,13 +8,62 @@ use App\Models\AdsbDataFlight;
 use App\Models\AdsbDataPosition;
 use App\Models\AisDataPosition;
 use App\Models\AisDataVessel;
+use App\Models\Datalogger;
 use App\Models\RadarData;
 use App\Models\Sensor;
 use App\Models\SensorData;
 use Carbon\Carbon;
+use Location\Bearing\BearingSpherical;
+use Location\Coordinate;
+use Location\Distance\Vincenty;
 
 class HelperController extends Controller
 {
+    public function movebylatlng()
+    {
+        $datalogger = Datalogger::find(1);
+        $pointA = new Coordinate($datalogger->latitude, $datalogger->longitude);
+        $pointB = new Coordinate(request('lat'), request('lng'));
+        $bearingCalculator = new BearingSpherical();
+        $distance = number_format($pointA->getDistance($pointB, new Vincenty()), 0, 0, 0) * 1;
+        $bearing = number_format($bearingCalculator->calculateBearing($pointA, $pointB), 0, '', '') * 10;
+        $c = sqrt(pow(10, 2) + pow($distance, 2));
+        $angleA = rad2deg(asin(10 / $c));
+        $angleB = rad2deg(asin($distance / $c));
+        $tilt = number_format($angleA, 0, '', '') * 10;
+        $zoom = 25;
+
+        $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">
+        <AbsoluteHigh>
+        <elevation>' . $tilt . ' </elevation>
+        <azimuth>' . ($bearing) . ' </azimuth>
+        <absoluteZoom>' . $zoom . ' </absoluteZoom>
+        </AbsoluteHigh>
+        </PTZData>';
+
+        $url = 'http://admin:Amtek12345@192.168.55.222/PTZCtrl/channels/1/absolute';
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+        $result = curl_exec($ch);
+        curl_close($ch);
+
+        return response()->json([
+            'msg' => $result,
+            'bea' => $bearing,
+            'beacukai' => (3600 - $bearing),
+            'success' => true,
+            "tilt" => $tilt,
+            "distance" => $distance,
+            "c" => $c,
+            "angle A" => $angleA,
+            "angle B" => $angleB,
+            "xml req" => $xml_data,
+        ], 200);
+    }
+
     public function detailvessel()
     {
         $vesselId = AisDataVessel::where('mmsi', request('mmsi'))->first();
@@ -107,22 +156,22 @@ class HelperController extends Controller
     public function aisstatic()
     {
 
-            $vessel = AisDataVessel::updateOrCreate([
-                'mmsi' => request()->senderMmsi,
-            ], [
-                'vessel_name' => request('name'),
-                'vessel_type' => request('shipType_text'),
-                'imo' => request('shipId'),
-                'callsign' => request('callsign'),
-                'draught' => request('draught'),
-                'reported_destination' => request('destination'),
-                'dimension_to_bow' => request('dimensionToBow'),
-                'dimension_to_stern' => request('dimensionToStern'),
-                'dimension_to_port' => request('dimensionToPort'),
-                'dimension_to_starboard' => request('dimensionToStarboard'),
-                'reported_eta' => Carbon::parse(request('eta')),
-            ]);
-            
+        $vessel = AisDataVessel::updateOrCreate([
+            'mmsi' => request()->senderMmsi,
+        ], [
+            'vessel_name' => request('name'),
+            'vessel_type' => request('shipType_text'),
+            'imo' => request('shipId'),
+            'callsign' => request('callsign'),
+            'draught' => request('draught'),
+            'reported_destination' => request('destination'),
+            'dimension_to_bow' => request('dimensionToBow'),
+            'dimension_to_stern' => request('dimensionToStern'),
+            'dimension_to_port' => request('dimensionToPort'),
+            'dimension_to_starboard' => request('dimensionToStarboard'),
+            'reported_eta' => Carbon::parse(request('eta')),
+        ]);
+
         return response()->json([
             'vessel' => $vessel ?? null,
         ], 201);
