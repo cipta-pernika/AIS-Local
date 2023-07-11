@@ -244,7 +244,7 @@ class HelperController extends Controller
             ->orderBy('created_at', 'DESC')
             ->get();
 
-        $adsb = AdsbDataPosition::with('vessel')
+        $adsb = AdsbDataPosition::with('aircraft')
             ->groupBy('aircraft_id')
             ->limit(10)
             ->orderBy('created_at', 'DESC')
