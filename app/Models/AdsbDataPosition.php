@@ -22,6 +22,7 @@ class AdsbDataPosition extends Model
         'vertical_rate',
         'track',
         'timestamp',
+        'heading',
         'transmission_type',
     ];
 

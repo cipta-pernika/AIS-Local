@@ -389,6 +389,14 @@ class HelperController extends Controller
             $latitude = request()->lat;
             $longitude = request()->lon;
             if ($this->isValidLatitude($latitude) && $this->isValidLongitude($longitude)) {
+                $heading = '';
+            if (!request('tracking_heading')) {
+                $curr = AdsbDataPosition::where('aircraft_id', request('tracking_device_imei'))->latest('id')->first();
+                $pointA = new Coordinate($curr['latitude'], $curr['longitude']);
+                $pointB = new Coordinate(request('tracking_latitude'), request('tracking_longitude'));
+                $bearingCalculator = new BearingSpherical();
+                $heading = number_format($bearingCalculator->calculateBearing($pointA, $pointB), 0, '', '');
+            }
                 $vesselPosition = new AdsbDataPosition([
                     'sensor_data_id' => $sensorData->id,
                     'aircraft_id' => $vessel->id,

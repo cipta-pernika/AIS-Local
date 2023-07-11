@@ -20,6 +20,7 @@ return new class extends Migration
             $table->decimal('longitude', 10, 7)->nullable();
             $table->decimal('altitude', 8, 2)->nullable();
             $table->decimal('ground_speed', 8, 2)->nullable();
+            $table->decimal('heading', 8, 2)->nullable();
             $table->decimal('vertical_rate', 8, 2)->nullable();
             $table->decimal('track', 8, 2)->nullable();
             $table->timestamp('timestamp');

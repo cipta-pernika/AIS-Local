@@ -18,6 +18,7 @@ class AdsbData extends Model
         'ground_speed',
         'vertical_rate',
         'track',
+        'heading',
         'timestamp',
     ];
 }
