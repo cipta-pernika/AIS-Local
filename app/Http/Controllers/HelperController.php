@@ -189,13 +189,13 @@ class HelperController extends Controller
 
     public function livefeed()
     {
-        $aisData = AisDataPosition::with('vessel', 'sensorData.sensor.datalogger')
+        $aisData = AisDataPosition::with('vessel')
             ->groupBy('vessel_id')
             ->limit(10)
             ->orderBy('created_at', 'DESC')
             ->get();
 
-        $adsb = AdsbDataPosition::with('vessel', 'sensorData.sensor.datalogger')
+        $adsb = AdsbDataPosition::with('vessel')
             ->groupBy('aircraft_id')
             ->limit(10)
             ->orderBy('created_at', 'DESC')
