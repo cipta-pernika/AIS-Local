@@ -12,7 +12,7 @@ class MapController extends Controller
     public function breadcrumb()
     {
         $track = AisDataPosition::orderBy('created_at', 'DESC')
-            ->select('latitude', 'longitude')
+            ->select('latitude', 'longitude', 'heading')
             ->where('vessel_id', request('vessel_id'))
             ->get();
 
