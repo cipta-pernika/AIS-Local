@@ -1,0 +1,66 @@
+.hover-button:hover {
+    cursor: pointer;
+}
+
+.hover-button {
+    background: #fff;
+    padding: 3px;
+    border-radius: 4px;
+    width: -webkit-fill-available;
+    color: #000;
+}
+
+.pointer-cursor {
+    cursor: pointer;
+}
+
+.active {
+    background-color: #fff;
+}
+
+.layout-camera {
+    justify-content: center;
+    display: flex;
+    align-items: flex-end;
+    position: relative;
+}
+
+.layout-camera>.tab-content>.tab-pane {
+    padding: 1rem 0 !important;
+    background: white;
+    border: none;
+    border-radius: 10px !important;
+}
+
+.tab-content {
+    background-color: #fff;
+    background-clip: border-box;
+    border-radius: 10px;
+    border: none !important;
+    box-shadow: none;
+}
+
+.control-camera {
+    background-color: white;
+    text-align: -webkit-center;
+    border-radius: 10px;
+}
+
+.control-main {
+    border-radius: 5px;
+    min-height: 162px;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.cust-tomb {
+    height: 5.5vh;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pad-cust-two {
+    padding: 4px 4px 4px 0;
+}

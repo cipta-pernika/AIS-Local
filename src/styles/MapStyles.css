@@ -1,0 +1,98 @@
+.leaflet-container {
+  width: 100%;
+  height: 100vh;
+  opacity: 0.6;
+  z-index: 0;
+  /* filter: brightness(50%); */
+}
+
+.leaflet-layer {
+  background-color: black;
+}
+
+.leaflet-popup {
+  transform: none !important;
+  position: absolute !important;
+  top: 0px !important;
+  bottom: 0px !important;
+  right: 0% !important;
+  display: flex !important;
+  align-items: right !important;
+  justify-items: right !important;
+}
+
+.leaflet-marker {
+  z-index: 20;
+}
+
+.title {
+  flex-grow: 1;
+  text-align: center;
+}
+
+.title1 {
+  flex-grow: 1;
+  text-align: left;
+}
+
+.title2 {
+  flex-grow: 1;
+  text-align: right;
+}
+
+.logo {
+  width: 10;
+  max-width: 10;
+  /* margin-right: '10px'; */
+}
+
+.MuiBox-root:hover {
+  background-color: #D2D7BA;
+  color: black;
+  cursor: pointer;
+}
+
+/* .MuiIconButton-root:hover {
+  background-color: #F64A00;
+}
+
+.iconHover:hover {
+  background-color: #F64A00;
+} */
+/* .MuiAccordion-root:hover {
+  background-color: gray;
+} */
+
+html,
+body {
+  background: black;
+  padding: 0;
+  margin: 0;
+}
+
+*:fullscreen *:-ms-fullscreen,
+*:-webkit-full-screen,
+*:-moz-full-screen {
+  overflow: auto !important;
+}
+
+.leaflet-control-layers-toggle:after {
+  background: transparent;
+  visibility: hidden;
+  background-color: transparent;
+}
+
+.leaflet-control-layers-toggle {
+  background-position: 3px 50%;
+  padding: 3px;
+  padding-left: 36px;
+  text-decoration: none;
+  line-height: 36px;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  background-color: transparent;
+  visibility: hidden;
+  position: fixed;
+  left: 10;
+}
