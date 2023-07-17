@@ -27,6 +27,8 @@ YG WORKING 2023
 
 docker run -e DOWNLOAD_PBF=https://download.geofabrik.de/asia/indonesia/java-latest.osm.pbf -v osm-data:/data/database/ -e ALLOW_CORS=enabled overv/openstreetmap-tile-server import
 
+docker run -e DOWNLOAD_PBF=https://download.geofabrik.de/asia/indonesia/sumatra-latest.osm.pbf -v osm-data:/data/database/ -e ALLOW_CORS=enabled overv/openstreetmap-tile-server import
+
 docker run -e DOWNLOAD_PBF=https://download.geofabrik.de/asia/malaysia-singapore-brunei-latest.osm.pbf -e DOWNLOAD_POLY=https://download.geofabrik.de/asia/malaysia-singapore-brunei.poly -v osm-data:/data/database/ -e ALLOW_CORS=enabled overv/openstreetmap-tile-server import
 
 docker run --restart=always -p 8080:80 -v osm-data:/data/database/ -d overv/openstreetmap-tile-server run
