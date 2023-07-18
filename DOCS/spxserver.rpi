@@ -1,0 +1,1032 @@
+#*********************************************************************
+#
+# (c) Copyright 2008 - 2014, 2022, Cambridge Pixel Ltd.
+#
+#
+# Purpose:
+#	Configuration file for SPx Server application in P226 input mode.
+#
+#	NB: Although many of the parameters that may be set in this
+#	file take a value matching one of the #define's in an SPx
+#	header file, it is important to note that the numerical value
+#	itself must be specified in this file, not the #define.
+#	For example, the value 1 should be used to select the test
+#	pattern generator as the initial source (SrcType), not the
+#	matching SPX_RIB_SOURCETYPE_TEST constant.  The same applies
+#	for all parameters that use one of the SPX_... definitions.
+#
+#
+# Revision Control:
+#   12/10/22 v1.5    AJH	Bring up to date for V1.90 s/w.
+#
+# Previous Changes:
+#   26/11/14 1.4    REW	Bring up to date for V1.66 s/w, TiledMap etc.
+#   25/11/14 1.3    DGJ	Tuning etc. for P226 radars.
+#   30/07/13 1.2    REW	Bring up to date after V1.58.2 release.
+#   14/12/12 1.1    REW	Initial Version for V1.53.3 software.
+#*********************************************************************/
+
+#
+# Top-level options
+#
+Svr.GuiAvailable = 1	# Set to 0 for minimal interface
+Svr.ProjectCode = 226	# Default project is 110 (or 0)
+
+#
+# Server options
+#
+Svr.Available = 1	# Are we allowing client connections?
+Svr.Port = 4377	# Port for listening to client connections
+Svr.Heartbeats = 239.192.43.77:4377	# Heartbeat destination
+Svr.Interface = ""	# Interface for heartbeats and client connections
+Svr.MaxBytesPerSample = 1	# Maximum sample size supported (1 or 2)
+Svr.MaxClients = 1	# Maximum number of simultaneous client connections.
+Svr.BlankingProcessPosition = 0	# Blanking process position (0 late, 1 early)
+Svr.Logo = ""	# Logo filename
+
+#
+# Server appearance
+#
+Svr.Title = "SPx Server for Simrad"	# Title, or empty string for default
+#Svr.WinX = 0	# Override position in pixels from top left
+#Svr.WinY = 0	# Override position in pixels from top left
+#Svr.WinW = 1280	# Override initial width in pixels
+#Svr.WinH = 1024	# Override initial height in pixels
+
+#
+# Server wizards
+#
+Svr.Wizard0 = SPxWizSvrSimradSetup.xml
+
+#
+# Resolution control
+#
+Svr.NumSamples = 2048
+Svr.NumAzimuths = 2048
+
+#
+# Web Interface
+#
+WebServer.Available = 1
+WebServer.Port = 8090
+WebServer.RadarVideoWidth = 2048
+WebServer.RadarVideoHeight = 2048
+WebServer.CertificatePath = ""
+WebServer.KeyPath = ""
+WebServer.KeyPassword = ""
+
+#
+# PIM processing control
+#
+Pim.ProcessingMode = 0	# 0 for output-processing, 1 for input
+Pim.ProcessingInterval = 1	# Number of azimuths between updates
+Pim.IfLevel = 0	# Inteference Suppression, 0=off, 1=low, 2=medium, 3=high
+Pim.RangeMode = 2	# 2 = highest-wins (see SPxPIMrangeCombine)
+Pim.AzimuthMode = 3	# 3 = highest-wins (see SPxPIMazimuthCombine)
+Pim.AziRefMode = 5	# 5 = north-from-input (see SPxAziRefMode)
+Pim.ConstantAziLimit = 0	# Maximum spokes combined at same position
+Pim.Clear = 32	# Maximum azimuths to clear on a discontinuity
+Pim.Debug = 0	# Debugging level
+Pim.Repeat = 10	# Maximum number of azimuths to repeat if missing
+Pim.EnableFill = 1	# Is azimuth and back filling enabled?
+
+#
+# PPI window options
+#
+# Scan conversion.
+PpiRaw.Available = 1	# Is display of raw radar available on GUI?
+PpiRaw.Enabled = 1	# Is it enabled at startup?
+PpiRaw.RGB = 0x00FF00	# Colour of radar
+PpiRaw.FadeType = 2	# Fade type, 0=realtime, 1=sweep, 2=replace.
+PpiRaw.FadeRate = 10	# Fade rate (No. of revs for sweep fade)
+PpiRaw.Brightness = 100	# Brightness (percentage)
+PpiRaw.SweepLineColour = 0xDDDDDD	# Sweep line colour
+PpiRaw.SweepLineType = 0	# Sweep line type, 0=off, 1=auto
+PpiRaw.SweepLineColMode = 0	# Sweep line colour mode, 0=offset, 1=highest, 2=replace
+PpiRaw.ScaleFactor = 0	# Scale scan-conversion (0=auto, 1+=scale down by this factor)
+PpiRaw.CorrectAntiClockwise = 0	# Correct anti-clockwise video?
+PpiRaw.SlantRangeHeightMetres = 0.000	# Height for slant range correction
+PpiRaw.SSCEnabled = 0	# Enable scan-to-scan correlation?
+PpiRaw.SSCStandbyEnabled = 0	# Enable scan-to-scan correlation standby?
+PpiRaw.SSCWindowLength = 3	# Window length for scan-to-scan correlation
+PpiRaw.SSCWindowThreshold = 0	# Threshold for scan-to-scan correlation
+PpiRaw.SSCInstantThreshold = 0x7f	# Instantaneous threshold for scan-to-scan correlation
+PpiRaw.SSCQuantisationGain = 1.000	# Gain applied before scan-to-scan quantisation
+PpiRaw.SSCCorrelationGain = 1.000	# Gain applied to correlated data before display
+PpiProc.Available = 1	# Is display of processed radar available?
+PpiProc.Enabled = 0	# Is it enabled at startup?
+PpiProc.RGB = 0xFF0000	# Colour of radar
+PpiProc.FadeType = 2	# Fade type, 0=realtime, 1=sweep, 2=replace.
+PpiProc.FadeRate = 10	# Fade rate (No. of revs for sweep fade)
+PpiProc.Brightness = 100	# Brightness (percentage)
+PpiProc.SweepLineColour = 0xDDDDDD	# Sweep line colour
+PpiProc.SweepLineType = 0	# Sweep line type, 0=off, 1=auto
+PpiProc.SweepLineColMode = 0	# Sweep line colour mode, 0=offset, 1=highest, 2=replace
+PpiProc.ScaleFactor = 0	# Scale scan-conversion (0=auto, 1+=scale down by this factor)
+PpiProc.CorrectAntiClockwise = 0	# Correct anti-clockwise video?
+PpiProc.SlantRangeHeightMetres = 0.000	# Height for slant range correction
+PpiProc.SSCEnabled = 0	# Enable scan-to-scan correlation?
+PpiProc.SSCStandbyEnabled = 0	# Enable scan-to-scan correlation standby?
+PpiProc.SSCWindowLength = 3	# Window length for scan-to-scan correlation
+PpiProc.SSCWindowThreshold = 0	# Threshold for scan-to-scan correlation
+PpiProc.SSCInstantThreshold = 0x7f	# Instantaneous threshold for scan-to-scan correlation
+PpiProc.SSCQuantisationGain = 1.000	# Gain applied before scan-to-scan quantisation
+PpiProc.SSCCorrelationGain = 1.000	# Gain applied to correlated data before display
+
+# Window update rate.
+Ppi.UpdateInterval = 50	# Update interval in milliseconds
+
+# Background colour of PPI area (if no underlay map)
+Ppi.BackgroundColour = 0x101010	# Background colour if no underlay map
+
+# Underlay map.
+Ppi.Map = ""
+Ppi.MapCentreXMetres = 0.0	# Centre of map in metres, increasing east
+Ppi.MapCentreYMetres = 0.0	# Centre of map in metres, increasing north
+Ppi.MapWidthMetres = 100000.0	# Width of map in metres
+Ppi.MapBrightness = 0	# Map brightess, -100 (dark) to 100 (bright)
+Ppi.MapContrast = 0	#  Map contrast, -100 (low) to 100 (high)
+
+# Initial view.
+Ppi.CentreXMetres = 0.0	# Initial centre of PPI window
+Ppi.CentreYMetres = 0.0	# Initial centre of PPI window
+Ppi.WidthMetres = 10000.0	# Initial width of PPI window in metres
+
+# Radar position.
+Ppi.RadarXMetres = 0.0	# Position of radar within window
+Ppi.RadarYMetres = 0.0	# Position of radar within window
+
+# Initial display options.
+Ppi.OlayPlots = 1	# Plot display
+Ppi.OlayPlotsNQ = 1	# Non-qualifying plot display
+Ppi.OlayBBoxes = 1	# Bounding box display
+Ppi.OlayTracks = 1	# Track display
+Ppi.OlayTrackGates = 0	# Track search gate display
+Ppi.OlayTracksProv = 0	# Provisional track display
+Ppi.OlayTracksAllHyp = 0	# Display all hypotheses, not just main ones
+Ppi.OlayClusters = 0	# Display clusters
+Ppi.OlayLeaderLines = 20	# Leader line length (0, 5, 20 or 60 seconds)
+Ppi.OlaySymbolTrails = 0	# Display symbol trails
+Ppi.OlayCursorPosition = 1	# Display cursor position
+Ppi.OlayOwnShip = 0	# Display own-ship marker
+Ppi.OlayRangeScale = 1	# Display range scale
+Ppi.OlayShapeBoxes = 0	# Display plot shape boxes
+Ppi.OlayPlotDetails = 0	# Display plot details
+Ppi.OlayTrackerSectors = 0	# Display tracker sectors (radial lines)
+Ppi.OlayAIS = 1		# Display AIS targets
+Ppi.OlayAISLabels = 0	# Display AIS target labels
+Ppi.OlayADSB = 0	# Display ADS-B targets
+Ppi.OlayADSBLabels = 0	# Display ADS-B target labels
+Ppi.UlayMap = 0		# Display the raster map
+Ppi.UlayWorldMap = 0	# Display the world map
+Ppi.UlayTiledMap = 1	# Display the tiled map
+Ppi.UlayRadar = 1	# Display the radar
+Ppi.CursorNM = 0	# Display cursor position in nautical miles
+Ppi.ShowClutter = 0	# Do we show MHT clutter display?
+
+# Active area displays, both blanking areas (e.g. tracking/no-tracking)
+# and other miscellaneous areas (e.g. parameter overrides etc.).
+Ppi.ActiveAreas = 0	# Display active areas on GUI?
+Ppi.ActiveAreaLabels = 0	# Display active area labels?
+Ppi.ActiveAreaPoints = 0	# Display active area points?
+
+#
+# A-Scan window options
+#
+Ascan.Input = 0	# Video input 0=raw, 1=processed video
+Ascan.RangeCombineMode = 1	# Range combine, 0=lowest, 1=highest, 2=average, 3=subsample
+Ascan.AzimuthCombineMode = 1	# Azi combine, 0=all, 1=highest, 2=average, 3=last
+Ascan.InitialHighlightStart = 7500	# Highlight start range in metres
+Ascan.InitialHighlightEnd = 12500	# Highlight end range in metres
+Ascan.TraceRGB = 0xffffe6	# Primary trace colour
+Ascan.ClutterProcTraceRGB = 0x60ff60	# Clutter processed trace colour
+Ascan.ThresholdTraceRGB = 0xff6060	# Threshold trace colour
+
+#
+# Source control
+#
+# SourceType should be one of the SPX_RIB_SOURCETYPE_... values in SPxRib.h
+# such as 0 for network, 1 for test pattern, 2 for file replay, 3 for scenario
+# generation or 4 for HPx-100 card.
+#
+Svr.SrcType = 0
+
+# Optional azimuth offset to apply to source.
+Pim.AzimuthOffset = 0.000	# Offset to apply (-180.0 to 180.0)
+Pim.CorrectPitchRoll = 1
+
+# 0. Network input source
+SrcNet.Available = 1		# Set to zero to disallow this source type
+SrcNet.Debug = 0x00000000	# Debugging
+#SrcNet.LicenseKey = XXX	# Add license key here!
+SrcNet.ImageStream = 0
+SrcNet.RangeMetres = 1000.0
+SrcNet.GainAuto = 1		# 0 manual, 1 auto
+SrcNet.GainLevel = 128		# 0 to 255
+SrcNet.SeaClutterAuto = 0	# 0 manual, 1 harbour, 2 offshore
+SrcNet.SeaClutterLevel = 0	# 0 to 255
+SrcNet.RainLevel = 0		# 0 to 255
+SrcNet.FTCLevel = 0		# 0 to 255
+SrcNet.InterferenceReject = 0	# 0 to 3
+SrcNet.FastScanMode = 0		# 0 to 2
+SrcNet.TargetStretch = 0	# 0 or 1
+SrcNet.TargetBoost = 0		# 0 to 2
+SrcNet.LocalIR = 0		# 0 to 2
+SrcNet.NoiseReject = 0		# 0 to 2
+SrcNet.BeamSharpening = 0	# 0 to 2
+SrcNet.STCCurveType = 0
+SrcNet.SerialNumber = ""
+SrcNet.WatchdogMsecs = 10000
+
+# 1. Test pattern generator source
+SrcTpg.Available = 1	# Set to zero to disallow this source type
+SrcTpg.Period = 2.000	# Seconds
+SrcTpg.PRF = 1000	# Hz
+SrcTpg.Pattern = 42	# Test pattern
+SrcTpg.Arg = 0	# Test pattern argument
+SrcTpg.StartRange = 0.000	# Start range in metres
+SrcTpg.Range = 10000.000	# 6140 = 2048 samples at 50MHz
+SrcTpg.ScanMode = 0	# Scan mode
+SrcTpg.SectorStart = 65536	# Start of sector for sector-scan
+SrcTpg.SectorEnd = 65536	# End of sector for sector-scan
+
+# 2. File replay source
+SrcFile.Available = 1	# Set to zero to disallow this source type
+SrcFile.Filename = ""	# Filename of file to replay or empty string for none
+SrcFile.SpeedUp = 1.000	# Speed-up factor if not 1.0
+SrcFile.AutoLoop = 1	# Set to 1 to auto loop at end of file
+SrcFile.ReplayNavData = 1	# Set to 1 to replay navigation data from file
+
+# 3. Scenario generator source
+SrcScen.Available = 1	# Set to zero to disallow this source type
+SrcScen.Range = 20000.000	# Range of scenario source
+SrcScen.Period = 2.000	# Period of source in seconds
+SrcScen.PRF = 1000.000	# PRF of source in Hz
+SrcScen.Beamwidth = 3.000	# Simulated beamwidth in degrees
+SrcScen.Noise = 0	# Noise level as a percentage of peak radar
+SrcScen.NearNoise = 0	# 1 to enable near noise
+SrcScen.NearNoiseGain = 1.000	# Gain applied to noise near to radar
+SrcScen.NearNoiseRange = 0	# Range for near noise (in polar samples)
+SrcScen.Filename = ""	# Scenario filename, e.g. "scen.txt", or "" for none
+SrcScen.NumTargets = 40	# Number of targets if not using scenario file
+SrcScen.TargetRangeDimension = 6	# Minimum size of targets in range samples
+SrcScen.DistEnabled = 0	# Enable target distribution
+SrcScen.DistAddressString = 239.192.50.79	# Target distribution address
+SrcScen.DistPort = 5079	# Target distribution port
+SrcScen.DistIfAddressString = ""	# Interface for multicast target distribution
+SrcScen.SendInterval = 1000	# Interval between target distributions in milliseconds
+SrcScen.TTL = -1	# Time to live for multicast packets, -1 for OS default
+SrcScen.RecvEnabled = 0	# Enable target receipt
+SrcScen.RecvAddressString = 239.192.50.79	# Target receipt address
+SrcScen.RecvPort = 5079	# Target receipt port
+SrcScen.RecvIfAddressString = ""	# Interface for multicast target receipt
+SrcScen.PurgeInterval = 5000	# Interval before received targets are purged in milliseconds
+SrcScen.TargetReportsEnabled = 0	# Send targets as SPx track reports too
+
+# 4.  Hardware source
+SrcHw.Available = 0	# Set to zero to disallow this source type
+SrcHw.AlwaysAllowCtrl = 0	# Show control dialog even if no board found
+SrcHw.Debug = 0x00000000	# Debug flags, should normally be zero.
+SrcHw.Index = 0	# Board index, starting from 0.
+SrcHw.Channel = 1	# Channel to grab (SPX_HPX100_VIDEO_..., 1=A)
+SrcHw.EndRange = 20000.000	# Desired sample range in metres
+SrcHw.StartRange = 0.000	# Desired start sample range in metres
+SrcHw.RangeCorrection = 0.000	# Correction factor for trigger delays
+SrcHw.EndRangeAutoFactor = 0.500	# Used if RangeMetres set to 0 for auto-detect
+SrcHw.EndRangeAutoRounding = 100.000	# Used if RangeMetres set to 0 for auto-detect
+SrcHw.DigEnable = 0	# Flag to control digital video inputs
+SrcHw.Azi = 0	# Type of input signal (SPX_HPX100_AZI_...)
+SrcHw.AziInterpolation = 0	# Should we do azimuth index interpolation?
+SrcHw.Arp = 0	# Type of input signal (SPX_HPX100_ARP_...)
+SrcHw.Trg = 0	# Type of input signal (SPX_HPX100_TRG_...)
+SrcHw.AcpInv = 0	# Flag to say if ACP is inverted
+SrcHw.ArpInv = 0	# Flag to say if ARP is inverted
+SrcHw.TrgInv = 0	# Flag to say if Trigger is inverted
+SrcHw.GainA = 1.000	# Gain multiplier for channel A
+SrcHw.GainB = 1.000	# Gain multiplier for channel B
+SrcHw.OffsetA = -0.029	# Voltage offset for channel A
+SrcHw.OffsetB = -0.029	# Voltage offset for channel B
+SrcHw.Tpg = 0	# Hardware test pattern (0=disabled)
+SrcHw.TpgTrgFreq = 1000.0	# PRF for hardware test pattern generator (hz)
+SrcHw.TpgAcpFreq = 1000.0	# ACP hz for hardware test pattern generator
+SrcHw.TpgArpFreq = 4096	# Number of ACPs per ARP for test pattern
+SrcHw.IntsPerSec = 30	# Interrupts per second to aim for
+SrcHw.LUTWriteMask = 0xff	# Mask for LUT outputs
+SrcHw.ScanMode = -1	# Scan mode override, or -1 for auto-detect
+SrcHw.AntiClockwise = 0	# Set to 1 for radars rotating anti-clockwise
+SrcHw.AvgPrfIntervalMsecs = 1000	# Interval over which we calculate avg PRF
+SrcHw.AvgPrfChangeThresholdPercent = 5.000	# Percentage PRF change deemed significant
+SrcHw.PortOut = 0x0	# Set the GPIO bits
+SrcHw.PortOutEnable = 0x0	# Enable GPIO bits as outputs (HPx-200 only)
+SrcHw.Sig1Type = 0	# Type of input signal (HPx-200 only)
+SrcHw.Sig2Type = 0	# Type of input signal (HPx-200 only)
+SrcHw.Sig1Inv = 0	# Invert SIG1 (HPx-200 only)
+SrcHw.Sig2Inv = 0	# Invert SIG2 (HPx-200 only)
+SrcHw.EndRangePulse = 0	# Enable end-of-range pulse
+SrcHw.VrefTRG = 3.000	# Trigger SE reference voltage (HPx-200 only)
+SrcHw.VrefACP = 3.000	# ACP SE reference voltage (HPx-200 only)
+SrcHw.VrefARP = 3.000	# ACP SE reference voltage (HPx-200 only)
+SrcHw.VrefSIG12 = 3.000	# Sig1/sig2 SE reference voltage (HPx-200 only)
+SrcHw.AcpAlarmMsecs = 1000	# Alarm time for ACP in milliseconds
+SrcHw.ArpAlarmMsecs = 10000	# Alarm time for ARP in milliseconds
+SrcHw.TrgAlarmMsecs = 1000	# Alarm time for TRG in milliseconds
+SrcHw.VideoCheckMsecs = 0	# Interval for checking video level
+SrcHw.VideoCheckThreshold = 0.000	# Threshold for video level standard deviation
+
+#
+# Process parameter control
+#
+#Svr.ProcParamExcludeFilename = SPxExcludedProcParams.txt
+
+#
+# Recording control
+#
+ProRecord.Available = 1	# Set to 0 if recording is disallowed
+ProRecord.Enabled = 0	# Initial state, 0 for off, 1 for on.
+ProRecord.EncodeFormat = 20	# Encoding format (10=ORC, 20=ZLib)
+ProRecord.FilePrefix = ""	# Filename prefix, e.g. directory with slash
+ProRecord.MaxFileSizeMB = 0	# Maximum file size to create (approx)
+ProRecord.MaxFileSizeSeconds = 0	# Maximum length of each file
+ProRecord.TocWriteIntervalSecs = 0	# If non-zero, rewrite TOC to file at intervals
+ProRecord.IncludeConfig = 1
+ProRecord.IncludeErrors = 1
+
+#
+# User process 0
+#
+#ProUser0.PluginName = SPxPluginProThresh	# Name of plugin file (no ext)
+#ProUser0.PluginClass = SPxPluginProThresh	# Name of the plugin class
+#ProUser0.InstanceName = ProThresPlugin	# Alias assigned to this instance
+
+# Plugin parameters are prefixed with the instance name
+#ProThresPlugin.Enabled = 1	# Initial state, 0 for off, 1 for on
+#ProThresPlugin.Threshold = 32	# Process threshold value
+
+#
+# Monitor process
+#
+ProMonitor.Available = 0
+ProMonitor.Enabled = 0
+ProMonitor.PrfConfigDefault = prf-default.rpi	# File if no freq matches
+ProMonitor.PrfMode = 0	# 0 - Instantaneous PRF, 1 average PRF.
+ProMonitor.PrfMarginPercent = 5.000
+ProMonitor.PrfFreqHz0 = 0.000
+ProMonitor.PrfConfig0 = prf-0.rpi
+ProMonitor.PrfFreqHz1 = 0.000
+ProMonitor.PrfConfig1 = prf-1.rpi
+ProMonitor.PrfFreqHz2 = 0.000
+ProMonitor.PrfConfig2 = prf-2.rpi
+ProMonitor.PrfFreqHz3 = 0.000
+ProMonitor.PrfConfig3 = prf-3.rpi
+ProMonitor.PrfFreqHz4 = 0.000
+ProMonitor.PrfConfig4 = prf-4.rpi
+ProMonitor.PrfFreqHz5 = 0.000
+ProMonitor.PrfConfig5 = prf-5.rpi
+
+#
+# LUT
+#
+ProLUT.Available = 0	# Set to 0 to disallow this process
+ProLUT.Enabled = 0	# Initial state, 0 for off, 1 for on
+LUT8.Type = 0	# One of the SPxLUTtype values, or -1 for file
+LUT8.Filename = ""	# File to read if ProLUTType set to -1
+LUT8.Packing = 255	# Packing type for output
+LUT8.Arg1 = 0	# Arg1 for LUTType if not read from file
+LUT8.Arg2 = 0	# Arg2 for LUTType if not read from file
+LUT8.Arg3 = 0	# Arg3 for LUTType if not read from file
+LUT8.Arg4 = 0	# Arg4 for LUTType if not read from file
+LUT8.Arg5 = 0	# Arg5 for LUTType if not read from file
+LUT8.Arg6 = 0	# Arg6 for LUTType if not read from file
+LUT8.Arg7 = 0	# Arg7 for LUTType if not read from file
+LUT8.Arg8 = 0	# Arg8 for LUTType if not read from file
+
+#
+# Auxiliary LUT
+#
+ProAux.Available = 0	# Set to 1 to allow this process
+ProAux.Enabled = 0	# Initial state, 0 for off, 1 for on
+AuxLUT.Type = 0	# One of the SPxLUTtype values
+
+#
+# STC
+#
+ProSTC.Available = 0	# Set to 0 to disallow this process
+ProSTC.Enabled = 0	# Initial state, 0 for off, 1 for on
+ProSTC.GainAtRange0 = 0.250	# Gain between zero range and start range
+ProSTC.StartRangeSample = 0	# Start range in samples (precedence if>=0)
+ProSTC.StartRangeWorld = -1.000	# Start range in metres if sample<0
+ProSTC.ActiveRangeSample = -1	# Range for gain 1.0 in samples (precedence)
+ProSTC.ActiveRangeWorld = 1000.000	# Range for gain 1.0 in metres
+
+#
+# FTC
+#
+ProFTC.Available = 0	# Set to 0 to disallow this process
+ProFTC.Enabled = 0	# Initial state, 0 for off, 1 for on
+ProFTC.WindowSizeSample = -1	# Window size in samples (precedence)
+ProFTC.WindowSizeWorld = 500.000	# Window size in metres
+ProFTC.Level = 0.750	# Filter level
+
+#
+# Gain/offset.
+#
+ProGainOffset.Available = 0	# Set to 0 to disallow this process
+ProGainOffset.Enabled = 0	# Initial state, 0 for off, 1 for on
+ProGainOffset.Gain = 1.000	# Global gain (pre-multiplier per sample)
+ProGainOffset.Offset = 0	# Global offset (post-addition per sample)
+ProGainOffset.LocalRegion = ""	# Optional region name for local gain/offset
+ProGainOffset.LocalGain = 1.000	# Local gain (pre-multiplier per sample)
+ProGainOffset.LocalOffset = 0	# Local offset (post-addition per sample)
+
+#
+# Land Mass Mapping
+#
+ProLMM.Available = 0	# Set to 0 to disallow this process
+ProLMM.Enabled = 0	# Initial state, 0 for off, 1 for on
+ProLMM.StartRangeMetres = 0.000	# Range to start looking from
+ProLMM.ThresholdStart = 64	# Threshold for start of land
+ProLMM.ThresholdStop = 0	# Threshold for end of land
+ProLMM.MinSpanLengthSamples = 2	# Minimum length of span along azi
+ProLMM.MinBlobSizeMode = 0	# 0 = range AND azimuth, 1 = rng OR az
+ProLMM.MinBlobRangeMetres = 500.000	# Minimum size in range of land
+ProLMM.MaxBlobRangeMetres = 999999.900	# Maximum size in range of land
+ProLMM.MinBlobAzimuthDegrees = 10.000	# Min size in azi (A)
+ProLMM.MinBlobAzimuthMetres = 5000.000	# Min size in azi (B) NB: >= A and B
+ProLMM.MaxBlobAzimuthDegrees = 270.000	# Max size in azi (C)
+ProLMM.MaxBlobAzimuthMetres = 0.000	# Max size in azi (D) NB: <= C or D
+ProLMM.MinBlobWeight = 0	# Min number of cells
+ProLMM.LandMassOutputGain = 0.000	# Multiply land samples by this 
+ProLMM.LandMassOutputOffset = 0	# Add this to land after multiplying
+ProLMM.LandMassSpreadNearMetres = 0.000	# Spread towards radar (metres)
+ProLMM.LandMassSpreadFarMetres = 0.000	# Spread away from radar (metres)
+ProLMM.LandMassSpreadDegrees = 0.000	# Spread either side in azimuth (degs)
+ProLMM.CentroidMode = 0	# How is position reported?
+
+#
+# Clutter mapping
+#
+ProClutterIntegrate.Available = 0	# Set to 0 to disallow this process
+ProClutterIntegrate.Enabled = 0	# Initial state, 0 for off, 1 for on
+ProClutterIntegrate.TimeConstant = 0.900	# Time constant
+ProClutterIntegrate.TimeConstantStartup = 0.500	# Time constant for first few revs
+ProClutterIntegrate.StartupRevs = 4	# Number of revs for startup constant
+ProClutterIntegrate.HoldRangeMult = 1.000	# Multiplier for target range size
+ProClutterIntegrate.HoldAzimuthMult = 1.000	# Multiplier for target azimuth size
+ProClutterIntegrate.HoldShadowMult = 0.000	# Multiplier of range size for shadow
+ProClutterIntegrate.HoldShadowAdd = 0.000	# Addition (metres) for shadow
+ProClutterIntegrate.SlowDecay = 0.000	# Clutter map rate of decay
+ProClutterIntegrate.ScrollNumCells = 0	# Moving platform scrolling control
+ProClutterIntegrate.LoadFromFile = ""	# .dat file to initialise clutter map
+ProClutterIntegrate.UseFloor = 0	# 1 to use file contents as lower-limit
+ProClutterIntegrate.SlowDecayStartup = 0.000	# Rate of decay for first StartupRevs
+ProClutterIntegrate.ScrollCartDim = 0	# Cartesian scrolling dimension
+ProClutterIntegrate.AllowGain = 0	# Allow values to exceed highest input value?
+ProClutterIntegrate.LoadFromFileFloor = ""
+
+#
+# Clutter processing (only available if clutter mapping is).
+#
+ProClutterCombine.Enabled = 0	# Initial state, 0 for off, 1 for on
+ProClutterCombine.Mode = 0	# Clutter combining mode (0=linear)
+ProClutterCombine.GainA = 1.000	# Gain for new radar data
+ProClutterCombine.GainB = -1.000	# Gain for clutter map data
+ProClutterCombine.MinA = 0	# Minimum A level to use (radar video)
+ProClutterCombine.MinB = 0	# Minimum B level to use (clutter map)
+ProClutterCombine.RangeMode = 0	# Range adjustment mode (0=None)
+ProClutterCombine.InfillStartAziDegs = 90.000	# Start azi for infill video
+ProClutterCombine.InfillStopAziDegs = 270.000	# End azi for infill video
+ProClutterCombine.InfillStartRangeMetres = 0.000	# Start range for infill video
+ProClutterCombine.InfillStopRangeMetres = 999999.000	# End range for infill video
+ProClutterCombine.UseLSBIndicator = 0	# Use LSB as A/B indicator?
+
+#
+# Thresholding
+#
+ProThreshold.Available = 1	# Set to 0 to disallow this process
+ProThreshold.Enabled = 1	# Initial state, 0 for off, 1 for on
+ProThreshold.WindowSizeSample = -1	# Window size in samples (precedence)
+ProThreshold.WindowSizeWorld = 5000.000	# Window size in metres
+ProThreshold.ThreshDelta = 32	# Delta to apply
+ProThreshold.ThreshDeltaStop = 0
+ProThreshold.ThreshOutputValue = 255	# Thresholded output, or 0 for input
+ProThreshold.SDfactor = 0.000	# When non-zero, use local standard deviation
+
+#
+# Scan to Scan Integration
+#
+ProSSI64.Available = 1	# Set to 0 to disallow this process
+ProSSI64.Enabled = 1	# Initial state, 0 for off, 1 for on
+ProSSI64.FullWindowSize = 20	# Scans to integrate (max 64)
+ProSSI64.RecentWindowSize = 4	# Window for "recent" detections
+ProSSI64.FullHitCountThreshold = 10	# Minimum hits needed in "full" window
+ProSSI64.RecentHitCountThreshold = 2	# Minimum hits in "recent" window
+ProSSI64.IntegrationVideoThreshold = 10	# Video must be > this to integrate
+ProSSI64.InstantVideoThreshold = 128	# If video > this then output 0xFF.
+ProSSI64.InstantVideoOutput = 255	# Level to output
+
+#
+# World Map blanking (only available if World Map enabled)
+#
+ProWorldMapBlank.Available = 1	# Set to 0 to disallow this process
+ProWorldMapBlank.Enabled = 0	# Initial state, 0 for off, 1 for on
+
+#
+# Area blanking
+#
+ProAreaBlank.Available = 1	# Set to 0 to disallow this process
+ProAreaBlank.Enabled = 0	# Initial state, 0 for off, 1 for on
+ProAreaBlankRegion.DefaultBlank = 1	# 1=blank everywhere except the given area
+ProAreaBlankRegion.Filename = ""
+
+#
+# External Plot Receipt (instead of internal Plot Extraction).
+#
+PlotReceiver.Available = 0	# Will disable ProPlotext if non-zero
+PlotReceiver.Enabled = 0	# Initial state if available
+PlotReceiver.Type = 0	# Change to 48 if input is Asterix
+PlotReceiver.TCP = 0	# Flag, 0 for UDP, 1 for TCP
+PlotReceiver.AddressString = 239.192.50.79
+PlotReceiver.Port = 5079
+PlotReceiver.Interface = ""	# Multicast i/f (empty string for default)
+PlotReceiver.Latency = 8	# Number of sectors (out of 32)
+PlotReceiver.SAC = 0	# Asterix SAC filter, or 0 for any
+PlotReceiver.SIC = 0	# Asterix SIC filter, or 0 for any
+PlotReceiver.SetFullRevAtZero = 0	# Ouput full rev of sectors at North
+PlotReceiver.AutoSector = 0	# Auto-generate sectors from plots
+PlotReceiver.AziRefMode = 0	# See SPxAziRefMode
+PlotReceiver.AziAdjustDegs = 0.000	# User adjustment to plot angles
+
+#
+# Plot extraction
+#
+ProPlotext.Available = 1	# Set to 0 to disallow this process
+ProPlotext.Enabled = 1	# Initial state, 0 for off, 1 for on
+ProPlotext.StartRangeMetres = 20.000	# Range to start extracting from
+ProPlotext.ThresholdStart = 64	# Threshold for start of plot
+ProPlotext.ThresholdStop = 0	# Threshold for end of plot
+ProPlotext.MinSpanLengthSamples = 2	# Minimum length of span along azi
+ProPlotext.MinBlobRangeMetres = 0.000	# Minimum size in range of blobs
+ProPlotext.MaxBlobRangeMetres = 75.000	# Maximum size in range of blobs
+ProPlotext.MinBlobAzimuthDegrees = 0.500	# Min size in azi (A)
+ProPlotext.MinBlobAzimuthMetres = 0.000	# Min size in azi (B) NB: >= A and B
+ProPlotext.MaxBlobAzimuthDegrees = 180.000	# Max size in azi (C)
+ProPlotext.MaxBlobAzimuthMetres = 0.000	# Max size in azi (D) NB: <= C or D
+ProPlotext.MinBlobWeight = 0	# Min number of cells
+ProPlotext.PreserveVideo = 1	# Preserve video through process
+ProPlotext.WorldMapInhibitLandMetres = 0.000	# Distance inland from shore
+ProPlotext.WorldMapInhibitSeaMetres = 0.000	# Distance seaward from shore
+ProPlotext.SmallBlobSectorLimit = 0	# Limit on number of small blobs
+ProPlotext.SmallBlobWeight = 0	# Definition of small blob
+ProPlotext.CentroidMode = 0	# 0 for weighted centre
+ProPlotext.IFFPattern = 0	# Only used for IFF modes
+ProPlotext.IFFStartSample = 1	# Start sample for P1 pulse
+ProPlotext.AllowNonQualifiers = 0	# Pass on non-qualifying plots?
+ProPlotext.AllowAnonIFF = 1	# Pass on IFF plots with no ID codes?
+ProPlotext.Debug = 0		# Normally zero
+ProPlotext.IFFMode6ReplyDelayMap = ""
+ProPlotext.DopplerMinSpeed = 0.000
+ProPlotext.DopplerMaxVariance = 0.000
+
+#
+# Plot reporting on network
+#
+PlotReporter.Available = 0	# Set to 0 to disallow reporting
+PlotReporter.Enabled = 0	# Initial state, 0 for off, 1 for on
+PlotReporter.AddressString = 239.192.50.79	# Destination address
+PlotReporter.Port = 5079	# Destination port
+PlotReporter.Interface = ""	# Multicast interface (empty string for default)
+PlotReporter.SenderID = 0	# Sender ID (0 to 255)
+PlotReporter.TTL = -1	# Time to live for messages
+PlotReporter.TCP = 0	# Use UDP (0) or TCP (1)
+PlotReporter.ReportType = 0x113	# Type of plot reports (0x113=SPx Plot)
+
+#
+# Plot merging
+#
+ProPlotMerge.Available = 0	# Set to 0 to disallow this process
+ProPlotMerge.Enabled = 0	# Initial state, 0 for off, 1 for on
+ProPlotMerge.Mode = 1	# Merging mode
+ProPlotMerge.KeepComponents = 0	# Keep fragments even after merging?
+ProPlotMerge.MergeMarginDegrees = 1.000	# Proximity for merging
+ProPlotMerge.MergeMarginMetres = 30.000	# Proximity for merging
+ProPlotMerge.MinMergedRangeMetres = 0.000	# Limit after merging
+ProPlotMerge.MaxMergedRangeMetres = 999999.900	# Limit after merging
+ProPlotMerge.MinMergedAzimuthDegrees = 0.800	# Limit A
+ProPlotMerge.MinMergedAzimuthMetres = 0.000	# Limit B, NB: >= A and B
+ProPlotMerge.MaxMergedAzimuthDegrees = 180.000	# Limit C
+ProPlotMerge.MaxMergedAzimuthMetres = 0.000	# Limit D, NB: <= C or D
+ProPlotMerge.NumSectorsBack = 1
+ProPlotMerge.AISLengthThreshold = 0.000
+ProPlotMerge.Debug = 0
+
+#
+# Tracking
+#
+ProTracker.Available = 1	# Set to 0 to disallow this process
+ProTracker.Enabled = 1	# Initial state, 0 for off, 1 for on
+Tracker.TargetCapacity = 500	# Expected max number of targets
+Tracker.TargetMBTcapacity = 50000	# Max number of MBT tracks
+
+#
+# MBT
+#
+ProMBT.Available = 1	# Set to 0 to disallow this process
+ProMBT.Enabled = 0	# Initial state, 0 for off, 1 for on
+
+#
+# Track reporting
+#
+TrackReporter.Enabled = 1	# Initial state, 0 for off, 1 for on.
+TrackReporter.Mode = 0	# Report all (0), designated (1), nearest (2) or newest (3)
+TrackReporter.Type = 0x111	# 0=none, 0x110=min, 0x111=norm, 0x112=ext
+TrackReporter.AddressString = 239.192.50.79	# Destination address
+TrackReporter.Port = 5079	# Destination port
+TrackReporter.Interface = ""	# Multicast interface (empty string for default) 
+TrackReporter.SenderId = 0	# Sender ID (0 to 255)
+TrackReporter.Provisionals = 0	# Report provisional tracks (0/1).
+TrackReporter.PlotCentre = 0	# 0 for weighted centre
+TrackReporter.ExtFlags = 0xffffffff	# Fields to include if Type=0x112.
+TrackReporter.HitCountWindowSize = 32	# Q limit (max 32) in numDetectionsPQ
+TrackReporter.Cat48TypWhenCoasted = 0	# Asterix flags for coasted targets
+TrackReporter.Cat48TypWhenMerged = 0	# Asterix flags for merging targets
+TrackReporter.TestTargetID = 0	# Asterix Cat-48 test target ID
+TrackReporter.TestTargetRange = -1.0	# Asterix Cat-48 test target rng if>=0
+TrackReporter.TestTargetAzimuth = 0.00	# Asterix Cat-48 test target azimuth
+TrackReporter.RadarLatDegs = 0.000000	# Asterix Cat-34 I034/120 message value
+TrackReporter.RadarLongDegs = 0.000000	# Asterix Cat-34 I034/120 message value
+TrackReporter.RadarHeightMetres = 0.0	# Asterix Cat-34 I034/120 message value
+TrackReporter.TTL = -1	# Time to live for messages
+TrackReporter.TCP = 0	# Use UDP (0) or TCP (1)
+TrackReporter.InhibitCat247 = 0	# Inhibit ASTERIX version messages
+
+#
+# Track Designating
+#
+TrackDesignator.Available = 0	# Is the track designator available?
+TrackDesignator.Enabled = 1	# Initial state, 0 for off, 1 for on.
+TrackDesignator.Type = 0xb7	# 0xb7 = NMEA-0183 TTM messages
+TrackDesignator.Mode = 1	# 0=all, 1=designated, 2=nearest, 3=newest
+TrackDesignator.AddressString = 239.192.101.10	# Destination address
+TrackDesignator.Port = 10110	# Destination port
+TrackDesignator.Interface = ""	# Multicast interface (empty for default)
+TrackDesignator.SenderId = 0	# Sender ID (0 to 255)
+TrackDesignator.Provisionals = 0	# Report provisional tracks (0/1).
+TrackDesignator.PlotCentre = 0	# 0 for weighted centre
+TrackDesignator.ExtFlags = 0xffffffff	# Fields to include if Type=0x112.
+TrackDesignator.HitCountWindowSize = 32	# Q limit (max 32) in numDetectionsPQ
+TrackDesignator.Cat48TypWhenCoasted = 0	# Asterix flags for coasted targets
+TrackDesignator.Cat48TypWhenMerged = 0	# Asterix flags for merging targets
+TrackDesignator.TestTargetID = 0	# Asterix Cat-48 test target ID
+TrackDesignator.TestTargetRange = -1.0	# Asterix Cat-48 test target rng if>=0
+TrackDesignator.TestTargetAzimuth = 0.00	# Asterix Cat-48 test target azimuth
+TrackDesignator.RadarLatDegs = 0.000000	# Asterix Cat-34 I034/120 message value
+TrackDesignator.RadarLongDegs = 0.000000	# Asterix Cat-34 I034/120 message value
+TrackDesignator.RadarHeightMetres = 0.0	# Asterix Cat-34 I034/120 message value
+
+
+#
+# Distribution control
+#
+Dist.Available = 0	# 0 for no distribution, or 1/2/3 for num streams
+
+# Distribution stream A.  (Use "DistB" and "DistC" for second/third streams.)
+Dist.Enabled = 0	# Initial state, 0 for off, 1 for on.
+Dist.ProjectCode = 110	# 0=Same as I/P, 110=SPx, 240=Asterix Cat-240.
+Dist.Format = 20	# Encoding format (0=None, 10=ORC, 20=ZLib)
+Dist.AddressString = 239.192.43.78	# Distribution address
+Dist.Port = 4378	# Distribution port
+Dist.Interface = ""	# Multicast interface (empty string for default)
+Dist.Source = 0	# Data (0=processed, 1=raw, 2=clutter map)
+Dist.RangeFactor = 1	# Range reduction factor
+Dist.SndBufSize = 0	# Non-zero to override default send buffer size
+Dist.Mtu = 1400	# Maximum Transmission Unit size to use
+Dist.ReportClientDropout = 0	# Do we report client dropout?
+Dist.TTL = -1	# Time to live for messages
+Dist.Debug = 0x00000000	# Debug flags (normally zero)
+
+#
+# Navigation data options.
+#
+# If NavData.SerialPort is defined, navigation data is read from that port
+# and also sent out on the network if either NavData.NetAddr or NavData.NetPort
+# are defined (with defaults for the other if just one is defined).
+# If NavData.SerialPort is not defined (i.e. commented out, or omitted, or
+# empty string), navigation data is received from the network instead (all
+# assuming that NavData.Enabled is non-zero).
+#
+NavData.Enabled = 0	# Set to 0 for static platforms, 1 mobile
+NavData.SerialPort = COM1	# Name of serial port to get data from
+NavData.SerialBaud = 4800	# Baud rate, normally 4800
+NavData.NetAddr = 239.192.50.79	# Network multicast address
+NavData.NetPort = 5079	# Network port
+NavData.OutputOnly = 0	# Only output messages (no input)
+NavData.RawInput = 0	# Receive raw NMEA messages (no SPx header)?
+NavData.LogFile = ""	# Log all received messages to this file
+NavData.DestNetEnabled = 1	# Enable (1) or disable (0) network output
+NavData.RawOutput = 0	# Output raw NMEA messages (no SPx header)?
+NavData.OverrideCourse = -1.000	# Override course or -1 to use course
+NavData.NMEAMessages = 0x7F	# Bitmask of SPX_NAVDATA_NMEA... messages to use
+NavData.Debug = 0	# Debug flags (set to 2 for msgs)
+NavData.RadarXOffsetMetres = 0.0	# +ve towards starboard
+NavData.RadarYOffsetMetres = 0.0	# +ve towards bow
+NavData.HeadingCorrectionDegs = 0.000	# Added to received heading information
+
+#
+# World Map support.
+# Commonly used lat/longs include:
+#	Dover:			51.1330N, 1.3435E
+#	Aegean-120km map:	40.116N, 23.643E, 2.0E variation
+#       Harwich-47km map:       51.9484N, 1.2888E
+#
+WorldMap.Available = 1	# Set to 1 to enable world map support
+WorldMap.RadarLatDegs = -6.217558135	# Latitude if static installation
+WorldMap.RadarLongDegs = 106.844309832	# Longitude if static installation
+WorldMap.RadarMagVarDegs = 0.0	# Mag variation at static position (+ve east)
+WorldMap.RadarRadius = 100000.0	# Radius around radar in metres
+WorldMap.UseMagVar = 0		# Enable/disable use of mag var for world map
+
+#
+# Tiled Map options.
+# Note that the static radar position is configured using:
+# WorldMap.RadarLatDegs and WorldMap.RadarLongDegs.
+#
+TiledMap.Available = 1	# Set to 1 to enable tiled map support
+TiledMap.Server = 1
+TiledMap.CustomServerName = ""
+TiledMap.CustomURLPrefix = ""
+TiledMap.CustomURLSuffix = ""
+TiledMap.CustomTileNameFormat = 1
+TiledMap.CustomTileImageFormat = 1
+TiledMap.CustomIsTileYInverted = 0
+TiledMap.CacheExpireSecs = 604800
+
+#
+# Terrain Database options (requires tiled map).
+#
+TerrainDatabase.Server-0 = 1
+TerrainDatabase.URL-0 = https://cambridgepixel.com/tiles/srtm3/terrain1
+TerrainDatabase.CacheDir = Config/Terrain/
+TerrainDatabase.Interpolate = 1
+TerrainDatabase.MinCacheSecs = 15
+TerrainDatabase.MinLatDegs-0 = -56.000
+TerrainDatabase.MaxLatDegs-0 = 60.395
+
+#
+# AIS data options.
+#
+# AIS messages may be received on a network connection or from
+# a serial port. Optionally AIS messages may be output onto a 
+# network. Note that WorldMap.Available must be set to 1 to
+# enable AIS.
+#
+AIS.Available = 0	# Set to 0 if AIS disallowed
+AIS.SrcType = 2	# Input: 0 = disabled, 1 = network, 2 = serial
+AIS.SrcSerialPort = COM1	# Input serial port name
+AIS.SrcSerialBaud = 38400	# Input serial port baud rate
+AIS.SrcNetAddr = 239.192.50.79	# Input network address
+AIS.SrcNetPort = 5079	# Input network port
+AIS.SrcNetInterface = ""	# Input network interface
+AIS.SrcNetTCP = 0	# Is source TCP based?
+AIS.DestType = 0	# Output: 0 = disabled, 1 = network
+AIS.DestNetAddr = 239.192.50.79	# Output network address
+AIS.DestNetPort = 5079	# Output network port
+AIS.DestNetInterface = ""	# Output network interface
+AIS.DestNetTCP = 0	# Is destination TCP based?
+AIS.UseVDOForNavData = 0	# Should we use VDO msgs to update NavData?
+AIS.TimeoutLost = 361	# Seconds before individual targets declared lost
+AIS.TimeoutAutoDelete = 600	# Seconds before lost targets are deleted
+AIS.TimeoutStatus = 0	# Seconds until heartbeat flags lost input (if not 0)
+AIS.DefaultActiveState = 1	# Are target 'active' by default?
+AIS.ExtrapolatePeriodSecs = 0	# 0 to disable extrapolation.
+AISRenderer.ShowExtrapolations = 0	# Set to non-zero if required.
+
+#
+# ADS-B data options.
+#
+# ADS-B messages may be received on a network connection or from
+# a serial port. Optionally ADS-B messages may be output onto a 
+# network. Note that WorldMap.Available must be set to 1 to
+# enable ADS-B.
+#
+ADSB.Available = 0	# Set to 0 if ADS-B disallowed
+ADSB.SrcType = 1	# Input: 0=none, 1=net(SPx), 2=serial, 3=net(ASTERIX Cat-21)
+ADSB.SrcSerialPort = COM1	# Input serial port name
+ADSB.SrcSerialBaud = 115200	# Input serial port baud rate
+ADSB.SrcNetAddr = 239.192.50.79	# Input network address
+ADSB.SrcNetPort = 5079	# Input network port
+ADSB.SrcNetInterface = ""	# Input network interface
+ADSB.DestType = 0	# Output: 0 = disabled, 1 = network
+ADSB.DestNetAddr = 239.192.50.79	# Output network address
+ADSB.DestNetPort = 5079	# Output network port
+ADSB.DestNetInterface = ""	# Output network interface
+ADSB.LatDegs = 52.071151	# Latitude of receiver, positive north
+ADSB.LongDegs = -0.081732	# Longitude of receiver, positive east
+
+#
+# Output manager options
+#
+OutputManager.Available = 0	# Set to 0 to disable output manager
+OutputManager.ServerGroupID = 1
+OutputManager.ServerPriority = 1
+
+# Distribution output conditions
+OutputManager.Conditions-0 = ""
+OutputManager.MasterIndex-0 = -1
+
+# Track output conditions
+OutputManager.Conditions-1 = ""
+OutputManager.MasterIndex-1 = -1
+
+# Plot output conditions
+OutputManager.Conditions-2 = ""
+OutputManager.MasterIndex-2 = -1
+
+# SNMP options
+SNMPAgent.Available = 0
+
+#
+# Tracker Parameters
+#
+Tracker.mhtActiveRegionListFile = ""
+Tracker.mhtActiveRegionListAzimuths = 2048
+Tracker.mhtActiveRegionListMode = 0
+Tracker.mhtOutputParameterList = 0
+Tracker.mhtLeavePlotsBeforeATI = 0.750
+Tracker.mhtTrackCanExist = 1
+Tracker.mhtTrackCanBeCreated = 1
+Tracker.mhtGenerateReport = 1
+Tracker.mhtGenerateProvisionalReport = 0
+Tracker.mhtReportAsLost = 0
+Tracker.mhtInitialDelayScans = 1
+Tracker.mhtParameterView = simrad-parameters.txt
+Tracker.mhtMinTrackingRange = 20.0
+Tracker.mhtMaxTrackingRange = -1.0
+Tracker.mhtCoastScans = 3
+Tracker.mhtCoastAgeMin = 0
+Tracker.mhtCoastAgeMax = 0
+Tracker.mhtCoastExtendedTime = 30
+Tracker.mhtCoastMatureExtension = 30
+Tracker.mhtTestCloseTracksAfterCoast = 1
+Tracker.mhtTargetTurnRate = 10.0
+Tracker.mhtTargetTurnAccel = 0.0
+Tracker.mhtTargetMaxDeceleration = 0.500
+Tracker.mhtTargetMaxAcceleration = 0.500
+Tracker.mhtTargetSpeedScans = 4
+Tracker.mhtTargetMaxTrackingSpeed = 25.0
+Tracker.mhtTargetMinTrackingSpeed = 0.0
+Tracker.mhtTargetMinInitiationSpeed = -1.0
+Tracker.mhtTargetMaxInitiationSpeed = -1.0
+Tracker.mhtTargetMaxInitiationSpeedRev = 0.0
+Tracker.mhtMinATIRange = 0.0
+Tracker.mhtMaxATIRange = -1.0
+Tracker.mhtCheckATIcloseToTrack = 0
+Tracker.mhtATImode = 0
+Tracker.mhtATIintegrationM = 5
+Tracker.mhtATIintegrationN = 7
+Tracker.mhtATImaxIntegrationMultiplier = 2.0
+Tracker.mhtATImodeSPRTdesiredFalseAlarm = 0.010
+Tracker.mhtATImodeSPRTdesiredFalseReject = 0.050
+Tracker.mhtATImodeSPRTpd_small = 0.700
+Tracker.mhtATImodeSPRTpd_large = 0.900
+Tracker.mhtATImodeSPRTpf = 0.100
+Tracker.mhtATItrackMargin = 100.0
+Tracker.mhtATIwakeDistance = 0.0
+Tracker.mhtATIwakeTime = 30.0
+Tracker.mhtATIwakeAngle = 40.0
+Tracker.mhtATIshadowDistance = 250.0
+Tracker.mhtATIshadowAngle = 0.0
+Tracker.mhtATIuseRangeRate = 0
+Tracker.mhtATIrangeRateThreshold = 5.0
+Tracker.mhtATIinitialAzimuthGain = 1.0
+Tracker.mhtATIinitialRangeGain = 1.0
+Tracker.mhtATIdirectionalMode = 0
+Tracker.mhtATIdirection = 0.0
+Tracker.mhtATIdirectionError = 5.0
+Tracker.mhtATIinhibitLandMetres = 0.0
+Tracker.mhtATIinhibitSeaMetres = 0.0
+Tracker.mhtMeasuredRangeRateLimit = 50.0
+Tracker.mhtReducedSignalGain = 1.0
+Tracker.mhtMinPlotRangeSize = 0.0
+Tracker.mhtMaxPlotRangeSize = 1000000.0
+Tracker.mhtMinPlotAzimuthSize = 0.0
+Tracker.mhtMaxPlotAzimuthSize = 360.0
+Tracker.mhtMinPlotAmplitudeTrack = 0.0
+Tracker.mhtMinPlotAmplitudeATI = 0.0
+Tracker.mhtMinPlotWeightATI = 0.0
+Tracker.mhtInitialRangeSizeVariance = 100.0
+Tracker.mhtInitialAzimuthSizeVariance = 0.500
+Tracker.mhtUpdatePeriod = 2.0
+Tracker.mhtAutoCalculatePeriod = 1
+Tracker.mhtNoTrackScanPeriod = 0.0
+Tracker.mhtAssociationMode = 0
+Tracker.mhtRangeMeasurementVariance = 4.0
+Tracker.mhtAzimuthMeasurementVariance = 0.050
+Tracker.mhtPointTargetAziDimDegrees = 1.0
+Tracker.mhtPointTargetRanDimMetres = 1.0
+Tracker.mhtMaximumClusterAzimuthSizeDegrees = 90.0
+Tracker.mhtAssocMask = 15
+Tracker.mhtHypothesisThresholdR = 0.200
+Tracker.mhtFilterRangeRateGain = 0.200
+Tracker.mhtAllowATIinMHTcluster = 0
+Tracker.mhtTrackLimitForDRChigh = 100000
+Tracker.mhtTrackLimitForDRClow = 0
+Tracker.mhtDRCreductionDelay = 2
+Tracker.mhtFilterMode = 2
+Tracker.mhtTargetFixedGainAzimuth = 0.500
+Tracker.mhtTargetFixedGainRange = 0.500
+Tracker.mhtTargetSpeedGainMaxGainRange = 0.800
+Tracker.mhtTargetSpeedGainMinGainRange = 0.400
+Tracker.mhtTargetSpeedGainMaxGainAzimuth = 0.600
+Tracker.mhtTargetSpeedGainMinGainAzimuth = 0.300
+Tracker.mhtTargetSpeedGainMaxSpeed = 25.0
+Tracker.mhtTargetSpeedGainMinSpeed = 0.0
+Tracker.mhtTargetTimeGainMaxGainRange = 0.800
+Tracker.mhtTargetTimeGainMinGainRange = 0.400
+Tracker.mhtTargetTimeGainMaxGainAzimuth = 0.600
+Tracker.mhtTargetTimeGainMinGainAzimuth = 0.300
+Tracker.mhtWeightRangeError = 0.350
+Tracker.mhtWeightAzimuthError = 0.350
+Tracker.mhtWeightRangeSizeError = 0.150
+Tracker.mhtWeightAzimuthSizeError = 0.150
+Tracker.mhtWeightStrengthError = 0.150
+Tracker.mhtWeightWeightError = 0.150
+Tracker.mhtWeightRangeRateError = 0.150
+Tracker.mhtMinTrackGateRange = 0.0
+Tracker.mhtMinTrackGateAzimuth = 0.0
+Tracker.mhtMinTrackGateAzimuthMetres = 0.0
+Tracker.mhtMaxTrackGateAzimuthMetres = 0.0
+Tracker.mhtMaxTrackGateRange = 0.0
+Tracker.mhtMaxTrackGateAzimuth = 0.0
+Tracker.mhtMeasThreshRange = 0.0
+Tracker.mhtMeasThreshAzimuth = 0.0
+Tracker.mhtDynamicLoadControl = 1
+Tracker.mhtDynamicLoadControlCPUmax = 0.250
+Tracker.mhtATIrangeRateNotchCentre = 0.0
+Tracker.mhtATIrangeRateNotchWidth = 0.0
+Tracker.mhtClutterControl = 0
+Tracker.mhtAlwaysCreateTtmIds = 0
+Tracker.mhtInterpolatedReportsMode = 0
+Tracker.mhtInterpolatedReportInterval = 0.0
+Tracker.mhtInterpolatedReportTrack = 0
+Tracker.mhtATItrackMarginTime = 0.0
+Tracker.mhtATIrequireCourseStability = 0.0
+Tracker.mhtClutterHoldMultiplier = 1.0
+Tracker.mhtSpeedGainWeight = 1.0
+Tracker.mhtClutterTrackAgeLimit = 32
+Tracker.mhtMaxTtmId = 99
+Tracker.mhtModelRefForManualTrack = 0
+Tracker.mhtATIminAge = 0
+Tracker.mhtCheckStablePeriodPercent = 0
+Tracker.mhtATIminSpeedForCourseStability = 2.0
+Tracker.mhtATInoConsistencyTests = 0
+Tracker.mhtSquelchSpeed = 0.0
+Tracker.mhtSquelchScans = 0
+Tracker.mhtSquelchCourseSD = -1.0
+Tracker.mhtGateFromSizeFactor = 1.200
+Tracker.mhtMaxPlotWeightATI = -1.0
+Tracker.mhtMinPlotWeightTrack = 0.0
+Tracker.mhtMinPlotAziSzATI = 0.0
+Tracker.mhtMinPlotRanSzATI = 0.0
+Tracker.mhtAziGainRangeFactor = 1.0
+Tracker.mhtManoeuvreSensitivity = 2.500
+Tracker.mhtMinAziErrForManoeuvre = 0.200
+Tracker.mhtMinRanErrForManoeuvre = 1.0
+Tracker.mhtMbtTrackGateMarginRange = 0.0
+Tracker.mhtMbtTrackGateMarginAzimuth = 0.0
+Tracker.mhtDebugMode = 0
+Tracker.mhtPlatformPositionMode = 0
+Tracker.mhtModelPriorityDerate = 0.500
+Tracker.mhtManDerateATI = 1.0
+Tracker.mhtATIenableSidelobeTests = 0
+Tracker.mhtATIsidelobeMaxRange = 0.0
+Tracker.mhtATIsidelobeAngle = 20.0
+Tracker.mhtATIsidelobeRangeDelta = 0.0
+Tracker.mhtSquelchOnlyManual = 0
+Tracker.mhtEnableVideoTrack = 0
+Tracker.mhtMinDensityVideoTrack = 0.250
+Tracker.mhtMinRangeVideoTrack = 0.0
+Tracker.mhtEnableAISassoc = 0
+Tracker.mhtAISrangeMargin = 250.0
+Tracker.mhtAISazimuthMargin = 1.0
+Tracker.mhtAIStimeoutSecs = 360
+Tracker.mhtATIdefaultNoATIdistance = 0
+Tracker.mhtSaveNoATIpos = 1
+Tracker.mhtMaxPlotDopplerVarATI = 0.0
+Tracker.mhtMinPlotDopplerATI = 0.0
+Tracker.mhtMinHitsVideoTrack = 5
+# Dummy parameter used by Wizard.
+Tracker.DummyAssignment = 0
+
+#
+# MBT Parameters
+#
+MBT.activeArea = Global
+MBT.maxRangeMetres = 0.00
+MBT.setRangeFromMHT = 1
+MBT.periodMethod = 2
+MBT.fixedPeriod = 2.00
+MBT.activeStartAzimuth = 0.00
+MBT.activeEndAzimuth = 360.00
+MBT.activeStartRange = 0.00
+MBT.activeEndRange = -1.00
+MBT.activeEndRangeSetFromMHT = 1.00

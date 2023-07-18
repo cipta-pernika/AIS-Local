@@ -4,6 +4,7 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\MapController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\DataloggerController;
+use App\Http\Controllers\ExportController;
 use App\Http\Controllers\HelperController;
 use App\Http\Controllers\SensorController;
 use Illuminate\Support\Facades\Route;
@@ -45,6 +46,9 @@ Route::post('position', [HelperController::class, 'position']);
 //map
 Route::post('breadcrumb', [MapController::class, 'breadcrumb']);
 Route::post('playback', [MapController::class, 'playback']);
+
+//export
+Route::post('exportais', [ExportController::class, 'exportais']);
 
 //camera
 Route::post('camzoomminus', [HelperController::class, 'camzoomminus']);
