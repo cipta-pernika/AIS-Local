@@ -155,6 +155,7 @@ class HelperController extends Controller
                 'dimension_to_port' => request('dimensionToPort'),
                 'dimension_to_starboard' => request('dimensionToStarboard'),
                 'reported_eta' => Carbon::parse(request('eta')),
+                'type_number' => request('type_number'),
             ]);
         }
 
@@ -276,6 +277,7 @@ class HelperController extends Controller
     {
         $aisData = AdsbDataPosition::with('aircraft', 'sensorData.sensor.datalogger')
             ->groupBy('aircraft_id')
+            ->whereBetween('created_at', [now()->subHours(12), now()])
             ->get();
 
         return response()->json([

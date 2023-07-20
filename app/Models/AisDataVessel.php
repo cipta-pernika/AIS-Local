@@ -22,6 +22,7 @@ class AisDataVessel extends Model
         'dimension_to_stern',
         'dimension_to_port',
         'dimension_to_starboard',
+        'type_number',
     ];
 
     // Define relationships
