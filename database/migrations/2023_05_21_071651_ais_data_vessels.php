@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('dimension_to_port')->nullable();
             $table->string('dimension_to_starboard')->nullable();
             $table->string('reported_destination')->nullable();
+            $table->enum('out_of_range', ['0', '1'])->default('0');
             $table->timestamp('reported_eta')->nullable();
             $table->timestamps();
 
