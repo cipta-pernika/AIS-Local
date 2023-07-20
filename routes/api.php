@@ -13,15 +13,17 @@ Route::post('/login', [AuthController::class, 'login']);
 // Route::post('/register', [RegisteredUserController::class, 'store']);
 
 Route::middleware('auth:sanctum')->group(function () {
-    //CRUD
-    Route::apiResource('dataloggers', DataloggerController::class);
-    Route::apiResource('users', UserController::class);
-
-    //FE
-    Route::get('aisdata', [HelperController::class, 'getaisdata']);
-    Route::get('livefeed', [HelperController::class, 'livefeed']);
+    
     // Route::get('playbackais', [HelperController::class, 'playbackais']);
 });
+
+//CRUD
+Route::apiResource('dataloggers', DataloggerController::class);
+Route::apiResource('users', UserController::class);
+
+//FE
+Route::get('aisdata', [HelperController::class, 'getaisdata']);
+Route::get('livefeed', [HelperController::class, 'livefeed']);
 
 Route::apiResource('sensors', SensorController::class);
 Route::post('detailvessel', [HelperController::class, 'detailvessel']);
