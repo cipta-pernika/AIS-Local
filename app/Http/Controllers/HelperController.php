@@ -22,7 +22,7 @@ class HelperController extends Controller
     public function position()
     {
         $datalogger = Datalogger::find(1);
-        $datalogger->latitude = request('lat'); 
+        $datalogger->latitude = request('lat');
         $datalogger->longitude = request('lon');
         $datalogger->update();
 
@@ -31,7 +31,7 @@ class HelperController extends Controller
             'message' => $datalogger,
         ], 201);
     }
-    
+
     public function movebylatlng()
     {
         $datalogger = Datalogger::find(1);
@@ -170,7 +170,7 @@ class HelperController extends Controller
         }
 
         $aisData = AisDataPosition::with('vessel', 'sensorData.sensor.datalogger')
-        ->orderBy('created_at', 'DESC')
+            ->orderBy('created_at', 'DESC')
             ->groupBy('vessel_id')
             ->where('id', $vesselPosition->id)
             ->first();
@@ -221,9 +221,9 @@ class HelperController extends Controller
     public function aisdataunique()
     {
         $aisData = AisDataPosition::with('vessel', 'sensorData.sensor.datalogger')
-        ->orderBy('created_at', 'DESC')
+            ->orderBy('created_at', 'DESC')
             ->groupBy('vessel_id')
-            // ->whereBetween('created_at', [now()->subHours(24), now()])
+            ->whereBetween('created_at', [now()->subHours(24), now()])
             ->get();
 
         return response()->json([
@@ -307,6 +307,7 @@ class HelperController extends Controller
     {
         $aisData = RadarData::with('sensorData.sensor.datalogger')
             ->groupBy('target_id')
+            ->whereBetween('created_at', [now()->subHours(12), now()])
             ->get();
 
         return response()->json([
@@ -932,88 +933,86 @@ class HelperController extends Controller
     }
 
     public function camcall()
-{
-    $url = 'http://admin@192.168.5.222/ISAPI/PTZCtrl/channels/1/homePosition/goto';
+    {
+        $url = 'http://admin@192.168.5.222/ISAPI/PTZCtrl/channels/1/homePosition/goto';
 
-    // The request body is empty, as specified in the cURL command
-    $xml_data = '';
+        // The request body is empty, as specified in the cURL command
+        $xml_data = '';
 
-    $ch = curl_init($url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-        'Accept: */*',
-        'Accept-Language: en-US,en;q=0.9',
-        'Cache-Control: max-age=0',
-        'Connection: keep-alive',
-        'Content-Length: 0',
-        'Cookie: language=en; _wnd_size_mode=4; sdMarkTab_1_1=2%3AmaintainService; sdMarkTab_4=2%3AdisplayParamSwitch; sdMarkTab_5=2%3AptzCfgHomePos; WebSession_5e54a95ca3=270e242d98a788147d05957d35e2689dd9cea92e0dd085ae8a499dcdb71e9aea; sdMarkTab_1_0=0%3AsettingBasic; sdMarkMenu=5%3AptzCfg; szLastPageName=ptzCfg',
-        'If-Modified-Since: 0',
-        'Origin: http://192.168.5.222',
-        'Referer: http://192.168.5.222/doc/page/config.asp',
-        'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
-        'X-Requested-With: XMLHttpRequest',
-    ));
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Accept: */*',
+            'Accept-Language: en-US,en;q=0.9',
+            'Cache-Control: max-age=0',
+            'Connection: keep-alive',
+            'Content-Length: 0',
+            'Cookie: language=en; _wnd_size_mode=4; sdMarkTab_1_1=2%3AmaintainService; sdMarkTab_4=2%3AdisplayParamSwitch; sdMarkTab_5=2%3AptzCfgHomePos; WebSession_5e54a95ca3=270e242d98a788147d05957d35e2689dd9cea92e0dd085ae8a499dcdb71e9aea; sdMarkTab_1_0=0%3AsettingBasic; sdMarkMenu=5%3AptzCfg; szLastPageName=ptzCfg',
+            'If-Modified-Since: 0',
+            'Origin: http://192.168.5.222',
+            'Referer: http://192.168.5.222/doc/page/config.asp',
+            'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
+            'X-Requested-With: XMLHttpRequest',
+        ));
 
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $xml_data);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $xml_data);
 
-    // Execute cURL request
-    curl_exec($ch);
-    $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    curl_close($ch);
+        // Execute cURL request
+        curl_exec($ch);
+        $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
 
-    if ($http_code === 200) {
-        return response()->json([
-            'success' => true,
-        ], 200);
-    } else {
-        return response()->json([
-            'success' => false,
-            'message' => 'Request failed with status code: ' . $http_code,
-        ], $http_code);
+        if ($http_code === 200) {
+            return response()->json([
+                'success' => true,
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Request failed with status code: ' . $http_code,
+            ], $http_code);
+        }
     }
-}
-
 
     public function camset()
-{
-    $url = 'http://admin@192.168.5.222/ISAPI/PTZCtrl/channels/1/homePosition';
-    $ch = curl_init($url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-        'Accept: */*',
-        'Accept-Language: en-US,en;q=0.9',
-        'Cache-Control: max-age=0',
-        'Connection: keep-alive',
-        'Content-Length: 0',
-        'Cookie: language=en; _wnd_size_mode=4; sdMarkTab_1_1=2%3AmaintainService; sdMarkTab_4=2%3AdisplayParamSwitch; sdMarkTab_5=2%3AptzCfgHomePos; WebSession_5e54a95ca3=270e242d98a788147d05957d35e2689dd9cea92e0dd085ae8a499dcdb71e9aea; sdMarkTab_1_0=0%3AsettingBasic; sdMarkMenu=5%3AptzCfg; szLastPageName=ptzCfg',
-        'If-Modified-Since: 0',
-        'Origin: http://192.168.5.222',
-        'Referer: http://192.168.5.222/doc/page/config.asp',
-        'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
-        'X-Requested-With: XMLHttpRequest',
-    ));
+    {
+        $url = 'http://admin@192.168.5.222/ISAPI/PTZCtrl/channels/1/homePosition';
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Accept: */*',
+            'Accept-Language: en-US,en;q=0.9',
+            'Cache-Control: max-age=0',
+            'Connection: keep-alive',
+            'Content-Length: 0',
+            'Cookie: language=en; _wnd_size_mode=4; sdMarkTab_1_1=2%3AmaintainService; sdMarkTab_4=2%3AdisplayParamSwitch; sdMarkTab_5=2%3AptzCfgHomePos; WebSession_5e54a95ca3=270e242d98a788147d05957d35e2689dd9cea92e0dd085ae8a499dcdb71e9aea; sdMarkTab_1_0=0%3AsettingBasic; sdMarkMenu=5%3AptzCfg; szLastPageName=ptzCfg',
+            'If-Modified-Since: 0',
+            'Origin: http://192.168.5.222',
+            'Referer: http://192.168.5.222/doc/page/config.asp',
+            'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
+            'X-Requested-With: XMLHttpRequest',
+        ));
 
-    curl_setopt($ch, CURLOPT_POSTFIELDS, ''); // Empty body as specified in the cURL command
+        curl_setopt($ch, CURLOPT_POSTFIELDS, ''); // Empty body as specified in the cURL command
 
-    // Execute cURL request
-    curl_exec($ch);
-    $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    curl_close($ch);
+        // Execute cURL request
+        curl_exec($ch);
+        $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
 
-    if ($http_code === 200) {
-        return response()->json([
-            'success' => true,
-        ], 200);
-    } else {
-        return response()->json([
-            'success' => false,
-            'message' => 'Request failed with status code: ' . $http_code,
-        ], $http_code);
+        if ($http_code === 200) {
+            return response()->json([
+                'success' => true,
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Request failed with status code: ' . $http_code,
+            ], $http_code);
+        }
     }
-}
-
 
     public function camirismin()
     {
@@ -1149,6 +1148,35 @@ class HelperController extends Controller
             'timestamp' => Carbon::parse(request()->isoDate),
         ]);
         $radarData->save();
+
+        return response()->json([
+            'radarData' => $radarData ?? null,
+        ], 201);
+    }
+
+    public function radararpha()
+    {
+        if (empty(request())) {
+            return response()->json([
+                'error' => 'No request payload provided.',
+            ], 400);
+        }
+
+        foreach (request()->all() as $item) {
+            $radarData = RadarData::updateOrCreate(
+                ['target_id' => $item['target_id']],
+                [
+                    'latitude' => $item['latitude'],
+                    'longitude' => $item['longitude'],
+                    'altitude' => $item['altitude'],
+                    'speed' => $item['speed'],
+                    'course' => $item['course'],
+                    'heading' => $item['heading'],
+                    'range' => $item['range'],
+                    'bearing' => $item['bearing'],
+                ]
+            );
+        }
 
         return response()->json([
             'radarData' => $radarData ?? null,

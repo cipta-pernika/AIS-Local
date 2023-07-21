@@ -48,6 +48,8 @@ Route::post('adsbdata', [HelperController::class, 'adsbdata']);
 Route::post('radardata', [HelperController::class, 'radardata']);
 Route::post('position', [HelperController::class, 'position']);
 
+Route::post('radararpha', [HelperController::class, 'radararpha']);
+
 //map
 Route::post('breadcrumb', [MapController::class, 'breadcrumb']);
 Route::post('playback', [MapController::class, 'playback']);
