@@ -25,6 +25,8 @@ Route::apiResource('users', UserController::class);
 Route::get('aisdata', [HelperController::class, 'getaisdata']);
 Route::get('livefeed', [HelperController::class, 'livefeed']);
 
+Route::get('mylocation', [HelperController::class, 'mylocation']);
+
 Route::apiResource('sensors', SensorController::class);
 Route::post('detailvessel', [HelperController::class, 'detailvessel']);
 Route::get('aisdataunique', [HelperController::class, 'aisdataunique']);
