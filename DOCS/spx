@@ -1,13 +1,17 @@
-- rename cp-spx-110-0648 to cp-spx
-- copy to spx server & webserver folder
-- on spxserver klik netwrok -> klik advance masukan
-152678CFC4135F08FAFF8E250C0861A8C3579F8AEA8D39E874ED51BE46E6793B6A57007C799BCD41F8BB7851770DBDB09FB9C4535279996E17AACA3A5F894456
+-   rename cp-spx-110-0648 to cp-spx
+-   copy to spx server & webserver folder
+-   on spxserver klik netwrok -> klik advance masukan
+    152678CFC4135F08FAFF8E250C0861A8C3579F8AEA8D39E874ED51BE46E6793B6A57007C799BCD41F8BB7851770DBDB09FB9C4535279996E17AACA3A5F894456
 
-- [19:34, 7/17/2023] Andrew Cambridge Pixel: No.  in spxradarwebserve.rpi change to Server.NumVideo = 0
-[19:35, 7/17/2023] Andrew Cambridge Pixel: Also set:
-SrcNet.AddressString = 239.192.43.78	# Receiving address
-SrcNet.Port = 4378			# Receiving port
+-   [19:34, 7/17/2023] Andrew Cambridge Pixel: No. in spxradarwebserve.rpi change to Server.NumVideo = 0
+    [19:35, 7/17/2023] Andrew Cambridge Pixel: Also set:
+    SrcNet.AddressString = 239.192.43.78 # Receiving address
+    SrcNet.Port = 4378 # Receiving port
 
 check both the boxes on that page.
 
 You need to enable radar video distribution in spxserver. The check box in spxserver UI is unchecked and greyed out. You should be able to use the wizard to configure it.
+
+NavData.RawInput = 1 # 0 for SPx packets, 1 for raw NMEA-0183 messages.
+NavData.NetPort = 2108 # Network port to receive on
+NavData.NetAddr = 127.0.0.1 # Network address to receive on
