@@ -169,11 +169,18 @@ class HelperController extends Controller
             ]);
         }
 
+        $aisData = AisDataPosition::with('vessel', 'sensorData.sensor.datalogger')
+        ->orderBy('created_at', 'DESC')
+            ->groupBy('vessel_id')
+            ->where('id', $vesselPosition->id)
+            ->first();
+
         return response()->json([
-            'sensor' => $sensor,
-            'sensorData' => $sensorData,
-            'vessel' => $vessel ?? null,
-            'vesselPosition' => $vesselPosition ?? null,
+            'aisData' => $aisData,
+            // 'sensor' => $sensor,
+            // 'sensorData' => $sensorData,
+            // 'vessel' => $vessel ?? null,
+            // 'vesselPosition' => $vesselPosition ?? null,
         ], 201);
     }
 
