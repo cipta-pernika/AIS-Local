@@ -15,3 +15,6 @@ You need to enable radar video distribution in spxserver. The check box in spxse
 NavData.RawInput = 1 # 0 for SPx packets, 1 for raw NMEA-0183 messages.
 NavData.NetPort = 2108 # Network port to receive on
 NavData.NetAddr = 127.0.0.1 # Network address to receive on
+
+SrcNet.AddressString = 239.192.43.78 # Receiving address
+SrcNet.Port = 4378 # Receiving port
