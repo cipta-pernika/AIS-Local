@@ -899,6 +899,90 @@ class HelperController extends Controller
         ], 200);
     }
 
+    public function camcall()
+{
+    $url = 'http://admin@192.168.5.222/ISAPI/PTZCtrl/channels/1/homePosition/goto';
+
+    // The request body is empty, as specified in the cURL command
+    $xml_data = '';
+
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        'Accept: */*',
+        'Accept-Language: en-US,en;q=0.9',
+        'Cache-Control: max-age=0',
+        'Connection: keep-alive',
+        'Content-Length: 0',
+        'Cookie: language=en; _wnd_size_mode=4; sdMarkTab_1_1=2%3AmaintainService; sdMarkTab_4=2%3AdisplayParamSwitch; sdMarkTab_5=2%3AptzCfgHomePos; WebSession_5e54a95ca3=270e242d98a788147d05957d35e2689dd9cea92e0dd085ae8a499dcdb71e9aea; sdMarkTab_1_0=0%3AsettingBasic; sdMarkMenu=5%3AptzCfg; szLastPageName=ptzCfg',
+        'If-Modified-Since: 0',
+        'Origin: http://192.168.5.222',
+        'Referer: http://192.168.5.222/doc/page/config.asp',
+        'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
+        'X-Requested-With: XMLHttpRequest',
+    ));
+
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $xml_data);
+
+    // Execute cURL request
+    curl_exec($ch);
+    $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+
+    if ($http_code === 200) {
+        return response()->json([
+            'success' => true,
+        ], 200);
+    } else {
+        return response()->json([
+            'success' => false,
+            'message' => 'Request failed with status code: ' . $http_code,
+        ], $http_code);
+    }
+}
+
+
+    public function camset()
+{
+    $url = 'http://admin@192.168.5.222/ISAPI/PTZCtrl/channels/1/homePosition';
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        'Accept: */*',
+        'Accept-Language: en-US,en;q=0.9',
+        'Cache-Control: max-age=0',
+        'Connection: keep-alive',
+        'Content-Length: 0',
+        'Cookie: language=en; _wnd_size_mode=4; sdMarkTab_1_1=2%3AmaintainService; sdMarkTab_4=2%3AdisplayParamSwitch; sdMarkTab_5=2%3AptzCfgHomePos; WebSession_5e54a95ca3=270e242d98a788147d05957d35e2689dd9cea92e0dd085ae8a499dcdb71e9aea; sdMarkTab_1_0=0%3AsettingBasic; sdMarkMenu=5%3AptzCfg; szLastPageName=ptzCfg',
+        'If-Modified-Since: 0',
+        'Origin: http://192.168.5.222',
+        'Referer: http://192.168.5.222/doc/page/config.asp',
+        'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
+        'X-Requested-With: XMLHttpRequest',
+    ));
+
+    curl_setopt($ch, CURLOPT_POSTFIELDS, ''); // Empty body as specified in the cURL command
+
+    // Execute cURL request
+    curl_exec($ch);
+    $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+
+    if ($http_code === 200) {
+        return response()->json([
+            'success' => true,
+        ], 200);
+    } else {
+        return response()->json([
+            'success' => false,
+            'message' => 'Request failed with status code: ' . $http_code,
+        ], $http_code);
+    }
+}
+
+
     public function camirismin()
     {
         $xml_data = '<IrisData>' .
