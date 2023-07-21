@@ -452,7 +452,8 @@ class HelperController extends Controller
                     'ground_speed' => request()->ground_speed ?? $speed,
                     'vertical_rate' => request()->vertical_rate,
                     'track' => request()->track,
-                    'timestamp' => Carbon::parse(request('generated_date') . ' ' . request('generated_time')),
+                    // 'timestamp' => Carbon::parse(request('generated_date') . ' ' . request('generated_time')),
+                    'timestamp' => Carbon::now(),
                     'transmission_type' => request()->transmission_type,
                 ]);
                 $vesselPosition->save();
