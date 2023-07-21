@@ -92,6 +92,16 @@ class HelperController extends Controller
         ], 201);
     }
 
+    public function mylocation()
+    {
+        $vesselId = Datalogger::select('latitude', 'longitude')->first();
+
+        return response()->json([
+            'success' => true,
+            'message' => $vesselId,
+        ], 201);
+    }
+
     public function isValidLatitude($latitude)
     {
         return ($latitude >= -90 && $latitude <= 90);
