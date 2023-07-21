@@ -315,6 +315,20 @@ class HelperController extends Controller
         ], 201);
     }
 
+    public function radardatauniquelimit()
+    {
+        $aisData = RadarData::with('sensorData.sensor.datalogger')
+            ->groupBy('target_id')
+            ->limit(20)
+            ->orderBy('created_at', 'DESC')
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'message' => $aisData,
+        ], 201);
+    }
+
     public function playbackais()
     {
         $aisData = AisDataPosition::with('vessel', 'sensorData.sensor.datalogger')
@@ -1116,23 +1130,13 @@ class HelperController extends Controller
 
     public function radardata()
     {
-        if (empty(request()->source)) {
+        if (empty(request())) {
             return response()->json([
                 'error' => 'No request payload provided.',
             ], 400);
         }
 
-        $sensor = Sensor::find(2);
-
-        $sensorData = new SensorData([
-            'sensor_id' => $sensor->id,
-            'payload' => request()->source,
-            'timestamp' => Carbon::parse(request()->isoDate),
-        ]);
-        $sensorData->save();
-
         $radarData = new RadarData([
-            'sensor_data_id' => $sensorData->id,
             'target_id' => request()->target_id,
             'latitude' => request()->latitude,
             'longitude' => request()->longitude,
@@ -1147,8 +1151,6 @@ class HelperController extends Controller
         $radarData->save();
 
         return response()->json([
-            'sensor' => $sensor,
-            'sensorData' => $sensorData,
             'radarData' => $radarData ?? null,
         ], 201);
     }

@@ -31,6 +31,7 @@ Route::apiResource('sensors', SensorController::class);
 Route::post('detailvessel', [HelperController::class, 'detailvessel']);
 Route::get('aisdataunique', [HelperController::class, 'aisdataunique']);
 Route::get('radardataunique', [HelperController::class, 'radardataunique']);
+Route::get('radardatauniquelimit', [HelperController::class, 'radardatauniquelimit']);
 Route::get('adsbunique', [HelperController::class, 'adsbunique']);
 Route::get('radarimage', [HelperController::class, 'radarimage']);
 
