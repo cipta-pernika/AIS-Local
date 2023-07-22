@@ -304,6 +304,7 @@ class HelperController extends Controller
         $aisData = AdsbDataPosition::with('aircraft', 'sensorData.sensor.datalogger')
             ->groupBy('aircraft_id')
             ->whereBetween('created_at', [now()->subHours(12), now()])
+            ->orderBy('created_at', 'DESC')
             ->get();
 
         return response()->json([
