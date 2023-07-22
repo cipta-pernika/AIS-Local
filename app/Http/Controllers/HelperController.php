@@ -328,6 +328,21 @@ class HelperController extends Controller
         ], 201);
     }
 
+    public function adsbupdate()
+    {
+        $aisData = AdsbDataPosition::with('aircraft', 'sensorData.sensor.datalogger')
+            ->groupBy('aircraft_id')
+            ->whereBetween('created_at', [now()->subMinutes(2), now()])
+            ->orderBy('created_at', 'DESC')
+            ->limit(20)
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'message' => $aisData,
+        ], 201);
+    }
+
     public function radardataunique()
     {
         $aisData = RadarData::with('sensorData.sensor.datalogger')
