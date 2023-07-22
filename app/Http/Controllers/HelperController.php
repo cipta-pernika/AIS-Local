@@ -1144,6 +1144,13 @@ class HelperController extends Controller
             ], 400);
         }
 
+        $datalogger = Datalogger::find(1);
+            $coordinate1 = new Coordinate($datalogger->latitude, $datalogger->longitude);
+            $coordinate2 = new Coordinate($geometry[1], $geometry[0]);
+            $distance = $coordinate1->getDistance($coordinate2, new Haversine());
+            $distanceInKilometers = $distance / 1000;
+                        $distanceInNauticalMiles = $distanceInKilometers * 0.539957;
+
         $radarData = new RadarData([
             'target_id' => request()->target_id,
             'latitude' => request()->latitude,
@@ -1155,6 +1162,7 @@ class HelperController extends Controller
             'range' => request()->range,
             'bearing' => request()->bearing,
             'timestamp' => request()->timestamp,
+            'distance_from_fak' => $distanceInNauticalMiles
         ]);
         $radarData->save();
 
@@ -1172,6 +1180,13 @@ class HelperController extends Controller
         }
 
         foreach (request()->all() as $item) {
+            $datalogger = Datalogger::find(1);
+            $coordinate1 = new Coordinate($datalogger->latitude, $datalogger->longitude);
+            $coordinate2 = new Coordinate($item['latitude'], $item['longitude']);
+            $distance = $coordinate1->getDistance($coordinate2, new Haversine());
+            $distanceInKilometers = $distance / 1000;
+                        $distanceInNauticalMiles = $distanceInKilometers * 0.539957;
+
             $radarData = RadarData::updateOrCreate(
                 ['target_id' => $item['target_id']],
                 [
@@ -1184,6 +1199,7 @@ class HelperController extends Controller
                     'range' => $item['range'],
                     'bearing' => $item['bearing'],
                     'timestamp' => $item['timestamp'],
+                    'distance_from_fak' => $distanceInNauticalMiles
                 ]
             );
         }

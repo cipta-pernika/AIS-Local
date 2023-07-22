@@ -22,6 +22,7 @@ return new class extends Migration
             $table->float('course')->nullable();
             $table->float('range')->nullable();
             $table->float('bearing')->nullable();
+            $table->float('distance_from_fak')->nullable();
             $table->timestamp('timestamp');
             $table->timestamps();
 

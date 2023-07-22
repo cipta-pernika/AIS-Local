@@ -22,6 +22,7 @@ class RadarData extends Model
         'range',
         'bearing',
         'timestamp',
+        'distance_from_fak'
     ];
 
     public function sensorData()
