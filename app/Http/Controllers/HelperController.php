@@ -1169,7 +1169,7 @@ class HelperController extends Controller
 
         $datalogger = Datalogger::find(1);
             $coordinate1 = new Coordinate($datalogger->latitude, $datalogger->longitude);
-            $coordinate2 = new Coordinate($geometry[1], $geometry[0]);
+            $coordinate2 = new Coordinate(request()->latitude, request()->longitude);
             $distance = $coordinate1->getDistance($coordinate2, new Haversine());
             $distanceInKilometers = $distance / 1000;
                         $distanceInNauticalMiles = $distanceInKilometers * 0.539957;
