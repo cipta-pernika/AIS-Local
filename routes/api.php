@@ -34,6 +34,7 @@ Route::get('radardataunique', [HelperController::class, 'radardataunique']);
 Route::get('radardatauniquelimit', [HelperController::class, 'radardatauniquelimit']);
 Route::get('adsbunique', [HelperController::class, 'adsbunique']);
 Route::get('radarimage', [HelperController::class, 'radarimage']);
+Route::get('aisdataupdate', [HelperController::class, 'aisdataupdate']);
 
 //tablelist
 Route::get('aisdatalist', [HelperController::class, 'aisdatalist']);
