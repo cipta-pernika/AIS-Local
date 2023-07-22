@@ -36,6 +36,7 @@ Route::get('adsbunique', [HelperController::class, 'adsbunique']);
 Route::get('radarimage', [HelperController::class, 'radarimage']);
 Route::get('aisdataupdate', [HelperController::class, 'aisdataupdate']);
 Route::get('adsbupdate', [HelperController::class, 'adsbupdate']);
+Route::get('adsbdataupdate', [HelperController::class, 'adsbupdate']);                   
 Route::get('radardataupdate', [HelperController::class, 'radardataupdate']);
 
 //tablelist
