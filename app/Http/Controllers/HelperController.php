@@ -357,6 +357,20 @@ class HelperController extends Controller
         ], 201);
     }
 
+    public function radardataupdate()
+    {
+        $aisData = RadarData::with('sensorData.sensor.datalogger')
+            ->groupBy('target_id')
+            ->whereBetween('created_at', [now()->subMinutes(2), now()])
+            ->limit(10)
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'message' => $aisData,
+        ], 201);
+    }
+
     public function radardatauniquelimit()
     {
         $aisData = RadarData::with('sensorData.sensor.datalogger')
