@@ -16,6 +16,7 @@ use Carbon\Carbon;
 use Location\Bearing\BearingSpherical;
 use Location\Coordinate;
 use Location\Distance\Vincenty;
+use Location\Distance\Haversine;
 
 class HelperController extends Controller
 {
@@ -246,8 +247,8 @@ class HelperController extends Controller
         $aisData = AisDataPosition::with('vessel', 'sensorData.sensor.datalogger')
             ->orderBy('created_at', 'DESC')
             ->groupBy('vessel_id')
-            ->whereBetween('created_at', [now()->subMinutes(2), now()])
-            ->limit(10)
+            // ->whereBetween('created_at', [now()->subMinutes(2), now()])
+            // ->limit(10)
             ->get();
 
         return response()->json([
