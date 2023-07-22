@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\RadarData;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 
 class fetchradar extends Command
@@ -44,6 +45,7 @@ class fetchradar extends Command
                     'heading' => $properties->heading,
                     'range' => $properties->range,
                     'bearing' => $properties->bearing,
+                    'timestamp' => Carbon::now(),
                 ]
             );
         }

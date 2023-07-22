@@ -1154,7 +1154,7 @@ class HelperController extends Controller
             'course' => request()->course,
             'range' => request()->range,
             'bearing' => request()->bearing,
-            'timestamp' => Carbon::parse(request()->isoDate),
+            'timestamp' => request()->timestamp,
         ]);
         $radarData->save();
 
@@ -1183,6 +1183,7 @@ class HelperController extends Controller
                     'heading' => $item['heading'],
                     'range' => $item['range'],
                     'bearing' => $item['bearing'],
+                    'timestamp' => $item['timestamp'],
                 ]
             );
         }
