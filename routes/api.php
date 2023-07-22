@@ -50,6 +50,8 @@ Route::post('position', [HelperController::class, 'position']);
 
 Route::post('radararpha', [HelperController::class, 'radararpha']);
 
+Route::post('radarpng', [HelperController::class, 'radarpng']);
+
 //map
 Route::post('breadcrumb', [MapController::class, 'breadcrumb']);
 Route::post('playback', [MapController::class, 'playback']);

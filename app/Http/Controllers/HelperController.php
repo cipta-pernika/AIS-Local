@@ -19,6 +19,15 @@ use Location\Distance\Vincenty;
 
 class HelperController extends Controller
 {
+    public function radarpng()
+    {
+        $image = request()->file('file');
+        $image->move(public_path().'/radarfolder', $image->getClientOriginalName());
+        return response()->json([
+            'success' => true
+        ], 200);
+    }
+    
     public function position()
     {
         $datalogger = Datalogger::find(1);
