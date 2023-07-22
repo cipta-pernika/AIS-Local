@@ -318,9 +318,10 @@ class HelperController extends Controller
     public function adsbunique()
     {
         $aisData = AdsbDataPosition::with('aircraft', 'sensorData.sensor.datalogger')
-            ->groupBy('aircraft_id')
+            ->whereRaw('adsb_data_positions.id IN (select MAX(adsb_data_positions.id) FROM adsb_data_positions GROUP BY aircraft_id)')
+            // ->groupBy('aircraft_id')
             ->whereBetween('created_at', [now()->subHours(12), now()])
-            ->orderBy('created_at', 'DESC')
+            // ->orderBy('created_at', 'DESC')
             ->get();
 
         return response()->json([
