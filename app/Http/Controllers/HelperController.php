@@ -410,7 +410,6 @@ class HelperController extends Controller
         $sensor = Sensor::find(3);
 
         foreach (request('aircraft') as $key => $item) {
-            dd($item);
 
             $sensorData = new SensorData([
                 'sensor_id' => $sensor->id,
