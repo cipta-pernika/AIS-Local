@@ -32,6 +32,14 @@
         "env": []
     },
     {
+        "id": "86b14407f78e2dfe",
+        "type": "tab",
+        "label": "SOS",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "4f90a3ebd122d18b",
         "type": "subflow",
         "name": "GPRMC Handler ",
@@ -67,11 +75,7 @@
             {
                 "x": 40,
                 "y": 60,
-                "wires": [
-                    {
-                        "id": "44c59405dbf60c58"
-                    }
-                ]
+                "wires": []
             }
         ],
         "out": [
@@ -155,11 +159,7 @@
             {
                 "x": 40,
                 "y": 60,
-                "wires": [
-                    {
-                        "id": "a318ffb7be555780"
-                    }
-                ]
+                "wires": []
             }
         ],
         "out": [
@@ -190,25 +190,6 @@
                 }
             ]
         }
-    },
-    {
-        "id": "7a514ac7e4bcf6eb",
-        "type": "serial-port",
-        "serialport": "COM1",
-        "serialbaud": "38400",
-        "databits": "8",
-        "parity": "none",
-        "stopbits": "1",
-        "waitfor": "",
-        "dtr": "none",
-        "rts": "none",
-        "cts": "none",
-        "dsr": "none",
-        "newline": "\\n",
-        "bin": "false",
-        "out": "char",
-        "addchar": "",
-        "responsetimeout": "10000"
     },
     {
         "id": "f614c112864cc4d3",
@@ -243,6 +224,213 @@
         "willMsg": {},
         "userProps": "",
         "sessionExpiry": ""
+    },
+    {
+        "id": "ed5625119e8ad936",
+        "type": "websocket-listener",
+        "d": true,
+        "path": "/ws/sensordata",
+        "wholemsg": "false"
+    },
+    {
+        "id": "c0587586e0feab65",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "mqtt.cakrawala.id",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "c5d4c21594239517",
+        "type": "websocket-listener",
+        "path": "/ws/sensordatas",
+        "wholemsg": "false"
+    },
+    {
+        "id": "287fbfd1c0981137",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "mqtt.cakrawala.id",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "6ad12317b7d625b5",
+        "type": "websocket-listener",
+        "path": "/ws/sos",
+        "wholemsg": "false"
+    },
+    {
+        "id": "a854ee812dc72335",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "mqtt.cakrawala.id",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "d54d706df92f463f",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "mqtt.cakrawala.id",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "2e45b84f9f25eef5",
+        "type": "websocket-listener",
+        "d": true,
+        "path": "/ws/sensordata",
+        "wholemsg": "false"
+    },
+    {
+        "id": "9ee02307b412a04e",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "mqtt.cakrawala.id",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "1007f679e71fda83",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "mqtt.cakrawala.id",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "7a514ac7e4bcf6eb",
+        "type": "serial-port",
+        "serialport": "COM1",
+        "serialbaud": "38400",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": "10000"
     },
     {
         "id": "0960ae41486c6ef0",
@@ -302,73 +490,6 @@
         "responsetimeout": "10000"
     },
     {
-        "id": "ed5625119e8ad936",
-        "type": "websocket-listener",
-        "d": true,
-        "path": "/ws/sensordata",
-        "wholemsg": "false"
-    },
-    {
-        "id": "c0587586e0feab65",
-        "type": "mqtt-broker",
-        "name": "",
-        "broker": "mqtt.cakrawala.id",
-        "port": "1883",
-        "clientid": "",
-        "autoConnect": true,
-        "usetls": false,
-        "protocolVersion": "4",
-        "keepalive": "60",
-        "cleansession": true,
-        "birthTopic": "",
-        "birthQos": "0",
-        "birthPayload": "",
-        "birthMsg": {},
-        "closeTopic": "",
-        "closeQos": "0",
-        "closePayload": "",
-        "closeMsg": {},
-        "willTopic": "",
-        "willQos": "0",
-        "willPayload": "",
-        "willMsg": {},
-        "userProps": "",
-        "sessionExpiry": ""
-    },
-    {
-        "id": "2bffb4e783a0c2ed",
-        "type": "MySQLdatabase",
-        "d": true,
-        "name": "bst_op",
-        "host": "localhost",
-        "port": "3306",
-        "db": "bst_op",
-        "tz": "UTC",
-        "charset": "UTF8"
-    },
-    {
-        "id": "32a6da0f907a8237",
-        "type": "MySQLdatabase",
-        "d": true,
-        "name": "bst_op_decoder",
-        "host": "127.0.0.1",
-        "port": "3306",
-        "db": "bst_op",
-        "tz": "UTC",
-        "charset": "UTF8"
-    },
-    {
-        "id": "1a43de3ee452c915",
-        "type": "MySQLdatabase",
-        "d": true,
-        "name": "bst_op_decoder_insert",
-        "host": "localhost",
-        "port": "3306",
-        "db": "bst_op",
-        "tz": "UTC",
-        "charset": "UTF8"
-    },
-    {
         "id": "e7a9b72075600f01",
         "type": "serial-port",
         "serialport": "COM1",
@@ -405,105 +526,6 @@
         "out": "char",
         "addchar": "",
         "responsetimeout": "10000"
-    },
-    {
-        "id": "54e0e4d1986c3da6",
-        "type": "MySQLdatabase",
-        "d": true,
-        "name": "bst_op",
-        "host": "localhost",
-        "port": "3306",
-        "db": "bst_op",
-        "tz": "UTC",
-        "charset": "UTF8"
-    },
-    {
-        "id": "cfc2b2a58a07f4a6",
-        "type": "MySQLdatabase",
-        "d": true,
-        "name": "bst_op_decoder",
-        "host": "127.0.0.1",
-        "port": "3306",
-        "db": "bst_op",
-        "tz": "UTC",
-        "charset": "UTF8"
-    },
-    {
-        "id": "b443960d2f483fde",
-        "type": "MySQLdatabase",
-        "d": true,
-        "name": "bst_op_decoder_insert",
-        "host": "localhost",
-        "port": "3306",
-        "db": "bst_op",
-        "tz": "UTC",
-        "charset": "UTF8"
-    },
-    {
-        "id": "c5d4c21594239517",
-        "type": "websocket-listener",
-        "path": "/ws/sensordatas",
-        "wholemsg": "false"
-    },
-    {
-        "id": "287fbfd1c0981137",
-        "type": "mqtt-broker",
-        "name": "",
-        "broker": "mqtt.cakrawala.id",
-        "port": "1883",
-        "clientid": "",
-        "autoConnect": true,
-        "usetls": false,
-        "protocolVersion": "4",
-        "keepalive": "60",
-        "cleansession": true,
-        "birthTopic": "",
-        "birthQos": "0",
-        "birthPayload": "",
-        "birthMsg": {},
-        "closeTopic": "",
-        "closeQos": "0",
-        "closePayload": "",
-        "closeMsg": {},
-        "willTopic": "",
-        "willQos": "0",
-        "willPayload": "",
-        "willMsg": {},
-        "userProps": "",
-        "sessionExpiry": ""
-    },
-    {
-        "id": "6ad12317b7d625b5",
-        "type": "websocket-listener",
-        "path": "/ws/sensordata",
-        "wholemsg": "false"
-    },
-    {
-        "id": "a854ee812dc72335",
-        "type": "mqtt-broker",
-        "name": "",
-        "broker": "mqtt.cakrawala.id",
-        "port": "1883",
-        "clientid": "",
-        "autoConnect": true,
-        "usetls": false,
-        "protocolVersion": "4",
-        "keepalive": "60",
-        "cleansession": true,
-        "birthTopic": "",
-        "birthQos": "0",
-        "birthPayload": "",
-        "birthMsg": {},
-        "closeTopic": "",
-        "closeQos": "0",
-        "closePayload": "",
-        "closeMsg": {},
-        "willTopic": "",
-        "willQos": "0",
-        "willPayload": "",
-        "willMsg": {},
-        "userProps": "",
-        "sessionExpiry": ""
     },
     {
         "id": "f4c28490e4b106b2",
@@ -544,39 +566,6 @@
         "responsetimeout": "10000"
     },
     {
-        "id": "65e826a5d17f83ca",
-        "type": "MySQLdatabase",
-        "d": true,
-        "name": "bst_op",
-        "host": "localhost",
-        "port": "3306",
-        "db": "bst_op",
-        "tz": "UTC",
-        "charset": "UTF8"
-    },
-    {
-        "id": "8a7f7bd3c920a188",
-        "type": "MySQLdatabase",
-        "d": true,
-        "name": "bst_op_decoder",
-        "host": "127.0.0.1",
-        "port": "3306",
-        "db": "bst_op",
-        "tz": "UTC",
-        "charset": "UTF8"
-    },
-    {
-        "id": "7fc24ae888100d55",
-        "type": "MySQLdatabase",
-        "d": true,
-        "name": "bst_op_decoder_insert",
-        "host": "localhost",
-        "port": "3306",
-        "db": "bst_op",
-        "tz": "UTC",
-        "charset": "UTF8"
-    },
-    {
         "id": "68de80a9c366f577",
         "type": "serial-port",
         "serialport": "COM6",
@@ -594,33 +583,6 @@
         "out": "char",
         "addchar": "",
         "responsetimeout": "10000"
-    },
-    {
-        "id": "d54d706df92f463f",
-        "type": "mqtt-broker",
-        "name": "",
-        "broker": "mqtt.cakrawala.id",
-        "port": "1883",
-        "clientid": "",
-        "autoConnect": true,
-        "usetls": false,
-        "protocolVersion": "4",
-        "keepalive": "60",
-        "cleansession": true,
-        "birthTopic": "",
-        "birthQos": "0",
-        "birthPayload": "",
-        "birthMsg": {},
-        "closeTopic": "",
-        "closeQos": "0",
-        "closePayload": "",
-        "closeMsg": {},
-        "willTopic": "",
-        "willQos": "0",
-        "willPayload": "",
-        "willMsg": {},
-        "userProps": "",
-        "sessionExpiry": ""
     },
     {
         "id": "13e8a2fb2cd93486",
@@ -680,73 +642,6 @@
         "responsetimeout": "10000"
     },
     {
-        "id": "2e45b84f9f25eef5",
-        "type": "websocket-listener",
-        "d": true,
-        "path": "/ws/sensordata",
-        "wholemsg": "false"
-    },
-    {
-        "id": "9ee02307b412a04e",
-        "type": "mqtt-broker",
-        "name": "",
-        "broker": "mqtt.cakrawala.id",
-        "port": "1883",
-        "clientid": "",
-        "autoConnect": true,
-        "usetls": false,
-        "protocolVersion": "4",
-        "keepalive": "60",
-        "cleansession": true,
-        "birthTopic": "",
-        "birthQos": "0",
-        "birthPayload": "",
-        "birthMsg": {},
-        "closeTopic": "",
-        "closeQos": "0",
-        "closePayload": "",
-        "closeMsg": {},
-        "willTopic": "",
-        "willQos": "0",
-        "willPayload": "",
-        "willMsg": {},
-        "userProps": "",
-        "sessionExpiry": ""
-    },
-    {
-        "id": "7a51fe6abe3c127f",
-        "type": "MySQLdatabase",
-        "d": true,
-        "name": "bst_op",
-        "host": "localhost",
-        "port": "3306",
-        "db": "bst_op",
-        "tz": "UTC",
-        "charset": "UTF8"
-    },
-    {
-        "id": "b47258cf45ab94ed",
-        "type": "MySQLdatabase",
-        "d": true,
-        "name": "bst_op_decoder",
-        "host": "127.0.0.1",
-        "port": "3306",
-        "db": "bst_op",
-        "tz": "UTC",
-        "charset": "UTF8"
-    },
-    {
-        "id": "0d4577e88360a832",
-        "type": "MySQLdatabase",
-        "d": true,
-        "name": "bst_op_decoder_insert",
-        "host": "localhost",
-        "port": "3306",
-        "db": "bst_op",
-        "tz": "UTC",
-        "charset": "UTF8"
-    },
-    {
         "id": "06b7b65f50430d3b",
         "type": "serial-port",
         "serialport": "COM1",
@@ -785,6 +680,138 @@
         "responsetimeout": "10000"
     },
     {
+        "id": "2bffb4e783a0c2ed",
+        "type": "MySQLdatabase",
+        "d": true,
+        "name": "bst_op",
+        "host": "localhost",
+        "port": "3306",
+        "db": "bst_op",
+        "tz": "UTC",
+        "charset": "UTF8"
+    },
+    {
+        "id": "32a6da0f907a8237",
+        "type": "MySQLdatabase",
+        "d": true,
+        "name": "bst_op_decoder",
+        "host": "127.0.0.1",
+        "port": "3306",
+        "db": "bst_op",
+        "tz": "UTC",
+        "charset": "UTF8"
+    },
+    {
+        "id": "1a43de3ee452c915",
+        "type": "MySQLdatabase",
+        "d": true,
+        "name": "bst_op_decoder_insert",
+        "host": "localhost",
+        "port": "3306",
+        "db": "bst_op",
+        "tz": "UTC",
+        "charset": "UTF8"
+    },
+    {
+        "id": "54e0e4d1986c3da6",
+        "type": "MySQLdatabase",
+        "d": true,
+        "name": "bst_op",
+        "host": "localhost",
+        "port": "3306",
+        "db": "bst_op",
+        "tz": "UTC",
+        "charset": "UTF8"
+    },
+    {
+        "id": "cfc2b2a58a07f4a6",
+        "type": "MySQLdatabase",
+        "d": true,
+        "name": "bst_op_decoder",
+        "host": "127.0.0.1",
+        "port": "3306",
+        "db": "bst_op",
+        "tz": "UTC",
+        "charset": "UTF8"
+    },
+    {
+        "id": "b443960d2f483fde",
+        "type": "MySQLdatabase",
+        "d": true,
+        "name": "bst_op_decoder_insert",
+        "host": "localhost",
+        "port": "3306",
+        "db": "bst_op",
+        "tz": "UTC",
+        "charset": "UTF8"
+    },
+    {
+        "id": "65e826a5d17f83ca",
+        "type": "MySQLdatabase",
+        "d": true,
+        "name": "bst_op",
+        "host": "localhost",
+        "port": "3306",
+        "db": "bst_op",
+        "tz": "UTC",
+        "charset": "UTF8"
+    },
+    {
+        "id": "8a7f7bd3c920a188",
+        "type": "MySQLdatabase",
+        "d": true,
+        "name": "bst_op_decoder",
+        "host": "127.0.0.1",
+        "port": "3306",
+        "db": "bst_op",
+        "tz": "UTC",
+        "charset": "UTF8"
+    },
+    {
+        "id": "7fc24ae888100d55",
+        "type": "MySQLdatabase",
+        "d": true,
+        "name": "bst_op_decoder_insert",
+        "host": "localhost",
+        "port": "3306",
+        "db": "bst_op",
+        "tz": "UTC",
+        "charset": "UTF8"
+    },
+    {
+        "id": "7a51fe6abe3c127f",
+        "type": "MySQLdatabase",
+        "d": true,
+        "name": "bst_op",
+        "host": "localhost",
+        "port": "3306",
+        "db": "bst_op",
+        "tz": "UTC",
+        "charset": "UTF8"
+    },
+    {
+        "id": "b47258cf45ab94ed",
+        "type": "MySQLdatabase",
+        "d": true,
+        "name": "bst_op_decoder",
+        "host": "127.0.0.1",
+        "port": "3306",
+        "db": "bst_op",
+        "tz": "UTC",
+        "charset": "UTF8"
+    },
+    {
+        "id": "0d4577e88360a832",
+        "type": "MySQLdatabase",
+        "d": true,
+        "name": "bst_op_decoder_insert",
+        "host": "localhost",
+        "port": "3306",
+        "db": "bst_op",
+        "tz": "UTC",
+        "charset": "UTF8"
+    },
+    {
         "id": "fb6290d2789e4005",
         "type": "MySQLdatabase",
         "d": true,
@@ -816,33 +843,6 @@
         "db": "bst_op",
         "tz": "UTC",
         "charset": "UTF8"
-    },
-    {
-        "id": "1007f679e71fda83",
-        "type": "mqtt-broker",
-        "name": "",
-        "broker": "mqtt.cakrawala.id",
-        "port": "1883",
-        "clientid": "",
-        "autoConnect": true,
-        "usetls": false,
-        "protocolVersion": "4",
-        "keepalive": "60",
-        "cleansession": true,
-        "birthTopic": "",
-        "birthQos": "0",
-        "birthPayload": "",
-        "birthMsg": {},
-        "closeTopic": "",
-        "closeQos": "0",
-        "closePayload": "",
-        "closeMsg": {},
-        "willTopic": "",
-        "willQos": "0",
-        "willPayload": "",
-        "willMsg": {},
-        "userProps": "",
-        "sessionExpiry": ""
     },
     {
         "id": "15ac1be9d7b1b4e1",
@@ -1215,19 +1215,6 @@
         "y": 120,
         "wires": [
             []
-        ]
-    },
-    {
-        "id": "44c59405dbf60c58",
-        "type": "ais-decoder",
-        "z": "9f8de59c262b7de1",
-        "name": "",
-        "x": 130,
-        "y": 60,
-        "wires": [
-            [
-                "0ee1358dd073c5c2"
-            ]
         ]
     },
     {
@@ -1847,19 +1834,6 @@
         ]
     },
     {
-        "id": "a318ffb7be555780",
-        "type": "ais-decoder",
-        "z": "37e155d714079b94",
-        "name": "",
-        "x": 130,
-        "y": 60,
-        "wires": [
-            [
-                "4fca860cbdd4d505"
-            ]
-        ]
-    },
-    {
         "id": "4fca860cbdd4d505",
         "type": "function",
         "z": "37e155d714079b94",
@@ -2218,7 +2192,7 @@
         "timeout": "5",
         "timeoutUnits": "seconds",
         "rate": "1",
-        "nbRateUnits": "15",
+        "nbRateUnits": "1",
         "rateUnits": "second",
         "randomFirst": "1",
         "randomLast": "5",
@@ -2226,7 +2200,7 @@
         "drop": true,
         "allowrate": false,
         "outputs": 1,
-        "x": 480,
+        "x": 470,
         "y": 180,
         "wires": [
             [
@@ -2276,61 +2250,6 @@
         ]
     },
     {
-        "id": "f6dc1745d85ec313",
-        "type": "ais",
-        "z": "17879f50931fc55a",
-        "name": "",
-        "x": 610,
-        "y": 120,
-        "wires": [
-            [
-                "21c0c83c51e99518"
-            ]
-        ]
-    },
-    {
-        "id": "51919cef7c2063d5",
-        "type": "ais-decoder",
-        "z": "17879f50931fc55a",
-        "name": "",
-        "x": 1050,
-        "y": 120,
-        "wires": [
-            [
-                "8ac57732f3d7624a"
-            ]
-        ]
-    },
-    {
-        "id": "25a559715ed99b68",
-        "type": "ais-decoder",
-        "z": "17879f50931fc55a",
-        "name": "",
-        "x": 610,
-        "y": 20,
-        "wires": [
-            [
-                "702660ed7d0bf73a"
-            ]
-        ]
-    },
-    {
-        "id": "4c35f946bf1dbed3",
-        "type": "nmea",
-        "z": "17879f50931fc55a",
-        "name": "",
-        "property": "payload",
-        "outputProperty": "payload",
-        "x": 910,
-        "y": 180,
-        "wires": [
-            [
-                "dcbfcb683a3a7e67",
-                "dd0bef023c4edddb"
-            ]
-        ]
-    },
-    {
         "id": "dd0bef023c4edddb",
         "type": "debug",
         "z": "17879f50931fc55a",
@@ -2355,7 +2274,7 @@
         "timeout": "5",
         "timeoutUnits": "seconds",
         "rate": "1",
-        "nbRateUnits": "5",
+        "nbRateUnits": "1",
         "rateUnits": "second",
         "randomFirst": "1",
         "randomLast": "5",
@@ -2363,7 +2282,7 @@
         "drop": true,
         "allowrate": false,
         "outputs": 1,
-        "x": 1380,
+        "x": 1370,
         "y": 120,
         "wires": [
             [
@@ -2381,7 +2300,7 @@
         "timeout": "5",
         "timeoutUnits": "seconds",
         "rate": "1",
-        "nbRateUnits": "5",
+        "nbRateUnits": "1",
         "rateUnits": "second",
         "randomFirst": "1",
         "randomLast": "5",
@@ -2389,7 +2308,7 @@
         "drop": true,
         "allowrate": false,
         "outputs": 1,
-        "x": 1260,
+        "x": 1250,
         "y": 20,
         "wires": [
             [
@@ -2519,7 +2438,7 @@
         "timeout": "5",
         "timeoutUnits": "seconds",
         "rate": "1",
-        "nbRateUnits": "10",
+        "nbRateUnits": "1",
         "rateUnits": "second",
         "randomFirst": "1",
         "randomLast": "5",
@@ -2527,12 +2446,67 @@
         "drop": true,
         "allowrate": false,
         "outputs": 1,
-        "x": 1760,
+        "x": 1750,
         "y": 200,
         "wires": [
             [
                 "9a2c8acc0e5319ee",
                 "6c9d872ebbaec0d3"
+            ]
+        ]
+    },
+    {
+        "id": "f6dc1745d85ec313",
+        "type": "ais",
+        "z": "17879f50931fc55a",
+        "name": "",
+        "x": 610,
+        "y": 120,
+        "wires": [
+            [
+                "21c0c83c51e99518"
+            ]
+        ]
+    },
+    {
+        "id": "51919cef7c2063d5",
+        "type": "ais-decoder",
+        "z": "17879f50931fc55a",
+        "name": "",
+        "x": 1050,
+        "y": 120,
+        "wires": [
+            [
+                "8ac57732f3d7624a"
+            ]
+        ]
+    },
+    {
+        "id": "25a559715ed99b68",
+        "type": "ais-decoder",
+        "z": "17879f50931fc55a",
+        "name": "",
+        "x": 610,
+        "y": 20,
+        "wires": [
+            [
+                "702660ed7d0bf73a"
+            ]
+        ]
+    },
+    {
+        "id": "4c35f946bf1dbed3",
+        "type": "nmea",
+        "z": "17879f50931fc55a",
+        "name": "",
+        "property": "payload",
+        "outputProperty": "payload",
+        "x": 910,
+        "y": 180,
+        "wires": [
+            [
+                "dcbfcb683a3a7e67",
+                "dd0bef023c4edddb"
             ]
         ]
     },
@@ -2584,7 +2558,7 @@
         "timeout": "5",
         "timeoutUnits": "seconds",
         "rate": "1",
-        "nbRateUnits": "5",
+        "nbRateUnits": "1",
         "rateUnits": "second",
         "randomFirst": "1",
         "randomLast": "5",
@@ -2592,7 +2566,7 @@
         "drop": true,
         "allowrate": false,
         "outputs": 1,
-        "x": 460,
+        "x": 450,
         "y": 100,
         "wires": [
             [
@@ -3066,38 +3040,6 @@
         ]
     },
     {
-        "id": "8c76257009e4805e",
-        "type": "cronplus",
-        "z": "8b616f6894142f79",
-        "name": "radar image",
-        "outputField": "payload",
-        "timeZone": "",
-        "persistDynamic": false,
-        "commandResponseMsgOutput": "output1",
-        "outputs": 1,
-        "options": [
-            {
-                "name": "schedule1",
-                "topic": "topic1",
-                "payloadType": "str",
-                "payload": "C:\\laragon\\bin\\php\\php-8.1.10-Win32-vs16-x64\\php \"C:\\Users\\admin\\Documents\\AIS-Local\\artisan\" radarpng",
-                "expressionType": "cron",
-                "expression": "0 */10 * * * *",
-                "location": "",
-                "offset": "0",
-                "solarType": "all",
-                "solarEvents": "sunrise,sunset"
-            }
-        ],
-        "x": 150,
-        "y": 60,
-        "wires": [
-            [
-                "961dcfa0c276c326"
-            ]
-        ]
-    },
-    {
         "id": "85c9d3185d65b55c",
         "type": "debug",
         "z": "8b616f6894142f79",
@@ -3136,70 +3078,6 @@
             ],
             [
                 "85c9d3185d65b55c"
-            ]
-        ]
-    },
-    {
-        "id": "82e6a3faeca429ae",
-        "type": "cronplus",
-        "z": "8b616f6894142f79",
-        "name": "radar data",
-        "outputField": "payload",
-        "timeZone": "",
-        "persistDynamic": false,
-        "commandResponseMsgOutput": "output1",
-        "outputs": 1,
-        "options": [
-            {
-                "name": "schedule1",
-                "topic": "topic1",
-                "payloadType": "str",
-                "payload": "C:\\laragon\\bin\\php\\php-8.1.10-Win32-vs16-x64\\php \"C:\\Users\\admin\\Documents\\AIS-Local\\artisan\" fetchradar",
-                "expressionType": "cron",
-                "expression": "0 */10 * * * *",
-                "location": "",
-                "offset": "0",
-                "solarType": "all",
-                "solarEvents": "sunrise,sunset"
-            }
-        ],
-        "x": 150,
-        "y": 140,
-        "wires": [
-            [
-                "90d3b6e1a1f699e6"
-            ]
-        ]
-    },
-    {
-        "id": "8b2424947843f29b",
-        "type": "cronplus",
-        "z": "8b616f6894142f79",
-        "name": "",
-        "outputField": "payload",
-        "timeZone": "",
-        "persistDynamic": false,
-        "commandResponseMsgOutput": "output1",
-        "outputs": 1,
-        "options": [
-            {
-                "name": "schedule1",
-                "topic": "topic1",
-                "payloadType": "default",
-                "payload": "",
-                "expressionType": "cron",
-                "expression": "0 */10 * * * *",
-                "location": "",
-                "offset": "0",
-                "solarType": "all",
-                "solarEvents": "sunrise,sunset"
-            }
-        ],
-        "x": 140,
-        "y": 260,
-        "wires": [
-            [
-                "73ae17533c9f8b30"
             ]
         ]
     },
@@ -3278,6 +3156,102 @@
             [
                 "faf0a9193cea829f",
                 "de9f8d87f4d11654"
+            ]
+        ]
+    },
+    {
+        "id": "8c76257009e4805e",
+        "type": "cronplus",
+        "z": "8b616f6894142f79",
+        "name": "radar image",
+        "outputField": "payload",
+        "timeZone": "",
+        "persistDynamic": false,
+        "commandResponseMsgOutput": "output1",
+        "outputs": 1,
+        "options": [
+            {
+                "name": "schedule1",
+                "topic": "topic1",
+                "payloadType": "str",
+                "payload": "C:\\laragon\\bin\\php\\php-8.1.10-Win32-vs16-x64\\php \"C:\\Users\\admin\\Documents\\AIS-Local\\artisan\" radarpng",
+                "expressionType": "cron",
+                "expression": "0 */10 * * * *",
+                "location": "",
+                "offset": "0",
+                "solarType": "all",
+                "solarEvents": "sunrise,sunset"
+            }
+        ],
+        "x": 150,
+        "y": 60,
+        "wires": [
+            [
+                "961dcfa0c276c326"
+            ]
+        ]
+    },
+    {
+        "id": "82e6a3faeca429ae",
+        "type": "cronplus",
+        "z": "8b616f6894142f79",
+        "name": "radar data",
+        "outputField": "payload",
+        "timeZone": "",
+        "persistDynamic": false,
+        "commandResponseMsgOutput": "output1",
+        "outputs": 1,
+        "options": [
+            {
+                "name": "schedule1",
+                "topic": "topic1",
+                "payloadType": "str",
+                "payload": "C:\\laragon\\bin\\php\\php-8.1.10-Win32-vs16-x64\\php \"C:\\Users\\admin\\Documents\\AIS-Local\\artisan\" fetchradar",
+                "expressionType": "cron",
+                "expression": "0 */10 * * * *",
+                "location": "",
+                "offset": "0",
+                "solarType": "all",
+                "solarEvents": "sunrise,sunset"
+            }
+        ],
+        "x": 150,
+        "y": 140,
+        "wires": [
+            [
+                "90d3b6e1a1f699e6"
+            ]
+        ]
+    },
+    {
+        "id": "8b2424947843f29b",
+        "type": "cronplus",
+        "z": "8b616f6894142f79",
+        "name": "",
+        "outputField": "payload",
+        "timeZone": "",
+        "persistDynamic": false,
+        "commandResponseMsgOutput": "output1",
+        "outputs": 1,
+        "options": [
+            {
+                "name": "schedule1",
+                "topic": "topic1",
+                "payloadType": "default",
+                "payload": "",
+                "expressionType": "cron",
+                "expression": "0 */10 * * * *",
+                "location": "",
+                "offset": "0",
+                "solarType": "all",
+                "solarEvents": "sunrise,sunset"
+            }
+        ],
+        "x": 140,
+        "y": 260,
+        "wires": [
+            [
+                "73ae17533c9f8b30"
             ]
         ]
     },
@@ -3400,5 +3374,64 @@
                 "965e2593a26899e1"
             ]
         ]
+    },
+    {
+        "id": "03652793f94cf8a8",
+        "type": "inject",
+        "z": "86b14407f78e2dfe",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "60",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1",
+        "payloadType": "num",
+        "x": 130,
+        "y": 140,
+        "wires": [
+            [
+                "299716a4c474b117",
+                "b7e2deaf551836d1"
+            ]
+        ]
+    },
+    {
+        "id": "299716a4c474b117",
+        "type": "websocket out",
+        "z": "86b14407f78e2dfe",
+        "name": "",
+        "server": "6ad12317b7d625b5",
+        "client": "",
+        "x": 350,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "b7e2deaf551836d1",
+        "type": "mqtt out",
+        "z": "86b14407f78e2dfe",
+        "name": "",
+        "topic": "sosfak",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "92bd4385102b2542",
+        "x": 330,
+        "y": 200,
+        "wires": []
     }
 ]

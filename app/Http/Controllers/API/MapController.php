@@ -23,51 +23,59 @@ class MapController extends Controller
     }
 
     public function playback()
-    {
-        $date = Carbon::parse(request('dateFrom'));
-        $date_until = Carbon::parse(request('dateTo'));
+{
+    $date = Carbon::parse(request('dateFrom'));
+    $date_until = Carbon::parse(request('dateTo'));
 
-        $track = AisDataPosition::orderBy('ais_data_positions.created_at', 'DESC')
-            ->join('ais_data_vessels', 'ais_data_positions.vessel_id', 'ais_data_vessels.id')
-            ->where('ais_data_vessels.mmsi', request('mmsi'))
-            ->select(
-                'ais_data_positions.latitude',
-                'ais_data_positions.longitude',
-                'ais_data_positions.course',
-                'ais_data_positions.created_at',
-                'ais_data_positions.speed',
-                'ais_data_vessels.mmsi',
-                'ais_data_vessels.vessel_name',
-                'ais_data_vessels.imo',
-                'ais_data_vessels.callsign'
-            )
-            ->when($date, function ($query) use ($date, $date_until) {
-                $query->whereBetween('ais_data_positions.created_at', [$date, $date_until]);
-            })
-            ->get();
-        $data = [];
+    $tracks = AisDataPosition::orderBy('ais_data_positions.created_at', 'DESC')
+        ->join('ais_data_vessels', 'ais_data_positions.vessel_id', 'ais_data_vessels.id')
+        ->select(
+            'ais_data_vessels.mmsi',
+            'ais_data_positions.latitude',
+            'ais_data_positions.longitude',
+            'ais_data_positions.course',
+            'ais_data_positions.created_at',
+            'ais_data_positions.speed',
+            'ais_data_vessels.vessel_name',
+            'ais_data_vessels.imo',
+            'ais_data_vessels.callsign'
+        )
+        ->when($date, function ($query) use ($date, $date_until) {
+            $query->whereBetween('ais_data_positions.created_at', [$date, $date_until]);
+        })
+        ->get();
 
-        foreach ($track as $i => $val) {
-            $data[] = collect([
-                'lat' => (float) $val['latitude'], 'lng' => (float) $val['longitude'], 'dir' => ((int) $val['cog'] * M_PI) / 180.0,
-                'time' => $val['created_at']->timestamp, 'heading' => ((int) $val['cog'] * M_PI) / 180.0,
-                'info' => [
-                    ['key' => 'MMSI', 'value' => $val['mmsi']],
-                    ['key' => 'Name', 'value' => $val['vessel_name']],
-                    ['key' => 'IMO', 'value' => $val['imo']],
-                    ['key' => 'Callsign', 'value' => $val['callsign']],
-                    ['key' => 'SOG', 'value' => $val['sog']],
-                    ['key' => 'COG', 'value' => $val['cog']],
-                    ['key' => 'Latitude', 'value' => $val['latitude']],
-                    ['key' => 'Longitude', 'value' => $val['longitude']],
-                    ['key' => 'Time Stamp ', 'value' => Carbon::parse($val['created_at'])->format('Y-m-d H:i:s')],
-                ],
-            ]);
-        }
+    $data = [];
 
-        return response()->json([
-            'success' => true,
-            'message' => $data,
-        ], 200);
+    foreach ($tracks as $track) {
+        $mmsi = $track['mmsi'];
+        $data[$mmsi]['mmsi'] = $mmsi;
+        $data[$mmsi]['playback'][] = [
+            'lat' => (float) $track['latitude'],
+            'lng' => (float) $track['longitude'],
+            'dir' => ((int) $track['course'] * M_PI) / 180.0,
+            'time' => $track['created_at']->timestamp,
+            'heading' => ((int) $track['course'] * M_PI) / 180.0,
+            'info' => [
+                ['key' => 'MMSI', 'value' => $mmsi],
+                ['key' => 'Name', 'value' => $track['vessel_name']],
+                ['key' => 'IMO', 'value' => $track['imo']],
+                ['key' => 'Callsign', 'value' => $track['callsign']],
+                ['key' => 'SOG', 'value' => $track['speed']],
+                ['key' => 'COG', 'value' => $track['course']],
+                ['key' => 'Latitude', 'value' => $track['latitude']],
+                ['key' => 'Longitude', 'value' => $track['longitude']],
+                ['key' => 'Time Stamp ', 'value' => Carbon::parse($track['created_at'])->format('Y-m-d H:i:s')],
+            ],
+        ];
     }
+
+    $response = [
+        'success' => true,
+        'message' => array_values($data),
+    ];
+
+    return response()->json($response, 200);
+}
+
 }
