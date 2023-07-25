@@ -20,6 +20,36 @@ use Location\Distance\Haversine;
 
 class HelperController extends Controller
 {
+    public function updateradarname()
+{
+    $id = request('id');
+    $name = request('name');
+
+    if (is_null($name)) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Name cannot be null.',
+        ], 400);
+    }
+
+    $radarData = RadarData::find($id);
+    if (!$radarData) {
+        return response()->json([
+            'success' => false,
+            'message' => 'RadarData not found.',
+        ], 404);
+    }
+
+    $radarData->name = $name;
+    $radarData->update();
+
+    return response()->json([
+        'success' => true,
+        'message' => $radarData,
+    ], 200);
+}
+
+
     public function radarpng()
     {
         $image = request()->file('file');

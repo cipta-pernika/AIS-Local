@@ -96,3 +96,6 @@ Route::post('camstopzoom', [HelperController::class, 'camstopzoom']);
 Route::post('movebylatlng', [HelperController::class, 'movebylatlng']);
 Route::post('camset', [HelperController::class, 'camset']);
 Route::post('camcall', [HelperController::class, 'camcall']);
+
+
+Route::post('updateradarname', [HelperController::class, 'updateradarname']);
