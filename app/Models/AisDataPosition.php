@@ -22,6 +22,7 @@ class AisDataPosition extends Model
         'timestamp',
         'turning_rate',
         'turning_direction',
+        'distance'
     ];
 
     public function sensorData()

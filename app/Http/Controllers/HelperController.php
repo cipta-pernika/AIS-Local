@@ -15,50 +15,49 @@ use App\Models\SensorData;
 use Carbon\Carbon;
 use Location\Bearing\BearingSpherical;
 use Location\Coordinate;
-use Location\Distance\Vincenty;
 use Location\Distance\Haversine;
+use Location\Distance\Vincenty;
 
 class HelperController extends Controller
 {
     public function updateradarname()
-{
-    $id = request('id');
-    $name = request('name');
+    {
+        $id = request('id');
+        $name = request('name');
 
-    if (is_null($name)) {
+        if (is_null($name)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Name cannot be null.',
+            ], 400);
+        }
+
+        $radarData = RadarData::find($id);
+        if (!$radarData) {
+            return response()->json([
+                'success' => false,
+                'message' => 'RadarData not found.',
+            ], 404);
+        }
+
+        $radarData->name = $name;
+        $radarData->update();
+
         return response()->json([
-            'success' => false,
-            'message' => 'Name cannot be null.',
-        ], 400);
+            'success' => true,
+            'message' => $radarData,
+        ], 200);
     }
-
-    $radarData = RadarData::find($id);
-    if (!$radarData) {
-        return response()->json([
-            'success' => false,
-            'message' => 'RadarData not found.',
-        ], 404);
-    }
-
-    $radarData->name = $name;
-    $radarData->update();
-
-    return response()->json([
-        'success' => true,
-        'message' => $radarData,
-    ], 200);
-}
-
 
     public function radarpng()
     {
         $image = request()->file('file');
-        $image->move(public_path().'/radarfolder', $image->getClientOriginalName());
+        $image->move(public_path() . '/radarfolder', $image->getClientOriginalName());
         return response()->json([
-            'success' => true
+            'success' => true,
         ], 200);
     }
-    
+
     public function position()
     {
         $datalogger = Datalogger::find(1);
@@ -175,6 +174,12 @@ class HelperController extends Controller
             $latitude = request()->latitude;
             $longitude = request()->longitude;
             if ($this->isValidLatitude($latitude) && $this->isValidLongitude($longitude)) {
+                $datalogger = Datalogger::find(1);
+                $coordinate1 = new Coordinate($datalogger->latitude, $datalogger->longitude);
+                $coordinate2 = new Coordinate(request()->latitude, request()->longitude);
+                $distance = $coordinate1->getDistance($coordinate2, new Haversine());
+                $distanceInKilometers = $distance / 1000;
+                $distanceInNauticalMiles = $distanceInKilometers * 0.539957;
                 $vesselPosition = new AisDataPosition([
                     'sensor_data_id' => $sensorData->id,
                     'vessel_id' => $vessel->id,
@@ -187,6 +192,7 @@ class HelperController extends Controller
                     'turning_rate' => request()->turningRate ?? request()->rateOfTurn,
                     'turning_direction' => request()->turningDirection,
                     'timestamp' => Carbon::parse(request()->isoDate),
+                    'distance' => $distanceInNauticalMiles,
                 ]);
                 $vesselPosition->save();
             }
@@ -277,8 +283,8 @@ class HelperController extends Controller
         $aisData = AisDataPosition::with('vessel', 'sensorData.sensor.datalogger')
             ->orderBy('created_at', 'DESC')
             ->groupBy('vessel_id')
-            // ->whereBetween('created_at', [now()->subMinutes(2), now()])
-            // ->limit(10)
+        // ->whereBetween('created_at', [now()->subMinutes(2), now()])
+        // ->limit(10)
             ->get();
 
         return response()->json([
@@ -349,9 +355,9 @@ class HelperController extends Controller
     {
         $aisData = AdsbDataPosition::with('aircraft', 'sensorData.sensor.datalogger')
             ->whereRaw('adsb_data_positions.id IN (select MAX(adsb_data_positions.id) FROM adsb_data_positions GROUP BY aircraft_id)')
-            // ->groupBy('aircraft_id')
+        // ->groupBy('aircraft_id')
             ->whereBetween('created_at', [now()->subHours(12), now()])
-            // ->orderBy('created_at', 'DESC')
+        // ->orderBy('created_at', 'DESC')
             ->get();
 
         return response()->json([
@@ -1198,11 +1204,11 @@ class HelperController extends Controller
         }
 
         $datalogger = Datalogger::find(1);
-            $coordinate1 = new Coordinate($datalogger->latitude, $datalogger->longitude);
-            $coordinate2 = new Coordinate(request()->latitude, request()->longitude);
-            $distance = $coordinate1->getDistance($coordinate2, new Haversine());
-            $distanceInKilometers = $distance / 1000;
-                        $distanceInNauticalMiles = $distanceInKilometers * 0.539957;
+        $coordinate1 = new Coordinate($datalogger->latitude, $datalogger->longitude);
+        $coordinate2 = new Coordinate(request()->latitude, request()->longitude);
+        $distance = $coordinate1->getDistance($coordinate2, new Haversine());
+        $distanceInKilometers = $distance / 1000;
+        $distanceInNauticalMiles = $distanceInKilometers * 0.539957;
 
         $radarData = new RadarData([
             'target_id' => request()->target_id,
@@ -1215,7 +1221,7 @@ class HelperController extends Controller
             'range' => request()->range,
             'bearing' => request()->bearing,
             'timestamp' => request()->timestamp,
-            'distance_from_fak' => $distanceInNauticalMiles
+            'distance_from_fak' => $distanceInNauticalMiles,
         ]);
         $radarData->save();
 
@@ -1238,7 +1244,7 @@ class HelperController extends Controller
             $coordinate2 = new Coordinate($item['latitude'], $item['longitude']);
             $distance = $coordinate1->getDistance($coordinate2, new Haversine());
             $distanceInKilometers = $distance / 1000;
-                        $distanceInNauticalMiles = $distanceInKilometers * 0.539957;
+            $distanceInNauticalMiles = $distanceInKilometers * 0.539957;
 
             $radarData = RadarData::updateOrCreate(
                 ['target_id' => $item['target_id']],
@@ -1252,7 +1258,7 @@ class HelperController extends Controller
                     'range' => $item['range'],
                     'bearing' => $item['bearing'],
                     'timestamp' => $item['timestamp'],
-                    'distance_from_fak' => $distanceInNauticalMiles
+                    'distance_from_fak' => $distanceInNauticalMiles,
                 ]
             );
         }
