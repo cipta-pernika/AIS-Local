@@ -2511,6 +2511,82 @@
         ]
     },
     {
+        "id": "b5a82e7fdb68dc17",
+        "type": "cronplus",
+        "z": "17879f50931fc55a",
+        "name": "out of range",
+        "outputField": "payload",
+        "timeZone": "",
+        "storeName": "",
+        "commandResponseMsgOutput": "output1",
+        "defaultLocation": "",
+        "defaultLocationType": "default",
+        "outputs": 1,
+        "options": [
+            {
+                "name": "schedule1",
+                "topic": "topic1",
+                "payloadType": "str",
+                "payload": "C:\\laragon\\bin\\php\\php-8.1.10-Win32-vs16-x64\\php \"C:\\Users\\USER\\Documents\\AIS-Local\\artisan\" app:outofrange",
+                "expressionType": "cron",
+                "expression": "0 */10 * * * *",
+                "location": "",
+                "offset": "0",
+                "solarType": "all",
+                "solarEvents": "sunrise,sunset"
+            }
+        ],
+        "x": 110,
+        "y": 400,
+        "wires": [
+            [
+                "5de8769cb9c387e0"
+            ]
+        ]
+    },
+    {
+        "id": "5de8769cb9c387e0",
+        "type": "exec",
+        "z": "17879f50931fc55a",
+        "command": "",
+        "addpay": "payload",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 270,
+        "y": 400,
+        "wires": [
+            [
+                "68dd793bd88266e1"
+            ],
+            [
+                "68dd793bd88266e1"
+            ],
+            [
+                "68dd793bd88266e1"
+            ]
+        ]
+    },
+    {
+        "id": "68dd793bd88266e1",
+        "type": "debug",
+        "z": "17879f50931fc55a",
+        "name": "debug 28",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 460,
+        "y": 400,
+        "wires": []
+    },
+    {
         "id": "cb0cbf94e58265e8",
         "type": "tcp in",
         "z": "c63ab78b43433ee2",
@@ -3167,6 +3243,7 @@
         "outputField": "payload",
         "timeZone": "",
         "persistDynamic": false,
+        "storeName": "",
         "commandResponseMsgOutput": "output1",
         "outputs": 1,
         "options": [
