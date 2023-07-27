@@ -1,6 +1,6 @@
 [
     {
-        "id": "17879f50931fc55a",
+        "id": "5bcb44ebef548647",
         "type": "tab",
         "label": "AIS",
         "disabled": false,
@@ -8,7 +8,7 @@
         "env": []
     },
     {
-        "id": "c63ab78b43433ee2",
+        "id": "a0b1eeb9fca4fab7",
         "type": "tab",
         "label": "ADS-B",
         "disabled": false,
@@ -16,7 +16,7 @@
         "env": []
     },
     {
-        "id": "8b616f6894142f79",
+        "id": "8adbecac0c1b664c",
         "type": "tab",
         "label": "RADAR",
         "disabled": false,
@@ -24,7 +24,7 @@
         "env": []
     },
     {
-        "id": "c501dc2b80aeee1e",
+        "id": "cfa3b248424f35bf",
         "type": "tab",
         "label": "Send & Receive",
         "disabled": false,
@@ -32,7 +32,7 @@
         "env": []
     },
     {
-        "id": "86b14407f78e2dfe",
+        "id": "6c5598670403b7f8",
         "type": "tab",
         "label": "SOS",
         "disabled": false,
@@ -473,8 +473,8 @@
     {
         "id": "bb03f8d1f5b4d598",
         "type": "serial-port",
-        "serialport": "/dev/ttyUSB0",
-        "serialbaud": "38400",
+        "serialport": "COM3",
+        "serialbaud": "9600",
         "databits": "8",
         "parity": "none",
         "stopbits": "1",
@@ -1852,9 +1852,9 @@
         ]
     },
     {
-        "id": "9575f78e93137840",
+        "id": "588c57281f5af4af",
         "type": "http request",
-        "z": "17879f50931fc55a",
+        "z": "5bcb44ebef548647",
         "name": "",
         "method": "use",
         "ret": "txt",
@@ -1871,15 +1871,15 @@
         "y": 160,
         "wires": [
             [
-                "3554105c664cab19",
-                "cdebce6620bdfb1c"
+                "cc6acc4d3e607336",
+                "39e9290ff3e1913b"
             ]
         ]
     },
     {
-        "id": "8ac57732f3d7624a",
+        "id": "6d8eaf9c2e4f0e40",
         "type": "function",
-        "z": "17879f50931fc55a",
+        "z": "5bcb44ebef548647",
         "name": "function 1",
         "func": "msg.method = \"POST\"\nmsg.url = \"http://127.0.0.1:8000/api/aisdata\"\nconst aisdata1 = flow.get(\"dataais\")\nconst aisdata2 = msg.payload\nconst joinedObject = { ...aisdata2, ...aisdata1 };\nmsg.payload = joinedObject;\nreturn msg;",
         "outputs": 1,
@@ -1891,14 +1891,14 @@
         "y": 120,
         "wires": [
             [
-                "65b567e76fc08e89"
+                "8c1a25896f332ebd"
             ]
         ]
     },
     {
-        "id": "1c6c853e04514542",
+        "id": "79a68e383a84f592",
         "type": "split",
-        "z": "17879f50931fc55a",
+        "z": "5bcb44ebef548647",
         "name": "",
         "splt": "\\n",
         "spltType": "str",
@@ -1910,15 +1910,15 @@
         "y": 100,
         "wires": [
             [
-                "90fceed17f9cf07f",
-                "bf6fc8387c67490b"
+                "32573320f6879891",
+                "1c40c3695379f861"
             ]
         ]
     },
     {
-        "id": "8eb9fee8e2368618",
+        "id": "c26077f0e179a91a",
         "type": "function",
-        "z": "17879f50931fc55a",
+        "z": "5bcb44ebef548647",
         "name": "function 2",
         "func": "flow.set(\"dataais\", msg.payload)\nmsg.payload = msg.payload.source\nreturn msg;",
         "outputs": 1,
@@ -1930,14 +1930,14 @@
         "y": 120,
         "wires": [
             [
-                "51919cef7c2063d5"
+                "07b53e7fb68e6155"
             ]
         ]
     },
     {
-        "id": "9a20ffa3dc5fa828",
+        "id": "d99505183151d23d",
         "type": "tcp in",
-        "z": "17879f50931fc55a",
+        "z": "5bcb44ebef548647",
         "name": "",
         "server": "client",
         "host": "192.168.5.148",
@@ -1953,15 +1953,15 @@
         "y": 100,
         "wires": [
             [
-                "1c6c853e04514542",
-                "5814adde37b6348b"
+                "79a68e383a84f592",
+                "37daadf13b1cac53"
             ]
         ]
     },
     {
-        "id": "6c9d872ebbaec0d3",
+        "id": "595b8b1259671ca6",
         "type": "websocket out",
-        "z": "17879f50931fc55a",
+        "z": "5bcb44ebef548647",
         "name": "",
         "server": "6ad12317b7d625b5",
         "client": "",
@@ -1970,9 +1970,9 @@
         "wires": []
     },
     {
-        "id": "27527ef78ded89dd",
+        "id": "3afecfdfb427312e",
         "type": "mqtt out",
-        "z": "17879f50931fc55a",
+        "z": "5bcb44ebef548647",
         "name": "",
         "topic": "aisdataloggerfak",
         "qos": "",
@@ -1988,9 +1988,9 @@
         "wires": []
     },
     {
-        "id": "90fceed17f9cf07f",
+        "id": "32573320f6879891",
         "type": "function",
-        "z": "17879f50931fc55a",
+        "z": "5bcb44ebef548647",
         "name": "function 6",
         "func": "var pl = String(msg.payload);\nmsg.payload = pl;\nreturn msg;",
         "outputs": 1,
@@ -2002,15 +2002,15 @@
         "y": 60,
         "wires": [
             [
-                "f6dc1745d85ec313",
-                "25a559715ed99b68"
+                "1deb6d3338b41c94",
+                "53e2ad5eb09c30d7"
             ]
         ]
     },
     {
-        "id": "21c0c83c51e99518",
+        "id": "f9c6413e57644bea",
         "type": "switch",
-        "z": "17879f50931fc55a",
+        "z": "5bcb44ebef548647",
         "name": "",
         "property": "payload.mmsi",
         "propertyType": "msg",
@@ -2029,14 +2029,14 @@
         "y": 120,
         "wires": [
             [
-                "8eb9fee8e2368618"
+                "c26077f0e179a91a"
             ]
         ]
     },
     {
-        "id": "702660ed7d0bf73a",
+        "id": "f8f8c697397b205b",
         "type": "switch",
-        "z": "17879f50931fc55a",
+        "z": "5bcb44ebef548647",
         "name": "",
         "property": "payload",
         "propertyType": "msg",
@@ -2052,14 +2052,14 @@
         "y": 20,
         "wires": [
             [
-                "ed4307820b43a856"
+                "5b2a8084f7c00f80"
             ]
         ]
     },
     {
-        "id": "ed4307820b43a856",
+        "id": "5b2a8084f7c00f80",
         "type": "switch",
-        "z": "17879f50931fc55a",
+        "z": "5bcb44ebef548647",
         "name": "",
         "property": "payload.name",
         "propertyType": "msg",
@@ -2075,14 +2075,14 @@
         "y": 20,
         "wires": [
             [
-                "bdb4cc7efca2b70e"
+                "0b15e906dd372f48"
             ]
         ]
     },
     {
-        "id": "bdb4cc7efca2b70e",
+        "id": "0b15e906dd372f48",
         "type": "function",
-        "z": "17879f50931fc55a",
+        "z": "5bcb44ebef548647",
         "name": "function 11",
         "func": "msg.method = \"POST\"\nmsg.url = \"http://127.0.0.1:8000/api/aisstatic\"\nconst aisdata2 = msg.payload\nmsg.payload = aisdata2;\nreturn msg;",
         "outputs": 1,
@@ -2094,14 +2094,14 @@
         "y": 20,
         "wires": [
             [
-                "21995c8a00990361"
+                "ce4b8b1df12e721a"
             ]
         ]
     },
     {
-        "id": "ddbbad301b22231e",
+        "id": "39c9ebb768e4270a",
         "type": "http request",
-        "z": "17879f50931fc55a",
+        "z": "5bcb44ebef548647",
         "name": "",
         "method": "use",
         "ret": "txt",
@@ -2121,9 +2121,9 @@
         ]
     },
     {
-        "id": "3390ca52d47be346",
+        "id": "242819caa409e3e7",
         "type": "mqtt out",
-        "z": "17879f50931fc55a",
+        "z": "5bcb44ebef548647",
         "name": "",
         "topic": "aisdatastaticfak",
         "qos": "2",
@@ -2139,9 +2139,9 @@
         "wires": []
     },
     {
-        "id": "9f73c0d4d868aa6b",
+        "id": "344a5cdd81e5c53e",
         "type": "switch",
-        "z": "17879f50931fc55a",
+        "z": "5bcb44ebef548647",
         "name": "",
         "property": "payload",
         "propertyType": "msg",
@@ -2160,14 +2160,14 @@
         "y": 180,
         "wires": [
             [
-                "db866382d8b05541"
+                "d91467a317a10786"
             ]
         ]
     },
     {
-        "id": "db866382d8b05541",
+        "id": "d91467a317a10786",
         "type": "function",
-        "z": "17879f50931fc55a",
+        "z": "5bcb44ebef548647",
         "name": "function 14",
         "func": "var pl = String(msg.payload);\nmsg.payload = pl;\nreturn msg;",
         "outputs": 1,
@@ -2179,14 +2179,14 @@
         "y": 180,
         "wires": [
             [
-                "4c35f946bf1dbed3"
+                "3aed4211fa35bdc1"
             ]
         ]
     },
     {
-        "id": "bf6fc8387c67490b",
+        "id": "1c40c3695379f861",
         "type": "delay",
-        "z": "17879f50931fc55a",
+        "z": "5bcb44ebef548647",
         "name": "",
         "pauseType": "rate",
         "timeout": "5",
@@ -2204,14 +2204,14 @@
         "y": 180,
         "wires": [
             [
-                "9f73c0d4d868aa6b"
+                "344a5cdd81e5c53e"
             ]
         ]
     },
     {
-        "id": "dcbfcb683a3a7e67",
+        "id": "509474e792ccda7e",
         "type": "function",
-        "z": "17879f50931fc55a",
+        "z": "5bcb44ebef548647",
         "name": "function 15",
         "func": "msg.method = \"POST\"\nmsg.url = \"http://127.0.0.1:8000/api/position\"\nmsg.payload = msg.payload;\nreturn msg;",
         "outputs": 1,
@@ -2223,14 +2223,14 @@
         "y": 180,
         "wires": [
             [
-                "5fbbda86db6ff5dd"
+                "3bc10fb7966b29a0"
             ]
         ]
     },
     {
-        "id": "5fbbda86db6ff5dd",
+        "id": "3bc10fb7966b29a0",
         "type": "http request",
-        "z": "17879f50931fc55a",
+        "z": "5bcb44ebef548647",
         "name": "",
         "method": "use",
         "ret": "txt",
@@ -2250,9 +2250,9 @@
         ]
     },
     {
-        "id": "dd0bef023c4edddb",
+        "id": "8adfc22c89d02ead",
         "type": "debug",
-        "z": "17879f50931fc55a",
+        "z": "5bcb44ebef548647",
         "name": "debug 25",
         "active": false,
         "tosidebar": true,
@@ -2266,9 +2266,9 @@
         "wires": []
     },
     {
-        "id": "65b567e76fc08e89",
+        "id": "8c1a25896f332ebd",
         "type": "delay",
-        "z": "17879f50931fc55a",
+        "z": "5bcb44ebef548647",
         "name": "",
         "pauseType": "rate",
         "timeout": "5",
@@ -2286,15 +2286,15 @@
         "y": 120,
         "wires": [
             [
-                "9575f78e93137840",
-                "27527ef78ded89dd"
+                "588c57281f5af4af",
+                "3afecfdfb427312e"
             ]
         ]
     },
     {
-        "id": "21995c8a00990361",
+        "id": "ce4b8b1df12e721a",
         "type": "delay",
-        "z": "17879f50931fc55a",
+        "z": "5bcb44ebef548647",
         "name": "",
         "pauseType": "rate",
         "timeout": "5",
@@ -2312,15 +2312,15 @@
         "y": 20,
         "wires": [
             [
-                "ddbbad301b22231e",
-                "3390ca52d47be346"
+                "39c9ebb768e4270a",
+                "242819caa409e3e7"
             ]
         ]
     },
     {
-        "id": "3554105c664cab19",
+        "id": "cc6acc4d3e607336",
         "type": "debug",
-        "z": "17879f50931fc55a",
+        "z": "5bcb44ebef548647",
         "name": "debug 26",
         "active": false,
         "tosidebar": true,
@@ -2334,9 +2334,9 @@
         "wires": []
     },
     {
-        "id": "42886fd787851907",
+        "id": "bb4d1486b8f89e44",
         "type": "udp out",
-        "z": "17879f50931fc55a",
+        "z": "5bcb44ebef548647",
         "name": "",
         "addr": "127.0.0.1",
         "iface": "",
@@ -2350,9 +2350,9 @@
         "wires": []
     },
     {
-        "id": "3497afd270cb269e",
+        "id": "f0e0a04ff4def13a",
         "type": "switch",
-        "z": "17879f50931fc55a",
+        "z": "5bcb44ebef548647",
         "name": "",
         "property": "payload",
         "propertyType": "msg",
@@ -2371,15 +2371,15 @@
         "y": 220,
         "wires": [
             [
-                "42886fd787851907",
-                "3f636074fab716cf"
+                "bb4d1486b8f89e44",
+                "4f10a4394b0da60d"
             ]
         ]
     },
     {
-        "id": "5814adde37b6348b",
+        "id": "37daadf13b1cac53",
         "type": "split",
-        "z": "17879f50931fc55a",
+        "z": "5bcb44ebef548647",
         "name": "",
         "splt": "\\n",
         "spltType": "str",
@@ -2391,14 +2391,14 @@
         "y": 220,
         "wires": [
             [
-                "3497afd270cb269e"
+                "f0e0a04ff4def13a"
             ]
         ]
     },
     {
-        "id": "9a2c8acc0e5319ee",
+        "id": "66ef07c4f082d276",
         "type": "mqtt out",
-        "z": "17879f50931fc55a",
+        "z": "5bcb44ebef548647",
         "name": "",
         "topic": "aisdatamatang",
         "qos": "",
@@ -2414,9 +2414,9 @@
         "wires": []
     },
     {
-        "id": "3f636074fab716cf",
+        "id": "4f10a4394b0da60d",
         "type": "udp out",
-        "z": "17879f50931fc55a",
+        "z": "5bcb44ebef548647",
         "name": "",
         "addr": "127.0.0.1",
         "iface": "",
@@ -2430,9 +2430,9 @@
         "wires": []
     },
     {
-        "id": "cdebce6620bdfb1c",
+        "id": "39e9290ff3e1913b",
         "type": "delay",
-        "z": "17879f50931fc55a",
+        "z": "5bcb44ebef548647",
         "name": "",
         "pauseType": "rate",
         "timeout": "5",
@@ -2450,54 +2450,54 @@
         "y": 200,
         "wires": [
             [
-                "9a2c8acc0e5319ee",
-                "6c9d872ebbaec0d3"
+                "66ef07c4f082d276",
+                "595b8b1259671ca6"
             ]
         ]
     },
     {
-        "id": "f6dc1745d85ec313",
+        "id": "1deb6d3338b41c94",
         "type": "ais",
-        "z": "17879f50931fc55a",
+        "z": "5bcb44ebef548647",
         "name": "",
         "x": 610,
         "y": 120,
         "wires": [
             [
-                "21c0c83c51e99518"
+                "f9c6413e57644bea"
             ]
         ]
     },
     {
-        "id": "51919cef7c2063d5",
+        "id": "07b53e7fb68e6155",
         "type": "ais-decoder",
-        "z": "17879f50931fc55a",
+        "z": "5bcb44ebef548647",
         "name": "",
         "x": 1050,
         "y": 120,
         "wires": [
             [
-                "8ac57732f3d7624a"
+                "6d8eaf9c2e4f0e40"
             ]
         ]
     },
     {
-        "id": "25a559715ed99b68",
+        "id": "53e2ad5eb09c30d7",
         "type": "ais-decoder",
-        "z": "17879f50931fc55a",
+        "z": "5bcb44ebef548647",
         "name": "",
         "x": 610,
         "y": 20,
         "wires": [
             [
-                "702660ed7d0bf73a"
+                "f8f8c697397b205b"
             ]
         ]
     },
     {
-        "id": "4c35f946bf1dbed3",
+        "id": "3aed4211fa35bdc1",
         "type": "nmea",
-        "z": "17879f50931fc55a",
+        "z": "5bcb44ebef548647",
         "name": "",
         "property": "payload",
         "outputProperty": "payload",
@@ -2505,15 +2505,15 @@
         "y": 180,
         "wires": [
             [
-                "dcbfcb683a3a7e67",
-                "dd0bef023c4edddb"
+                "509474e792ccda7e",
+                "8adfc22c89d02ead"
             ]
         ]
     },
     {
-        "id": "b5a82e7fdb68dc17",
+        "id": "ee9a03828f11a8d4",
         "type": "cronplus",
-        "z": "17879f50931fc55a",
+        "z": "5bcb44ebef548647",
         "name": "out of range",
         "outputField": "payload",
         "timeZone": "",
@@ -2540,14 +2540,14 @@
         "y": 400,
         "wires": [
             [
-                "5de8769cb9c387e0"
+                "78fb7beeac84dfb8"
             ]
         ]
     },
     {
-        "id": "5de8769cb9c387e0",
+        "id": "78fb7beeac84dfb8",
         "type": "exec",
-        "z": "17879f50931fc55a",
+        "z": "5bcb44ebef548647",
         "command": "",
         "addpay": "payload",
         "append": "",
@@ -2560,20 +2560,20 @@
         "y": 400,
         "wires": [
             [
-                "68dd793bd88266e1"
+                "80833f8549a953c7"
             ],
             [
-                "68dd793bd88266e1"
+                "80833f8549a953c7"
             ],
             [
-                "68dd793bd88266e1"
+                "80833f8549a953c7"
             ]
         ]
     },
     {
-        "id": "68dd793bd88266e1",
+        "id": "80833f8549a953c7",
         "type": "debug",
-        "z": "17879f50931fc55a",
+        "z": "5bcb44ebef548647",
         "name": "debug 28",
         "active": false,
         "tosidebar": true,
@@ -2587,9 +2587,9 @@
         "wires": []
     },
     {
-        "id": "cb0cbf94e58265e8",
+        "id": "a030d12df663ee33",
         "type": "tcp in",
-        "z": "c63ab78b43433ee2",
+        "z": "a0b1eeb9fca4fab7",
         "name": "",
         "server": "client",
         "host": "192.168.5.147",
@@ -2605,14 +2605,14 @@
         "y": 100,
         "wires": [
             [
-                "b588a72b9192551b"
+                "f2ba46985479748a"
             ]
         ]
     },
     {
-        "id": "8a3da9c1ee87d776",
+        "id": "e7d83eb68da4151f",
         "type": "debug",
-        "z": "c63ab78b43433ee2",
+        "z": "a0b1eeb9fca4fab7",
         "name": "debug 6",
         "active": false,
         "tosidebar": true,
@@ -2626,9 +2626,9 @@
         "wires": []
     },
     {
-        "id": "b588a72b9192551b",
+        "id": "f2ba46985479748a",
         "type": "delay",
-        "z": "c63ab78b43433ee2",
+        "z": "a0b1eeb9fca4fab7",
         "name": "",
         "pauseType": "rate",
         "timeout": "5",
@@ -2646,14 +2646,14 @@
         "y": 100,
         "wires": [
             [
-                "7f4d7d93e8aee5b7"
+                "026f2471fc9faf24"
             ]
         ]
     },
     {
-        "id": "19cd4b36adc2888b",
+        "id": "7e3d05ae7980b8aa",
         "type": "tcp in",
-        "z": "c63ab78b43433ee2",
+        "z": "a0b1eeb9fca4fab7",
         "name": "",
         "server": "client",
         "host": "192.168.100.2",
@@ -2669,14 +2669,14 @@
         "y": 320,
         "wires": [
             [
-                "b01eee6de67d83b7"
+                "9b71c036faf2a780"
             ]
         ]
     },
     {
-        "id": "4f076f44e44d3019",
+        "id": "e5241316c6b9fd20",
         "type": "tcp in",
-        "z": "c63ab78b43433ee2",
+        "z": "a0b1eeb9fca4fab7",
         "name": "",
         "server": "client",
         "host": "192.168.100.4",
@@ -2692,15 +2692,15 @@
         "y": 400,
         "wires": [
             [
-                "b01eee6de67d83b7",
-                "2870f74ca5f8d437"
+                "9b71c036faf2a780",
+                "21d7aa87af91d1cc"
             ]
         ]
     },
     {
-        "id": "eb19e336825d05eb",
+        "id": "411373cca4e3a0c2",
         "type": "debug",
-        "z": "c63ab78b43433ee2",
+        "z": "a0b1eeb9fca4fab7",
         "name": "debug 7",
         "active": false,
         "tosidebar": true,
@@ -2714,9 +2714,9 @@
         "wires": []
     },
     {
-        "id": "9002c7890c4cba5e",
+        "id": "4d766e73c11e4286",
         "type": "debug",
-        "z": "c63ab78b43433ee2",
+        "z": "a0b1eeb9fca4fab7",
         "name": "debug 8",
         "active": true,
         "tosidebar": true,
@@ -2730,9 +2730,9 @@
         "wires": []
     },
     {
-        "id": "368defd67982cad0",
+        "id": "799a5a08985ca544",
         "type": "inject",
-        "z": "c63ab78b43433ee2",
+        "z": "a0b1eeb9fca4fab7",
         "name": "",
         "props": [
             {
@@ -2754,14 +2754,14 @@
         "y": 460,
         "wires": [
             [
-                "756279a9889e16a9"
+                "00882594fd05e6f8"
             ]
         ]
     },
     {
-        "id": "5977f28d2202fc59",
+        "id": "2e632cf94cd031e0",
         "type": "function",
-        "z": "c63ab78b43433ee2",
+        "z": "a0b1eeb9fca4fab7",
         "name": "function 3",
         "func": "msg.method = \"POST\"\nmsg.url = \"http://127.0.0.1:8000/api/adsbdatav2\"\nconst aisdata1 = { msgSbs: flow.get(\"dataadsb\") }\nconst aisdata2 = msg.payload\nconst joinedObject = { ...aisdata2, ...aisdata1 };\nmsg.payload = joinedObject;\nreturn msg;",
         "outputs": 1,
@@ -2773,15 +2773,15 @@
         "y": 140,
         "wires": [
             [
-                "2a7775ef9722a2d6",
-                "8e6b8e30f3b04bf6"
+                "d82d227e54dbbf1e",
+                "0a02bbe6f754ee9f"
             ]
         ]
     },
     {
-        "id": "2a7775ef9722a2d6",
+        "id": "d82d227e54dbbf1e",
         "type": "http request",
-        "z": "c63ab78b43433ee2",
+        "z": "a0b1eeb9fca4fab7",
         "name": "",
         "method": "use",
         "ret": "txt",
@@ -2798,14 +2798,14 @@
         "y": 220,
         "wires": [
             [
-                "184c5c2f30809afc"
+                "0640dce1fbc02dd4"
             ]
         ]
     },
     {
-        "id": "184c5c2f30809afc",
+        "id": "0640dce1fbc02dd4",
         "type": "debug",
-        "z": "c63ab78b43433ee2",
+        "z": "a0b1eeb9fca4fab7",
         "name": "debug 9",
         "active": false,
         "tosidebar": true,
@@ -2819,9 +2819,9 @@
         "wires": []
     },
     {
-        "id": "7f4d7d93e8aee5b7",
+        "id": "026f2471fc9faf24",
         "type": "function",
-        "z": "c63ab78b43433ee2",
+        "z": "a0b1eeb9fca4fab7",
         "name": "function 4",
         "func": "flow.set(\"dataadsb\", msg.payload)\nmsg.payload = msg.payload\nreturn msg;",
         "outputs": 1,
@@ -2833,14 +2833,14 @@
         "y": 100,
         "wires": [
             [
-                "4ec746d1e4c3789b"
+                "ea975225e2af643a"
             ]
         ]
     },
     {
-        "id": "b01eee6de67d83b7",
+        "id": "9b71c036faf2a780",
         "type": "debug",
-        "z": "c63ab78b43433ee2",
+        "z": "a0b1eeb9fca4fab7",
         "name": "debug 19",
         "active": false,
         "tosidebar": true,
@@ -2854,9 +2854,9 @@
         "wires": []
     },
     {
-        "id": "99a903e5b2e05252",
+        "id": "19cf5b273cd38178",
         "type": "tcp in",
-        "z": "c63ab78b43433ee2",
+        "z": "a0b1eeb9fca4fab7",
         "name": "",
         "server": "client",
         "host": "192.168.100.4",
@@ -2872,16 +2872,16 @@
         "y": 40,
         "wires": [
             [
-                "19a201bcb102c561",
-                "b588a72b9192551b",
-                "97390ac6d007923f"
+                "e731416d9b6f7e14",
+                "f2ba46985479748a",
+                "c6da07e861f4ffeb"
             ]
         ]
     },
     {
-        "id": "19a201bcb102c561",
+        "id": "e731416d9b6f7e14",
         "type": "function",
-        "z": "c63ab78b43433ee2",
+        "z": "a0b1eeb9fca4fab7",
         "name": "function 13",
         "func": "flow.set(\"dataadsb\", msg.payload)\nmsg.payload = msg.payload\nreturn msg;",
         "outputs": 1,
@@ -2893,14 +2893,14 @@
         "y": 40,
         "wires": [
             [
-                "89d8b029cf403f67"
+                "26b42203ed63587c"
             ]
         ]
     },
     {
-        "id": "8e6b8e30f3b04bf6",
+        "id": "0a02bbe6f754ee9f",
         "type": "mqtt out",
-        "z": "c63ab78b43433ee2",
+        "z": "a0b1eeb9fca4fab7",
         "name": "",
         "topic": "adsbdataloggerfak",
         "qos": "",
@@ -2916,9 +2916,9 @@
         "wires": []
     },
     {
-        "id": "2870f74ca5f8d437",
+        "id": "21d7aa87af91d1cc",
         "type": "debug",
-        "z": "c63ab78b43433ee2",
+        "z": "a0b1eeb9fca4fab7",
         "name": "debug 20",
         "active": false,
         "tosidebar": true,
@@ -2932,9 +2932,9 @@
         "wires": []
     },
     {
-        "id": "97390ac6d007923f",
+        "id": "c6da07e861f4ffeb",
         "type": "debug",
-        "z": "c63ab78b43433ee2",
+        "z": "a0b1eeb9fca4fab7",
         "name": "debug 21",
         "active": false,
         "tosidebar": true,
@@ -2948,9 +2948,9 @@
         "wires": []
     },
     {
-        "id": "306a2087cb3938d5",
+        "id": "bd2976b7616379b3",
         "type": "switch",
-        "z": "c63ab78b43433ee2",
+        "z": "a0b1eeb9fca4fab7",
         "name": "",
         "property": "payload.lat",
         "propertyType": "msg",
@@ -2966,14 +2966,14 @@
         "y": 40,
         "wires": [
             [
-                "8a3da9c1ee87d776"
+                "e7d83eb68da4151f"
             ]
         ]
     },
     {
-        "id": "4ec746d1e4c3789b",
+        "id": "ea975225e2af643a",
         "type": "npm",
-        "z": "c63ab78b43433ee2",
+        "z": "a0b1eeb9fca4fab7",
         "name": "",
         "func": "// NPM module exposed as variable, npm_module\nreturn npm_module(msg.payload);",
         "npm_module": "sbs1",
@@ -2984,14 +2984,14 @@
         "y": 100,
         "wires": [
             [
-                "5977f28d2202fc59"
+                "2e632cf94cd031e0"
             ]
         ]
     },
     {
-        "id": "d97db836f834160a",
+        "id": "6ffdfc934b00e987",
         "type": "npm",
-        "z": "c63ab78b43433ee2",
+        "z": "a0b1eeb9fca4fab7",
         "name": "",
         "func": "// NPM module exposed as variable, npm_module\nreturn npm_module(msg.payload);",
         "npm_module": "mode-s-decoder",
@@ -3002,14 +3002,14 @@
         "y": 320,
         "wires": [
             [
-                "eb19e336825d05eb"
+                "411373cca4e3a0c2"
             ]
         ]
     },
     {
-        "id": "813864c6182a8230",
+        "id": "6b17e24639aa05a7",
         "type": "npm",
-        "z": "c63ab78b43433ee2",
+        "z": "a0b1eeb9fca4fab7",
         "name": "",
         "func": "// NPM module exposed as variable, npm_module\nreturn npm_module(msg.payload);",
         "npm_module": "ads-b",
@@ -3023,9 +3023,9 @@
         ]
     },
     {
-        "id": "ce1d635a60b9bb0a",
+        "id": "013b1b5e77c6a31e",
         "type": "npm",
-        "z": "c63ab78b43433ee2",
+        "z": "a0b1eeb9fca4fab7",
         "d": true,
         "name": "",
         "func": "// NPM module exposed as variable, npm_module\nreturn npm_module(msg.payload);",
@@ -3040,9 +3040,9 @@
         ]
     },
     {
-        "id": "89d8b029cf403f67",
+        "id": "26b42203ed63587c",
         "type": "npm",
-        "z": "c63ab78b43433ee2",
+        "z": "a0b1eeb9fca4fab7",
         "name": "",
         "func": "// NPM module exposed as variable, npm_module\nreturn npm_module(msg.payload);",
         "npm_module": "sbs1",
@@ -3053,14 +3053,14 @@
         "y": 40,
         "wires": [
             [
-                "306a2087cb3938d5"
+                "bd2976b7616379b3"
             ]
         ]
     },
     {
-        "id": "756279a9889e16a9",
+        "id": "00882594fd05e6f8",
         "type": "function-npm",
-        "z": "c63ab78b43433ee2",
+        "z": "a0b1eeb9fca4fab7",
         "name": "",
         "func": "const decoder = require('decoder1090-c')\nmsg.payload = decoder.decodeMsg(msg.payload)\nreturn msg;",
         "outputs": 1,
@@ -3069,14 +3069,14 @@
         "y": 460,
         "wires": [
             [
-                "9002c7890c4cba5e"
+                "4d766e73c11e4286"
             ]
         ]
     },
     {
-        "id": "5bfcb950cd14bf94",
+        "id": "0b5a11380a7d3255",
         "type": "debug",
-        "z": "8b616f6894142f79",
+        "z": "8adbecac0c1b664c",
         "name": "debug 23",
         "active": false,
         "tosidebar": true,
@@ -3090,9 +3090,9 @@
         "wires": []
     },
     {
-        "id": "961dcfa0c276c326",
+        "id": "aaf2275f8dbd556d",
         "type": "exec",
-        "z": "8b616f6894142f79",
+        "z": "8adbecac0c1b664c",
         "command": "",
         "addpay": "payload",
         "append": "",
@@ -3105,20 +3105,20 @@
         "y": 60,
         "wires": [
             [
-                "5bfcb950cd14bf94"
+                "0b5a11380a7d3255"
             ],
             [
-                "5bfcb950cd14bf94"
+                "0b5a11380a7d3255"
             ],
             [
-                "5bfcb950cd14bf94"
+                "0b5a11380a7d3255"
             ]
         ]
     },
     {
-        "id": "85c9d3185d65b55c",
+        "id": "63132010c4eeda16",
         "type": "debug",
-        "z": "8b616f6894142f79",
+        "z": "8adbecac0c1b664c",
         "name": "debug 24",
         "active": false,
         "tosidebar": true,
@@ -3132,9 +3132,9 @@
         "wires": []
     },
     {
-        "id": "90d3b6e1a1f699e6",
+        "id": "827d6fd18f81ee70",
         "type": "exec",
-        "z": "8b616f6894142f79",
+        "z": "8adbecac0c1b664c",
         "command": "",
         "addpay": "payload",
         "append": "",
@@ -3147,20 +3147,20 @@
         "y": 140,
         "wires": [
             [
-                "85c9d3185d65b55c"
+                "63132010c4eeda16"
             ],
             [
-                "85c9d3185d65b55c"
+                "63132010c4eeda16"
             ],
             [
-                "85c9d3185d65b55c"
+                "63132010c4eeda16"
             ]
         ]
     },
     {
-        "id": "de9f8d87f4d11654",
+        "id": "6ee289206f5ecc39",
         "type": "debug",
-        "z": "8b616f6894142f79",
+        "z": "8adbecac0c1b664c",
         "name": "debug 27",
         "active": false,
         "tosidebar": true,
@@ -3174,9 +3174,9 @@
         "wires": []
     },
     {
-        "id": "faf0a9193cea829f",
+        "id": "258f3ef675cc07c3",
         "type": "mqtt out",
-        "z": "8b616f6894142f79",
+        "z": "8adbecac0c1b664c",
         "name": "",
         "topic": "radardatafak",
         "qos": "",
@@ -3192,9 +3192,9 @@
         "wires": []
     },
     {
-        "id": "73ae17533c9f8b30",
+        "id": "2b99ab069342c235",
         "type": "function",
-        "z": "8b616f6894142f79",
+        "z": "8adbecac0c1b664c",
         "name": "function 16",
         "func": "msg.method = \"GET\"\nmsg.url = \"http://127.0.0.1:8000/api/radardatauniquelimit\"\nreturn msg;",
         "outputs": 1,
@@ -3206,14 +3206,14 @@
         "y": 260,
         "wires": [
             [
-                "855539997ed77a31"
+                "bfd1de8ff5c227d2"
             ]
         ]
     },
     {
-        "id": "855539997ed77a31",
+        "id": "bfd1de8ff5c227d2",
         "type": "http request",
-        "z": "8b616f6894142f79",
+        "z": "8adbecac0c1b664c",
         "name": "",
         "method": "use",
         "ret": "txt",
@@ -3230,15 +3230,15 @@
         "y": 260,
         "wires": [
             [
-                "faf0a9193cea829f",
-                "de9f8d87f4d11654"
+                "258f3ef675cc07c3",
+                "6ee289206f5ecc39"
             ]
         ]
     },
     {
-        "id": "8c76257009e4805e",
+        "id": "4ac4e7d097e61377",
         "type": "cronplus",
-        "z": "8b616f6894142f79",
+        "z": "8adbecac0c1b664c",
         "name": "radar image",
         "outputField": "payload",
         "timeZone": "",
@@ -3264,14 +3264,14 @@
         "y": 60,
         "wires": [
             [
-                "961dcfa0c276c326"
+                "aaf2275f8dbd556d"
             ]
         ]
     },
     {
-        "id": "82e6a3faeca429ae",
+        "id": "72102baf9cff38fd",
         "type": "cronplus",
-        "z": "8b616f6894142f79",
+        "z": "8adbecac0c1b664c",
         "name": "radar data",
         "outputField": "payload",
         "timeZone": "",
@@ -3296,14 +3296,14 @@
         "y": 140,
         "wires": [
             [
-                "90d3b6e1a1f699e6"
+                "827d6fd18f81ee70"
             ]
         ]
     },
     {
-        "id": "8b2424947843f29b",
+        "id": "3187aefd37a0acbc",
         "type": "cronplus",
-        "z": "8b616f6894142f79",
+        "z": "8adbecac0c1b664c",
         "name": "",
         "outputField": "payload",
         "timeZone": "",
@@ -3328,14 +3328,14 @@
         "y": 260,
         "wires": [
             [
-                "73ae17533c9f8b30"
+                "2b99ab069342c235"
             ]
         ]
     },
     {
-        "id": "3709e29822cf32cf",
+        "id": "2a936f24a6751eea",
         "type": "debug",
-        "z": "c501dc2b80aeee1e",
+        "z": "cfa3b248424f35bf",
         "name": "debug 4",
         "active": false,
         "tosidebar": true,
@@ -3349,9 +3349,9 @@
         "wires": []
     },
     {
-        "id": "965e2593a26899e1",
+        "id": "e35047beb5d0d3bf",
         "type": "exec",
-        "z": "c501dc2b80aeee1e",
+        "z": "cfa3b248424f35bf",
         "command": "",
         "addpay": "payload",
         "append": "",
@@ -3364,20 +3364,20 @@
         "y": 80,
         "wires": [
             [
-                "3709e29822cf32cf"
+                "2a936f24a6751eea"
             ],
             [
-                "3709e29822cf32cf"
+                "2a936f24a6751eea"
             ],
             [
-                "3709e29822cf32cf"
+                "2a936f24a6751eea"
             ]
         ]
     },
     {
-        "id": "e8c2c7a5e1a32d26",
+        "id": "98fe1a1895a5f37d",
         "type": "http in",
-        "z": "c501dc2b80aeee1e",
+        "z": "cfa3b248424f35bf",
         "name": "",
         "url": "/api/nampungdata",
         "method": "post",
@@ -3387,15 +3387,15 @@
         "y": 360,
         "wires": [
             [
-                "4f97f328b859df1a",
-                "ce0b5a9a6e866e6c"
+                "a10a35bc266f9533",
+                "c4465c70f83bc814"
             ]
         ]
     },
     {
-        "id": "ce0b5a9a6e866e6c",
+        "id": "c4465c70f83bc814",
         "type": "debug",
-        "z": "c501dc2b80aeee1e",
+        "z": "cfa3b248424f35bf",
         "name": "debug 5",
         "active": true,
         "tosidebar": true,
@@ -3409,9 +3409,9 @@
         "wires": []
     },
     {
-        "id": "4f97f328b859df1a",
+        "id": "a10a35bc266f9533",
         "type": "http response",
-        "z": "c501dc2b80aeee1e",
+        "z": "cfa3b248424f35bf",
         "name": "",
         "statusCode": "200",
         "headers": {},
@@ -3420,9 +3420,9 @@
         "wires": []
     },
     {
-        "id": "635fc657433a8717",
+        "id": "55d5512f5fc8d588",
         "type": "cronplus",
-        "z": "c501dc2b80aeee1e",
+        "z": "cfa3b248424f35bf",
         "d": true,
         "name": "sendata",
         "outputField": "payload",
@@ -3448,44 +3448,14 @@
         "y": 80,
         "wires": [
             [
-                "965e2593a26899e1"
+                "e35047beb5d0d3bf"
             ]
         ]
     },
     {
-        "id": "03652793f94cf8a8",
-        "type": "inject",
-        "z": "86b14407f78e2dfe",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "60",
-        "crontab": "",
-        "once": true,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "1",
-        "payloadType": "num",
-        "x": 130,
-        "y": 140,
-        "wires": [
-            [
-                "299716a4c474b117",
-                "b7e2deaf551836d1"
-            ]
-        ]
-    },
-    {
-        "id": "299716a4c474b117",
+        "id": "9491342092325130",
         "type": "websocket out",
-        "z": "86b14407f78e2dfe",
+        "z": "6c5598670403b7f8",
         "name": "",
         "server": "6ad12317b7d625b5",
         "client": "",
@@ -3494,9 +3464,9 @@
         "wires": []
     },
     {
-        "id": "b7e2deaf551836d1",
+        "id": "c622dc98673df985",
         "type": "mqtt out",
-        "z": "86b14407f78e2dfe",
+        "z": "6c5598670403b7f8",
         "name": "",
         "topic": "sosfak",
         "qos": "",
@@ -3510,5 +3480,20 @@
         "x": 330,
         "y": 200,
         "wires": []
+    },
+    {
+        "id": "cc60f8b756f97084",
+        "type": "serial in",
+        "z": "6c5598670403b7f8",
+        "name": "",
+        "serial": "bb03f8d1f5b4d598",
+        "x": 130,
+        "y": 200,
+        "wires": [
+            [
+                "9491342092325130",
+                "c622dc98673df985"
+            ]
+        ]
     }
 ]
