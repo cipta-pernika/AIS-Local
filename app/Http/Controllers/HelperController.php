@@ -43,9 +43,15 @@ class HelperController extends Controller
         $radarData->name = $name;
         $radarData->update();
 
+        $aisData = RadarData::with('sensorData.sensor.datalogger')
+            ->groupBy('target_id')
+            // ->whereBetween('created_at', [now()->subHours(120), now()])
+            ->limit(30)
+            ->get();
+
         return response()->json([
             'success' => true,
-            'message' => $radarData,
+            'message' => $aisData,
         ], 200);
     }
 
