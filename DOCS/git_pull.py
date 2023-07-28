@@ -25,10 +25,10 @@ def git_pull():
 # Perform the initial Git pull and Composer install
 git_pull()
 
-# # Schedule periodic Git pulls and Composer installs every 10 minutes
-# schedule.every(10).minutes.do(git_pull)
+# Schedule periodic Git pulls and Composer installs every 10 minutes
+schedule.every(10).minutes.do(git_pull)
 
-# # Keep the script running
-# while True:
-#     schedule.run_pending()
-#     time.sleep(60)
+# Keep the script running
+while True:
+    schedule.run_pending()
+    time.sleep(60)
