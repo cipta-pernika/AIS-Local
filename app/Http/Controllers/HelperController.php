@@ -269,6 +269,20 @@ class HelperController extends Controller
         $aisData = AisDataPosition::with('vessel', 'sensorData.sensor.datalogger')
             ->orderBy('created_at', 'DESC')
             ->groupBy('vessel_id')
+            // ->whereBetween('created_at', [now()->subHours(124), now()])
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'message' => $aisData,
+        ], 201);
+    }
+
+    public function aisdatauniquefe()
+    {
+        $aisData = AisDataPosition::with('vessel', 'sensorData.sensor.datalogger')
+            ->orderBy('created_at', 'DESC')
+            ->groupBy('vessel_id')
             ->whereBetween('created_at', [now()->subHours(24), now()])
             ->get();
 
@@ -356,6 +370,21 @@ class HelperController extends Controller
         $aisData = AdsbDataPosition::with('aircraft', 'sensorData.sensor.datalogger')
             ->whereRaw('adsb_data_positions.id IN (select MAX(adsb_data_positions.id) FROM adsb_data_positions GROUP BY aircraft_id)')
         // ->groupBy('aircraft_id')
+            // ->whereBetween('created_at', [now()->subHours(12), now()])
+        // ->orderBy('created_at', 'DESC')
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'message' => $aisData,
+        ], 201);
+    }
+
+    public function adsbuniquefe()
+    {
+        $aisData = AdsbDataPosition::with('aircraft', 'sensorData.sensor.datalogger')
+            ->whereRaw('adsb_data_positions.id IN (select MAX(adsb_data_positions.id) FROM adsb_data_positions GROUP BY aircraft_id)')
+        // ->groupBy('aircraft_id')
             ->whereBetween('created_at', [now()->subHours(12), now()])
         // ->orderBy('created_at', 'DESC')
             ->get();
@@ -382,6 +411,20 @@ class HelperController extends Controller
     }
 
     public function radardataunique()
+    {
+        $aisData = RadarData::with('sensorData.sensor.datalogger')
+            ->groupBy('target_id')
+            // ->whereBetween('created_at', [now()->subHours(120), now()])
+            ->limit(30)
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'message' => $aisData,
+        ], 201);
+    }
+
+    public function radardatauniquefe()
     {
         $aisData = RadarData::with('sensorData.sensor.datalogger')
             ->groupBy('target_id')

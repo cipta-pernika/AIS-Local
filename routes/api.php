@@ -39,6 +39,10 @@ Route::get('adsbupdate', [HelperController::class, 'adsbupdate']);
 Route::get('adsbdataupdate', [HelperController::class, 'adsbupdate']);                   
 Route::get('radardataupdate', [HelperController::class, 'radardataupdate']);
 
+Route::get('aisdatauniquefe', [HelperController::class, 'aisdatauniquefe']);
+Route::get('radardatauniquefe', [HelperController::class, 'radardatauniquefe']);
+Route::get('adsbuniquefe', [HelperController::class, 'adsbuniquefe']);
+
 //tablelist
 Route::get('aisdatalist', [HelperController::class, 'aisdatalist']);
 Route::get('adsbdatalist', [HelperController::class, 'adsbdatalist']);
