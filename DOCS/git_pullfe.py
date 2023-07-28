@@ -30,4 +30,4 @@ schedule.every(10).minutes.do(git_pull)
 # Keep the script running
 while True:
     schedule.run_pending()
-    time.sleep(1)
+    time.sleep(60)
