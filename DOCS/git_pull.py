@@ -14,13 +14,17 @@ def git_pull():
         subprocess.check_output(['git', 'pull'])
         print('Git pull successful!')
 
-    except subprocess.CalledProcessError as e:
-        print('Error during Git pull:', e)
+        # Execute the composer install command using subprocess
+        subprocess.check_output(['composer', 'install'])
+        print('Composer install successful!')
 
-# Perform the initial Git pull
+    except subprocess.CalledProcessError as e:
+        print('Error during Git pull or Composer install:', e)
+
+# Perform the initial Git pull and Composer install
 git_pull()
 
-# Schedule periodic Git pulls every 10 minutes
+# Schedule periodic Git pulls and Composer installs every 10 minutes
 schedule.every(10).minutes.do(git_pull)
 
 # Keep the script running
