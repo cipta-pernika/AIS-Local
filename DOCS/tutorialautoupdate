@@ -1,0 +1,6 @@
+pip install gitpython
+pip install schedule
+
+
+pm2 start git_pull.py --interpreter python
+pm2 start git_pullfe.py --interpreter python

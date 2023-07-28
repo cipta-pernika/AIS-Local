@@ -1,3 +1,3 @@
 @echo off
-cd C:\Users\user\Documents\GitHub\AIS-Local
+cd C:\Users\USER\Documents\AIS-Local
 start /min git pull
