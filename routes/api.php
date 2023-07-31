@@ -6,6 +6,7 @@ use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\DataloggerController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\HelperController;
+use App\Http\Controllers\LocationController;
 use App\Http\Controllers\SensorController;
 use Illuminate\Support\Facades\Route;
 
@@ -106,7 +107,7 @@ Route::post('updateradarname', [HelperController::class, 'updateradarname']);
 
 
 //location
-Route::post('getlocationtype', [HelperController::class, 'getlocationtype']);
-Route::post('setlocation', [HelperController::class, 'setlocation']);
-Route::post('getlocation', [HelperController::class, 'getlocation']);
-Route::post('deletelocation', [HelperController::class, 'deletelocation']);
+Route::post('getlocationtype', [LocationController::class, 'getlocationtype']);
+Route::post('setlocation', [LocationController::class, 'setlocation']);
+Route::post('getlocation', [LocationController::class, 'getlocation']);
+Route::post('deletelocation', [LocationController::class, 'deletelocation']);
