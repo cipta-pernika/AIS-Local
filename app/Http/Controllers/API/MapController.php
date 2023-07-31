@@ -34,6 +34,7 @@ class MapController extends Controller
             'ais_data_positions.latitude',
             'ais_data_positions.longitude',
             'ais_data_positions.course',
+            'ais_data_positions.heading',
             'ais_data_positions.created_at',
             'ais_data_positions.speed',
             'ais_data_vessels.vessel_name',
@@ -55,7 +56,7 @@ class MapController extends Controller
             'lng' => (float) $track['longitude'],
             'dir' => ((int) $track['course'] * M_PI) / 180.0,
             'time' => $track['created_at']->timestamp,
-            'heading' => ((int) $track['course'] * M_PI) / 180.0,
+            'heading' => (int) $track['heading'],
             'info' => [
                 ['key' => 'MMSI', 'value' => $mmsi],
                 ['key' => 'Name', 'value' => $track['vessel_name']],
