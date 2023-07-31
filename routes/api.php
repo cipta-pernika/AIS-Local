@@ -103,3 +103,10 @@ Route::post('camcall', [HelperController::class, 'camcall']);
 
 
 Route::post('updateradarname', [HelperController::class, 'updateradarname']);
+
+
+//location
+Route::post('getlocationtype', [HelperController::class, 'getlocationtype']);
+Route::post('setlocation', [HelperController::class, 'setlocation']);
+Route::post('getlocation', [HelperController::class, 'getlocation']);
+Route::post('deletelocation', [HelperController::class, 'deletelocation']);
