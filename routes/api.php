@@ -107,7 +107,7 @@ Route::post('updateradarname', [HelperController::class, 'updateradarname']);
 
 
 //location
-Route::post('getlocationtype', [LocationController::class, 'getlocationtype']);
+Route::get('getlocationtype', [LocationController::class, 'getlocationtype']);
 Route::post('setlocation', [LocationController::class, 'setlocation']);
-Route::post('getlocation', [LocationController::class, 'getlocation']);
+Route::get('getlocation', [LocationController::class, 'getlocation']);
 Route::post('deletelocation', [LocationController::class, 'deletelocation']);

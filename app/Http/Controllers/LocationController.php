@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Location;
+use App\Models\LocationType;
 use Illuminate\Http\Request;
 
 class LocationController extends Controller
@@ -18,51 +20,48 @@ class LocationController extends Controller
 
     public function setlocation()
     {
-        $loc = new LocationList;
-        $loc->location_name = request('name');
-        $loc->author = request('userId');
-        $loc->location_type = request('typeloc');
-        $loc->location_latitude = request('lat');
-        $loc->location_longitude = request('long');
-        $loc->save();
+        $data = request()->validate([
+            'name' => 'required|string',
+            'typeloc' => 'required|exists:location_types,id', // Validate that the location_type_id exists in the location_types table
+            'lat' => 'required|numeric',
+            'long' => 'required|numeric',
+        ]);
 
-        $locnow = LocationList::join('location_type', 'location.location_type', 'location_type.id')
-            ->where('location.id', $loc->id)
-            ->select(
-                'location.id',
-                'location_type.icon',
-                'location.author',
-                'location_latitude',
-                'location_longitude',
-                'location_name',
-                'location_type',
-                'location_type_description',
-                'location_type_name',
-                'location.created_at',
-                'location.updated_at'
-            )->first();
+        // Create a new Location model instance
+        $location = new Location([
+            'name' => $data['name'],
+            'latitude' => $data['lat'],
+            'longitude' => $data['long'],
+        ]);
+
+        // Save the location record and associate it with the specified location type
+        $locationType = LocationType::find($data['typeloc']);
+        $locationType->locations()->save($location);
+
+        // Fetch the complete Location record including the LocationType information
+        $location = $location->refresh();
 
         return response()->json([
             'success' => true,
-            'message' => $locnow,
+            'message' => $location,
         ], 200);
     }
 
     public function getlocation()
     {
-        $loc = LocationList::join('location_type', 'location.location_type', 'location_type.id')
-            ->select('location_name', 'location.id', 'location_latitude', 'location_longitude', 'icon')
-            ->where('location.author', request('id'))->orWhere('location.author', '1')->get();
+        $locations = Location::with('locationType') // Eager load the location type relationship
+            ->select('id', 'name', 'latitude', 'longitude')
+            ->get();
 
         return response()->json([
             'success' => true,
-            'message' => $loc,
+            'message' => $locations,
         ], 200);
     }
 
     public function deletelocation()
     {
-        $loc = LocationList::find(request('idLoc'));
+        $loc = Location::find(request('idLoc'));
         $loc->delete();
 
         return response()->json([
