@@ -15,6 +15,8 @@ class DatabaseSeeder extends Seeder
         $this->call([DatalogSeeder::class, SensorSeeder::class, UserSeeder::class]);
         $this->call([
             // RadarDataSeeder::class,
+            LocationTypeSeeder::class,
+            LocationSeeder::class,
             AdsbDataAircraftSeeder::class
         ]);
     }

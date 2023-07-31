@@ -39,7 +39,18 @@ class LocationController extends Controller
         $locationType->locations()->save($location);
 
         // Fetch the complete Location record including the LocationType information
-        $location = $location->refresh();
+        $location = Location::with('locationType') // Eager load the location type relationship
+            ->select(
+                'id',
+                'name',
+                'latitude',
+                'longitude',
+                'created_at',
+                'updated_at',
+                'location_type_id'
+            )
+            ->where('id', $location->id)
+            ->first();
 
         return response()->json([
             'success' => true,
@@ -49,8 +60,8 @@ class LocationController extends Controller
 
     public function getlocation()
     {
-        $locations = Location::with('locationType') // Eager load the location type relationship
-            ->select('id', 'name', 'latitude', 'longitude')
+        $locations = Location::with('locationType')
+            ->select('id', 'name', 'latitude', 'longitude', 'location_type_id')
             ->get();
 
         return response()->json([
