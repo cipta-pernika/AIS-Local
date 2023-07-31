@@ -837,6 +837,12 @@
         "responsetimeout": "10000"
     },
     {
+        "id": "ea714261967f2fee",
+        "type": "websocket-listener",
+        "path": "/ws/sosfak",
+        "wholemsg": "false"
+    },
+    {
         "id": "d4126176.99a47",
         "type": "function",
         "z": "7b598f00.47fb3",
@@ -2992,7 +2998,7 @@
         "type": "debug",
         "z": "faa1600f64cd9251",
         "name": "",
-        "active": false,
+        "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -3302,5 +3308,132 @@
                 "b0f6d2d84ac88e9a"
             ]
         ]
+    },
+    {
+        "id": "aeb575cf8d354644",
+        "type": "mqtt in",
+        "z": "faa1600f64cd9251",
+        "name": "",
+        "topic": "fakposition",
+        "qos": "2",
+        "datatype": "json",
+        "broker": "fa4efe60b7e3b6f6",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 120,
+        "y": 440,
+        "wires": [
+            [
+                "5ab2e64922e9bc81"
+            ]
+        ]
+    },
+    {
+        "id": "6ad8b09328f0c793",
+        "type": "debug",
+        "z": "faa1600f64cd9251",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 630,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "5ab2e64922e9bc81",
+        "type": "function",
+        "z": "faa1600f64cd9251",
+        "name": "",
+        "func": "msg.method = \"POST\"\nmsg.url = \"https://siege.cakrawala.id/api/position\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 280,
+        "y": 440,
+        "wires": [
+            [
+                "245f1ff691a52a43"
+            ]
+        ]
+    },
+    {
+        "id": "245f1ff691a52a43",
+        "type": "http request",
+        "z": "faa1600f64cd9251",
+        "name": "",
+        "method": "use",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 450,
+        "y": 440,
+        "wires": [
+            [
+                "6ad8b09328f0c793"
+            ]
+        ]
+    },
+    {
+        "id": "2f7b5487e6ab913f",
+        "type": "mqtt in",
+        "z": "faa1600f64cd9251",
+        "name": "",
+        "topic": "sosfak",
+        "qos": "2",
+        "datatype": "json",
+        "broker": "fa4efe60b7e3b6f6",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 110,
+        "y": 540,
+        "wires": [
+            [
+                "612cd8dc292d1b0a",
+                "a952dab0cd8090e3"
+            ]
+        ]
+    },
+    {
+        "id": "a952dab0cd8090e3",
+        "type": "websocket out",
+        "z": "faa1600f64cd9251",
+        "name": "",
+        "server": "ea714261967f2fee",
+        "client": "",
+        "x": 320,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "612cd8dc292d1b0a",
+        "type": "debug",
+        "z": "faa1600f64cd9251",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 310,
+        "y": 500,
+        "wires": []
     }
 ]
