@@ -315,11 +315,16 @@ class HelperController extends Controller
 
     public function aisdatalist()
     {
-        $aisData = AisDataPosition::with('vessel', 'sensorData.sensor.datalogger')
-            ->groupBy('vessel_id')
-            ->orderBy('created_at', 'DESC')
-            ->select('mmsi', 'imo', 'vessel_name', 'latitude', 'longitude', 'speed', 'course', 'heading', 'navigation_status', 'timestamp', 'id')
-            ->get();
+        $aisData = AisDataPosition::with(['vessel', 'sensorData.sensor.datalogger'])
+    ->orderBy('created_at', 'DESC')
+    ->select('vessel_id', 'latitude', 'longitude', 'speed', 'course', 'heading', 'navigation_status', 'timestamp', 'id')
+    ->get()
+    ->groupBy('vessel_id')
+    ->map(function ($groupedData) {
+        return $groupedData->first()->only(['vessel.mmsi', 'vessel.imo', 'vessel.vessel_name'])
+            ->merge($groupedData->first()->only(['latitude', 'longitude', 'speed', 'course', 'heading', 'navigation_status', 'timestamp', 'id']));
+    });
+
 
         return response()->json([
             'success' => true,
