@@ -321,9 +321,15 @@ class HelperController extends Controller
     ->get()
     ->groupBy('vessel_id')
     ->map(function ($groupedData) {
-        return $groupedData->first()->only(['vessel.mmsi', 'vessel.imo', 'vessel.vessel_name'])
-            ->merge($groupedData->first()->only(['latitude', 'longitude', 'speed', 'course', 'heading', 'navigation_status', 'timestamp', 'id']));
+        $firstData = $groupedData->first();
+        $vesselData = $firstData->vessel;
+
+        return array_merge(
+            $vesselData->only(['mmsi', 'imo', 'vessel_name']),
+            $firstData->only(['latitude', 'longitude', 'speed', 'course', 'heading', 'navigation_status', 'timestamp', 'id'])
+        );
     });
+
 
 
         return response()->json([
