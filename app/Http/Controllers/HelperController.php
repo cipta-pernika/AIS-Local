@@ -328,7 +328,12 @@ class HelperController extends Controller
             $vesselData->only(['mmsi', 'imo', 'vessel_name']),
             $firstData->only(['latitude', 'longitude', 'speed', 'course', 'heading', 'navigation_status', 'timestamp', 'id'])
         );
-    });
+    })
+    ->values() // Reset the keys and convert back to a simple array.
+    ->toArray();
+
+// Now $aisData is an array of arrays, each representing the properties of a vessel.
+
 
 
 
