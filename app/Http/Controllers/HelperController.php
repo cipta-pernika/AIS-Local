@@ -318,6 +318,7 @@ class HelperController extends Controller
         $aisData = AisDataPosition::with('vessel', 'sensorData.sensor.datalogger')
             ->groupBy('vessel_id')
             ->orderBy('created_at', 'DESC')
+            ->select('mmsi', 'imo', 'vessel_name', 'latitude', 'longitude', 'speed', 'course', 'heading', 'navigation_status', 'timestamp', 'id')
             ->get();
 
         return response()->json([
