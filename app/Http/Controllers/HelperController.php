@@ -20,6 +20,20 @@ use Location\Distance\Vincenty;
 
 class HelperController extends Controller
 {
+    public function dailyreport()
+    {
+        $jumlahkapal = AisDataPosition::with('vessel', 'sensorData.sensor.datalogger')
+            ->orderBy('created_at', 'DESC')
+            ->groupBy('vessel_id')
+            ->whereDate('created_at', Carbon::now())
+            ->count();
+
+        return response()->json([
+            'success' => true,
+            'message' => $jumlahkapal,
+        ], 201);
+    }
+
     public function updateradarname()
     {
         $id = request('id');

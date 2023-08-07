@@ -111,3 +111,5 @@ Route::get('getlocationtype', [LocationController::class, 'getlocationtype']);
 Route::post('setlocation', [LocationController::class, 'setlocation']);
 Route::get('getlocation', [LocationController::class, 'getlocation']);
 Route::post('deletelocation', [LocationController::class, 'deletelocation']);
+
+Route::post('dailyreport', [HelperController::class, 'dailyreport']);
