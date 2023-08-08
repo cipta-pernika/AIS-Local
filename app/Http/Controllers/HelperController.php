@@ -13,6 +13,7 @@ use App\Models\RadarData;
 use App\Models\Sensor;
 use App\Models\SensorData;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Location\Bearing\BearingSpherical;
 use Location\Coordinate;
 use Location\Distance\Haversine;
@@ -26,20 +27,22 @@ class HelperController extends Controller
         $dateFrom = Carbon::parse(request('date_from'));
         $dateTo = Carbon::parse(request('date_to'))->endOfDay();
 
-        $jumlahkapal = AisDataVessel::with('positions')
-            ->orderBy('updated_at', 'DESC')
-            ->whereBetween('updated_at', [$dateFrom, $dateTo])
-            ->count();
+        $jumlahkapal = AisDataVessel::whereBetween('updated_at', [$dateFrom, $dateTo])->count();
+        $jumlahpesawat = AdsbDataPosition::whereBetween('updated_at', [$dateFrom, $dateTo])->count();
 
-            $jumlahpesawat = AdsbDataPosition::with('aircraft')
-            ->orderBy('updated_at', 'DESC')
+        $jumlahkapalByType = AisDataVessel::select('vessel_type', DB::raw('count(*) as count'))
             ->whereBetween('updated_at', [$dateFrom, $dateTo])
-            ->count();
+            ->groupBy('vessel_type')
+            ->get();
+
+        $jumlahradardata = RadarData::whereBetween('timestamp', [$dateFrom, $dateTo])->count();
 
         return response()->json([
             'success' => true,
             'jumlahkapal' => $jumlahkapal,
-            'jumlahpesawat' => $jumlahpesawat
+            'jumlahpesawat' => $jumlahpesawat,
+            'jumlahkapal_by_type' => $jumlahkapalByType,
+            'jumlahradardata' => $jumlahradardata,
         ], 201);
     }
 
