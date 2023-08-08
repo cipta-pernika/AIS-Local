@@ -19,6 +19,7 @@ use Location\Bearing\BearingSpherical;
 use Location\Coordinate;
 use Location\Distance\Haversine;
 use Location\Distance\Vincenty;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class HelperController extends Controller
 {
@@ -48,6 +49,35 @@ class HelperController extends Controller
             'jumlahradardata' => $jumlahradardata,
             'radar_image_url' => $radarImageUrl,
         ], 201);
+    }
+
+    public function dailyreportprint()
+    {
+        //http://localhost:8000/dailyreport?user_id=1&date_from=2023-07-22&date_to=2023-07-22
+        $dateFrom = Carbon::parse(request('date_from'));
+        $dateTo = Carbon::parse(request('date_to'))->endOfDay();
+
+        $jumlahkapal = AisDataVessel::whereBetween('updated_at', [$dateFrom, $dateTo])->count();
+        $jumlahpesawat = AdsbDataPosition::whereBetween('updated_at', [$dateFrom, $dateTo])->count();
+
+        $jumlahkapalByType = AisDataVessel::select('vessel_type', DB::raw('count(*) as count'))
+            ->whereBetween('updated_at', [$dateFrom, $dateTo])
+            ->groupBy('vessel_type')
+            ->get();
+
+        $jumlahradardata = RadarData::whereBetween('timestamp', [$dateFrom, $dateTo])->count();
+
+        $radarImageUrl = Storage::disk('public')->url('radar/radar.png');
+
+        $pdf = Pdf::loadView('daily-report', [
+            'jumlahkapal' => $jumlahkapal,
+            'jumlahpesawat' => $jumlahpesawat,
+            'radar_image_url' => $radarImageUrl,
+            'jumlahkapalByType' => $jumlahkapalByType,
+            'jumlahradardata' => $jumlahradardata,
+        ]);
+
+        return $pdf->download('daily-report.pdf');
     }
 
     public function updateradarname()
