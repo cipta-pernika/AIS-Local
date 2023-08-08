@@ -14,6 +14,7 @@ use App\Models\Sensor;
 use App\Models\SensorData;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Location\Bearing\BearingSpherical;
 use Location\Coordinate;
 use Location\Distance\Haversine;
@@ -37,12 +38,15 @@ class HelperController extends Controller
 
         $jumlahradardata = RadarData::whereBetween('timestamp', [$dateFrom, $dateTo])->count();
 
+        $radarImageUrl = Storage::disk('public')->url('radar/radar.png');
+
         return response()->json([
             'success' => true,
             'jumlahkapal' => $jumlahkapal,
             'jumlahpesawat' => $jumlahpesawat,
             'jumlahkapal_by_type' => $jumlahkapalByType,
             'jumlahradardata' => $jumlahradardata,
+            'radar_image_url' => $radarImageUrl,
         ], 201);
     }
 
