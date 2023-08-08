@@ -74,6 +74,7 @@ class HelperController extends Controller
             'jumlahpesawat' => $jumlahpesawat,
             'radar_image_url' => $radarImageUrl,
             'jumlahkapalByType' => $jumlahkapalByType,
+            'jumlahradardata' => $jumlahradardata,
         ]);
 
         return $pdf->download('daily-report.pdf');
