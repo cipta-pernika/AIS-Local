@@ -114,3 +114,4 @@ Route::post('deletelocation', [LocationController::class, 'deletelocation']);
 
 Route::post('dailyreport', [HelperController::class, 'dailyreport']);
 Route::get('dailyreportpdf', [HelperController::class, 'dailyreportprint']);
+Route::post('dailyreportpdf', [HelperController::class, 'dailyreportprint']);
