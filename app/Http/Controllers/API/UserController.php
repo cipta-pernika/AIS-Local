@@ -69,8 +69,16 @@ class UserController extends Controller
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 422);
         }
-
-        $user->update($request->all());
+    
+        $userData = $request->all();
+    
+        // Hash the password if it's provided in the request
+        if (isset($userData['password'])) {
+            $userData['password'] = bcrypt($userData['password']);
+        }
+    
+        $user->update($userData);
+        
         return response()->json([
             'message' => 'User updated successfully',
             'data' => $user
