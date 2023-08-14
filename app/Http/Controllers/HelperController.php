@@ -452,6 +452,7 @@ class HelperController extends Controller
         // ->groupBy('aircraft_id')
         // ->whereBetween('created_at', [now()->subHours(12), now()])
         // ->orderBy('created_at', 'DESC')
+        ->limit(500)
             ->get();
 
         return response()->json([

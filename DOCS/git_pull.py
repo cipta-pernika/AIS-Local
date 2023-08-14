@@ -5,7 +5,7 @@ import time
 
 repository_path = r'C:\Users\USER\Documents\AIS-Local'
 composer_path = r'C:\ProgramData\ComposerSetup\bin\composer.bat'
-
+    
 def git_pull():
     try:
         # Change the current working directory to the repository path
