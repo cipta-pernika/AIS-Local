@@ -404,6 +404,7 @@ class HelperController extends Controller
     {
         $aisData = AdsbDataPosition::with('aircraft', 'sensorData.sensor.datalogger')
             ->orderBy('created_at', 'DESC')
+            ->limit(200)
             ->get();
 
         return response()->json([
