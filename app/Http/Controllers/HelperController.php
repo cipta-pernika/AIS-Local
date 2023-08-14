@@ -12,6 +12,7 @@ use App\Models\Datalogger;
 use App\Models\RadarData;
 use App\Models\Sensor;
 use App\Models\SensorData;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -19,7 +20,6 @@ use Location\Bearing\BearingSpherical;
 use Location\Coordinate;
 use Location\Distance\Haversine;
 use Location\Distance\Vincenty;
-use Barryvdh\DomPDF\Facade\Pdf;
 
 class HelperController extends Controller
 {
@@ -453,7 +453,7 @@ class HelperController extends Controller
         // ->groupBy('aircraft_id')
         // ->whereBetween('created_at', [now()->subHours(12), now()])
         // ->orderBy('created_at', 'DESC')
-        ->limit(500)
+            ->limit(500)
             ->get();
 
         return response()->json([
