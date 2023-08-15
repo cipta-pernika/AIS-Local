@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\AdsbDataPosition;
 use App\Models\AisDataPosition;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -46,7 +47,15 @@ class MapController extends Controller
             })
             ->get();
 
+        $adsbTracks = AdsbDataPosition::with('aircraft')
+            ->orderBy('created_at', 'DESC')
+            ->when($date, function ($query) use ($date, $date_until) {
+                $query->whereBetween('adsb_data_positions.created_at', [$date, $date_until]);
+            })
+            ->get();
+
         $data = [];
+        $dataAdsb = [];
 
         foreach ($tracks as $track) {
             $mmsi = $track['mmsi'];
@@ -71,15 +80,37 @@ class MapController extends Controller
             ];
         }
 
+        foreach ($adsbTracks as $track) {
+            $mmsiAdsb = $track['hex_ident'];
+            $dataAdsb[$mmsiAdsb]['hex_ident'] = $mmsiAdsb;
+            $dataAdsb[$mmsiAdsb]['playback'][] = [
+                'lat' => (float) $track['latitude'],
+                'lng' => (float) $track['longitude'],
+                'dir' => ((int) $track['course'] * M_PI) / 180.0,
+                'time' => $track['created_at']->timestamp,
+                'heading' => (int) $track['heading'],
+                'info' => [
+                    // Info data here...
+                ],
+            ];
+        }
+
         $dataSorted = collect($data)->sortByDesc(function ($item, $key) {
             return count($item['playback']);
         })->values()->all();
-    
+
+        $dataSortedAdsb = collect($dataAdsb)->sortByDesc(function ($item, $key) {
+            return count($item['playback']);
+        })->values()->all();
+
         $response = [
             'success' => true,
-            'message' => $dataSorted,
+            'message' => [
+                'ais' => $dataSorted,
+                'adsb' => $dataSortedAdsb,
+            ],
         ];
-    
+
         return response()->json($response, 200);
     }
 
