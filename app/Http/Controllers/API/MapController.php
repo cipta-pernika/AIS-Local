@@ -92,7 +92,6 @@ class MapController extends Controller
                     'adsb_data_positions.heading',
                     'adsb_data_positions.created_at',
                     'adsb_data_positions.ground_speed',
-                    'adsb_data_positions.speed',
                     'adsb_data_aircrafts.hex_ident',
                     'adsb_data_aircrafts.registration',
                     'adsb_data_aircrafts.callsign'
