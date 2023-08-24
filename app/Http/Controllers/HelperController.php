@@ -9,6 +9,7 @@ use App\Models\AdsbDataPosition;
 use App\Models\AisDataPosition;
 use App\Models\AisDataVessel;
 use App\Models\Datalogger;
+use App\Models\DataTransferLog;
 use App\Models\RadarData;
 use App\Models\Sensor;
 use App\Models\SensorData;
@@ -23,6 +24,29 @@ use Location\Distance\Vincenty;
 
 class HelperController extends Controller
 {
+    public function datatransferlogspost()
+    {
+        $createlog = new DataTransferLog();
+        $createlog->timestamp = Carbon::now();
+        $createlog->response_code = 200;
+        $createlog->additional_info = request('msg');
+        $createlog->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => $createlog,
+        ], 201);
+    }
+
+    public function datatransferlogs()
+    {
+        $datatransferlog = DataTransferLog::orderBy('created_at', 'DESC')->limit(100)->get();
+
+        return response()->json([
+            'success' => true,
+            'message' => $datatransferlog,
+        ], 201);
+    }
 
     public function dailyreport()
     {
@@ -452,7 +476,7 @@ class HelperController extends Controller
             ->whereRaw('adsb_data_positions.id IN (select MAX(adsb_data_positions.id) FROM adsb_data_positions GROUP BY aircraft_id)')
         // ->groupBy('aircraft_id')
         // ->whereBetween('created_at', [now()->subHours(12), now()])
-        ->orderBy('created_at', 'DESC')
+            ->orderBy('created_at', 'DESC')
             ->limit(500)
             ->get();
 
@@ -480,10 +504,10 @@ class HelperController extends Controller
     public function adsbupdate()
     {
         $aisData = AdsbDataPosition::with('aircraft', 'sensorData.sensor.datalogger')
-            // ->groupBy('aircraft_id')
+        // ->groupBy('aircraft_id')
             ->whereRaw('adsb_data_positions.id IN (select MAX(adsb_data_positions.id) FROM adsb_data_positions GROUP BY aircraft_id)')
             ->whereBetween('created_at', [now()->subMinutes(2), now()])
-            // ->orderBy('created_at', 'DESC')
+        // ->orderBy('created_at', 'DESC')
             ->limit(20)
             ->get();
 
