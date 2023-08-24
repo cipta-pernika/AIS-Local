@@ -452,7 +452,7 @@ class HelperController extends Controller
             ->whereRaw('adsb_data_positions.id IN (select MAX(adsb_data_positions.id) FROM adsb_data_positions GROUP BY aircraft_id)')
         // ->groupBy('aircraft_id')
         // ->whereBetween('created_at', [now()->subHours(12), now()])
-        // ->orderBy('created_at', 'DESC')
+        ->orderBy('created_at', 'DESC')
             ->limit(500)
             ->get();
 

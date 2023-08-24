@@ -81,12 +81,21 @@ class MapController extends Controller
             $dataAis = collect($dataAis)->sortByDesc(function ($item, $key) {
                 return count($item['playback']);
             })->values()->all();
-
         }
 
         if (in_array('adsb', $selectedSensors)) {
 
-            $adsbTracks = AdsbDataPosition::with('aircraft')
+            $adsbTracks = AdsbDataPosition::join('adsb_data_aircrafts', 'adsb_data_positions.aircraft_id', 'adsb_data_aircrafts.id')
+                ->select(
+                    'adsb_data_positions.latitude',
+                    'adsb_data_positions.longitude',
+                    'adsb_data_positions.heading',
+                    'adsb_data_positions.created_at',
+                    'adsb_data_positions.ground_speed',
+                    'adsb_data_aircrafts.hex_ident',
+                    'adsb_data_aircrafts.registration',
+                    'adsb_data_aircrafts.callsign'
+                )
                 ->orderBy('created_at', 'DESC')
                 ->when($date, function ($query) use ($date, $date_until) {
                     $query->whereBetween('adsb_data_positions.created_at', [$date, $date_until]);
@@ -98,16 +107,15 @@ class MapController extends Controller
                 $dataAdsb[$mmsiAdsb]['playback'][] = [
                     'lat' => (float) $track['latitude'],
                     'lng' => (float) $track['longitude'],
-                    'dir' => ((int) $track['course'] * M_PI) / 180.0,
+                    'dir' => ((int) $track['heading'] * M_PI) / 180.0,
                     'time' => $track['created_at']->timestamp,
                     'heading' => (int) $track['heading'],
                     'info' => [
-                        ['key' => 'MMSI', 'value' => $mmsiAdsb],
-                        ['key' => 'Name', 'value' => $track['vessel_name']],
-                        ['key' => 'IMO', 'value' => $track['imo']],
+                        ['key' => 'hex_ident', 'value' => $mmsiAdsb],
+                        ['key' => 'registration', 'value' => $track['registration']],
                         ['key' => 'Callsign', 'value' => $track['callsign']],
-                        ['key' => 'SOG', 'value' => $track['speed']],
-                        ['key' => 'COG', 'value' => $track['course']],
+                        ['key' => 'ground_speed', 'value' => $track['ground_speed']],
+                        ['key' => 'COG', 'value' => $track['heading']],
                         ['key' => 'Latitude', 'value' => $track['latitude']],
                         ['key' => 'Longitude', 'value' => $track['longitude']],
                         ['key' => 'Time Stamp ', 'value' => Carbon::parse($track['created_at'])->format('Y-m-d H:i:s')],
@@ -158,5 +166,4 @@ class MapController extends Controller
 
         return response()->json($response, 200);
     }
-
 }
