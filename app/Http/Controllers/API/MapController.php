@@ -102,7 +102,15 @@ class MapController extends Controller
                     'time' => $track['created_at']->timestamp,
                     'heading' => (int) $track['heading'],
                     'info' => [
-                        // Info data here...
+                        ['key' => 'MMSI', 'value' => $mmsiAdsb],
+                        ['key' => 'Name', 'value' => $track['vessel_name']],
+                        ['key' => 'IMO', 'value' => $track['imo']],
+                        ['key' => 'Callsign', 'value' => $track['callsign']],
+                        ['key' => 'SOG', 'value' => $track['speed']],
+                        ['key' => 'COG', 'value' => $track['course']],
+                        ['key' => 'Latitude', 'value' => $track['latitude']],
+                        ['key' => 'Longitude', 'value' => $track['longitude']],
+                        ['key' => 'Time Stamp ', 'value' => Carbon::parse($track['created_at'])->format('Y-m-d H:i:s')],
                     ],
                 ];
             }
