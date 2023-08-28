@@ -24,6 +24,32 @@ use Location\Distance\Vincenty;
 
 class HelperController extends Controller
 {
+    public function search()
+    {
+        $mmsi = request('query');
+
+        $vessel = AisDataVessel::where('mmsi', $mmsi)->first();
+
+        if (!$vessel) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Vessel not found',
+            ], 404);
+        }
+
+        $positions = $vessel->positions->sortByDesc('timestamp');
+
+        $lastPositions = $positions->take(10);
+
+        return response()->json([
+            'success' => true,
+            'message' => [
+                'vessel' => $vessel,
+                'last_positions' => $lastPositions,
+            ],
+        ], 201);
+    }
+
     public function datatransferlogspost()
     {
         $createlog = new DataTransferLog();

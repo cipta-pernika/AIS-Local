@@ -119,3 +119,5 @@ Route::post('dailyreportpdf', [HelperController::class, 'dailyreportprint']);
 
 Route::get('datatransferlogs', [HelperController::class, 'datatransferlogs']);
 Route::post('datatransferlogs', [HelperController::class, 'datatransferlogspost']);
+
+Route::get('search', [HelperController::class, 'search']);
