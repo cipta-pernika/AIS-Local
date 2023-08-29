@@ -5,6 +5,7 @@ use App\Http\Controllers\API\MapController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\DataloggerController;
 use App\Http\Controllers\ExportController;
+use App\Http\Controllers\GeofenceController;
 use App\Http\Controllers\HelperController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\SensorController;
@@ -115,3 +116,10 @@ Route::post('deletelocation', [LocationController::class, 'deletelocation']);
 Route::post('dailyreport', [HelperController::class, 'dailyreport']);
 Route::get('dailyreportpdf', [HelperController::class, 'dailyreportprint']);
 Route::post('dailyreportpdf', [HelperController::class, 'dailyreportprint']);
+
+//geofence
+Route::post('setgeofence', [GeofenceController::class, 'setgeofence']);
+Route::post('getgeofence', [LocationController::class, 'getgeofence']);
+Route::post('getgeofencebyid', [LocationController::class, 'getgeofencebyid']);
+Route::post('editgeofence', [LocationController::class, 'editgeofence']);
+Route::post('deletegeofence', [LocationController::class, 'deletegeofence']);
