@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('geofence_bindings', function (Blueprint $table) {
-            $table->id();
-            $table->string('geofence_id')->nullable();
-            $table->string('device_imei')->nullable();
-            $table->string('asset_id')->nullable();
-            $table->timestamps();
-        });
+        // Schema::create('geofence_bindings', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->string('geofence_id')->nullable();
+        //     $table->string('device_imei')->nullable();
+        //     $table->string('asset_id')->nullable();
+        //     $table->timestamps();
+        // });
     }
 
     /**
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('geofence_bindings');
+        // Schema::dropIfExists('geofence_bindings');
     }
 };
