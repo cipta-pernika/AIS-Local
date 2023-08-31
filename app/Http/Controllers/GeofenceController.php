@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Geofence;
 use Illuminate\Http\Request;
 
 class GeofenceController extends Controller
 {
     public function setgeofence()
     {
-        $geo = new Geofence;
+        $geo = new Geofence();
         $geo->user_id = request('userId');
         $geo->geofence_name = request('name');
         $geo->type = request('typegeo');

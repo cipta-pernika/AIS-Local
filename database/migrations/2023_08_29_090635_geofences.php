@@ -11,7 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        //
+        Schema::create('geofence', function (Blueprint $table) {
+            $table->id();
+            $table->string('user_id')->nullable();
+            $table->string('geofence_name')->nullable();
+            $table->string('type')->nullable();
+            $table->string('type_geo')->nullable();
+            $table->string('radius')->nullable();
+            $table->longText('geometry')->nullable();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -19,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('geofence');
     }
 };
