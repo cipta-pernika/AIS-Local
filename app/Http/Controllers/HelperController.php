@@ -105,7 +105,7 @@ class HelperController extends Controller
 
         $aisData = RadarData::with('sensorData.sensor.datalogger')
             ->groupBy('target_id')
-        // ->whereBetween('created_at', [now()->subHours(120), now()])
+            // ->whereBetween('created_at', [now()->subHours(120), now()])
             ->limit(30)
             ->get();
 
@@ -335,7 +335,7 @@ class HelperController extends Controller
         $aisData = AisDataPosition::with('vessel', 'sensorData.sensor.datalogger')
             ->orderBy('created_at', 'DESC')
             ->groupBy('vessel_id')
-        // ->whereBetween('created_at', [now()->subHours(124), now()])
+            // ->whereBetween('created_at', [now()->subHours(124), now()])
             ->get();
 
         return response()->json([
@@ -363,8 +363,8 @@ class HelperController extends Controller
         $aisData = AisDataPosition::with('vessel', 'sensorData.sensor.datalogger')
             ->orderBy('created_at', 'DESC')
             ->groupBy('vessel_id')
-        // ->whereBetween('created_at', [now()->subMinutes(2), now()])
-        // ->limit(10)
+            ->whereBetween('created_at', [now()->subMinutes(322), now()])
+            // ->limit(10)
             ->get();
 
         return response()->json([
@@ -392,7 +392,7 @@ class HelperController extends Controller
             ->values() // Reset the keys and convert back to a simple array.
             ->toArray();
 
-// Now $aisData is an array of arrays, each representing the properties of a vessel.
+        // Now $aisData is an array of arrays, each representing the properties of a vessel.
 
         return response()->json([
             'success' => true,
@@ -450,9 +450,9 @@ class HelperController extends Controller
     {
         $aisData = AdsbDataPosition::with('aircraft', 'sensorData.sensor.datalogger')
             ->whereRaw('adsb_data_positions.id IN (select MAX(adsb_data_positions.id) FROM adsb_data_positions GROUP BY aircraft_id)')
-        // ->groupBy('aircraft_id')
-        // ->whereBetween('created_at', [now()->subHours(12), now()])
-        ->orderBy('created_at', 'DESC')
+            // ->groupBy('aircraft_id')
+            // ->whereBetween('created_at', [now()->subHours(12), now()])
+            ->orderBy('created_at', 'DESC')
             ->limit(500)
             ->get();
 
@@ -466,9 +466,9 @@ class HelperController extends Controller
     {
         $aisData = AdsbDataPosition::with('aircraft', 'sensorData.sensor.datalogger')
             ->whereRaw('adsb_data_positions.id IN (select MAX(adsb_data_positions.id) FROM adsb_data_positions GROUP BY aircraft_id)')
-        // ->groupBy('aircraft_id')
+            // ->groupBy('aircraft_id')
             ->whereBetween('created_at', [now()->subHours(12), now()])
-        // ->orderBy('created_at', 'DESC')
+            // ->orderBy('created_at', 'DESC')
             ->get();
 
         return response()->json([
@@ -497,7 +497,7 @@ class HelperController extends Controller
     {
         $aisData = RadarData::with('sensorData.sensor.datalogger')
             ->groupBy('target_id')
-        // ->whereBetween('created_at', [now()->subHours(120), now()])
+            // ->whereBetween('created_at', [now()->subHours(120), now()])
             ->limit(30)
             ->get();
 
