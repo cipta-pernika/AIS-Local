@@ -13,7 +13,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         // $schedule->command('inspire')->hourly();
-        $schedule->command('fetchradar')->daily();
+        $schedule->command('fetchradar')->everyMinute();
         $schedule->command('app:outofrange')->daily();
         $schedule->command('radarpng')->daily();
         $schedule->command('app:sendata')->daily();
