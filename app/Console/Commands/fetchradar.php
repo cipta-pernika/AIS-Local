@@ -60,6 +60,10 @@ class fetchradar extends Command
                     'distance_from_fak' => $distanceInNauticalMiles
                 ]
             );
+
+            $datalogger->latitude = $geometry[1];
+            $datalogger->longitude = $geometry[0];
+            $datalogger->update();
         }
 
     }
