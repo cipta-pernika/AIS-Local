@@ -13,10 +13,29 @@ class MapController extends Controller
 {
     public function breadcrumb()
     {
-        $track = AisDataPosition::orderBy('created_at', 'DESC')
-            ->select('latitude', 'longitude', 'heading')
-            ->where('vessel_id', request('vessel_id'))
-            ->get();
+        $vessel_id = request('vessel_id'); // Get the vessel_id from the request
+        $hexIdent = request('hex_ident'); // Get hex_ident from the request
+        $targetId = request('target_id'); // Get target_id from the request
+
+        if ($vessel_id) {
+
+
+            $track = AisDataPosition::orderBy('created_at', 'DESC')
+                ->select('latitude', 'longitude', 'heading')
+                ->where('vessel_id', $vessel_id)
+                ->get();
+        } else if ($hexIdent) {
+            $track = AdsbDataPosition::orderBy('created_at', 'DESC')
+                ->join('adsb_data_aircrafts', 'adsb_data_positions.aircraft_id', 'adsb_data_aircrafts.id')
+                ->select('latitude', 'longitude', 'heading')
+                ->where('adsb_data_aircrafts.hex_ident', $hexIdent)
+                ->get();
+        } else if ($targetId) {
+            $track = RadarData::orderBy('created_at', 'DESC')
+                ->select('latitude', 'longitude', 'heading')
+                ->where('target_id', $targetId)
+                ->get();
+        }
 
         return response()->json([
             'success' => true,
