@@ -1940,7 +1940,7 @@
         "z": "5bcb44ebef548647",
         "name": "",
         "server": "client",
-        "host": "192.168.5.148",
+        "host": "192.168.5.150",
         "port": "2101",
         "datamode": "stream",
         "datatype": "buffer",
@@ -2288,7 +2288,8 @@
             [
                 "588c57281f5af4af",
                 "3afecfdfb427312e",
-                "12c32c1da5935fc3"
+                "12c32c1da5935fc3",
+                "142f6c0abe380dbb"
             ]
         ]
     },
@@ -2630,7 +2631,7 @@
         "type": "debug",
         "z": "5bcb44ebef548647",
         "name": "debug 30",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -2642,12 +2643,53 @@
         "wires": []
     },
     {
+        "id": "142f6c0abe380dbb",
+        "type": "function",
+        "z": "5bcb44ebef548647",
+        "name": "function 20",
+        "func": "msg.method = \"POST\"\nmsg.url = \"http://127.0.0.1:8000/api/datatransferlogs\"\nconst data = {\n    \"msg\": \"Send AIS to server success\"\n}\nmsg.payload = data;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1490,
+        "y": 320,
+        "wires": [
+            [
+                "4190a380ea761309"
+            ]
+        ]
+    },
+    {
+        "id": "4190a380ea761309",
+        "type": "http request",
+        "z": "5bcb44ebef548647",
+        "name": "",
+        "method": "use",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1670,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
         "id": "a030d12df663ee33",
         "type": "tcp in",
         "z": "a0b1eeb9fca4fab7",
         "name": "",
         "server": "client",
-        "host": "192.168.5.147",
+        "host": "192.168.5.149",
         "port": "32459",
         "datamode": "stream",
         "datatype": "utf8",
@@ -2993,7 +3035,7 @@
         "type": "debug",
         "z": "a0b1eeb9fca4fab7",
         "name": "debug 21",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -3135,7 +3177,7 @@
         "type": "debug",
         "z": "a0b1eeb9fca4fab7",
         "name": "debug 29",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -3151,7 +3193,7 @@
         "type": "function",
         "z": "a0b1eeb9fca4fab7",
         "name": "function 18",
-        "func": "msg.payload = new Date().toISOString() + \": \" + \"Send AIS to server success\";\nreturn msg;",
+        "func": "msg.payload = new Date().toISOString() + \": \" + \"Send ADS-B to server success\";\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -3170,13 +3212,13 @@
         "type": "file",
         "z": "a0b1eeb9fca4fab7",
         "name": "",
-        "filename": "C:\\Users\\USER\\Documents\\logais.txt",
+        "filename": "C:\\Users\\USER\\Documents\\logadsb.txt",
         "filenameType": "str",
         "appendNewline": true,
         "createDir": false,
         "overwriteFile": "false",
         "encoding": "none",
-        "x": 1350,
+        "x": 1360,
         "y": 240,
         "wires": [
             [
@@ -3189,7 +3231,7 @@
         "type": "debug",
         "z": "a0b1eeb9fca4fab7",
         "name": "debug 31",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -3199,6 +3241,47 @@
         "x": 1600,
         "y": 240,
         "wires": []
+    },
+    {
+        "id": "b580bc15ea7d0ce1",
+        "type": "function",
+        "z": "a0b1eeb9fca4fab7",
+        "name": "function 21",
+        "func": "msg.method = \"POST\"\nmsg.url = \"http://127.0.0.1:8000/api/datatransferlogs\"\nconst data = {\n    \"msg\": \"Send ADS-B to server success\"\n}\nmsg.payload = data;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1090,
+        "y": 300,
+        "wires": [
+            [
+                "4f874c902b6dde1a"
+            ]
+        ]
+    },
+    {
+        "id": "4f874c902b6dde1a",
+        "type": "http request",
+        "z": "a0b1eeb9fca4fab7",
+        "name": "",
+        "method": "use",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1270,
+        "y": 300,
+        "wires": [
+            []
+        ]
     },
     {
         "id": "0b5a11380a7d3255",
@@ -3367,12 +3450,14 @@
         "id": "4ac4e7d097e61377",
         "type": "cronplus",
         "z": "8adbecac0c1b664c",
+        "d": true,
         "name": "radar image",
         "outputField": "payload",
         "timeZone": "",
-        "persistDynamic": false,
         "storeName": "",
         "commandResponseMsgOutput": "output1",
+        "defaultLocation": "",
+        "defaultLocationType": "default",
         "outputs": 1,
         "options": [
             {
@@ -3400,11 +3485,14 @@
         "id": "72102baf9cff38fd",
         "type": "cronplus",
         "z": "8adbecac0c1b664c",
+        "d": true,
         "name": "radar data",
         "outputField": "payload",
         "timeZone": "",
-        "persistDynamic": false,
+        "storeName": "",
         "commandResponseMsgOutput": "output1",
+        "defaultLocation": "",
+        "defaultLocationType": "default",
         "outputs": 1,
         "options": [
             {
