@@ -25,9 +25,9 @@ class MapController extends Controller
                 ->where('vessel_id', $vessel_id)
                 ->get();
         } else if ($hexIdent) {
-            $track = AdsbDataPosition::orderBy('created_at', 'DESC')
+            $track = AdsbDataPosition::orderBy('adsb_data_positions.created_at', 'DESC')
                 ->join('adsb_data_aircrafts', 'adsb_data_positions.aircraft_id', 'adsb_data_aircrafts.id')
-                ->select('latitude', 'longitude', 'heading')
+                ->select('adsb_data_positions.latitude', 'adsb_data_positions.longitude', 'adsb_data_positions.heading')
                 ->where('adsb_data_aircrafts.hex_ident', $hexIdent)
                 ->get();
         } else if ($targetId) {
