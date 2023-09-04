@@ -30,6 +30,10 @@ class MapController extends Controller
         $date_until = Carbon::parse(request('dateTo'));
         $selectedSensors = request('sensor');
 
+        $mmsi = request('mmsi'); // Get the MMSI from the request
+        $hexIdent = request('hex_ident'); // Get hex_ident from the request
+        $targetId = request('target_id'); // Get target_id from the request
+
         $dataAis = [];
         $dataAdsb = [];
         $dataRadar = [];
@@ -52,6 +56,9 @@ class MapController extends Controller
                 )
                 ->when($date, function ($query) use ($date, $date_until) {
                     $query->whereBetween('ais_data_positions.created_at', [$date, $date_until]);
+                })
+                ->when($mmsi, function ($query) use ($mmsi) {
+                    $query->where('ais_data_vessels.mmsi', $mmsi); // Filter by MMSI if provided
                 })
                 ->get();
 
@@ -100,6 +107,9 @@ class MapController extends Controller
                 ->when($date, function ($query) use ($date, $date_until) {
                     $query->whereBetween('adsb_data_positions.created_at', [$date, $date_until]);
                 })
+                ->when($hexIdent, function ($query) use ($hexIdent) {
+                    $query->where('adsb_data_aircrafts.hex_ident', $hexIdent); // Filter by hex_ident if provided
+                })
                 ->get();
             foreach ($adsbTracks as $track) {
                 $mmsiAdsb = $track['hex_ident'];
@@ -132,6 +142,9 @@ class MapController extends Controller
             $radarDataTracks = RadarData::orderBy('created_at', 'DESC')
                 ->when($date, function ($query) use ($date, $date_until) {
                     $query->whereBetween('created_at', [$date, $date_until]);
+                })
+                ->when($targetId, function ($query) use ($targetId) {
+                    $query->where('target_id', $targetId); // Filter by target_id if provided
                 })
                 ->get();
 
