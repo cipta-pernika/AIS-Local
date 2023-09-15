@@ -431,12 +431,14 @@ class HelperController extends Controller
             ->groupBy('vessel_id')
             ->limit(10)
             ->orderBy('created_at', 'DESC')
+            ->whereBetween('created_at', [now()->subHours(12), now()])
             ->get();
 
         $adsb = AdsbDataPosition::with('aircraft')
             ->groupBy('aircraft_id')
             ->limit(10)
             ->orderBy('created_at', 'DESC')
+            ->whereBetween('created_at', [now()->subHours(12), now()])
             ->get();
 
         return response()->json([
