@@ -1,0 +1,1 @@
+php artisan infyom:api_scaffold Event --skip=views,menu,tests --fromTable --table=events
