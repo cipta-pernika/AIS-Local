@@ -29,19 +29,7 @@ class GeofenceController extends Controller
         //     $geobinding->save();
         // }
 
-        $geod = Geofence::join('geofence_binding', 'geofence.id', 'geofence_binding.geofence_id')
-            ->join('asset', 'geofence_binding.asset_id', 'asset.id')
-            ->where('geofence.id', $geo->id)
-            ->select(
-                DB::raw('GROUP_CONCAT(DISTINCT asset.asset_name ORDER BY asset.id) AS assets_name'),
-                'geofence.type_geo',
-                'geofence.id',
-                'geometry',
-                'radius',
-                'type',
-                'asset_id',
-                'geofence_name'
-            )
+        $geod = Geofence::where('id', $geo->id)
             ->first();
 
         return response()->json([

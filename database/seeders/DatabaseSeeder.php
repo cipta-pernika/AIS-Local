@@ -17,6 +17,11 @@ class DatabaseSeeder extends Seeder
             // RadarDataSeeder::class,
             LocationTypeSeeder::class,
             LocationSeeder::class,
+
+
+
+
+            //paling akhir
             AdsbDataAircraftSeeder::class
         ]);
     }

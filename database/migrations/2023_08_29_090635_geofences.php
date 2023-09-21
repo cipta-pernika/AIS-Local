@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('geofence', function (Blueprint $table) {
+        Schema::create('geofences', function (Blueprint $table) {
             $table->id();
             $table->string('user_id')->nullable();
             $table->string('geofence_name')->nullable();
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('geofence');
+        Schema::dropIfExists('geofences');
     }
 };
