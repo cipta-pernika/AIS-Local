@@ -11,7 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        //
+        Schema::create('event_trackings', function (Blueprint $table) {
+            $table->id();
+            $table->integer('asset_id');
+            $table->integer('event_id');
+            $table->softDeletes();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -19,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('event_trackings');
     }
 };
