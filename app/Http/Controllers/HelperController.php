@@ -49,7 +49,7 @@ class HelperController extends Controller
 
     public function datatransferlogs()
     {
-        $datatransferlog = DataTransferLog::orderBy('created_at', 'DESC')->limit(100)->get();
+        $datatransferlog = DataTransferLog::orderBy('created_at', 'DESC')->whereBetween('created_at', [now()->subHours(2), now()])->limit(100)->get();
 
         return response()->json([
             'success' => true,
