@@ -42,28 +42,39 @@ class GeofenceController extends Controller
     public function editGeofence()
     {
         $geo = Geofence::find(request('id'));
+
+        if (!$geo) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Geofence not found.',
+            ], 404); // Return a 404 Not Found response.
+        }
+
+        // Update geofence properties
         $geo->geofence_name = request('name');
         $geo->type = request('typegeo');
         $geo->update();
 
-        $geobinding = GeofenceBinding::where('geofence_id', request('id'))->get();
-        foreach ($geobinding as $geob) {
-            $geob->delete();
-        }
-        foreach (request('assetgeo') as $asset) {
-            $geobinding = new GeofenceBinding;
-            $geobinding->geofence_id = $geo->id;
-            $geobinding->asset_id = $asset;
-            $geobinding->save();
+        // Delete existing geofence bindings
+        GeofenceBinding::where('geofence_id', request('id'))->delete();
+
+        // Create new geofence bindings
+        if (is_array(request('assetgeo'))) {
+            foreach (request('assetgeo') as $asset) {
+                $geobinding = new GeofenceBinding;
+                $geobinding->geofence_id = $geo->id;
+                $geobinding->asset_id = $asset;
+                $geobinding->save();
+            }
         }
 
-        $geod = Geofence::join('geofence_bindings', 'geofence.id', 'geofence_bindings.geofence_id')
+        $geod = Geofence::join('geofence_bindings', 'geofences.id', 'geofence_bindings.geofence_id')
             ->join('asset', 'geofence_bindings.asset_id', 'assets.id')
-            ->where('geofence.id', $geo->id)
+            ->where('geofences.id', $geo->id)
             ->select(
                 DB::raw('GROUP_CONCAT(DISTINCT assets.asset_name ORDER BY assets.id) AS assets_name'),
-                'geofence.type_geo',
-                'geofence.id',
+                'geofences.type_geo',
+                'geofences.id',
                 'geometry',
                 'radius',
                 'type',
@@ -78,13 +89,14 @@ class GeofenceController extends Controller
         ], 200);
     }
 
+
     public function getgeofence()
     {
         $geo = Cache::remember('geofenceee', 120, function () {
-            return Geofence::join('geofence_bindings', 'geofence_bindings.geofence_id', 'geofence.id')
+            return Geofence::join('geofence_bindings', 'geofence_bindings.geofence_id', 'geofences.id')
                 ->join('assets', 'geofence_bindings.asset_id', 'assets.id')
-                ->groupBy('geofence.id')
-                ->select(DB::raw('GROUP_CONCAT(DISTINCT assets.asset_name ORDER BY assets.id) AS assets_name'), 'geofence.type_geo', 'geofence.id', 'geometry', 'radius', 'type', 'geofence_name')
+                ->groupBy('geofences.id')
+                ->select(DB::raw('GROUP_CONCAT(DISTINCT assets.asset_name ORDER BY assets.id) AS assets_name'), 'geofences.type_geo', 'geofences.id', 'geometry', 'radius', 'type', 'geofence_name')
                 ->get();
         });
 
@@ -94,30 +106,28 @@ class GeofenceController extends Controller
         ], 200);
     }
 
-    // public function getgeofencebyid()
-    // {
-    //     $geo = GeofenceBinding::where('geofence_id', request('id'))
-    //         ->select('asset_id')
-    //         ->get();
-
-    //     return response()->json([
-    //         'success' => true,
-    //         'message' => $geo,
-    //     ], 200);
-    // }
-
     public function deletegeofence()
     {
         $geo = Geofence::find(request('idGeo'));
-        $geo->delete();
-        // $geoB = GeofenceBinding::where('geofence_id', request('idGeo'))->get();
-        // foreach ($geoB as $geoBe) {
-        //     $geoBe->delete();
-        // }
 
-        return response()->json([
-            'success' => true,
-            'message' => $geo,
-        ], 200);
+        if ($geo) {
+            $geo->delete();
+
+            // You can uncomment this code if you also want to delete associated bindings
+            $geoB = GeofenceBinding::where('geofence_id', request('idGeo'))->get();
+            foreach ($geoB as $geoBe) {
+                $geoBe->delete();
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Geofence deleted successfully.',
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Geofence not found.',
+            ], 404); // Return a 404 Not Found response.
+        }
     }
 }

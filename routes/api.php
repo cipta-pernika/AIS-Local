@@ -120,7 +120,6 @@ Route::post('dailyreportpdf', [HelperController::class, 'dailyreportprint']);
 //geofence
 Route::post('setgeofence', [GeofenceController::class, 'setgeofence']);
 Route::post('getgeofence', [GeofenceController::class, 'getgeofence']);
-// Route::post('getgeofencebyid', [GeofenceController::class, 'getgeofencebyid']);
 Route::post('editgeofence', [GeofenceController::class, 'editgeofence']);
 Route::post('deletegeofence', [GeofenceController::class, 'deletegeofence']);
 
