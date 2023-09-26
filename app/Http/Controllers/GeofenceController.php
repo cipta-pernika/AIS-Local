@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Geofence;
+use App\Models\GeofenceBinding;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
@@ -45,24 +46,22 @@ class GeofenceController extends Controller
         $geo->type = request('typegeo');
         $geo->update();
 
-        // $geobinding = GeofenceBinding::where('geofence_id', request('id'))->get();
-        // foreach ($geobinding as $geob) {
-        //     $geob->delete();
-        // }
-        // foreach (request('assetgeo') as $asset) {
-        //     $device = Device::where('asset_id', $asset)->first();
-        //     $geobinding = new GeofenceBinding;
-        //     $geobinding->geofence_id = $geo->id;
-        //     $geobinding->device_imei = $device->device_imei;
-        //     $geobinding->asset_id = $asset;
-        //     $geobinding->save();
-        // }
+        $geobinding = GeofenceBinding::where('geofence_id', request('id'))->get();
+        foreach ($geobinding as $geob) {
+            $geob->delete();
+        }
+        foreach (request('assetgeo') as $asset) {
+            $geobinding = new GeofenceBinding;
+            $geobinding->geofence_id = $geo->id;
+            $geobinding->asset_id = $asset;
+            $geobinding->save();
+        }
 
-        $geod = Geofence::join('geofence_binding', 'geofence.id', 'geofence_binding.geofence_id')
-            ->join('asset', 'geofence_binding.asset_id', 'asset.id')
+        $geod = Geofence::join('geofence_bindings', 'geofence.id', 'geofence_bindings.geofence_id')
+            ->join('asset', 'geofence_bindings.asset_id', 'assets.id')
             ->where('geofence.id', $geo->id)
             ->select(
-                DB::raw('GROUP_CONCAT(DISTINCT asset.asset_name ORDER BY asset.id) AS assets_name'),
+                DB::raw('GROUP_CONCAT(DISTINCT assets.asset_name ORDER BY assets.id) AS assets_name'),
                 'geofence.type_geo',
                 'geofence.id',
                 'geometry',
@@ -82,10 +81,10 @@ class GeofenceController extends Controller
     public function getgeofence()
     {
         $geo = Cache::remember('geofenceee', 120, function () {
-            return Geofence::join('geofence_binding', 'geofence_binding.geofence_id', 'geofence.id')
-                ->join('asset', 'geofence_binding.asset_id', 'asset.id')
+            return Geofence::join('geofence_bindings', 'geofence_bindings.geofence_id', 'geofence.id')
+                ->join('assets', 'geofence_bindings.asset_id', 'assets.id')
                 ->groupBy('geofence.id')
-                ->select(DB::raw('GROUP_CONCAT(DISTINCT asset.asset_name ORDER BY asset.id) AS assets_name'), 'geofence.type_geo', 'geofence.id', 'geometry', 'radius', 'type', 'geofence_name')
+                ->select(DB::raw('GROUP_CONCAT(DISTINCT assets.asset_name ORDER BY assets.id) AS assets_name'), 'geofence.type_geo', 'geofence.id', 'geometry', 'radius', 'type', 'geofence_name')
                 ->get();
         });
 
