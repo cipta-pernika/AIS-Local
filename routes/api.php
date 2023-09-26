@@ -124,5 +124,4 @@ Route::post('getgeofence', [GeofenceController::class, 'getgeofence']);
 Route::post('editgeofence', [GeofenceController::class, 'editgeofence']);
 Route::post('deletegeofence', [GeofenceController::class, 'deletegeofence']);
 
-Route::resource('assets', App\Http\Controllers\API\AssetAPIController::class)
-    ->except(['create', 'edit']);
+Route::resource('assets', App\Http\Controllers\API\AssetAPIController::class);
