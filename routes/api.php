@@ -126,3 +126,5 @@ Route::post('deletegeofence', [GeofenceController::class, 'deletegeofence']);
 Route::resource('assets', App\Http\Controllers\API\AssetAPIController::class);
 
 Route::resource('trackings', App\Http\Controllers\API\TrackingAPIController::class);
+
+Route::resource('mission-plans', App\Http\Controllers\API\MissionPlanAPIController::class);

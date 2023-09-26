@@ -13,13 +13,22 @@ return new class extends Migration
     {
         Schema::create('mission_plans', function (Blueprint $table) {
             $table->id();
-            $table->string('asset_id');
-            $table->string('dispatcher')->nullable();
-            $table->string('name');
-            $table->string('leader');
-            $table->string('note');
-            $table->enum('status', ['0', '1'])->default('1');
+            $table->unsignedBigInteger('asset_id'); // Use an appropriate data type (assuming it references another table)
+            $table->string('name')->unique();
+            $table->timestamp('ETD')->nullable();
+            $table->timestamp('ATD')->nullable();
+            $table->timestamp('ETA')->nullable();
+            $table->timestamp('ATA')->nullable();
+            $table->text('route_plans')->nullable();
+            $table->string('captain')->nullable();
+            $table->string('muatan')->nullable();
+            $table->text('note')->nullable(); // Changed to text data type for longer notes
+            $table->tinyInteger('status')->default('1'); // Consider using integer or boolean for status
             $table->timestamps();
+
+            $table->index('asset_id'); // Index for asset_id if it's frequently queried
+            $table->index('name'); // Index for name if it's frequently queried
+            // Add additional indexes based on your specific query patterns
         });
     }
 
