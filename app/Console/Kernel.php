@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Jobs\DeleteOldRecords;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -17,6 +18,8 @@ class Kernel extends ConsoleKernel
         $schedule->command('app:outofrange')->daily();
         $schedule->command('radarpng')->daily();
         $schedule->command('app:sendata')->daily();
+
+        $schedule->job(new DeleteOldRecords)->daily(); // Run daily
     }
 
     /**
