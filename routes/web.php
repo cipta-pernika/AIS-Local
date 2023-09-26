@@ -41,3 +41,4 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 Route::resource('assets', App\Http\Controllers\AssetController::class);
+Route::resource('trackings', App\Http\Controllers\TrackingController::class);
