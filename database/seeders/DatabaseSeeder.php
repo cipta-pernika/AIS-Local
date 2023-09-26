@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
             // RadarDataSeeder::class,
             LocationTypeSeeder::class,
             LocationSeeder::class,
-
+            AssetSeeder::class,
 
 
 
