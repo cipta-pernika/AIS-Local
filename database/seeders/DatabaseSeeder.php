@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
             SensorDatasTableSeeder::class,
             AisDataVesselsTableSeeder::class,
             AisDataPositionsTableSeeder::class,
-
+            EventSeeder::class,
 
             //paling akhir
             AdsbDataAircraftSeeder::class

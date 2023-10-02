@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('status');
             $table->date('installation_date');
             $table->dateTime('last_online');
+            $table->integer('coverage')->nullable();
             $table->timestamps();
         });
     }

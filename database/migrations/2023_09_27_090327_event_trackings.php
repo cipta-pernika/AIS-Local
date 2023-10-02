@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('asset_id');
             $table->unsignedBigInteger('event_id');
-            $table->unsignedBigInteger('ais_data_position_id');
+            $table->unsignedBigInteger('ais_data_position_id')->nullable();
             $table->softDeletes();
             $table->timestamps();
 
