@@ -39,4 +39,26 @@ class AisDataPosition extends Model
     {
         return $this->belongsTo(Port::class);
     }
+
+    // Assuming it's in AisDataPosition model
+    public static function isAisOn($vesselId)
+    {
+        $lastData = self::where('vessel_id', $vesselId)
+            ->orderBy('created_at', 'DESC')
+            ->first();
+
+        if (!$lastData) {
+            // No data available, consider AIS as off
+            return false;
+        }
+
+        $currentTime = now();
+        $lastDataTime = $lastData->created_at;
+
+        // Calculate the difference in minutes
+        $minutesDiff = $currentTime->diffInMinutes($lastDataTime);
+
+        // If the difference is greater than 5 minutes, AIS is considered off
+        return $minutesDiff <= 5;
+    }
 }

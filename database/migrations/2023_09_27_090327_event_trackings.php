@@ -15,11 +15,13 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('asset_id');
             $table->unsignedBigInteger('event_id');
+            $table->unsignedBigInteger('ais_data_position_id');
             $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('asset_id')->references('id')->on('assets')->onDelete('cascade');
             $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
+            $table->foreign('ais_data_position_id')->references('id')->on('ais_data_positions')->onDelete('cascade');
         });
     }
 
