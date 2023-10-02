@@ -24,5 +24,8 @@ class DatabaseSeeder extends Seeder
             //paling akhir
             AdsbDataAircraftSeeder::class
         ]);
+        $this->call(SensorDatasTableSeeder::class);
+        $this->call(AisDataVesselsTableSeeder::class);
+        $this->call(AisDataPositionsTableSeeder::class);
     }
 }
