@@ -44,7 +44,12 @@ class EventSeeder extends Seeder
         ]);
 
         Event::create([
-            'name' => 'Entry coverage AIS (new detected)',
+            'name' => 'Navigation status changes',
+            'threshold' => 10,
+        ]);
+
+        Event::create([
+            'name' => 'Potential Collision',
             'threshold' => 10,
         ]);
     }
