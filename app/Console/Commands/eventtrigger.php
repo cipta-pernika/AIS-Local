@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\AisDataPosition;
+use App\Models\Asset;
 use Illuminate\Console\Command;
 
 class eventtrigger extends Command
@@ -32,16 +33,18 @@ class eventtrigger extends Command
         //     ->orderBy('created_at', 'DESC')
         //     ->get();
 
+        $allAssets = Asset::with('aisDataVessel')->get();
 
         //AIS ON/OFF
-        $vesselId = 1; // Replace with the actual vessel_id you want to check
+        foreach ($allAssets as $asset) {
+            if ($asset->aisDataVessel) {
+                $vesselId = $asset->aisDataVessel->id;
+                $aisStatus = AisDataPosition::isAisOn($vesselId);
 
-        if (AisDataPosition::isAisOn($vesselId)) {
-            echo "AIS is ON for Vessel $vesselId";
-        } else {
-            echo "AIS is OFF for Vessel $vesselId";
+                echo "Asset {$asset->asset_name}: AIS is " . ($aisStatus ? 'ON' : 'OFF') . "\n";
+            } else {
+                echo "Asset {$asset->asset_name}: AIS data not available\n";
+            }
         }
-
-        dd($vesselId);
     }
 }

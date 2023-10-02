@@ -109,5 +109,8 @@ class Asset extends Model
         'updated_at' => 'nullable'
     ];
 
-    
+    public function aisDataVessel()
+    {
+        return $this->hasOne(AisDataVessel::class, 'mmsi', 'mmsi');
+    }
 }

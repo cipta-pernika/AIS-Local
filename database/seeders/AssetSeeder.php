@@ -19,12 +19,14 @@ class AssetSeeder extends Seeder
                 'asset_name' => 'Asset 1',
                 'asset_author' => 'Author 1',
                 'asset_type' => 'Type 1',
+                'mmsi' => '352001445',
                 // Add other columns and their values here
             ],
             [
                 'asset_name' => 'Asset 2',
                 'asset_author' => 'Author 2',
                 'asset_type' => 'Type 2',
+                'mmsi' => '525024016',
                 // Add other columns and their values here
             ],
             // Add more sample records as needed

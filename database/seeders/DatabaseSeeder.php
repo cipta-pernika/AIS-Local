@@ -18,14 +18,13 @@ class DatabaseSeeder extends Seeder
             LocationTypeSeeder::class,
             LocationSeeder::class,
             AssetSeeder::class,
-
+            SensorDatasTableSeeder::class,
+            AisDataVesselsTableSeeder::class,
+            AisDataPositionsTableSeeder::class,
 
 
             //paling akhir
             AdsbDataAircraftSeeder::class
         ]);
-        $this->call(SensorDatasTableSeeder::class);
-        $this->call(AisDataVesselsTableSeeder::class);
-        $this->call(AisDataPositionsTableSeeder::class);
     }
 }
