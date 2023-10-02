@@ -19,12 +19,32 @@ class EventSeeder extends Seeder
         ]);
 
         Event::create([
-            'name' => 'AIS ON',
+            'name' => 'ON AIS',
             'threshold' => 10,
         ]);
 
         Event::create([
-            'name' => 'AIS OFF',
+            'name' => 'OFF AIS',
+            'threshold' => 10,
+        ]);
+
+        Event::create([
+            'name' => 'ON AIS Receiver Coverage',
+            'threshold' => 10,
+        ]);
+
+        Event::create([
+            'name' => 'OFF AIS Receiver Coverage',
+            'threshold' => 10,
+        ]);
+
+        Event::create([
+            'name' => 'Entry coverage AIS (new detected)',
+            'threshold' => 10,
+        ]);
+
+        Event::create([
+            'name' => 'Entry coverage AIS (new detected)',
             'threshold' => 10,
         ]);
     }

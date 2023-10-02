@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('event_trackings', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('asset_id');
+            $table->unsignedBigInteger('asset_id')->nullable();
             $table->unsignedBigInteger('event_id');
             $table->unsignedBigInteger('ais_data_position_id')->nullable();
             $table->softDeletes();
