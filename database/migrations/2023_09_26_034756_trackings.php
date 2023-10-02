@@ -31,6 +31,8 @@ return new class extends Migration
             $table->string('orbcomm_id')->nullable();
             $table->timestamps();
 
+            $table->foreign('asset_id')->references('id')->on('assets')->onDelete('cascade');
+
             $table->index('asset_id'); // Index for asset_id if it's frequently queried
             $table->index('timestamp'); // Index for timestamp if it's frequently queried
             // Add additional indexes based on your specific query patterns
