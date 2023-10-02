@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('event_trackings', function (Blueprint $table) {
+        Schema::create('geofence_bindings', function (Blueprint $table) {
             $table->id();
-            $table->integer('asset_id');
-            $table->integer('event_id');
-            $table->softDeletes();
+            $table->unsignedBigInteger('geofence_id')->nullable();
+            $table->string('asset_id')->nullable();
             $table->timestamps();
+
+            $table->foreign('geofence_id')->references('id')->on('geofences')->onDelete('cascade');
         });
     }
 
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('event_trackings');
+        Schema::dropIfExists('geofence_bindings');
     }
 };
