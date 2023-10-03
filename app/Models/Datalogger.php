@@ -17,6 +17,7 @@ class Datalogger extends Model
         'status',
         'installation_date',
         'last_online',
+        'coverage'
     ];
 
     public function sensors()

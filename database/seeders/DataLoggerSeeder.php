@@ -21,6 +21,7 @@ class DataLoggerSeeder extends Seeder
             'status' => 'Online',
             'installation_date' => '2022-01-01',
             'last_online' => '2023-05-24 12:34:56',
+            'coverage' => 25
         ]);
     }
 }
