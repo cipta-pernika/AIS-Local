@@ -9,6 +9,7 @@ use App\Models\AdsbDataPosition;
 use App\Models\AisDataPosition;
 use App\Models\AisDataVessel;
 use App\Models\Datalogger;
+use App\Models\EventTracking;
 use App\Models\RadarData;
 use App\Models\Sensor;
 use App\Models\SensorData;
@@ -236,6 +237,12 @@ class HelperController extends Controller
 
         if (request()->mmsi) {
             $vessel = AisDataVessel::updateOrCreate(['mmsi' => request()->mmsi]);
+            if ($vessel->wasRecentlyCreated) {
+                EventTracking::create([
+                    'event_id' => 6,
+                    'mmsi' => request()->mmsi,
+                ]);
+            }
 
             $latitude = request()->latitude;
             $longitude = request()->longitude;
@@ -279,6 +286,13 @@ class HelperController extends Controller
                 'reported_eta' => Carbon::parse(request('eta')),
                 'type_number' => request('type_number'),
             ]);
+            if ($vessel->wasRecentlyCreated) {
+                EventTracking::create([
+                    'event_id' => 6,
+                    'mmsi' => request()->mmsi,
+                    'ship_name' => request('name')
+                ]);
+            }
         }
 
         $aisData = AisDataPosition::with('vessel', 'sensorData.sensor.datalogger')
