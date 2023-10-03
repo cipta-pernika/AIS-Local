@@ -21,4 +21,9 @@ class AdsbData extends Model
         'heading',
         'timestamp',
     ];
+
+    public function aircraft()
+    {
+        return $this->belongsTo(AdsbDataAircraft::class, 'aircraft_id');
+    }
 }

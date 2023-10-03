@@ -43,3 +43,4 @@ require __DIR__.'/auth.php';
 Route::resource('assets', App\Http\Controllers\AssetController::class);
 Route::resource('trackings', App\Http\Controllers\TrackingController::class);
 Route::resource('mission-plans', App\Http\Controllers\MissionPlanController::class);
+Route::resource('event-trackings', App\Http\Controllers\EventTrackingController::class);

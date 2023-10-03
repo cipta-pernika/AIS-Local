@@ -2,30 +2,51 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class EventTracking extends Model
 {
-    use HasFactory, SoftDeletes;
+    public $table = 'event_trackings';
 
-    protected $fillable = [
-        'asset_id', 'event_id', 'ais_data_position_id', 'mmsi', 'ship_name'
+    public $fillable = [
+        'asset_id',
+        'event_id',
+        'ais_data_position_id',
+        'notes',
+        'mmsi',
+        'ship_name'
     ];
 
-    public function asset()
+    protected $casts = [
+        'notes' => 'string',
+        'mmsi' => 'string',
+        'ship_name' => 'string'
+    ];
+
+    public static array $rules = [
+        'asset_id' => 'nullable',
+        'event_id' => 'required',
+        'ais_data_position_id' => 'nullable',
+        'notes' => 'nullable|string|max:255',
+        'mmsi' => 'nullable|string|max:255',
+        'ship_name' => 'nullable|string|max:255',
+        'deleted_at' => 'nullable',
+        'created_at' => 'nullable',
+        'updated_at' => 'nullable'
+    ];
+
+    public function aisDataPosition(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(Asset::class);
+        return $this->belongsTo(\App\Models\AisDataPosition::class, 'ais_data_position_id');
     }
 
-    public function event()
+    public function asset(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(Event::class);
+        return $this->belongsTo(\App\Models\Asset::class, 'asset_id');
     }
 
-    public function aisDataPosition()
+    public function event(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(AisDataPosition::class);
+        return $this->belongsTo(\App\Models\Event::class, 'event_id');
     }
 }
