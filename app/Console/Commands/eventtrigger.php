@@ -61,6 +61,8 @@ class eventtrigger extends Command
                             'asset_id' => $asset->id,
                             'event_id' => 5,
                             'ais_data_position_id' => $latestAisData->id,
+                            'mmsi' => $asset->mmsi,
+                            'ship_name' => $asset->asset_name
                         ]);
                         echo "Asset {$asset->asset_name}: AIS Receiver Coverage OFF\n";
                     } else {
@@ -70,6 +72,8 @@ class eventtrigger extends Command
                             'asset_id' => $asset->id,
                             'event_id' => 4,
                             'ais_data_position_id' => $latestAisData->id,
+                            'mmsi' => $asset->mmsi,
+                            'ship_name' => $asset->asset_name
                         ]);
 
                         // AIS ON/OFF
@@ -80,12 +84,16 @@ class eventtrigger extends Command
                                 'asset_id' => $asset->id, // Replace with the actual asset_id
                                 'event_id' => 2,
                                 'ais_data_position_id' => $latestAisData->id, // Use $vesselId instead of $aisStatus->id
+                                'mmsi' => $asset->mmsi,
+                                'ship_name' => $asset->asset_name
                             ]);
                         } else {
                             EventTracking::create([
                                 'asset_id' => $asset->id, // Replace with the actual asset_id
                                 'event_id' => 3,
                                 'ais_data_position_id' => $latestAisData->id, // Set to null or handle accordingly
+                                'mmsi' => $asset->mmsi,
+                                'ship_name' => $asset->asset_name
                             ]);
                         }
                     }

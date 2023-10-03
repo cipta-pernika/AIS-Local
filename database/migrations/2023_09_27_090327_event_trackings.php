@@ -17,6 +17,8 @@ return new class extends Migration
             $table->unsignedBigInteger('event_id');
             $table->unsignedBigInteger('ais_data_position_id')->nullable();
             $table->string('notes')->nullable();
+            $table->string('mmsi')->nullable();
+            $table->string('ship_name')->nullable();
             $table->softDeletes();
             $table->timestamps();
 

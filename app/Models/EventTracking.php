@@ -11,7 +11,7 @@ class EventTracking extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'asset_id', 'event_id', 'ais_data_position_id',
+        'asset_id', 'event_id', 'ais_data_position_id', 'mmsi', 'ship_name'
     ];
 
     public function asset()
