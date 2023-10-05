@@ -55,18 +55,32 @@ class eventtrigger extends Command
                     ->take(1) // Limit to 1 record
                     ->first();
 
-                //Potential Collision
-                if ($secondLatestAisData && $latestAisData) {
-                    $distance = $this->calculateDistance($latestAisData->latitude, $latestAisData->longitude, $secondLatestAisData->latitude, $secondLatestAisData->longitude);
-                    $timeDifference = $latestAisData->timestamp->diffInSeconds($secondLatestAisData->timestamp);
+                //get kapal selain ini dengan jangkauan terdekat
+                $kapalLain = AisDataPosition::whereNot('vessel_id', $vesselId)
+                    ->orderBy('created_at', 'DESC')
+                    ->skip(1) // Offset by 1 to get the second latest
+                    ->take(1) // Limit to 1 record
+                    ->first();
+
+                // Declare collisionThreshold before using it
+                $collisionThreshold = 10; // Example: distance in meters
+
+                // Potential Collision
+                if ($kapalLain && $latestAisData) {
+                    $distance = $this->calculateDistance($latestAisData->latitude, $latestAisData->longitude, $kapalLain->latitude, $kapalLain->longitude);
+                    $timeDifference = 0;
+
+                    // Check if timestamps are DateTime objects
+                    if ($latestAisData->timestamp instanceof DateTime && $kapalLain->timestamp instanceof DateTime) {
+                        $timeDifference = $latestAisData->timestamp->diffInSeconds($kapalLain->timestamp);
+                    }
 
                     if ($distance < $collisionThreshold && $timeDifference > 0) {
                         $speed1 = $latestAisData->speed;
-                        $speed2 = $secondLatestAisData->speed;
+                        $speed2 = $kapalLain->speed;
                         $relativeSpeed = abs($speed1 - $speed2);
 
-                        // Adjust the collisionThreshold and relativeSpeedThreshold based on your requirements
-                        $collisionThreshold = 10; // Example: distance in meters
+                        // Adjust the relativeSpeedThreshold based on your requirements
                         $relativeSpeedThreshold = 5; // Example: speed difference in knots
 
                         if ($relativeSpeed > $relativeSpeedThreshold) {
