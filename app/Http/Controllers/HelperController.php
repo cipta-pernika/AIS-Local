@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\GeofenceMail;
 use App\Models\AdsbData;
 use App\Models\AdsbDataAircraft;
 use App\Models\AdsbDataFlight;
@@ -18,11 +19,13 @@ use App\Models\SensorData;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Location\Bearing\BearingSpherical;
 use Location\Coordinate;
 use Location\Distance\Haversine;
 use Location\Distance\Vincenty;
+use Location\Polygon;
 
 class HelperController extends Controller
 {
@@ -332,9 +335,43 @@ class HelperController extends Controller
                                 $geoParse->geometry->coordinates[0],
                                 'K'
                             );
-                            dd($jarak);
+                            if ($jarak <= (float) $value['radius'] / 1000) {
+                                if ($value['type'] === 'in' || $value['type'] === 'both') {
+                                    Mail::to('support@pernika.com')->send(new GeofenceMail([
+                                        'asset' => $asset,
+                                        'geofence' => $value
+                                    ]));
+                                }
+                            } else {
+                                if ($value['type'] === 'out' || $value['type'] === 'both') {
+                                    Mail::to('support@pernika.com')->send(new GeofenceMail([
+                                        'asset' => $asset,
+                                        'geofence' => $value
+                                    ]));
+                                }
+                            }
                         } else if ($geoParse && ($value->type_geo === 'polygon' || $value->type_geo === 'rectangle')) {
                             // Handle polygon or rectangle case
+                            $geofence = new Polygon();
+                            foreach ($geoParse as $valGeo) {
+                                $geofence->addPoint(new Coordinate($valGeo[0], $valGeo[1]));
+                            }
+                            $insidePoint = new Coordinate(request()->latitude,  request()->longitude);
+                            if ($geofence->contains($insidePoint)) {
+                                if ($value['type'] === 'in' || $value['type'] === 'both') {
+                                    Mail::to('support@pernika.com')->send(new GeofenceMail([
+                                        'asset' => $asset,
+                                        'geofence' => $value
+                                    ]));
+                                }
+                            } else {
+                                if ($value['type'] === 'out' || $value['type'] === 'both') {
+                                    Mail::to('support@pernika.com')->send(new GeofenceMail([
+                                        'asset' => $asset,
+                                        'geofence' => $value
+                                    ]));
+                                }
+                            }
                         } else {
                             // Handle other cases
                             $isInside = [];
