@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Asset;
 use App\Models\Geofence;
 use App\Models\GeofenceBinding;
 use Illuminate\Http\Request;
@@ -21,14 +22,12 @@ class GeofenceController extends Controller
         $geo->geometry = json_encode(request('geoDraw'));
         $geo->save();
 
-        // foreach (request('assetgeo') as $asset) {
-        //     $device = Device::where('asset_id', $asset)->first();
-        //     $geobinding = new GeofenceBinding;
-        //     $geobinding->geofence_id = $geo->id;
-        //     $geobinding->device_imei = $device->device_imei;
-        //     $geobinding->asset_id = $asset;
-        //     $geobinding->save();
-        // }
+        foreach (request('assetgeo') as $asset) {
+            $geobinding = new GeofenceBinding;
+            $geobinding->geofence_id = $geo->id;
+            $geobinding->asset_id = $asset;
+            $geobinding->save();
+        }
 
         $geod = Geofence::where('id', $geo->id)
             ->first();

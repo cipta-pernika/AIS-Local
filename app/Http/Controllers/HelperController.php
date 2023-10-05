@@ -11,6 +11,7 @@ use App\Models\AisDataVessel;
 use App\Models\Asset;
 use App\Models\Datalogger;
 use App\Models\EventTracking;
+use App\Models\GeofenceBinding;
 use App\Models\RadarData;
 use App\Models\Sensor;
 use App\Models\SensorData;
@@ -236,6 +237,8 @@ class HelperController extends Controller
         ]);
         $sensorData->save();
 
+        $vesselPosition = null;
+
         if (request()->mmsi) {
             $vessel = AisDataVessel::updateOrCreate(['mmsi' => request()->mmsi]);
             if ($vessel->wasRecentlyCreated) {
@@ -296,11 +299,15 @@ class HelperController extends Controller
             }
         }
 
-        $aisData = AisDataPosition::with('vessel', 'sensorData.sensor.datalogger')
-            ->orderBy('created_at', 'DESC')
-            ->groupBy('vessel_id')
-            ->where('id', $vesselPosition->id)
-            ->first();
+        $aisData = null;
+
+        if ($vesselPosition) {
+            $aisData = AisDataPosition::with('vessel', 'sensorData.sensor.datalogger')
+                ->orderBy('created_at', 'DESC')
+                ->groupBy('vessel_id')
+                ->where('id', $vesselPosition->id)
+                ->first();
+        }
 
         //detect inside geofence
         if (request()->has('mmsi') || request()->has('senderMmsi')) {
@@ -308,8 +315,35 @@ class HelperController extends Controller
 
             // Use first() instead of get() to get a single result
             $asset = Asset::where('mmsi', $mmsi)->first();
-            dd($asset);
+
+            if ($asset) {
+                $geo = GeofenceBinding::join('geofences', 'geofence_bindings.geofence_id', 'geofences.id')
+                    ->where('asset_id', $asset->id)->get();
+
+                foreach ($geo as $value) {
+                    if ($value->geometry) {
+                        $geoParse = json_decode($value->geometry);
+
+                        if ($geoParse && $value->type_geo === 'circle') {
+                            $jarak = $this->distance(
+                                request()->latitude,
+                                request()->longitude,
+                                $geoParse->geometry->coordinates[1],
+                                $geoParse->geometry->coordinates[0],
+                                'K'
+                            );
+                            dd($jarak);
+                        } else if ($geoParse && ($value->type_geo === 'polygon' || $value->type_geo === 'rectangle')) {
+                            // Handle polygon or rectangle case
+                        } else {
+                            // Handle other cases
+                            $isInside = [];
+                        }
+                    }
+                }
+            }
         }
+
 
         return response()->json([
             'aisData' => $aisData,
@@ -318,6 +352,28 @@ class HelperController extends Controller
             // 'vessel' => $vessel ?? null,
             // 'vesselPosition' => $vesselPosition ?? null,
         ], 201);
+    }
+
+    public function distance($lat1, $lon1, $lat2, $lon2, $unit)
+    {
+        if (($lat1 == $lat2) && ($lon1 == $lon2)) {
+            return 0;
+        } else {
+            $theta = $lon1 - $lon2;
+            $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) + cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
+            $dist = acos($dist);
+            $dist = rad2deg($dist);
+            $miles = $dist * 60 * 1.1515;
+            $unit = strtoupper($unit);
+
+            if ($unit == "K") {
+                return ($miles * 1.609344);
+            } else if ($unit == "N") {
+                return ($miles * 0.8684);
+            } else {
+                return $miles;
+            }
+        }
     }
 
     public function aisstatic()
