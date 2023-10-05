@@ -8,6 +8,7 @@ use App\Models\AdsbDataFlight;
 use App\Models\AdsbDataPosition;
 use App\Models\AisDataPosition;
 use App\Models\AisDataVessel;
+use App\Models\Asset;
 use App\Models\Datalogger;
 use App\Models\EventTracking;
 use App\Models\RadarData;
@@ -300,6 +301,15 @@ class HelperController extends Controller
             ->groupBy('vessel_id')
             ->where('id', $vesselPosition->id)
             ->first();
+
+        //detect inside geofence
+        if (request()->has('mmsi') || request()->has('senderMmsi')) {
+            $mmsi = request()->input('mmsi') ?: request()->input('senderMmsi');
+
+            // Use first() instead of get() to get a single result
+            $asset = Asset::where('mmsi', $mmsi)->first();
+            dd($asset);
+        }
 
         return response()->json([
             'aisData' => $aisData,
