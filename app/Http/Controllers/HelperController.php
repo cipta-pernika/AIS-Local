@@ -452,7 +452,7 @@ class HelperController extends Controller
         $aisData = AisDataPosition::with('vessel', 'sensorData.sensor.datalogger')
             ->orderBy('created_at', 'DESC')
             ->groupBy('vessel_id')
-            ->whereBetween('created_at', [now()->subHours(64), now()])
+            ->whereBetween('created_at', [now()->subHours(4), now()])
             ->get();
 
         return response()->json([
@@ -466,7 +466,7 @@ class HelperController extends Controller
         $aisData = AisDataPosition::with('vessel', 'sensorData.sensor.datalogger')
             ->orderBy('created_at', 'DESC')
             ->groupBy('vessel_id')
-            // ->whereBetween('created_at', [now()->subHours(24), now()])
+            ->whereBetween('created_at', [now()->subHours(4), now()])
             ->get();
 
         return response()->json([
@@ -480,8 +480,8 @@ class HelperController extends Controller
         $aisData = AisDataPosition::with('vessel', 'sensorData.sensor.datalogger')
             ->orderBy('created_at', 'DESC')
             ->groupBy('vessel_id')
-            // ->whereBetween('created_at', [now()->subMinutes(320), now()])
-            // ->limit(10)
+            ->whereBetween('created_at', [now()->subMinutes(320), now()])
+            ->limit(10)
             ->get();
 
         return response()->json([
