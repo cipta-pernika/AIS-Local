@@ -18,6 +18,7 @@ use App\Models\Sensor;
 use App\Models\SensorData;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -35,7 +36,7 @@ class HelperController extends Controller
         $query = $request->input('query');
 
         // Use the search method provided by Laravel Scout
-        $results = AisDataVessel::search($query)->get();
+        $results = AisDataVessel::search($query)->query(fn (Builder $query) => $query->with('positions'))->get();
 
         return response()->json($results);
     }
