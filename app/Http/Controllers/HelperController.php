@@ -18,6 +18,7 @@ use App\Models\Sensor;
 use App\Models\SensorData;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
@@ -29,6 +30,15 @@ use Location\Polygon;
 
 class HelperController extends Controller
 {
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+
+        // Use the search method provided by Laravel Scout
+        $results = AisDataVessel::search($query)->get();
+
+        return response()->json($results);
+    }
 
     public function dailyreport()
     {

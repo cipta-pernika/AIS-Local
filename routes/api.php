@@ -130,3 +130,5 @@ Route::resource('trackings', App\Http\Controllers\API\TrackingAPIController::cla
 Route::resource('mission-plans', App\Http\Controllers\API\MissionPlanAPIController::class);
 
 Route::resource('event-trackings', App\Http\Controllers\API\EventTrackingAPIController::class);
+
+Route::get('search', [HelperController::class, 'search']);
