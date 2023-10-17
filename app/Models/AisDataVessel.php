@@ -26,6 +26,15 @@ class AisDataVessel extends Model
         'type_number',
     ];
 
+    public function toSearchableArray()
+    {
+        return [
+            'mmsi' => $this->mmsi,
+            'vessel_name' => $this->vessel_name,
+            'imo' => $this->imo,
+        ];
+    }
+
     // Define relationships
     public function positions()
     {
