@@ -16,6 +16,7 @@ class MapController extends Controller
         $track = AisDataPosition::orderBy('created_at', 'DESC')
             ->select('latitude', 'longitude', 'heading')
             ->where('vessel_id', request('vessel_id'))
+            ->limit(200)
             ->get();
 
         return response()->json([
