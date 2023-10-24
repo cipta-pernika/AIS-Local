@@ -2,6 +2,8 @@
 
 /** @var \Laravel\Lumen\Routing\Router $router */
 
+use App\Http\Controllers\ExampleController;
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -16,3 +18,4 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+$router->post("aisdata", "ExampleController@aisdata");
