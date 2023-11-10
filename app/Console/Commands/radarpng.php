@@ -32,7 +32,7 @@ class radarpng extends Command
 
         $response = Http::attach(
             'file', $contents, 'radar.png'
-        )->post('https://siege.cakrawala.id/api/radarpng');
+        )->post('http://172.16.172.8/api/radarpng');
         $this->line($response->body());
     }
 }
