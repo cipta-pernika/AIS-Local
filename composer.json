@@ -7,30 +7,31 @@
     "require": {
         "php": "^8.1",
         "barryvdh/laravel-dompdf": "^v2.0.1",
-        "doctrine/dbal": "~3.6.7",
+        "doctrine/dbal": "~3.7.2",
+        "filament/filament": "^3.0-stable",
         "guzzlehttp/guzzle": "^7.8.0",
         "http-interop/http-factory-guzzle": "^1.2",
-        "inertiajs/inertia-laravel": "^v0.6.10",
+        "inertiajs/inertia-laravel": "v0.6.11",
         "infyomlabs/laravel-generator": "^v6.0.1",
-        "laravel/fortify": "^v1.18.0",
-        "laravel/framework": "^v10.24.0",
-        "laravel/sanctum": "^v3.3.1",
-        "laravel/scout": "^10.5",
+        "laravel/fortify": "v1.18.1",
+        "laravel/framework": "v10.33.0",
+        "laravel/sanctum": "v3.3.2",
+        "laravel/scout": "^v10.5.1",
         "laravel/tinker": "^v2.8.2",
-        "meilisearch/meilisearch-php": "^1.4",
+        "meilisearch/meilisearch-php": "^v1.5.0",
         "mjaschen/phpgeo": "^4.2",
         "orangehill/iseed": "^v3.0.3",
-        "tightenco/ziggy": "^v1.6.2"
+        "tightenco/ziggy": "v1.8.1"
     },
     "require-dev": {
         "fakerphp/faker": "^v1.23.0",
-        "laravel/breeze": "^v1.24.0",
-        "laravel/pint": "^v1.13.2",
-        "laravel/sail": "^v1.25.0",
+        "laravel/breeze": "v1.26.1",
+        "laravel/pint": "v1.13.6",
+        "laravel/sail": "v1.26.1",
         "mockery/mockery": "^1.6.6",
-        "nunomaduro/collision": "^v7.9.0",
-        "phpunit/phpunit": "^10.3.5",
-        "spatie/laravel-ignition": "^2.3.0"
+        "nunomaduro/collision": "v7.10.0",
+        "phpunit/phpunit": "^10.4.2",
+        "spatie/laravel-ignition": "^2.3.1"
     },
     "autoload": {
         "psr-4": {
@@ -47,7 +48,8 @@
     "scripts": {
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi"
+            "@php artisan package:discover --ansi",
+            "@php artisan filament:upgrade"
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
