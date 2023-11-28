@@ -99,11 +99,7 @@ class GeofenceController extends Controller
         //         ->get();
         // });
 
-        $geo =  Geofence::join('geofence_bindings', 'geofence_bindings.geofence_id', 'geofences.id')
-            ->join('assets', 'geofence_bindings.asset_id', 'assets.id')
-            ->groupBy('geofences.id')
-            ->select(DB::raw('GROUP_CONCAT(DISTINCT assets.asset_name ORDER BY assets.id) AS assets_name'), 'geofences.type_geo', 'geofences.id', 'geometry', 'radius', 'type', 'geofence_name')
-            ->get();
+        $geo =  Geofence::all();
 
         return response()->json([
             'success' => true,
