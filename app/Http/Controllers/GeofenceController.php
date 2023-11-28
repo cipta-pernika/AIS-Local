@@ -91,13 +91,19 @@ class GeofenceController extends Controller
 
     public function getgeofence()
     {
-        $geo = Cache::remember('geofenceee', 120, function () {
-            return Geofence::join('geofence_bindings', 'geofence_bindings.geofence_id', 'geofences.id')
-                ->join('assets', 'geofence_bindings.asset_id', 'assets.id')
-                ->groupBy('geofences.id')
-                ->select(DB::raw('GROUP_CONCAT(DISTINCT assets.asset_name ORDER BY assets.id) AS assets_name'), 'geofences.type_geo', 'geofences.id', 'geometry', 'radius', 'type', 'geofence_name')
-                ->get();
-        });
+        // $geo = Cache::remember('geofenceee', 120, function () {
+        //     return Geofence::join('geofence_bindings', 'geofence_bindings.geofence_id', 'geofences.id')
+        //         ->join('assets', 'geofence_bindings.asset_id', 'assets.id')
+        //         ->groupBy('geofences.id')
+        //         ->select(DB::raw('GROUP_CONCAT(DISTINCT assets.asset_name ORDER BY assets.id) AS assets_name'), 'geofences.type_geo', 'geofences.id', 'geometry', 'radius', 'type', 'geofence_name')
+        //         ->get();
+        // });
+
+        $geo =  Geofence::join('geofence_bindings', 'geofence_bindings.geofence_id', 'geofences.id')
+            ->join('assets', 'geofence_bindings.asset_id', 'assets.id')
+            ->groupBy('geofences.id')
+            ->select(DB::raw('GROUP_CONCAT(DISTINCT assets.asset_name ORDER BY assets.id) AS assets_name'), 'geofences.type_geo', 'geofences.id', 'geometry', 'radius', 'type', 'geofence_name')
+            ->get();
 
         return response()->json([
             'success' => true,
