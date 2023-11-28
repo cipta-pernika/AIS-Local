@@ -23,6 +23,7 @@
         "meilisearch/meilisearch-php": "^v1.5.0",
         "mjaschen/phpgeo": "^4.2",
         "orangehill/iseed": "^v3.0.3",
+        "pxlrbt/filament-excel": "^2.1",
         "tightenco/ziggy": "v1.8.1"
     },
     "require-dev": {

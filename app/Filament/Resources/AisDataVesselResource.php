@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\AisDataVesselResource\Pages;
 use App\Filament\Resources\AisDataVesselResource\RelationManagers;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 use App\Models\AisDataVessel;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -17,7 +18,7 @@ class AisDataVesselResource extends Resource
 {
     protected static ?string $model = AisDataVessel::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-s-paper-airplane';
 
     public static function form(Form $form): Form
     {
@@ -59,6 +60,7 @@ class AisDataVesselResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    ExportBulkAction::make()
                 ]),
             ]);
     }

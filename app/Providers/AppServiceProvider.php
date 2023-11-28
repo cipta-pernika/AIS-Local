@@ -27,8 +27,7 @@ class AppServiceProvider extends ServiceProvider
             Filament::registerNavigationItems([
                 NavigationItem::make('Maps')
                     ->url('https://coastal.cakrawala.id')
-                    ->icon('heroicon-o-map')
-                    ->sort(0),
+                    ->icon('heroicon-o-map'),
             ]);
         });
     }
