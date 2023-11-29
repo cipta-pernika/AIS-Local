@@ -17,7 +17,7 @@ class AisDataPositionResource extends Resource
 {
     protected static ?string $model = AisDataPosition::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-m-globe-asia-australia';
 
     public static function form(Form $form): Form
     {
