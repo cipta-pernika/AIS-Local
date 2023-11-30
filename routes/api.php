@@ -132,3 +132,5 @@ Route::resource('mission-plans', App\Http\Controllers\API\MissionPlanAPIControll
 Route::resource('event-trackings', App\Http\Controllers\API\EventTrackingAPIController::class);
 
 Route::get('search', [HelperController::class, 'search']);
+
+Route::resource('geofence-types', App\Http\Controllers\API\GeofenceTypeAPIController::class);
