@@ -22,10 +22,9 @@ class DatabaseSeeder extends Seeder
             AisDataVesselsTableSeeder::class,
             AisDataPositionsTableSeeder::class,
             EventSeeder::class,
-
+            GeofenceTypesTableSeeder::class,
             //paling akhir
             AdsbDataAircraftSeeder::class
         ]);
-        $this->call(GeofenceTypesTableSeeder::class);
     }
 }
