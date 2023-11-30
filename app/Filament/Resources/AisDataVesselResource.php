@@ -20,6 +20,8 @@ class AisDataVesselResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-s-paper-airplane';
 
+    protected static ?string $navigationGroup = 'AIS';
+
     public static function form(Form $form): Form
     {
         return $form

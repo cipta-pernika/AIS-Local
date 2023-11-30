@@ -19,6 +19,8 @@ class AdsbDataPositionResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-cursor-arrow-ripple';
 
+    protected static ?string $navigationGroup = 'ADS-B';
+
     public static function form(Form $form): Form
     {
         return $form

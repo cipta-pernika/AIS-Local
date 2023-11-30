@@ -19,6 +19,8 @@ class GeofenceResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-s-square-3-stack-3d';
 
+    protected static ?string $navigationGroup = 'Geofence';
+
     public static function form(Form $form): Form
     {
         return $form

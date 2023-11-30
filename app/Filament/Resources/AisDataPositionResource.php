@@ -19,6 +19,8 @@ class AisDataPositionResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-m-globe-asia-australia';
 
+    protected static ?string $navigationGroup = 'AIS';
+
     public static function form(Form $form): Form
     {
         return $form
