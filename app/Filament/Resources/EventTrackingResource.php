@@ -62,12 +62,11 @@ class EventTrackingResource extends Resource
                     ->sortable(),
             ])
             ->filters([
-                Tables\Filters\SelectFilter::make('vessel_type')
-                ->options([
-                    'Fishing' => 'Fishing',
-                    'Tug' => 'Tug',
-                    'Cargo' => 'Cargo',
-                ]),
+                Tables\Filters\SelectFilter::make('event')
+                    ->multiple()
+                    ->relationship('event', 'name')
+                    ->preload()
+                    ->searchable(),
             ])
             ->actions([
                 // Tables\Actions\EditAction::make(),
