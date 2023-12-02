@@ -22,6 +22,16 @@ class GeofenceTypesTableSeeder extends Seeder
             0 => 
             array (
                 'id' => 1,
+                'name' => 'Kabel Laut',
+                'base_price' => '',
+                'uom' => '',
+                'vessel_type' => '',
+                'created_at' => '2023-11-30 06:27:34',
+                'updated_at' => '2023-11-30 06:28:24',
+            ),
+            1 => 
+            array (
+                'id' => 2,
                 'name' => 'Bongkar Muat',
                 'base_price' => '10000.00',
                 'uom' => 'Hours',
