@@ -18,9 +18,9 @@ class DatabaseSeeder extends Seeder
             LocationTypeSeeder::class,
             LocationSeeder::class,
             AssetSeeder::class,
-            SensorDatasTableSeeder::class,
-            AisDataVesselsTableSeeder::class,
-            AisDataPositionsTableSeeder::class,
+            // SensorDatasTableSeeder::class,
+            // AisDataVesselsTableSeeder::class,
+            // AisDataPositionsTableSeeder::class,
             EventSeeder::class,
             GeofenceTypesTableSeeder::class,
             //paling akhir
