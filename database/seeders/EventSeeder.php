@@ -52,5 +52,15 @@ class EventSeeder extends Seeder
             'name' => 'Potential Collision',
             'threshold' => 10,
         ]);
+
+        Event::create([
+            'name' => 'Enter Geofence',
+            'threshold' => 10,
+        ]);
+
+        Event::create([
+            'name' => 'Exit Geofence',
+            'threshold' => 10,
+        ]);
     }
 }

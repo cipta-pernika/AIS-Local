@@ -1,0 +1,108 @@
+<?php
+
+namespace App\Console\Commands;
+
+use App\Mail\GeofenceMail;
+use App\Models\AisDataPosition;
+use App\Models\EventTracking;
+use App\Models\Geofence;
+use Carbon\Carbon;
+use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Mail;
+use Location\Bearing\BearingSpherical;
+use Location\Coordinate;
+use Location\Distance\Haversine;
+use Location\Distance\Vincenty;
+use Location\Polygon;
+
+class checkgeofence extends Command
+{
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'app:checkgeofence';
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Check Geofence';
+
+    /**
+     * Execute the console command.
+     */
+    public function handle()
+    {
+        $geofence_datas = Geofence::all();
+        $ais_datas = AisDataPosition::limit(10)->get();
+
+        foreach ($geofence_datas as $geofence) {
+            $geoParse = json_decode($geofence->geometry);
+            if ($geofence->geometry && $geofence->type_geo === 'circle') {
+
+                foreach ($ais_datas as $ais_data) {
+                    $jarak = $this->distance(
+                        $ais_data->latitude,
+                        $ais_data->longitude,
+                        $geoParse->geometry->coordinates[1],
+                        $geoParse->geometry->coordinates[0],
+                        'K'
+                    );
+                    if ($jarak <= (float) $geofence['radius'] / 1000) {
+                        if ($geofence->type === 'in' || $geofence->type === 'both') {
+                            EventTracking::create([
+                                'event_id' => 9,
+                                'ais_data_position_id' => $ais_data->id,
+                                'mmsi' => $ais_data->mmsi,
+                                'geofence_id' => $geofence->id
+                            ]);
+                        }
+                    } else {
+                        if ($geofence->type === 'out' || $geofence->type === 'both') {
+                            EventTracking::create([
+                                'event_id' => 9,
+                                'ais_data_position_id' => $ais_data->id,
+                                'mmsi' => $ais_data->mmsi,
+                                'geofence_id' => $geofence->id
+                            ]);
+                        }
+                    }
+                }
+            } elseif ($geofence->geometry && ($geofence->type_geo === 'polygon' || $geofence->type_geo === 'rectangle')) {
+                foreach ($ais_datas as $ais_data) {
+                    $polygon = new Polygon();
+                    foreach ($geoParse as $valGeo) {
+                        $polygon->addPoint(new Coordinate($valGeo[0], $valGeo[1]));
+                    }
+                    $insidePoint = new Coordinate($ais_data->latitude,  $ais_data->longitude);
+                    if ($polygon->contains($insidePoint)) {
+                        if ($geofence->type === 'in' || $geofence->type === 'both') {
+                            EventTracking::create([
+                                'event_id' => 9,
+                                'ais_data_position_id' => $ais_data->id,
+                                'mmsi' => $ais_data->mmsi,
+                                'geofence_id' => $geofence->id
+                            ]);
+                        }
+                    } else {
+                        if ($geofence->type === 'out' || $geofence->type === 'both') {
+                            EventTracking::create([
+                                'event_id' => 9,
+                                'ais_data_position_id' => $ais_data->id,
+                                'mmsi' => $ais_data->mmsi,
+                                'geofence_id' => $geofence->id
+                            ]);
+                        }
+                    }
+                }
+            } else {
+                foreach ($ais_datas as $ais_data) {
+                    
+                }
+            }
+        }
+    }
+}
