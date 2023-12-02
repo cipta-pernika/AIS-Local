@@ -256,10 +256,10 @@ class HelperController extends Controller
         if (request()->mmsi) {
             $vessel = AisDataVessel::updateOrCreate(['mmsi' => request()->mmsi]);
             if ($vessel->wasRecentlyCreated) {
-                EventTracking::create([
-                    'event_id' => 6,
-                    'mmsi' => request()->mmsi,
-                ]);
+                // EventTracking::create([
+                //     'event_id' => 6,
+                //     'mmsi' => request()->mmsi,
+                // ]);
             }
 
             $latitude = request()->latitude;
@@ -305,11 +305,11 @@ class HelperController extends Controller
                 'type_number' => request('type_number'),
             ]);
             if ($vessel->wasRecentlyCreated) {
-                EventTracking::create([
-                    'event_id' => 6,
-                    'mmsi' => request()->mmsi,
-                    'ship_name' => request('name')
-                ]);
+                // EventTracking::create([
+                //     'event_id' => 6,
+                //     'mmsi' => request()->mmsi,
+                //     'ship_name' => request('name')
+                // ]);
             }
         }
 
