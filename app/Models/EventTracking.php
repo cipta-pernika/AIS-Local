@@ -14,7 +14,8 @@ class EventTracking extends Model
         'ais_data_position_id',
         'notes',
         'mmsi',
-        'ship_name'
+        'ship_name',
+        'geofence_id'
     ];
 
     protected $casts = [
@@ -48,5 +49,10 @@ class EventTracking extends Model
     public function event(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(\App\Models\Event::class, 'event_id');
+    }
+
+    public function geofence(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(\App\Models\Geofence::class, 'geofence_id');
     }
 }

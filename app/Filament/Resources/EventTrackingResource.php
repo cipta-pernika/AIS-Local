@@ -12,6 +12,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 
 class EventTrackingResource extends Resource
 {
@@ -23,8 +24,8 @@ class EventTrackingResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('asset_id')
-                    ->relationship('asset', 'id'),
+                // Forms\Components\Select::make('asset_id')
+                //     ->relationship('asset', 'id'),
                 Forms\Components\Select::make('event_id')
                     ->relationship('event', 'name')
                     ->required(),
@@ -43,43 +44,33 @@ class EventTrackingResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('asset.id')
-                    ->numeric()
-                    ->sortable(),
+                // Tables\Columns\TextColumn::make('asset.id')
+                //     ->numeric()
+                //     ->sortable(),
                 Tables\Columns\TextColumn::make('event.name')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('aisDataPosition.id')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('aisDataPosition.vessel.mmsi')
+                    ->label('MMSI')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('notes')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('mmsi')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('ship_name')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('deleted_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('aisDataPosition.vessel.vessel_name')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('geofence.geofence_name')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('aisDataPosition.created_at')
+                    ->label('Timestamp')
+                    ->sortable(),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    ExportBulkAction::make()
                 ]),
             ]);
     }

@@ -4,7 +4,9 @@ namespace App\Filament\Resources\EventTrackingResource\Pages;
 
 use App\Filament\Resources\EventTrackingResource;
 use Filament\Actions;
+use Filament\Actions\ActionGroup;
 use Filament\Resources\Pages\ListRecords;
+use pxlrbt\FilamentExcel\Actions\Pages\ExportAction;
 
 class ListEventTrackings extends ListRecords
 {
@@ -13,7 +15,10 @@ class ListEventTrackings extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            // Actions\CreateAction::make(),
+            ActionGroup::make([
+                ExportAction::make(),
+            ])
         ];
     }
 }

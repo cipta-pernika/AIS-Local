@@ -8,6 +8,7 @@ use App\Models\EventTracking;
 use App\Models\Geofence;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use Location\Bearing\BearingSpherical;
 use Location\Coordinate;
@@ -37,7 +38,7 @@ class checkgeofence extends Command
     public function handle()
     {
         $geofence_datas = Geofence::all();
-        $ais_datas = AisDataPosition::limit(10)->get();
+        $ais_datas = AisDataPosition::limit(10)->orderBy('created_at', 'DESC')->get();
 
         foreach ($geofence_datas as $geofence) {
             $geoParse = json_decode($geofence->geometry);
@@ -86,6 +87,9 @@ class checkgeofence extends Command
                                 'mmsi' => $ais_data->mmsi,
                                 'geofence_id' => $geofence->id
                             ]);
+                            Http::post('https://nr.monitormyvessel.com/sendgeofencealarm', [
+                                'msg' => $ais_data->vessel->vessel_name . ' Inside ' . $geofence->geofence_name . ' Geofence'
+                            ]);
                         }
                     } else {
                         if ($geofence->type === 'out' || $geofence->type === 'both') {
@@ -94,6 +98,9 @@ class checkgeofence extends Command
                                 'ais_data_position_id' => $ais_data->id,
                                 'mmsi' => $ais_data->mmsi,
                                 'geofence_id' => $geofence->id
+                            ]);
+                            Http::post('https://nr.monitormyvessel.com/sendgeofencealarm', [
+                                'msg' => $ais_data->vessel->vessel_name . ' Outside ' . $geofence->geofence_name . ' Geofence'
                             ]);
                         }
                     }
