@@ -33,7 +33,7 @@ class HelperController extends Controller
 {
     public function eventtrackings()
     {
-        $event = EventTracking::where('event_id', 9)->orderBy('created_at', 'DESC')->limit(50)->get();
+        $event = EventTracking::where('event_id', 9)->orderBy('created_at', 'DESC')->with('aisDataPosition')->limit(50)->get();
 
         return response()->json([
             'success' => true,
