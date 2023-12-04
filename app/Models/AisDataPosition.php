@@ -22,7 +22,8 @@ class AisDataPosition extends Model
         'timestamp',
         'turning_rate',
         'turning_direction',
-        'distance'
+        'distance',
+        'is_inside_geofence'
     ];
 
     public function sensorData()

@@ -60,11 +60,13 @@ class checkgeofence extends Command
                                 'mmsi' => $ais_data->mmsi,
                                 'geofence_id' => $geofence->id
                             ]);
+                            $ais_data->is_inside_geofence = 1;
+                            $ais_data->update();
                         }
                     } else {
                         if ($geofence->type === 'out' || $geofence->type === 'both') {
                             EventTracking::create([
-                                'event_id' => 9,
+                                'event_id' => 10,
                                 'ais_data_position_id' => $ais_data->id,
                                 'mmsi' => $ais_data->mmsi,
                                 'geofence_id' => $geofence->id
@@ -87,6 +89,8 @@ class checkgeofence extends Command
                                 'mmsi' => $ais_data->mmsi,
                                 'geofence_id' => $geofence->id
                             ]);
+                            $ais_data->is_inside_geofence = 1;
+                            $ais_data->update();
                             Http::post('https://nr.monitormyvessel.com/sendgeofencealarm', [
                                 'msg' => $ais_data->vessel->vessel_name . ' Inside ' . $geofence->geofence_name . ' Geofence'
                             ]);
@@ -94,7 +98,7 @@ class checkgeofence extends Command
                     } else {
                         if ($geofence->type === 'out' || $geofence->type === 'both') {
                             EventTracking::create([
-                                'event_id' => 9,
+                                'event_id' => 10,
                                 'ais_data_position_id' => $ais_data->id,
                                 'mmsi' => $ais_data->mmsi,
                                 'geofence_id' => $geofence->id
