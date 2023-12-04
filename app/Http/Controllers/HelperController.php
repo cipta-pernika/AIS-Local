@@ -31,6 +31,15 @@ use Location\Polygon;
 
 class HelperController extends Controller
 {
+    public function eventtrackings()
+    {
+        $event = EventTracking::where('event_id', 9)->orderBy('created_at', 'DESC')->limit(50)->get();
+
+        return response()->json([
+            'success' => true,
+            'message' => $event,
+        ], 200);
+    }
     public function search(Request $request)
     {
         $query = $request->input('query');

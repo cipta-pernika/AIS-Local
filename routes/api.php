@@ -134,3 +134,5 @@ Route::resource('event-trackings', App\Http\Controllers\API\EventTrackingAPICont
 Route::get('search', [HelperController::class, 'search']);
 
 Route::resource('geofence-types', App\Http\Controllers\API\GeofenceTypeAPIController::class);
+
+Route::get('eventtrackings', [HelperController::class, 'eventtrackings']);
