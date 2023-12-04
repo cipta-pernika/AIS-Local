@@ -57,6 +57,15 @@ class EventTrackingResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('geofence.geofence_name')
                     ->sortable(),
+                Tables\Columns\TextColumn::make('aisDataPosition.speed')
+                    ->label('Speed')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('aisDataPosition.latitude')
+                    ->label('Latitude')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('aisDataPosition.longitude')
+                    ->label('Longitude')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('aisDataPosition.created_at')
                     ->label('Timestamp')
                     ->sortable(),
