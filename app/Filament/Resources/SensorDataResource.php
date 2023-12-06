@@ -41,7 +41,7 @@ class SensorDataResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('sensor_id')
+                Tables\Columns\TextColumn::make('sensor.name')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('timestamp')
