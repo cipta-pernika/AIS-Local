@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\GeofenceTypeResource\Pages;
-use App\Filament\Resources\GeofenceTypeResource\RelationManagers;
-use App\Models\GeofenceType;
+use App\Filament\Resources\EventResource\Pages;
+use App\Filament\Resources\EventResource\RelationManagers;
+use App\Models\Event;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,13 +13,13 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class GeofenceTypeResource extends Resource
+class EventResource extends Resource
 {
-    protected static ?string $model = GeofenceType::class;
+    protected static ?string $model = Event::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $navigationGroup = 'Geofence';
+    protected static ?string $navigationGroup = 'Events';
 
     public static function form(Form $form): Form
     {
@@ -28,24 +28,7 @@ class GeofenceTypeResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('base_price')
-                    ->numeric(),
-                Forms\Components\Select::make('uom')
-                    ->options([
-                        'Minutes' => 'Minutes',
-                        'Hours' => 'Hours',
-                        'Days' => 'Days',
-                    ])
-                    ->native(false),
-                Forms\Components\Select::make('vessel_type')
-                    ->native(false)
-                    ->multiple()
-                    ->options([
-                        'Fishing' => 'Fishing',
-                        'Tug' => 'Tug',
-                        'Cargo' => 'Cargo',
-                    ]),
-                Forms\Components\TextInput::make('speed')
+                Forms\Components\TextInput::make('threshold')
                     ->numeric(),
             ]);
     }
@@ -56,16 +39,13 @@ class GeofenceTypeResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('base_price')
+                Tables\Columns\TextColumn::make('threshold')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('uom')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('vessel_type')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('speed')
-                    ->numeric()
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('deleted_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -98,9 +78,9 @@ class GeofenceTypeResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListGeofenceTypes::route('/'),
-            'create' => Pages\CreateGeofenceType::route('/create'),
-            'edit' => Pages\EditGeofenceType::route('/{record}/edit'),
+            'index' => Pages\ListEvents::route('/'),
+            'create' => Pages\CreateEvent::route('/create'),
+            'edit' => Pages\EditEvent::route('/{record}/edit'),
         ];
     }
 }

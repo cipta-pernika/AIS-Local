@@ -12,7 +12,8 @@ class GeofenceType extends Model
         'name',
         'base_price',
         'uom',
-        'vessel_type'
+        'vessel_type',
+        'speed'
     ];
 
     protected $casts = [

@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('geofence_types', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->decimal('base_price', 10, 2);
-            $table->string('uom');
-            $table->string('vessel_type');
-
+            $table->decimal('base_price', 10, 2)->nullable();
+            $table->string('uom')->nullable();
+            $table->string('vessel_type')->nullable();
+            $table->integer('speed')->nullable();
             $table->timestamps();
         });
     }
