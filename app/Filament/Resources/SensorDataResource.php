@@ -47,6 +47,7 @@ class SensorDataResource extends Resource
                 Tables\Columns\TextColumn::make('timestamp')
                     ->dateTime()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('payload'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
