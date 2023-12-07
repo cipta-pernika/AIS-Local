@@ -540,6 +540,7 @@ class HelperController extends Controller
         $aisData = RadarData::with('sensorData.sensor.datalogger')
             ->groupBy('target_id')
             ->whereBetween('created_at', [now()->subMinutes(5), now()])
+            ->orderBy('created_at', 'DESC')
             // ->whereBetween('created_at', [now()->subHours(120), now()])
             ->limit(30)
             ->get();
