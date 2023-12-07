@@ -26,7 +26,12 @@ class AisDataVesselResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\TextInput::make('vessel_name'),
+                Forms\Components\Select::make('vessel_type')->options([
+                    'Fishing' => 'Fishing',
+                    'Tug' => 'Tug',
+                    'Cargo' => 'Cargo',
+                ])->native(false),
             ]);
     }
 
