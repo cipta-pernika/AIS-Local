@@ -1,63 +1,35 @@
 export default function leafletAISMaps() {
     let markerClusterEnabled = false;
     let markers;
+    let map;
     return {
         init: async function () {
-            console.log("start leafletAISMaps");
-            const map = L.map(this.$refs.map.id).setView([51.505, -0.09], 13);
+            map = L.map(this.$refs.map.id).setView(
+                [-1.5499571228201094, 117.89427962462793],
+                5.4
+            );
 
             const tiles = L.tileLayer
                 .provider("OpenStreetMap.Mapnik")
                 .addTo(map);
 
-            // Add individual markers to the marker cluster group
-            const marker1 = L.marker([51.505, -0.09]).bindPopup("Marker 1");
-            const marker2 = L.marker([51.51, -0.1], {
-                icon: L.AwesomeMarkers.icon({
-                    icon: "coffee",
-                    markerColor: "green",
-                    prefix: "fa",
-                }),
-            }).bindPopup("Marker 2");
-            const marker3 = L.marker([51.52, -0.08]).bindPopup("Marker 3");
+            // Create a base layers object
+            const baseLayers = {
+                OpenStreetMap: tiles,
+                // Add other base layers here
+            };
 
-            // Add markers to a feature group (not clustering by default)
-            markers = L.featureGroup([marker1, marker2, marker3]);
-
-            // Add the feature group to the map
-            map.addLayer(markers);
-
-            // Fetch AIS data from the API
+            // Fetch AIS data from the API and create markers
             try {
                 const response = await axios.get(
                     "https://ksop.cakrawala.id/api/aisdataunique"
                 );
                 const aisData = response.data.message;
 
-                // Iterate through AIS data and create markers
-                aisData.forEach((aisItem) => {
-                    const marker = L.marker([
-                        aisItem.latitude,
-                        aisItem.longitude,
-                    ]).bindPopup(`AIS Data: ${JSON.stringify(aisItem)}`);
+                // Create markers or marker cluster based on the initial data
+                markers = createMarkers(aisData, markerClusterEnabled);
 
-                    // Check if inside geofence
-                    if (aisItem.is_inside_geofence === 1) {
-                        // Blinking effect using Leaflet Pulse
-                        const pulsingIcon = L.icon.pulse({
-                            iconSize: [10, 10],
-                            color: "red",
-                            fillColor: "red",
-                            animate: true,
-                            pulseColor: "red",
-                        });
-                        marker.setIcon(pulsingIcon);
-                    }
-
-                    markers.addLayer(marker);
-                });
-
-                // Add the marker cluster group to the map
+                // Add the markers or marker cluster to the map
                 map.addLayer(markers);
             } catch (error) {
                 console.error("Error fetching AIS data:", error);
@@ -86,43 +58,73 @@ export default function leafletAISMaps() {
                 })
                 .addTo(map);
 
-            // Event handler for marker3 click to show sidebar
-            marker3.on("click", function () {
-                sidebar.open("marker3Content"); // Open the specific content with ID 'marker3Content'
-            });
-
             // Add a panel to the sidebar
             sidebar.addPanel({
-                id: "marker3Content",
+                id: "Content",
                 tab: '<i class="fa fa-info"></i>',
-                pane: `<h1>Marker 3 Content</h1>
-                       <button id="toggleMarkerCluster">Toggle Marker Cluster</button>
-                       <p>This is some content for Marker 3.</p>`,
-                title: "Marker 3 Information",
+                pane: `
+                       <button id="toggleMarkerCluster">Toggle Marker Cluster</button>`,
+                title: "Sidebar",
                 position: "top",
             });
+
+            // Create a layer control and add it to the map
+            L.control.layers(baseLayers).addTo(map);
 
             // Event handler for the button to toggle Marker Cluster
             document
                 .getElementById("toggleMarkerCluster")
-                .addEventListener("click", function () {
+                .addEventListener("click", async function () {
                     markerClusterEnabled = !markerClusterEnabled; // Toggle the state
 
-                    if (markerClusterEnabled) {
-                        // Enable Marker Cluster
-                        map.removeLayer(markers); // Remove individual markers
-                        markers = L.markerClusterGroup(); // Create a new marker cluster group
-                        map.addLayer(markers); // Add the new marker cluster group to the map
-                        markers.addLayer(
-                            L.featureGroup([marker1, marker2, marker3])
-                        ); // Add individual markers to the cluster group
-                    } else {
-                        // Disable Marker Cluster
-                        map.removeLayer(markers); // Remove the marker cluster group
-                        markers = L.featureGroup([marker1, marker2, marker3]); // Create a new feature group with individual markers
-                        map.addLayer(markers); // Add individual markers to the map
+                    // Remove existing markers or marker cluster
+                    map.removeLayer(markers);
+
+                    // Fetch AIS data from the API
+                    try {
+                        const response = await axios.get(
+                            "https://ksop.cakrawala.id/api/aisdataunique"
+                        );
+                        const aisData = response.data.message;
+
+                        // Recreate markers or marker cluster based on the new data
+                        markers = createMarkers(aisData, markerClusterEnabled);
+
+                        // Add the markers or marker cluster to the map
+                        map.addLayer(markers);
+                    } catch (error) {
+                        console.error("Error fetching AIS data:", error);
                     }
                 });
         },
     };
+}
+
+// Function to create markers or marker cluster based on the data and markerClusterEnabled
+function createMarkers(data, markerClusterEnabled) {
+    const newMarkers = markerClusterEnabled
+        ? L.markerClusterGroup()
+        : L.featureGroup();
+
+    data.forEach((aisItem) => {
+        const marker = L.marker([
+            aisItem.latitude,
+            aisItem.longitude,
+        ]).bindPopup(`AIS Data: ${JSON.stringify(aisItem)}`);
+
+        if (aisItem.is_inside_geofence === 1) {
+            const pulsingIcon = L.icon.pulse({
+                iconSize: [10, 10],
+                color: "red",
+                fillColor: "red",
+                animate: true,
+                pulseColor: "red",
+            });
+            marker.setIcon(pulsingIcon);
+        }
+
+        newMarkers.addLayer(marker);
+    });
+
+    return newMarkers;
 }
