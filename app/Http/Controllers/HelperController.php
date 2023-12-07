@@ -616,7 +616,7 @@ class HelperController extends Controller
         $aisData = AdsbDataPosition::with('aircraft', 'sensorData.sensor.datalogger')
             ->whereRaw('adsb_data_positions.id IN (select MAX(adsb_data_positions.id) FROM adsb_data_positions GROUP BY aircraft_id)')
             // ->groupBy('aircraft_id')
-            // ->whereBetween('created_at', [now()->subHours(12), now()])
+            ->whereBetween('created_at', [now()->subHours(3), now()])
             ->orderBy('created_at', 'DESC')
             ->limit(500)
             ->get();
@@ -632,8 +632,8 @@ class HelperController extends Controller
         $aisData = AdsbDataPosition::with('aircraft', 'sensorData.sensor.datalogger')
             ->whereRaw('adsb_data_positions.id IN (select MAX(adsb_data_positions.id) FROM adsb_data_positions GROUP BY aircraft_id)')
             // ->groupBy('aircraft_id')
-            // ->whereBetween('created_at', [now()->subHours(12), now()])
-            // ->orderBy('created_at', 'DESC')
+            ->whereBetween('created_at', [now()->subHours(3), now()])
+            ->orderBy('created_at', 'DESC')
             ->get();
 
         return response()->json([
@@ -647,8 +647,8 @@ class HelperController extends Controller
         $aisData = AdsbDataPosition::with('aircraft', 'sensorData.sensor.datalogger')
             // ->groupBy('aircraft_id')
             ->whereRaw('adsb_data_positions.id IN (select MAX(adsb_data_positions.id) FROM adsb_data_positions GROUP BY aircraft_id)')
-            // ->whereBetween('created_at', [now()->subMinutes(2), now()])
-            // ->orderBy('created_at', 'DESC')
+            ->whereBetween('created_at', [now()->subMinutes(2), now()])
+            ->orderBy('created_at', 'DESC')
             ->limit(20)
             ->get();
 
