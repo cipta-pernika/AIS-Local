@@ -38,7 +38,7 @@ class checkgeofence extends Command
     public function handle()
     {
         $geofence_datas = Geofence::all();
-        $ais_datas = AisDataPosition::limit(10)->orderBy('created_at', 'DESC')->get();
+        $ais_datas = AisDataPosition::limit(700)->orderBy('created_at', 'DESC')->get();
 
         foreach ($geofence_datas as $geofence) {
             $geoParse = json_decode($geofence->geometry);

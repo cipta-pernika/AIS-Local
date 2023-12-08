@@ -48,6 +48,12 @@ export default function leafletAISMaps() {
 
             L.control.locate().addTo(map);
 
+            L.terminator().addTo(map)
+
+            setInterval(function() {
+                terminator.setTime();
+            }, 60000); // Every minute
+
             // Add Leaflet Sidebar
             const sidebar = L.control
                 .sidebar({

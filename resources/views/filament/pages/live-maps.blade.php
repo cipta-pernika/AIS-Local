@@ -48,7 +48,9 @@ https://cdn.jsdelivr.net/npm/leaflet-pulse-icon@0.1.0/src/L.Icon.Pulse.min.js
 "></script>
 <link href="
 https://cdn.jsdelivr.net/npm/leaflet-pulse-icon@0.1.0/src/L.Icon.Pulse.min.css
-" rel="stylesheet">    
+" rel="stylesheet">  
+
+<script src="https://unpkg.com/@joergdietrich/leaflet.terminator"></script>
 
 @endpush
 </x-filament-panels::page>
