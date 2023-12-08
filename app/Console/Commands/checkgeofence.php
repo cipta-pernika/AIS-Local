@@ -54,23 +54,35 @@ class checkgeofence extends Command
                     );
                     if ($jarak <= (float) $geofence['radius'] / 1000) {
                         if ($geofence->type === 'in' || $geofence->type === 'both') {
-                            EventTracking::create([
-                                'event_id' => 9,
-                                'ais_data_position_id' => $ais_data->id,
-                                'mmsi' => $ais_data->mmsi,
-                                'geofence_id' => $geofence->id
-                            ]);
-                            $ais_data->is_inside_geofence = 1;
-                            $ais_data->update();
+                            // Check if an EventTracking record already exists for the same MMSI within the last 15 minutes
+                            $existingEvent = EventTracking::where('mmsi', $ais_data->mmsi)
+                                ->where('created_at', '>', now()->subMinutes(15))
+                                ->first();
+                            if (!$existingEvent) {
+                                EventTracking::create([
+                                    'event_id' => 9,
+                                    'ais_data_position_id' => $ais_data->id,
+                                    'mmsi' => $ais_data->mmsi,
+                                    'geofence_id' => $geofence->id
+                                ]);
+                                $ais_data->is_inside_geofence = 1;
+                                $ais_data->update();
+                            }
                         }
                     } else {
                         if ($geofence->type === 'out' || $geofence->type === 'both') {
-                            EventTracking::create([
-                                'event_id' => 10,
-                                'ais_data_position_id' => $ais_data->id,
-                                'mmsi' => $ais_data->mmsi,
-                                'geofence_id' => $geofence->id
-                            ]);
+                            // Check if an EventTracking record already exists for the same MMSI within the last 15 minutes
+                            $existingEvent = EventTracking::where('mmsi', $ais_data->mmsi)
+                                ->where('created_at', '>', now()->subMinutes(15))
+                                ->first();
+                            if (!$existingEvent) {
+                                EventTracking::create([
+                                    'event_id' => 10,
+                                    'ais_data_position_id' => $ais_data->id,
+                                    'mmsi' => $ais_data->mmsi,
+                                    'geofence_id' => $geofence->id
+                                ]);
+                            }
                         }
                     }
                 }
@@ -111,7 +123,6 @@ class checkgeofence extends Command
                 }
             } else {
                 foreach ($ais_datas as $ais_data) {
-                    
                 }
             }
         }
