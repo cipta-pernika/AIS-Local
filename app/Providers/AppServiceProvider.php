@@ -32,12 +32,44 @@ class AppServiceProvider extends ServiceProvider
                 NavigationItem::make('Maps')
                     ->url('https://coastal.cakrawala.id')
                     ->icon('heroicon-o-map'),
+                NavigationItem::make('Klasifikasi Jenis Kapal')
+                    ->url('/classification')
+                    ->icon('heroicon-o-trophy')
+                    ->group('AI'),
+                NavigationItem::make('Deteksi Anomali')
+                    ->url('/anomaly-detection')
+                    ->icon('heroicon-o-trophy')
+                    ->group('AI'),
+                NavigationItem::make('Klasterisasi Pergerakan Kapal')
+                    ->url('/clustering')
+                    ->icon('heroicon-o-trophy')
+                    ->group('AI'),
+                NavigationItem::make('Prediksi Posisi Kapal')
+                    ->url('/position-prediction')
+                    ->icon('heroicon-o-trophy')
+                    ->group('AI'),
+                NavigationItem::make('Analisis Pola Waktu')
+                    ->url('/time-pattern-analysis')
+                    ->icon('heroicon-o-trophy')
+                    ->group('AI'),
+                NavigationItem::make('Pendeteksian Geofence')
+                    ->url('/geofence-detection')
+                    ->icon('heroicon-o-trophy')
+                    ->group('AI'),
+                NavigationItem::make('Klasifikasi Status Navigasi')
+                    ->url('/navigation-status')
+                    ->icon('heroicon-o-trophy')
+                    ->group('AI'),
+                NavigationItem::make('Analisis Pelayaran Bersama (Convoy)')
+                    ->url('/convoy-analysis')
+                    ->icon('heroicon-o-trophy')
+                    ->group('AI'),
             ]);
         });
         FilamentAsset::register([
             Css::make('leaflet-1-9-4-css', 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css'),
             Js::make('leaflet-1-9-4-js', 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js'),
-            AlpineComponent::make('aismaps-js', __DIR__ . '/../../resources/js/dist/aismaps.js')      
+            AlpineComponent::make('aismaps-js', __DIR__ . '/../../resources/js/dist/aismaps.js')
         ]);
     }
 }
