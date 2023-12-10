@@ -21,6 +21,8 @@ return new class extends Migration
             $table->integer('jarak')->comment('nm; 0 untuk unlimited');
             $table->integer('jumlah_data')->comment('0 untuk unlimited');
             $table->timestamps();
+
+            $table->index('datalogger_id');
         });
     }
 

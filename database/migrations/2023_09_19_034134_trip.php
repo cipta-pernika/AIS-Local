@@ -13,13 +13,15 @@ return new class extends Migration
     {
         Schema::create('trips', function (Blueprint $table) {
             $table->id();
-            $table->string('asset_id');
+            $table->integer('asset_id');
             $table->string('trip_dispatcher')->nullable();
             $table->string('trip_name');
             $table->string('trip_leader');
             $table->string('trip_note');
-            $table->enum('trip_status', ['0', '1'])->default('1');
+            $table->tinyInteger('trip_status')->default(1);
             $table->timestamps();
+
+            $table->index('asset_id');
         });
     }
 

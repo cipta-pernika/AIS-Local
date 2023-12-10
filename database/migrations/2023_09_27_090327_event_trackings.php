@@ -27,6 +27,9 @@ return new class extends Migration
             $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
             $table->foreign('ais_data_position_id')->references('id')->on('ais_data_positions')->onDelete('cascade');
             $table->foreign('geofence_id')->references('id')->on('geofences')->onDelete('cascade');
+
+            $table->index('mmsi');
+            $table->index('asset_id');
         });
     }
 

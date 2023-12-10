@@ -18,6 +18,9 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('geofence_id')->references('id')->on('geofences')->onDelete('cascade');
+
+            $table->index('asset_id');
+            $table->index('geofence_id');
         });
     }
 

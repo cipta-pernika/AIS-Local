@@ -27,6 +27,8 @@ return new class extends Migration
             $table->foreign('aircraft_id')->references('id')->on('adsb_data_aircrafts')->onDelete('cascade');
 
             $table->timestamps();
+
+            $table->index('aircraft_id');
         });
     }
 

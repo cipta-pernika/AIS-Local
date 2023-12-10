@@ -13,18 +13,20 @@ return new class extends Migration
     {
         Schema::create('trip_datas', function (Blueprint $table) {
             $table->id();
-            $table->string('trip_id');
-            $table->string('trip_data_latitude')->nullable();
-            $table->string('trip_data_longitude')->nullable();
+            $table->integer('trip_id');
+            $table->decimal('trip_data_latitude', 10, 7);
+            $table->decimal('trip_data_longitude', 10, 7)->nullable();
             $table->string('trip_data_etd')->nullable();
             $table->string('trip_data_eta')->nullable();
             $table->string('trip_data_pathname')->nullable();
             $table->string('trip_data_description')->nullable();
             $table->string('trip_data_note')->nullable();
-            $table->enum('trip_data_status', ['0', '1'])->default('0');
+            $table->tinyInteger('trip_data_status')->default(0);
             $table->string('trip_data_atd')->nullable();
             $table->string('trip_data_ata')->nullable();
             $table->timestamps();
+
+            $table->index('trip_id');
         });
     }
 

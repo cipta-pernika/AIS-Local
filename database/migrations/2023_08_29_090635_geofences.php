@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('radius')->nullable();
             $table->longText('geometry')->nullable();
             $table->timestamps();
+
+            $table->index('user_id');
         });
     }
 

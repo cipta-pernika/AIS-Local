@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('callsign')->nullable();
             $table->string('year')->nullable();
             $table->timestamps();
+
+            $table->index('hex_ident');
         });
     }
 
