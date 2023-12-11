@@ -32,8 +32,12 @@ class AppServiceProvider extends ServiceProvider
                 NavigationItem::make('Maps')
                     ->url('https://coastal.cakrawala.id')
                     ->icon('heroicon-o-map'),
+                NavigationItem::make('Performance Monitoring')
+                    ->url('/pulse')
+                    ->icon('heroicon-o-trophy')
+                    ->group('Logs'),
                 NavigationItem::make('Klasifikasi Jenis Kapal')
-                    ->url('/classification')
+                    ->url('/admin/classifications')
                     ->icon('heroicon-o-trophy')
                     ->group('AI'),
                 NavigationItem::make('Deteksi Anomali')

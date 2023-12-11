@@ -37,6 +37,7 @@ return new class extends Migration
             $table->index('sensor_data_id');
             $table->index('vessel_id');
             $table->index('timestamp');
+            $table->index('created_at');
         });
     }
 
