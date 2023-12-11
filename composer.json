@@ -13,10 +13,11 @@
         "guzzlehttp/guzzle": "^7.8.0",
         "http-interop/http-factory-guzzle": "^1.2",
         "inertiajs/inertia-laravel": "v0.6.11",
-        "infyomlabs/laravel-generator": "^v6.0.1",
+        "infyomlabs/laravel-generator": "^6.0",
         "jeffgreco13/filament-breezy": "^v2.2.1",
         "laravel/fortify": "v1.19.0",
         "laravel/framework": "v10.34.2",
+        "laravel/pulse": "^1.0@beta",
         "laravel/sanctum": "v3.3.2",
         "laravel/scout": "v10.6.0",
         "laravel/tinker": "^v2.8.2",
@@ -78,6 +79,6 @@
             "php-http/discovery": true
         }
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "beta",
     "prefer-stable": true
 }
