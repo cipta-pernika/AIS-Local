@@ -8,6 +8,10 @@ export default defineConfig({
             input: 'resources/js/app.jsx',
             refresh: true,
         }),
+        laravel({
+            input: 'resources/js/aismaps.js',
+            refresh: true,
+        }),
         react(),
     ],
 });

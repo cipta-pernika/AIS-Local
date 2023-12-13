@@ -21,6 +21,7 @@
     "dependencies": {
         "esbuild": "^0.19.8",
         "leaflet": "^1.9.4",
+        "leaflet-ais-tracksymbol-by-akora": "^2.0.1",
         "leaflet-sidebar-v2": "^3.2.3",
         "react-leaflet": "^4.2.1"
     }

@@ -52,5 +52,11 @@ https://cdn.jsdelivr.net/npm/leaflet-pulse-icon@0.1.0/src/L.Icon.Pulse.min.css
 
 <script src="https://unpkg.com/@joergdietrich/leaflet.terminator"></script>
 
+<!-- Leaflet TrackSymbol2 Script -->
+<script src="https://unpkg.com/@arl/leaflet-tracksymbol2@0.1.3/dist/leaflet-tracksymbol2.umd.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet-ais-tracksymbol-by-akora@2.0.1/dist/leaflet-ais-tracksymbol-by-akora.css" />
+<script src="https://unpkg.com/leaflet-ais-tracksymbol-by-akora@2.0.1/dist/leaflet-ais-tracksymbol-by-akora.js"></script>
+
 @endpush
 </x-filament-panels::page>

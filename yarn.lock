@@ -1010,6 +1010,11 @@ laravel-vite-plugin@^0.7.2:
     picocolors "^1.0.0"
     vite-plugin-full-reload "^1.0.5"
 
+leaflet-ais-tracksymbol-by-akora@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/leaflet-ais-tracksymbol-by-akora/-/leaflet-ais-tracksymbol-by-akora-2.0.1.tgz#fad407caa40eee001ac6fda59e52bd1028106d6b"
+  integrity sha512-oGjYiAxH+CFQcRg/KNp6mioIijSAHUaJn9frwRhIgOUyfJDUm7E0yAWwqWb3VAkQEBjtC8gVbAsH40KK2JYO6A==
+
 leaflet-sidebar-v2@^3.2.3:
   version "3.2.3"
   resolved "https://registry.yarnpkg.com/leaflet-sidebar-v2/-/leaflet-sidebar-v2-3.2.3.tgz#73bb949d7d4f51f22cbda875806b9aa804d31717"
