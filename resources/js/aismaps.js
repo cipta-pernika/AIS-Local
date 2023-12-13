@@ -74,6 +74,18 @@ export default function leafletAISMaps() {
                 position: "top",
             });
 
+            // Add Google Maps layer
+            const googleMapsLayer = L.tileLayer(
+                'https://mt1.google.com/vt/lyrs=r&x={x}&y={y}&z={z}', {
+                    attribution: 'Google Maps'
+                }
+            ).addTo(map);
+
+            // Create a layer group and add the Google Maps layer
+            const layerGroup = L.layerGroup([googleMapsLayer]);
+
+            map.addLayer(layerGroup);
+
             // Create a layer control and add it to the map
             L.control.layers(baseLayers).addTo(map);
 

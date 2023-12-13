@@ -498,7 +498,7 @@ class HelperController extends Controller
         $aisData = AisDataPosition::with('vessel', 'sensorData.sensor.datalogger')
             ->orderBy('created_at', 'DESC')
             ->groupBy('vessel_id')
-            ->whereBetween('created_at', [now()->subHours(334), now()])
+            ->whereBetween('created_at', [now()->subHours(24), now()])
             ->get();
 
         return response()->json([
