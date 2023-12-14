@@ -21,6 +21,8 @@ class GeofenceResource extends Resource
 
     protected static ?string $navigationGroup = 'Geofence';
 
+    protected static ?string $recordTitleAttribute = 'geofence_name';
+
     public static function form(Form $form): Form
     {
         return $form

@@ -4,7 +4,9 @@ namespace App\Filament\Resources\AisDataPositionResource\Pages;
 
 use App\Filament\Resources\AisDataPositionResource;
 use Filament\Actions;
+use Filament\Actions\ActionGroup;
 use Filament\Resources\Pages\ListRecords;
+use pxlrbt\FilamentExcel\Actions\Pages\ExportAction;
 
 class ListAisDataPositions extends ListRecords
 {
@@ -14,6 +16,9 @@ class ListAisDataPositions extends ListRecords
     {
         return [
             // Actions\CreateAction::make(),
+            ActionGroup::make([
+                ExportAction::make(),
+            ])
         ];
     }
 }
