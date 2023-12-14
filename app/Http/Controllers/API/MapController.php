@@ -16,16 +16,16 @@ class MapController extends Controller
     {
         $map_setting = MapSetting::select('breadcrumb', 'breadcrumb_point')->first();
 
-        if($map_setting){
+        if ($map_setting) {
             $trackQuery = AisDataPosition::orderBy('created_at', 'DESC')
-            ->select('latitude', 'longitude', 'heading')
-            ->where('vessel_id', request('vessel_id'))
-            ->limit($map_setting->breadcrumb_point);
+                ->select('latitude', 'longitude', 'heading')
+                ->where('vessel_id', request('vessel_id'))
+                ->limit($map_setting->breadcrumb_point);
         } else {
             $trackQuery = AisDataPosition::orderBy('created_at', 'DESC')
-            ->select('latitude', 'longitude', 'heading')
-            ->where('vessel_id', request('vessel_id'))
-            ->limit(10);
+                ->select('latitude', 'longitude', 'heading')
+                ->where('vessel_id', request('vessel_id'))
+                ->limit(10);
         }
 
         // if ($map_setting->breadcrumb === 'duration') {
