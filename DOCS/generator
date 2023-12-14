@@ -1,1 +1,1 @@
-php artisan infyom:api_scaffold GeofenceType --skip=views,menu,tests --fromTable --table=geofence_types
+php artisan infyom:api_scaffold MapSetting --skip=views,menu,tests --fromTable --table=map_settings

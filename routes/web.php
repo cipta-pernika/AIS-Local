@@ -52,3 +52,4 @@ require __DIR__.'/auth.php';
 // Route::resource('mission-plans', App\Http\Controllers\MissionPlanController::class);
 // Route::resource('event-trackings', App\Http\Controllers\EventTrackingController::class);
 Route::resource('geofence-types', App\Http\Controllers\GeofenceTypeController::class);
+Route::resource('map-settings', App\Http\Controllers\MapSettingController::class);

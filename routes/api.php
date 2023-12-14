@@ -137,3 +137,6 @@ Route::get('search', [HelperController::class, 'search']);
 Route::resource('geofence-types', App\Http\Controllers\API\GeofenceTypeAPIController::class);
 
 Route::get('eventtrackings', [HelperController::class, 'eventtrackings']);
+
+Route::resource('map-settings', App\Http\Controllers\API\MapSettingAPIController::class)
+    ->except(['create', 'edit']);
