@@ -55,7 +55,8 @@ class AdminPanelProvider extends PanelProvider
                 Authenticate::class,
             ])
             ->plugin(
-                BreezyCore::make()
+                BreezyCore::make(),
+                \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make()
             )->sidebarCollapsibleOnDesktop();
     }
 }
