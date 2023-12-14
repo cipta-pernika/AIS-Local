@@ -12,7 +12,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call([DatalogSeeder::class, SensorSeeder::class, UserSeeder::class]);
+        $this->call([DatalogSeeder::class, SensorSeeder::class, ShieldSeeder::class, UserSeeder::class]);
         $this->call([
             // RadarDataSeeder::class,
             LocationTypeSeeder::class,

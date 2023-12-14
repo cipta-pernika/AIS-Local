@@ -26,7 +26,8 @@
         "mjaschen/phpgeo": "^4.2",
         "orangehill/iseed": "^v3.0.3",
         "pxlrbt/filament-excel": "^v2.1.8",
-        "tightenco/ziggy": "v1.8.1"
+        "tightenco/ziggy": "v1.8.1",
+        "z3d0x/filament-logger": "^0.6.2"
     },
     "require-dev": {
         "fakerphp/faker": "^v1.23.0",

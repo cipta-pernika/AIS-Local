@@ -57,6 +57,8 @@ class AdminPanelProvider extends PanelProvider
             ->plugin(
                 BreezyCore::make(),
                 \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make()
-            )->sidebarCollapsibleOnDesktop();
+            )->resources([
+                config('filament-logger.activity_resource')
+            ])->sidebarCollapsibleOnDesktop();
     }
 }
