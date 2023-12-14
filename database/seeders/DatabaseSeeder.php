@@ -24,6 +24,10 @@ class DatabaseSeeder extends Seeder
             EventSeeder::class,
             GeofenceTypesTableSeeder::class,
             MapSettingSeeder::class,
+            ModelHasRolesTableSeeder::class,
+            PermissionsTableSeeder::class,
+            RolesTableSeeder::class,
+            RoleHasPermissionsTableSeeder::class,
             //paling akhir
             AdsbDataAircraftSeeder::class
         ]);

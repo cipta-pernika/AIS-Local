@@ -6,6 +6,7 @@ use App\Filament\Resources\AisDataVesselResource\Pages;
 use App\Filament\Resources\AisDataVesselResource\RelationManagers;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 use App\Models\AisDataVessel;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -14,7 +15,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class AisDataVesselResource extends Resource
+class AisDataVesselResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = AisDataVessel::class;
 
@@ -23,6 +24,19 @@ class AisDataVesselResource extends Resource
     protected static ?string $navigationGroup = 'AIS';
 
     protected static ?string $recordTitleAttribute = 'vessel_name';
+
+    public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'view_any',
+            'create',
+            'update',
+            'delete',
+            'delete_any',
+            'publish'
+        ];
+    }
 
     public static function form(Form $form): Form
     {

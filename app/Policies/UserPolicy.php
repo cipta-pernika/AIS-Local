@@ -3,10 +3,10 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Models\AisDataVessel;
+
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class AisDataVesselPolicy
+class UserPolicy
 {
     use HandlesAuthorization;
 
@@ -18,19 +18,18 @@ class AisDataVesselPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view_any_ais::data::vessel');
+        return $user->can('view_any_user');
     }
 
     /**
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\AisDataVessel  $aisDataVessel
      * @return bool
      */
-    public function view(User $user, AisDataVessel $aisDataVessel): bool
+    public function view(User $user): bool
     {
-        return $user->can('view_ais::data::vessel');
+        return $user->can('view_user');
     }
 
     /**
@@ -41,31 +40,29 @@ class AisDataVesselPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create_ais::data::vessel');
+        return $user->can('create_user');
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\AisDataVessel  $aisDataVessel
      * @return bool
      */
-    public function update(User $user, AisDataVessel $aisDataVessel): bool
+    public function update(User $user): bool
     {
-        return $user->can('update_ais::data::vessel');
+        return $user->can('update_user');
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\AisDataVessel  $aisDataVessel
      * @return bool
      */
-    public function delete(User $user, AisDataVessel $aisDataVessel): bool
+    public function delete(User $user): bool
     {
-        return $user->can('delete_ais::data::vessel');
+        return $user->can('delete_user');
     }
 
     /**
@@ -76,19 +73,18 @@ class AisDataVesselPolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->can('delete_any_ais::data::vessel');
+        return $user->can('delete_any_user');
     }
 
     /**
      * Determine whether the user can permanently delete.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\AisDataVessel  $aisDataVessel
      * @return bool
      */
-    public function forceDelete(User $user, AisDataVessel $aisDataVessel): bool
+    public function forceDelete(User $user): bool
     {
-        return $user->can('{{ ForceDelete }}');
+        return $user->can('force_delete_user');
     }
 
     /**
@@ -99,19 +95,18 @@ class AisDataVesselPolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('{{ ForceDeleteAny }}');
+        return $user->can('force_delete_any_user');
     }
 
     /**
      * Determine whether the user can restore.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\AisDataVessel  $aisDataVessel
      * @return bool
      */
-    public function restore(User $user, AisDataVessel $aisDataVessel): bool
+    public function restore(User $user): bool
     {
-        return $user->can('{{ Restore }}');
+        return $user->can('restore_user');
     }
 
     /**
@@ -122,19 +117,18 @@ class AisDataVesselPolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->can('{{ RestoreAny }}');
+        return $user->can('restore_any_user');
     }
 
     /**
-     * Determine whether the user can replicate.
+     * Determine whether the user can bulk restore.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\AisDataVessel  $aisDataVessel
      * @return bool
      */
-    public function replicate(User $user, AisDataVessel $aisDataVessel): bool
+    public function replicate(User $user): bool
     {
-        return $user->can('{{ Replicate }}');
+        return $user->can('replicate_user');
     }
 
     /**
@@ -145,7 +139,6 @@ class AisDataVesselPolicy
      */
     public function reorder(User $user): bool
     {
-        return $user->can('{{ Reorder }}');
+        return $user->can('reorder_user');
     }
-
 }
