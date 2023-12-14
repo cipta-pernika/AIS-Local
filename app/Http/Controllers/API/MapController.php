@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\AdsbDataPosition;
 use App\Models\AisDataPosition;
+use App\Models\MapSetting;
 use App\Models\RadarData;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -13,11 +14,26 @@ class MapController extends Controller
 {
     public function breadcrumb()
     {
-        $track = AisDataPosition::orderBy('created_at', 'DESC')
+        $map_setting = MapSetting::select('breadcrumb', 'breadcrumb_point')->first();
+
+        if($map_setting){
+            $trackQuery = AisDataPosition::orderBy('created_at', 'DESC')
             ->select('latitude', 'longitude', 'heading')
             ->where('vessel_id', request('vessel_id'))
-            ->limit(200)
-            ->get();
+            ->limit($map_setting->breadcrumb_point);
+        } else {
+            $trackQuery = AisDataPosition::orderBy('created_at', 'DESC')
+            ->select('latitude', 'longitude', 'heading')
+            ->where('vessel_id', request('vessel_id'))
+            ->limit(10);
+        }
+
+        // if ($map_setting->breadcrumb === 'duration') {
+        //     $trackQuery->whereNotNull('latitude')
+        //         ->whereBetween('created_at', [now()->subMinutes((int)$map_setting->breadcrumb), now()]);
+        // }
+
+        $track = $trackQuery->get();
 
         return response()->json([
             'success' => true,
