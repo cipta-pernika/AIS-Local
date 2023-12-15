@@ -123,6 +123,7 @@ Route::post('setgeofence', [GeofenceController::class, 'setgeofence']);
 Route::post('getgeofence', [GeofenceController::class, 'getgeofence']);
 Route::post('editgeofence', [GeofenceController::class, 'editgeofence']);
 Route::post('deletegeofence', [GeofenceController::class, 'deletegeofence']);
+Route::post('totalentries', [GeofenceController::class, 'totalentries']);
 
 Route::resource('assets', App\Http\Controllers\API\AssetAPIController::class);
 

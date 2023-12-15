@@ -3,14 +3,34 @@
 namespace App\Http\Controllers;
 
 use App\Models\Asset;
+use App\Models\EventTracking;
 use App\Models\Geofence;
 use App\Models\GeofenceBinding;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class GeofenceController extends Controller
 {
+    public function totalentries()
+    {
+        $geofence = Geofence::find(request('geofence_id'));
+        $event = null;
+
+        if ($geofence) {
+            $event = EventTracking::where('geofence_id', $geofence->id)
+                ->whereBetween('created_at', [now()->subHours(24), now()])
+                ->with('aisDataPosition', 'asset', 'event', 'geofence')
+                ->get();
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => $event,
+        ], 200);
+    }
+
     public function setgeofence()
     {
         $geo = new Geofence();
