@@ -6,6 +6,7 @@ use App\Mail\GeofenceMail;
 use App\Models\AisDataPosition;
 use App\Models\EventTracking;
 use App\Models\Geofence;
+use App\Models\ReportGeofence;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
@@ -38,13 +39,15 @@ class checkgeofence extends Command
     public function handle()
     {
         $geofence_datas = Geofence::all();
-        $ais_datas = AisDataPosition::limit(700)->orderBy('created_at', 'DESC')->get();
+        $ais_datas = AisDataPosition::limit(700)->where('is_geofence', 0)->orderBy('created_at', 'DESC')->get();
 
         foreach ($geofence_datas as $geofence) {
             $geoParse = json_decode($geofence->geometry);
             if ($geofence->geometry && $geofence->type_geo === 'circle') {
 
                 foreach ($ais_datas as $ais_data) {
+                    $ais_data->is_geofence = 1;
+                    $ais_data->update();
                     $jarak = $this->distance(
                         $ais_data->latitude,
                         $ais_data->longitude,
@@ -67,6 +70,18 @@ class checkgeofence extends Command
                                 ]);
                                 $ais_data->is_inside_geofence = 1;
                                 $ais_data->update();
+
+                                $report = ReportGeofence::where('mmsi', $ais_data->mmsi)->whereNull('out')->get();
+
+                                if (!$report) {
+                                    $geofence_report = new ReportGeofence;
+                                    $geofence_report->event_id = 9;
+                                    $geofence_report->ais_data_position_id = $ais_data->id;
+                                    $geofence_report->geofence_id = $geofence->id;
+                                    $geofence_report->mmsi = $ais_data->mmsi;
+                                    $geofence_report->in = Carbon::now();
+                                    $geofence_report->save();
+                                }
                             }
                         }
                     } else {
@@ -82,6 +97,18 @@ class checkgeofence extends Command
                                     'mmsi' => $ais_data->mmsi,
                                     'geofence_id' => $geofence->id
                                 ]);
+
+                                $report = ReportGeofence::where('mmsi', $ais_data->mmsi)->whereNull('out')->get();
+
+                                if ($report) {
+                                    $geofence_report = new ReportGeofence;
+                                    $geofence_report->event_id = 9;
+                                    $geofence_report->ais_data_position_id = $ais_data->id;
+                                    $geofence_report->geofence_id = $geofence->id;
+                                    $geofence_report->mmsi = $ais_data->mmsi;
+                                    $geofence_report->out = Carbon::now();
+                                    $geofence_report->save();
+                                }
                             }
                         }
                     }
