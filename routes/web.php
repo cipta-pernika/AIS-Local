@@ -53,3 +53,4 @@ require __DIR__.'/auth.php';
 // Route::resource('event-trackings', App\Http\Controllers\EventTrackingController::class);
 Route::resource('geofence-types', App\Http\Controllers\GeofenceTypeController::class);
 Route::resource('map-settings', App\Http\Controllers\MapSettingController::class);
+Route::resource('report-geofences', App\Http\Controllers\ReportGeofenceController::class);
