@@ -78,6 +78,11 @@ class EventTrackingResource extends Resource
                     ->relationship('event', 'name')
                     ->preload()
                     ->searchable(),
+                Tables\Filters\SelectFilter::make('geofence')
+                    ->multiple()
+                    ->relationship('geofence', 'geofence_name')
+                    ->preload()
+                    ->searchable(),
             ])
             ->actions([
                 // Tables\Actions\EditAction::make(),
