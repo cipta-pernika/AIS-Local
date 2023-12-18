@@ -26,7 +26,7 @@ return new class extends Migration
             $table->unsignedTinyInteger('turning_direction')->nullable();
             $table->timestamp('timestamp');
             $table->decimal('distance', 8, 2)->nullable(); //distance from sensor
-            $table->tinyInteger('is_inside_geofence')->nullable();
+            $table->tinyInteger('is_inside_geofence')->default(0);
             $table->tinyInteger('is_geofence')->default(0);
             // Foreign key constraints
             $table->foreign('sensor_data_id')->references('id')->on('sensor_datas')->onDelete('cascade');
