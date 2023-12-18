@@ -1,0 +1,167 @@
+<?php
+
+namespace App\Console\Commands;
+
+use App\Mail\GeofenceMail;
+use App\Models\AisDataPosition;
+use App\Models\Geofence;
+use App\Models\ReportGeofence;
+use Carbon\Carbon;
+use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Mail;
+use Location\Bearing\BearingSpherical;
+use Location\Coordinate;
+use Location\Distance\Haversine;
+use Location\Distance\Vincenty;
+use Location\Polygon;
+
+class checkreportgeofence extends Command
+{
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'app:checkreportgeofence';
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Check Report Geofence';
+
+    /**
+     * Execute the console command.
+     */
+    public function handle()
+    {
+        $geofenceDatas = Geofence::all();
+        $aisDatas = AisDataPosition::limit(700)
+            ->with('vessel')
+            ->orderByDesc('created_at')
+            ->get();
+
+        foreach ($geofenceDatas as $geofence) {
+            $geoParse = json_decode($geofence->geometry);
+            if ($geofence->geometry && $geofence->type_geo === 'circle') {
+
+                foreach ($aisDatas as $ais_data) {
+                    $jarak = $this->distance(
+                        $ais_data->latitude,
+                        $ais_data->longitude,
+                        $geoParse->geometry->coordinates[1],
+                        $geoParse->geometry->coordinates[0],
+                        'K'
+                    );
+                    if ($jarak <= (float) $geofence['radius'] / 1000) {
+                        if ($geofence->type === 'in' || $geofence->type === 'both') {
+
+                            $report = ReportGeofence::where('mmsi', $ais_data->vessel->mmsi)
+                                ->whereNull('out')
+                                ->get();
+
+                            if ($report->isEmpty()) {
+                                $geofence_report = ReportGeofence::updateOrCreate(
+                                    [
+                                        'ais_data_position_id' => $ais_data->id,
+                                    ],
+                                    [
+                                        'event_id' => 9,
+                                        'geofence_id' => $geofence->id,
+                                        'mmsi' => $ais_data->vessel->mmsi,
+                                        'in' => Carbon::now(),
+                                    ]
+                                );
+                            }
+                        }
+                    } else {
+                        if ($geofence->type === 'out' || $geofence->type === 'both') {
+                            $report = ReportGeofence::where('mmsi', $ais_data->vessel->mmsi)
+                                ->whereNull('out')
+                                ->whereNotNull('in') // Added condition to check if 'in' is not null
+                                ->get();
+
+                            if ($report->isEmpty()) {
+                                if (!is_null($geofence_report->in)) {
+
+                                    $geofence_report = ReportGeofence::updateOrCreate(
+                                        [
+                                            'ais_data_position_id' => $ais_data->id,
+                                        ],
+                                        [
+                                            'event_id' => 9,
+                                            'geofence_id' => $geofence->id,
+                                            'mmsi' => $ais_data->vessel->mmsi,
+                                            'out' => Carbon::now(),
+                                        ]
+                                    );
+                                }
+                            }
+                        }
+                    }
+                }
+            } else if ($geofence->geometry && ($geofence->type_geo === 'polygon' || $geofence->type_geo === 'rectangle')) {
+                foreach ($aisDatas as $ais_data) {
+                    $polygon = new Polygon();
+                    foreach ($geoParse as $valGeo) {
+                        $polygon->addPoint(new Coordinate($valGeo[0], $valGeo[1]));
+                    }
+                    $insidePoint = new Coordinate($ais_data->latitude,  $ais_data->longitude);
+                    if ($polygon->contains($insidePoint)) {
+                        if ($geofence->type === 'in' || $geofence->type === 'both') {
+
+                            $report = ReportGeofence::where('mmsi', $ais_data->vessel->mmsi)
+                                ->whereNull('out')
+                                ->get();
+
+                            if ($report->isEmpty()) {
+
+                                $geofence_report = ReportGeofence::updateOrCreate(
+                                    [
+                                        'ais_data_position_id' => $ais_data->id,
+                                    ],
+                                    [
+                                        'event_id' => 9,
+                                        'geofence_id' => $geofence->id,
+                                        'mmsi' => $ais_data->vessel->mmsi,
+                                        'in' => Carbon::now(),
+                                    ]
+                                );
+                            }
+                        }
+                    } else {
+                        if ($geofence->type === 'out' || $geofence->type === 'both') {
+                            $report = ReportGeofence::where('mmsi', $ais_data->vessel->mmsi)
+                                ->whereNull('out')
+                                ->whereNotNull('in') // Added condition to check if 'in' is not null
+                                ->get();
+
+                            if ($report->isEmpty()) { // Check if $report is not empty
+
+                                if (!is_null($geofence_report->in)) {
+
+                                    $geofence_report = ReportGeofence::updateOrCreate(
+                                        [
+                                            'ais_data_position_id' => $ais_data->id,
+                                        ],
+                                        [
+                                            'event_id' => 9,
+                                            'geofence_id' => $geofence->id,
+                                            'mmsi' => $ais_data->vessel->mmsi,
+                                            'out' => Carbon::now(),
+                                        ]
+                                    );
+                                }
+                            }
+                        }
+                    }
+                }
+            } else {
+                foreach ($aisDatas as $ais_data) {
+                }
+            }
+        }
+    }
+}
