@@ -115,6 +115,8 @@ class checkgeofence extends Command
                 }
             } elseif ($geofence->geometry && ($geofence->type_geo === 'polygon' || $geofence->type_geo === 'rectangle')) {
                 foreach ($ais_datas as $ais_data) {
+                    $ais_data->is_geofence = 1;
+                    $ais_data->update();
                     $polygon = new Polygon();
                     foreach ($geoParse as $valGeo) {
                         $polygon->addPoint(new Coordinate($valGeo[0], $valGeo[1]));
@@ -122,29 +124,65 @@ class checkgeofence extends Command
                     $insidePoint = new Coordinate($ais_data->latitude,  $ais_data->longitude);
                     if ($polygon->contains($insidePoint)) {
                         if ($geofence->type === 'in' || $geofence->type === 'both') {
-                            EventTracking::create([
-                                'event_id' => 9,
-                                'ais_data_position_id' => $ais_data->id,
-                                'mmsi' => $ais_data->mmsi,
-                                'geofence_id' => $geofence->id
-                            ]);
-                            $ais_data->is_inside_geofence = 1;
-                            $ais_data->update();
-                            Http::post('https://nr.monitormyvessel.com/sendgeofencealarm', [
-                                'msg' => $ais_data->vessel->vessel_name . ' Inside ' . $geofence->geofence_name . ' Geofence'
-                            ]);
+                            $existingEvent = EventTracking::where('mmsi', $ais_data->mmsi)
+                                ->where('created_at', '>', now()->subMinutes(15))
+                                ->first();
+                            if (!$existingEvent) {
+
+                                EventTracking::create([
+                                    'event_id' => 9,
+                                    'ais_data_position_id' => $ais_data->id,
+                                    'mmsi' => $ais_data->mmsi,
+                                    'geofence_id' => $geofence->id
+                                ]);
+                                $ais_data->is_inside_geofence = 1;
+                                $ais_data->update();
+                                Http::post('https://nr.monitormyvessel.com/sendgeofencealarm', [
+                                    'msg' => $ais_data->vessel->vessel_name . ' Inside ' . $geofence->geofence_name . ' Geofence'
+                                ]);
+
+                                $report = ReportGeofence::where('mmsi', $ais_data->mmsi)->whereNull('out')->get();
+
+                                if (!$report) {
+                                    $geofence_report = new ReportGeofence;
+                                    $geofence_report->event_id = 9;
+                                    $geofence_report->ais_data_position_id = $ais_data->id;
+                                    $geofence_report->geofence_id = $geofence->id;
+                                    $geofence_report->mmsi = $ais_data->mmsi;
+                                    $geofence_report->in = Carbon::now();
+                                    $geofence_report->save();
+                                }
+                            }
                         }
                     } else {
                         if ($geofence->type === 'out' || $geofence->type === 'both') {
-                            EventTracking::create([
-                                'event_id' => 10,
-                                'ais_data_position_id' => $ais_data->id,
-                                'mmsi' => $ais_data->mmsi,
-                                'geofence_id' => $geofence->id
-                            ]);
-                            Http::post('https://nr.monitormyvessel.com/sendgeofencealarm', [
-                                'msg' => $ais_data->vessel->vessel_name . ' Outside ' . $geofence->geofence_name . ' Geofence'
-                            ]);
+                            $existingEvent = EventTracking::where('mmsi', $ais_data->mmsi)
+                                ->where('created_at', '>', now()->subMinutes(15))
+                                ->first();
+                            if (!$existingEvent) {
+
+                                EventTracking::create([
+                                    'event_id' => 10,
+                                    'ais_data_position_id' => $ais_data->id,
+                                    'mmsi' => $ais_data->mmsi,
+                                    'geofence_id' => $geofence->id
+                                ]);
+                                Http::post('https://nr.monitormyvessel.com/sendgeofencealarm', [
+                                    'msg' => $ais_data->vessel->vessel_name . ' Outside ' . $geofence->geofence_name . ' Geofence'
+                                ]);
+
+                                $report = ReportGeofence::where('mmsi', $ais_data->mmsi)->whereNull('out')->get();
+
+                                if ($report) {
+                                    $geofence_report = new ReportGeofence;
+                                    $geofence_report->event_id = 9;
+                                    $geofence_report->ais_data_position_id = $ais_data->id;
+                                    $geofence_report->geofence_id = $geofence->id;
+                                    $geofence_report->mmsi = $ais_data->mmsi;
+                                    $geofence_report->out = Carbon::now();
+                                    $geofence_report->save();
+                                }
+                            }
                         }
                     }
                 }
