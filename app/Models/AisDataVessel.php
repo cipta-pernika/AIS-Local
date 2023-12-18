@@ -8,7 +8,9 @@ use Laravel\Scout\Searchable;
 
 class AisDataVessel extends Model
 {
-    use HasFactory, Searchable;
+    use HasFactory;
+
+    // Searchable
 
     protected $fillable = [
         'vessel_name',
