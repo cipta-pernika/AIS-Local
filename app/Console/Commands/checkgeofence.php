@@ -115,17 +115,20 @@ class checkgeofence extends Command
                                         'geofence_id' => $geofence->id
                                     ]);
 
-                                    $geofence_report = ReportGeofence::updateOrCreate(
-                                        [
-                                            'ais_data_position_id' => $ais_data->id,
-                                        ],
-                                        [
-                                            'event_id' => 9,
-                                            'geofence_id' => $geofence->id,
-                                            'mmsi' => $ais_data->vessel->mmsi,
-                                            'out' => Carbon::now(),
-                                        ]
-                                    );
+                                    if (!is_null($geofence_report->in)) {
+
+                                        $geofence_report = ReportGeofence::updateOrCreate(
+                                            [
+                                                'ais_data_position_id' => $ais_data->id,
+                                            ],
+                                            [
+                                                'event_id' => 9,
+                                                'geofence_id' => $geofence->id,
+                                                'mmsi' => $ais_data->vessel->mmsi,
+                                                'out' => Carbon::now(),
+                                            ]
+                                        );
+                                    }
                                 }
                             }
                         }
@@ -203,17 +206,20 @@ class checkgeofence extends Command
                                         'msg' => $ais_data->vessel->vessel_name . ' Outside ' . $geofence->geofence_name . ' Geofence'
                                     ]);
 
-                                    $geofence_report = ReportGeofence::updateOrCreate(
-                                        [
-                                            'ais_data_position_id' => $ais_data->id,
-                                        ],
-                                        [
-                                            'event_id' => 9,
-                                            'geofence_id' => $geofence->id,
-                                            'mmsi' => $ais_data->vessel->mmsi,
-                                            'out' => Carbon::now(),
-                                        ]
-                                    );
+                                    if (!is_null($geofence_report->in)) {
+
+                                        $geofence_report = ReportGeofence::updateOrCreate(
+                                            [
+                                                'ais_data_position_id' => $ais_data->id,
+                                            ],
+                                            [
+                                                'event_id' => 9,
+                                                'geofence_id' => $geofence->id,
+                                                'mmsi' => $ais_data->vessel->mmsi,
+                                                'out' => Carbon::now(),
+                                            ]
+                                        );
+                                    }
                                 }
                             }
                         }
