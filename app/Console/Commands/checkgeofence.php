@@ -39,7 +39,9 @@ class checkgeofence extends Command
     public function handle()
     {
         $geofence_datas = Geofence::all();
-        $ais_datas = AisDataPosition::limit(700)->where('is_geofence', 0)->orderBy('created_at', 'DESC')->get();
+        $ais_datas = AisDataPosition::limit(700)->where('is_geofence', 0)
+            ->with('vessel')
+            ->orderBy('created_at', 'DESC')->get();
 
         foreach ($geofence_datas as $geofence) {
             $geoParse = json_decode($geofence->geometry);
@@ -58,27 +60,27 @@ class checkgeofence extends Command
                     if ($jarak <= (float) $geofence['radius'] / 1000) {
                         if ($geofence->type === 'in' || $geofence->type === 'both') {
                             // Check if an EventTracking record already exists for the same MMSI within the last 15 minutes
-                            $existingEvent = EventTracking::where('mmsi', $ais_data->mmsi)
+                            $existingEvent = EventTracking::where('mmsi', $ais_data->vessel->mmsi)
                                 ->where('created_at', '>', now()->subMinutes(15))
                                 ->first();
                             if (!$existingEvent) {
                                 EventTracking::create([
                                     'event_id' => 9,
                                     'ais_data_position_id' => $ais_data->id,
-                                    'mmsi' => $ais_data->mmsi,
+                                    'mmsi' => $ais_data->vessel->mmsi,
                                     'geofence_id' => $geofence->id
                                 ]);
                                 $ais_data->is_inside_geofence = 1;
                                 $ais_data->update();
 
-                                $report = ReportGeofence::where('mmsi', $ais_data->mmsi)->whereNull('out')->get();
+                                $report = ReportGeofence::where('mmsi', $ais_data->vessel->mmsi)->whereNull('out')->get();
 
                                 if (!$report) {
                                     $geofence_report = new ReportGeofence;
                                     $geofence_report->event_id = 9;
                                     $geofence_report->ais_data_position_id = $ais_data->id;
                                     $geofence_report->geofence_id = $geofence->id;
-                                    $geofence_report->mmsi = $ais_data->mmsi;
+                                    $geofence_report->mmsi = $ais_data->vessel->mmsi;
                                     $geofence_report->in = Carbon::now();
                                     $geofence_report->save();
                                 }
@@ -87,25 +89,25 @@ class checkgeofence extends Command
                     } else {
                         if ($geofence->type === 'out' || $geofence->type === 'both') {
                             // Check if an EventTracking record already exists for the same MMSI within the last 15 minutes
-                            $existingEvent = EventTracking::where('mmsi', $ais_data->mmsi)
+                            $existingEvent = EventTracking::where('mmsi', $ais_data->vessel->mmsi)
                                 ->where('created_at', '>', now()->subMinutes(15))
                                 ->first();
                             if (!$existingEvent) {
                                 EventTracking::create([
                                     'event_id' => 10,
                                     'ais_data_position_id' => $ais_data->id,
-                                    'mmsi' => $ais_data->mmsi,
+                                    'mmsi' => $ais_data->vessel->mmsi,
                                     'geofence_id' => $geofence->id
                                 ]);
 
-                                $report = ReportGeofence::where('mmsi', $ais_data->mmsi)->whereNull('out')->get();
+                                $report = ReportGeofence::where('mmsi', $ais_data->vessel->mmsi)->whereNull('out')->get();
 
                                 if ($report) {
                                     $geofence_report = new ReportGeofence;
                                     $geofence_report->event_id = 9;
                                     $geofence_report->ais_data_position_id = $ais_data->id;
                                     $geofence_report->geofence_id = $geofence->id;
-                                    $geofence_report->mmsi = $ais_data->mmsi;
+                                    $geofence_report->mmsi = $ais_data->vessel->mmsi;
                                     $geofence_report->out = Carbon::now();
                                     $geofence_report->save();
                                 }
@@ -113,7 +115,7 @@ class checkgeofence extends Command
                         }
                     }
                 }
-            } elseif ($geofence->geometry && ($geofence->type_geo === 'polygon' || $geofence->type_geo === 'rectangle')) {
+            } else if ($geofence->geometry && ($geofence->type_geo === 'polygon' || $geofence->type_geo === 'rectangle')) {
                 foreach ($ais_datas as $ais_data) {
                     $ais_data->is_geofence = 1;
                     $ais_data->update();
@@ -124,7 +126,7 @@ class checkgeofence extends Command
                     $insidePoint = new Coordinate($ais_data->latitude,  $ais_data->longitude);
                     if ($polygon->contains($insidePoint)) {
                         if ($geofence->type === 'in' || $geofence->type === 'both') {
-                            $existingEvent = EventTracking::where('mmsi', $ais_data->mmsi)
+                            $existingEvent = EventTracking::where('mmsi', $ais_data->vessel->mmsi)
                                 ->where('created_at', '>', now()->subMinutes(15))
                                 ->first();
                             if (!$existingEvent) {
@@ -132,7 +134,7 @@ class checkgeofence extends Command
                                 EventTracking::create([
                                     'event_id' => 9,
                                     'ais_data_position_id' => $ais_data->id,
-                                    'mmsi' => $ais_data->mmsi,
+                                    'mmsi' => $ais_data->vessel->mmsi,
                                     'geofence_id' => $geofence->id
                                 ]);
                                 $ais_data->is_inside_geofence = 1;
@@ -141,14 +143,14 @@ class checkgeofence extends Command
                                     'msg' => $ais_data->vessel->vessel_name . ' Inside ' . $geofence->geofence_name . ' Geofence'
                                 ]);
 
-                                $report = ReportGeofence::where('mmsi', $ais_data->mmsi)->whereNull('out')->get();
+                                $report = ReportGeofence::where('mmsi', $ais_data->vessel->mmsi)->whereNull('out')->get();
 
                                 if (!$report) {
                                     $geofence_report = new ReportGeofence;
                                     $geofence_report->event_id = 9;
                                     $geofence_report->ais_data_position_id = $ais_data->id;
                                     $geofence_report->geofence_id = $geofence->id;
-                                    $geofence_report->mmsi = $ais_data->mmsi;
+                                    $geofence_report->mmsi = $ais_data->vessel->mmsi;
                                     $geofence_report->in = Carbon::now();
                                     $geofence_report->save();
                                 }
@@ -156,7 +158,7 @@ class checkgeofence extends Command
                         }
                     } else {
                         if ($geofence->type === 'out' || $geofence->type === 'both') {
-                            $existingEvent = EventTracking::where('mmsi', $ais_data->mmsi)
+                            $existingEvent = EventTracking::where('mmsi', $ais_data->vessel->mmsi)
                                 ->where('created_at', '>', now()->subMinutes(15))
                                 ->first();
                             if (!$existingEvent) {
@@ -164,21 +166,21 @@ class checkgeofence extends Command
                                 EventTracking::create([
                                     'event_id' => 10,
                                     'ais_data_position_id' => $ais_data->id,
-                                    'mmsi' => $ais_data->mmsi,
+                                    'mmsi' => $ais_data->vessel->mmsi,
                                     'geofence_id' => $geofence->id
                                 ]);
                                 Http::post('https://nr.monitormyvessel.com/sendgeofencealarm', [
                                     'msg' => $ais_data->vessel->vessel_name . ' Outside ' . $geofence->geofence_name . ' Geofence'
                                 ]);
 
-                                $report = ReportGeofence::where('mmsi', $ais_data->mmsi)->whereNull('out')->get();
+                                $report = ReportGeofence::where('mmsi', $ais_data->vessel->mmsi)->whereNull('out')->get();
 
                                 if ($report) {
                                     $geofence_report = new ReportGeofence;
                                     $geofence_report->event_id = 9;
                                     $geofence_report->ais_data_position_id = $ais_data->id;
                                     $geofence_report->geofence_id = $geofence->id;
-                                    $geofence_report->mmsi = $ais_data->mmsi;
+                                    $geofence_report->mmsi = $ais_data->vessel->mmsi;
                                     $geofence_report->out = Carbon::now();
                                     $geofence_report->save();
                                 }
