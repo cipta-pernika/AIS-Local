@@ -93,12 +93,6 @@ class checkgeofence extends Command
                                 ->where('created_at', '>', now()->subMinutes(15))
                                 ->first();
                             if (!$existingEvent) {
-                                EventTracking::create([
-                                    'event_id' => 10,
-                                    'ais_data_position_id' => $ais_data->id,
-                                    'mmsi' => $ais_data->vessel->mmsi,
-                                    'geofence_id' => $geofence->id
-                                ]);
 
                                 $report = ReportGeofence::where('mmsi', $ais_data->vessel->mmsi)
                                     ->whereNull('out')
@@ -106,6 +100,12 @@ class checkgeofence extends Command
                                     ->get();
 
                                 if ($report->isEmpty()) {
+                                    EventTracking::create([
+                                        'event_id' => 10,
+                                        'ais_data_position_id' => $ais_data->id,
+                                        'mmsi' => $ais_data->vessel->mmsi,
+                                        'geofence_id' => $geofence->id
+                                    ]);
                                     $geofence_report = new ReportGeofence;
                                     $geofence_report->event_id = 9;
                                     $geofence_report->ais_data_position_id = $ais_data->id;
