@@ -48,6 +48,11 @@ class ReportGeofenceResource extends Resource
                 Tables\Columns\TextColumn::make('event.name')
                     ->numeric()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('aisDataPosition.vessel.mmsi')
+                    ->label('MMSI')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('aisDataPosition.vessel.vessel_name')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('aisDataPosition.id')
                     ->numeric()
                     ->sortable(),
