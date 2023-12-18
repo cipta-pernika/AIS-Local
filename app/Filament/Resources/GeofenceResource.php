@@ -27,8 +27,8 @@ class GeofenceResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('user_id')
-                    ->maxLength(255),
+                // Forms\Components\TextInput::make('user_id')
+                //     ->maxLength(255),
                 Forms\Components\TextInput::make('geofence_name')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('type')
