@@ -100,9 +100,12 @@ class checkgeofence extends Command
                                     'geofence_id' => $geofence->id
                                 ]);
 
-                                $report = ReportGeofence::where('mmsi', $ais_data->vessel->mmsi)->whereNull('out')->get();
+                                $report = ReportGeofence::where('mmsi', $ais_data->vessel->mmsi)
+                                    ->whereNull('out')
+                                    ->whereNotNull('in') // Added condition to check if 'in' is not null
+                                    ->get();
 
-                                if ($report) {
+                                if ($report->isEmpty()) {
                                     $geofence_report = new ReportGeofence;
                                     $geofence_report->event_id = 9;
                                     $geofence_report->ais_data_position_id = $ais_data->id;
