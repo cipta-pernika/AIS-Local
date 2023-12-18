@@ -163,19 +163,22 @@ class checkgeofence extends Command
                                 ->first();
                             if (!$existingEvent) {
 
-                                EventTracking::create([
-                                    'event_id' => 10,
-                                    'ais_data_position_id' => $ais_data->id,
-                                    'mmsi' => $ais_data->vessel->mmsi,
-                                    'geofence_id' => $geofence->id
-                                ]);
-                                Http::post('https://nr.monitormyvessel.com/sendgeofencealarm', [
-                                    'msg' => $ais_data->vessel->vessel_name . ' Outside ' . $geofence->geofence_name . ' Geofence'
-                                ]);
+                                $report = ReportGeofence::where('mmsi', $ais_data->vessel->mmsi)
+                                    ->whereNull('out')
+                                    ->whereNotNull('in') // Added condition to check if 'in' is not null
+                                    ->get();
 
-                                $report = ReportGeofence::where('mmsi', $ais_data->vessel->mmsi)->whereNull('out')->get();
+                                if ($report->isEmpty()) { // Check if $report is not empty
 
-                                if ($report) {
+                                    EventTracking::create([
+                                        'event_id' => 10,
+                                        'ais_data_position_id' => $ais_data->id,
+                                        'mmsi' => $ais_data->vessel->mmsi,
+                                        'geofence_id' => $geofence->id
+                                    ]);
+                                    Http::post('https://nr.monitormyvessel.com/sendgeofencealarm', [
+                                        'msg' => $ais_data->vessel->vessel_name . ' Outside ' . $geofence->geofence_name . ' Geofence'
+                                    ]);
                                     $geofence_report = new ReportGeofence;
                                     $geofence_report->event_id = 9;
                                     $geofence_report->ais_data_position_id = $ais_data->id;
