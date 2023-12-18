@@ -80,13 +80,17 @@ class checkgeofence extends Command
                                     ->get();
 
                                 if ($report->isEmpty()) {
-                                    $geofence_report = new ReportGeofence;
-                                    $geofence_report->event_id = 9;
-                                    $geofence_report->ais_data_position_id = $ais_data->id;
-                                    $geofence_report->geofence_id = $geofence->id;
-                                    $geofence_report->mmsi = $ais_data->vessel->mmsi;
-                                    $geofence_report->in = Carbon::now();
-                                    $geofence_report->save();
+                                    $geofence_report = ReportGeofence::updateOrCreate(
+                                        [
+                                            'ais_data_position_id' => $ais_data->id,
+                                        ],
+                                        [
+                                            'event_id' => 9,
+                                            'geofence_id' => $geofence->id,
+                                            'mmsi' => $ais_data->vessel->mmsi,
+                                            'in' => Carbon::now(),
+                                        ]
+                                    );
                                 }
                             }
                         }
@@ -110,13 +114,18 @@ class checkgeofence extends Command
                                         'mmsi' => $ais_data->vessel->mmsi,
                                         'geofence_id' => $geofence->id
                                     ]);
-                                    $geofence_report = new ReportGeofence;
-                                    $geofence_report->event_id = 9;
-                                    $geofence_report->ais_data_position_id = $ais_data->id;
-                                    $geofence_report->geofence_id = $geofence->id;
-                                    $geofence_report->mmsi = $ais_data->vessel->mmsi;
-                                    $geofence_report->out = Carbon::now();
-                                    $geofence_report->save();
+
+                                    $geofence_report = ReportGeofence::updateOrCreate(
+                                        [
+                                            'ais_data_position_id' => $ais_data->id,
+                                        ],
+                                        [
+                                            'event_id' => 9,
+                                            'geofence_id' => $geofence->id,
+                                            'mmsi' => $ais_data->vessel->mmsi,
+                                            'out' => Carbon::now(),
+                                        ]
+                                    );
                                 }
                             }
                         }
@@ -155,13 +164,18 @@ class checkgeofence extends Command
                                     ->get();
 
                                 if ($report->isEmpty()) {
-                                    $geofence_report = new ReportGeofence;
-                                    $geofence_report->event_id = 9;
-                                    $geofence_report->ais_data_position_id = $ais_data->id;
-                                    $geofence_report->geofence_id = $geofence->id;
-                                    $geofence_report->mmsi = $ais_data->vessel->mmsi;
-                                    $geofence_report->in = Carbon::now();
-                                    $geofence_report->save();
+
+                                    $geofence_report = ReportGeofence::updateOrCreate(
+                                        [
+                                            'ais_data_position_id' => $ais_data->id,
+                                        ],
+                                        [
+                                            'event_id' => 9,
+                                            'geofence_id' => $geofence->id,
+                                            'mmsi' => $ais_data->vessel->mmsi,
+                                            'in' => Carbon::now(),
+                                        ]
+                                    );
                                 }
                             }
                         }
@@ -188,13 +202,18 @@ class checkgeofence extends Command
                                     Http::post('https://nr.monitormyvessel.com/sendgeofencealarm', [
                                         'msg' => $ais_data->vessel->vessel_name . ' Outside ' . $geofence->geofence_name . ' Geofence'
                                     ]);
-                                    $geofence_report = new ReportGeofence;
-                                    $geofence_report->event_id = 9;
-                                    $geofence_report->ais_data_position_id = $ais_data->id;
-                                    $geofence_report->geofence_id = $geofence->id;
-                                    $geofence_report->mmsi = $ais_data->vessel->mmsi;
-                                    $geofence_report->out = Carbon::now();
-                                    $geofence_report->save();
+
+                                    $geofence_report = ReportGeofence::updateOrCreate(
+                                        [
+                                            'ais_data_position_id' => $ais_data->id,
+                                        ],
+                                        [
+                                            'event_id' => 9,
+                                            'geofence_id' => $geofence->id,
+                                            'mmsi' => $ais_data->vessel->mmsi,
+                                            'out' => Carbon::now(),
+                                        ]
+                                    );
                                 }
                             }
                         }
