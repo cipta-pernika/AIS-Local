@@ -38,16 +38,18 @@ class checkgeofence extends Command
      */
     public function handle()
     {
-        $geofence_datas = Geofence::all();
-        $ais_datas = AisDataPosition::limit(700)->where('is_geofence', 0)
+        $geofenceDatas = Geofence::all();
+        $aisDatas = AisDataPosition::limit(700)
+            ->where('is_geofence', 0)
             ->with('vessel')
-            ->orderBy('created_at', 'DESC')->get();
+            ->orderByDesc('created_at')
+            ->get();
 
-        foreach ($geofence_datas as $geofence) {
+        foreach ($geofenceDatas as $geofence) {
             $geoParse = json_decode($geofence->geometry);
             if ($geofence->geometry && $geofence->type_geo === 'circle') {
 
-                foreach ($ais_datas as $ais_data) {
+                foreach ($aisDatas as $ais_data) {
                     $ais_data->is_geofence = 1;
                     $ais_data->update();
                     $jarak = $this->distance(
@@ -73,9 +75,11 @@ class checkgeofence extends Command
                                 $ais_data->is_inside_geofence = 1;
                                 $ais_data->update();
 
-                                $report = ReportGeofence::where('mmsi', $ais_data->vessel->mmsi)->whereNull('out')->get();
+                                $report = ReportGeofence::where('mmsi', $ais_data->vessel->mmsi)
+                                    ->whereNull('out')
+                                    ->get();
 
-                                if (!$report) {
+                                if ($report->isEmpty()) {
                                     $geofence_report = new ReportGeofence;
                                     $geofence_report->event_id = 9;
                                     $geofence_report->ais_data_position_id = $ais_data->id;
@@ -119,7 +123,7 @@ class checkgeofence extends Command
                     }
                 }
             } else if ($geofence->geometry && ($geofence->type_geo === 'polygon' || $geofence->type_geo === 'rectangle')) {
-                foreach ($ais_datas as $ais_data) {
+                foreach ($aisDatas as $ais_data) {
                     $ais_data->is_geofence = 1;
                     $ais_data->update();
                     $polygon = new Polygon();
@@ -146,9 +150,11 @@ class checkgeofence extends Command
                                     'msg' => $ais_data->vessel->vessel_name . ' Inside ' . $geofence->geofence_name . ' Geofence'
                                 ]);
 
-                                $report = ReportGeofence::where('mmsi', $ais_data->vessel->mmsi)->whereNull('out')->get();
+                                $report = ReportGeofence::where('mmsi', $ais_data->vessel->mmsi)
+                                    ->whereNull('out')
+                                    ->get();
 
-                                if (!$report) {
+                                if ($report->isEmpty()) {
                                     $geofence_report = new ReportGeofence;
                                     $geofence_report->event_id = 9;
                                     $geofence_report->ais_data_position_id = $ais_data->id;
@@ -195,7 +201,7 @@ class checkgeofence extends Command
                     }
                 }
             } else {
-                foreach ($ais_datas as $ais_data) {
+                foreach ($aisDatas as $ais_data) {
                 }
             }
         }
