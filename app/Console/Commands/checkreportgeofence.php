@@ -124,7 +124,7 @@ class checkreportgeofence extends Command
                             'event_id' => 9,
                             'geofence_id' => $geofence->id,
                             'mmsi' => $ais_data->vessel->mmsi,
-                            $eventType => Carbon::now(),
+                            $eventType => Carbon::parse($ais_data->timestamp)
                         ]
                     );
                 }
