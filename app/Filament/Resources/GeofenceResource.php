@@ -31,10 +31,20 @@ class GeofenceResource extends Resource
                 //     ->maxLength(255),
                 Forms\Components\TextInput::make('geofence_name')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('type')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('type_geo')
-                    ->maxLength(255),
+                Forms\Components\Select::make('type')
+                    ->options([
+                        'both' => 'Both',
+                        'in' => 'In',
+                        'out' => 'Out',
+                    ])
+                    ->multiple(false),
+                Forms\Components\Select::make('type_geo')
+                    ->options([
+                        'polygon' => 'Polygon',
+                        'rectangle' => 'Rectangle',
+                        'circle' => 'Circle',
+                    ])
+                    ->multiple(false),
                 Forms\Components\TextInput::make('radius')
                     ->maxLength(255),
                 Forms\Components\Textarea::make('geometry')

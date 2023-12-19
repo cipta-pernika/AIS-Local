@@ -114,7 +114,6 @@ class checkreportgeofence extends Command
                     ->whereNull('out')
                     ->whereNotNull('in')
                     ->first();
-
                 if (!$existingReportInside) {
                     ReportGeofence::updateOrCreate(
                         [
