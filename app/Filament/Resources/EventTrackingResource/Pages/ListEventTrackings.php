@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\EventTrackingResource\Pages;
 
+use AlperenErsoy\FilamentExport\Actions\FilamentExportHeaderAction;
 use App\Filament\Resources\EventTrackingResource;
 use Filament\Actions;
 use Filament\Actions\ActionGroup;
@@ -18,6 +19,7 @@ class ListEventTrackings extends ListRecords
             // Actions\CreateAction::make(),
             ActionGroup::make([
                 ExportAction::make(),
+                // FilamentExportHeaderAction::make('export')
             ])
         ];
     }

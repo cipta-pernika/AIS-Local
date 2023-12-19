@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use AlperenErsoy\FilamentExport\Actions\FilamentExportBulkAction;
 use App\Filament\Resources\EventTrackingResource\Pages;
 use App\Filament\Resources\EventTrackingResource\RelationManagers;
 use App\Models\EventTracking;
@@ -90,7 +91,8 @@ class EventTrackingResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
-                    ExportBulkAction::make()
+                    // ExportBulkAction::make(),
+                    FilamentExportBulkAction::make('export')
                 ]),
             ]);
     }
