@@ -248,6 +248,10 @@ class HelperController extends Controller
 
     public function aisdata()
     {
+        $url = app()->isLocal()
+            ? 'http://localhost:8000/sendgeofencealarm'
+            : 'https://nr.monitormyvessel.com/sendgeofencealarm';
+
         if (empty(request()->source)) {
             return response()->json([
                 'error' => 'No request payload provided.',
@@ -372,7 +376,8 @@ class HelperController extends Controller
                             ]);
                             $aisData->is_inside_geofence = 1;
                             $aisData->update();
-                            Http::post('https://nr.monitormyvessel.com/sendgeofencealarm', [
+
+                            Http::post($url, [
                                 'msg' => $aisData->vessel->vessel_name . ' Inside ' . $value['geofence_name'] . ' Geofence'
                             ]);
                         }
@@ -402,7 +407,7 @@ class HelperController extends Controller
                                     'mmsi' => $aisData->vessel->mmsi,
                                     'geofence_id' => $value['id']
                                 ]);
-                                Http::post('https://nr.monitormyvessel.com/sendgeofencealarm', [
+                                Http::post($url, [
                                     'msg' => $aisData->vessel->vessel_name . ' Outside ' . $value['geofence_name'] . ' Geofence'
                                 ]);
                             }
@@ -445,7 +450,7 @@ class HelperController extends Controller
                             ]);
                             $aisData->is_inside_geofence = 1;
                             $aisData->update();
-                            Http::post('https://nr.monitormyvessel.com/sendgeofencealarm', [
+                            Http::post($url, [
                                 'msg' => $aisData->vessel->vessel_name . ' Inside ' . $value['geofence_name'] . ' Geofence'
                             ]);
                         }
@@ -475,7 +480,7 @@ class HelperController extends Controller
                                     'mmsi' => $aisData->vessel->mmsi,
                                     'geofence_id' => $value['id']
                                 ]);
-                                Http::post('https://nr.monitormyvessel.com/sendgeofencealarm', [
+                                Http::post($url, [
                                     'msg' => $aisData->vessel->vessel_name . ' Outside ' . $value['geofence_name'] . ' Geofence'
                                 ]);
                             }
