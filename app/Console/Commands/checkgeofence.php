@@ -6,7 +6,6 @@ use App\Mail\GeofenceMail;
 use App\Models\AisDataPosition;
 use App\Models\EventTracking;
 use App\Models\Geofence;
-use App\Models\ReportGeofence;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
@@ -74,24 +73,6 @@ class checkgeofence extends Command
                                 ]);
                                 $ais_data->is_inside_geofence = 1;
                                 $ais_data->update();
-
-                                $report = ReportGeofence::where('mmsi', $ais_data->vessel->mmsi)
-                                    ->whereNull('out')
-                                    ->get();
-
-                                if ($report->isEmpty()) {
-                                    $geofence_report = ReportGeofence::updateOrCreate(
-                                        [
-                                            'ais_data_position_id' => $ais_data->id,
-                                        ],
-                                        [
-                                            'event_id' => 9,
-                                            'geofence_id' => $geofence->id,
-                                            'mmsi' => $ais_data->vessel->mmsi,
-                                            'in' => Carbon::now(),
-                                        ]
-                                    );
-                                }
                             }
                         }
                     } else {
@@ -101,35 +82,12 @@ class checkgeofence extends Command
                                 ->where('created_at', '>', now()->subMinutes(15))
                                 ->first();
                             if (!$existingEvent) {
-
-                                $report = ReportGeofence::where('mmsi', $ais_data->vessel->mmsi)
-                                    ->whereNull('out')
-                                    ->whereNotNull('in') // Added condition to check if 'in' is not null
-                                    ->get();
-
-                                if ($report->isEmpty()) {
-                                    EventTracking::create([
-                                        'event_id' => 10,
-                                        'ais_data_position_id' => $ais_data->id,
-                                        'mmsi' => $ais_data->vessel->mmsi,
-                                        'geofence_id' => $geofence->id
-                                    ]);
-
-                                    if (!is_null($geofence_report->in)) {
-
-                                        $geofence_report = ReportGeofence::updateOrCreate(
-                                            [
-                                                'ais_data_position_id' => $ais_data->id,
-                                            ],
-                                            [
-                                                'event_id' => 9,
-                                                'geofence_id' => $geofence->id,
-                                                'mmsi' => $ais_data->vessel->mmsi,
-                                                'out' => Carbon::now(),
-                                            ]
-                                        );
-                                    }
-                                }
+                                EventTracking::create([
+                                    'event_id' => 10,
+                                    'ais_data_position_id' => $ais_data->id,
+                                    'mmsi' => $ais_data->vessel->mmsi,
+                                    'geofence_id' => $geofence->id
+                                ]);
                             }
                         }
                     }
@@ -161,25 +119,6 @@ class checkgeofence extends Command
                                 Http::post('https://nr.monitormyvessel.com/sendgeofencealarm', [
                                     'msg' => $ais_data->vessel->vessel_name . ' Inside ' . $geofence->geofence_name . ' Geofence'
                                 ]);
-
-                                $report = ReportGeofence::where('mmsi', $ais_data->vessel->mmsi)
-                                    ->whereNull('out')
-                                    ->get();
-
-                                if ($report->isEmpty()) {
-
-                                    $geofence_report = ReportGeofence::updateOrCreate(
-                                        [
-                                            'ais_data_position_id' => $ais_data->id,
-                                        ],
-                                        [
-                                            'event_id' => 9,
-                                            'geofence_id' => $geofence->id,
-                                            'mmsi' => $ais_data->vessel->mmsi,
-                                            'in' => Carbon::now(),
-                                        ]
-                                    );
-                                }
                             }
                         }
                     } else {
@@ -189,38 +128,15 @@ class checkgeofence extends Command
                                 ->first();
                             if (!$existingEvent) {
 
-                                $report = ReportGeofence::where('mmsi', $ais_data->vessel->mmsi)
-                                    ->whereNull('out')
-                                    ->whereNotNull('in') // Added condition to check if 'in' is not null
-                                    ->get();
-
-                                if ($report->isEmpty()) { // Check if $report is not empty
-
-                                    EventTracking::create([
-                                        'event_id' => 10,
-                                        'ais_data_position_id' => $ais_data->id,
-                                        'mmsi' => $ais_data->vessel->mmsi,
-                                        'geofence_id' => $geofence->id
-                                    ]);
-                                    Http::post('https://nr.monitormyvessel.com/sendgeofencealarm', [
-                                        'msg' => $ais_data->vessel->vessel_name . ' Outside ' . $geofence->geofence_name . ' Geofence'
-                                    ]);
-
-                                    if (!is_null($geofence_report->in)) {
-
-                                        $geofence_report = ReportGeofence::updateOrCreate(
-                                            [
-                                                'ais_data_position_id' => $ais_data->id,
-                                            ],
-                                            [
-                                                'event_id' => 9,
-                                                'geofence_id' => $geofence->id,
-                                                'mmsi' => $ais_data->vessel->mmsi,
-                                                'out' => Carbon::now(),
-                                            ]
-                                        );
-                                    }
-                                }
+                                EventTracking::create([
+                                    'event_id' => 10,
+                                    'ais_data_position_id' => $ais_data->id,
+                                    'mmsi' => $ais_data->vessel->mmsi,
+                                    'geofence_id' => $geofence->id
+                                ]);
+                                Http::post('https://nr.monitormyvessel.com/sendgeofencealarm', [
+                                    'msg' => $ais_data->vessel->vessel_name . ' Outside ' . $geofence->geofence_name . ' Geofence'
+                                ]);
                             }
                         }
                     }
@@ -228,6 +144,28 @@ class checkgeofence extends Command
             } else {
                 foreach ($aisDatas as $ais_data) {
                 }
+            }
+        }
+    }
+
+    public function distance($lat1, $lon1, $lat2, $lon2, $unit)
+    {
+        if (($lat1 == $lat2) && ($lon1 == $lon2)) {
+            return 0;
+        } else {
+            $theta = $lon1 - $lon2;
+            $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) + cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
+            $dist = acos($dist);
+            $dist = rad2deg($dist);
+            $miles = $dist * 60 * 1.1515;
+            $unit = strtoupper($unit);
+
+            if ($unit == "K") {
+                return ($miles * 1.609344);
+            } else if ($unit == "N") {
+                return ($miles * 0.8684);
+            } else {
+                return $miles;
             }
         }
     }
