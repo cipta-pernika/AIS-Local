@@ -313,6 +313,14 @@ class HelperController extends Controller
                 'reported_eta' => Carbon::parse(request('eta')),
                 'type_number' => request('type_number'),
             ]);
+            $asset = Asset::updateOrCreate(
+                ['mmsi' => request()->mmsi],
+                [
+                    'asset_name' => request('name'),
+                    'imo' => request('shipId'),
+                    'callsign' => request('callsign'),
+                ]
+            );
             if ($vessel->wasRecentlyCreated) {
                 // EventTracking::create([
                 //     'event_id' => 6,
@@ -454,6 +462,15 @@ class HelperController extends Controller
             'reported_eta' => Carbon::parse(request('eta')),
         ]);
 
+        $asset = Asset::updateOrCreate(
+            ['mmsi' => request()->mmsi],
+            [
+                'asset_name' => request('name'),
+                'imo' => request('shipId'),
+                'callsign' => request('callsign'),
+            ]
+        );
+
         return response()->json([
             'vessel' => $vessel ?? null,
         ], 201);
@@ -477,6 +494,15 @@ class HelperController extends Controller
             'dimension_to_starboard' => request('dimension_to_starboard'),
             'reported_eta' => Carbon::parse(request('reported_eta')),
         ]);
+
+        $asset = Asset::updateOrCreate(
+            ['mmsi' => request()->mmsi],
+            [
+                'asset_name' => request('name'),
+                'imo' => request('shipId'),
+                'callsign' => request('callsign'),
+            ]
+        );
 
         return response()->json([
             'vessel' => $vessel ?? null,

@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('assets', function (Blueprint $table) {
             $table->id();
-            $table->string('asset_name');
-            $table->string('asset_author');
-            $table->string('asset_type');
+            $table->string('asset_name')->nullable();
+            $table->string('asset_author')->nullable();
+            $table->string('asset_type')->nullable();
             $table->string('asset_owner')->nullable();
             $table->string('mmsi')->nullable();
             $table->string('callsign')->nullable();
