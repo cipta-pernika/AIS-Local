@@ -12,8 +12,10 @@ use App\Models\AisDataVessel;
 use App\Models\Asset;
 use App\Models\Datalogger;
 use App\Models\EventTracking;
+use App\Models\Geofence;
 use App\Models\GeofenceBinding;
 use App\Models\RadarData;
+use App\Models\ReportGeofence;
 use App\Models\Sensor;
 use App\Models\SensorData;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -23,6 +25,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Http;
 use Location\Bearing\BearingSpherical;
 use Location\Coordinate;
 use Location\Distance\Haversine;
@@ -340,77 +343,168 @@ class HelperController extends Controller
                 ->first();
         }
 
-        try {
-            //detect inside geofence
-            if (request()->has('mmsi') || request()->has('senderMmsi')) {
-                $mmsi = request()->input('mmsi') ?: request()->input('senderMmsi');
+        // try {
+        //detect inside geofence
+        $geofenceDatas = Geofence::all();
+        foreach ($geofenceDatas as $value) {
+            if ($value->geometry) {
+                $geoParse = json_decode($value->geometry);
 
-                // Use first() instead of get() to get a single result
-                $asset = Asset::where('mmsi', $mmsi)->first();
+                if ($geoParse && $value->type_geo === 'circle') {
+                    $jarak = $this->distance(
+                        request()->latitude,
+                        request()->longitude,
+                        $geoParse->geometry->coordinates[1],
+                        $geoParse->geometry->coordinates[0],
+                        'K'
+                    );
+                    if ($jarak <= (float) $value['radius'] / 1000) {
+                        if ($value['type'] === 'in' || $value['type'] === 'both') {
+                            // Mail::to('support@pernika.com')->send(new GeofenceMail([
+                            //     'asset' => $asset,
+                            //     'geofence' => $value
+                            // ]));
+                            EventTracking::create([
+                                'event_id' => 9,
+                                'ais_data_position_id' => $aisData->id,
+                                'mmsi' => $aisData->vessel->mmsi,
+                                'geofence_id' => $value['id']
+                            ]);
+                            $aisData->is_inside_geofence = 1;
+                            $aisData->update();
+                            Http::post('https://nr.monitormyvessel.com/sendgeofencealarm', [
+                                'msg' => $aisData->vessel->vessel_name . ' Inside ' . $value['geofence_name'] . ' Geofence'
+                            ]);
+                        }
+                        ReportGeofence::updateOrCreate(
+                            [
+                                'ais_data_position_id' => $aisData->id,
+                            ],
+                            [
+                                'event_id' => 9,
+                                'geofence_id' => $value['id'],
+                                'mmsi' => $aisData->vessel->mmsi,
+                                'in' => Carbon::parse($aisData->timestamp)
+                            ]
+                        );
+                    } else {
+                        if ($value['type'] === 'out' || $value['type'] === 'both') {
+                            // Mail::to('support@pernika.com')->send(new GeofenceMail([
+                            //     'asset' => $asset,
+                            //     'geofence' => $value
+                            // ]));
+                            $washere = EventTracking::where('mmsi', $aisData->vessel->mmsi)
+                                ->where('event_id', 9)->where('geofence_id', $value['id'])->first();
+                            if ($washere) {
+                                EventTracking::create([
+                                    'event_id' => 10,
+                                    'ais_data_position_id' => $aisData->id,
+                                    'mmsi' => $aisData->vessel->mmsi,
+                                    'geofence_id' => $value['id']
+                                ]);
+                                Http::post('https://nr.monitormyvessel.com/sendgeofencealarm', [
+                                    'msg' => $aisData->vessel->vessel_name . ' Outside ' . $value['geofence_name'] . ' Geofence'
+                                ]);
+                            }
+                        }
+                        $washere = EventTracking::where('mmsi', $aisData->vessel->mmsi)
+                            ->where('event_id', 9)->where('geofence_id', $value['id'])->first();
+                        if ($washere) {
+                            $existingReport = ReportGeofence::where('mmsi', $aisData->vessel->mmsi)
+                                ->where('geofence_id', $value['id'])
+                                ->whereNull('out')
+                                ->whereNotNull('in')
+                                ->first();
 
-                if ($asset) {
-                    $geo = GeofenceBinding::join('geofences', 'geofence_bindings.geofence_id', 'geofences.id')
-                        ->where('asset_id', $asset->id)->get();
-
-                    foreach ($geo as $value) {
-                        if ($value->geometry) {
-                            $geoParse = json_decode($value->geometry);
-
-                            if ($geoParse && $value->type_geo === 'circle') {
-                                $jarak = $this->distance(
-                                    request()->latitude,
-                                    request()->longitude,
-                                    $geoParse->geometry->coordinates[1],
-                                    $geoParse->geometry->coordinates[0],
-                                    'K'
-                                );
-                                if ($jarak <= (float) $value['radius'] / 1000) {
-                                    if ($value['type'] === 'in' || $value['type'] === 'both') {
-                                        Mail::to('support@pernika.com')->send(new GeofenceMail([
-                                            'asset' => $asset,
-                                            'geofence' => $value
-                                        ]));
-                                    }
-                                } else {
-                                    if ($value['type'] === 'out' || $value['type'] === 'both') {
-                                        Mail::to('support@pernika.com')->send(new GeofenceMail([
-                                            'asset' => $asset,
-                                            'geofence' => $value
-                                        ]));
-                                    }
-                                }
-                            } else if ($geoParse && ($value->type_geo === 'polygon' || $value->type_geo === 'rectangle')) {
-                                // Handle polygon or rectangle case
-                                $geofence = new Polygon();
-                                foreach ($geoParse as $valGeo) {
-                                    $geofence->addPoint(new Coordinate($valGeo[0], $valGeo[1]));
-                                }
-                                $insidePoint = new Coordinate(request()->latitude,  request()->longitude);
-                                if ($geofence->contains($insidePoint)) {
-                                    if ($value['type'] === 'in' || $value['type'] === 'both') {
-                                        Mail::to('support@pernika.com')->send(new GeofenceMail([
-                                            'asset' => $asset,
-                                            'geofence' => $value
-                                        ]));
-                                    }
-                                } else {
-                                    if ($value['type'] === 'out' || $value['type'] === 'both') {
-                                        Mail::to('support@pernika.com')->send(new GeofenceMail([
-                                            'asset' => $asset,
-                                            'geofence' => $value
-                                        ]));
-                                    }
-                                }
-                            } else {
-                                // Handle other cases
-                                $isInside = [];
+                            if ($existingReport) {
+                                $existingReport->update([
+                                    'out' => Carbon::parse($aisData->timestamp),
+                                    'total_time' => $existingReport->in->diffInMinutes($aisData->timestamp)
+                                ]);
                             }
                         }
                     }
+                } else if ($geoParse && ($value->type_geo === 'polygon' || $value->type_geo === 'rectangle')) {
+                    // Handle polygon or rectangle case
+                    $geofence = new Polygon();
+                    foreach ($geoParse as $valGeo) {
+                        $geofence->addPoint(new Coordinate($valGeo[0], $valGeo[1]));
+                    }
+                    $insidePoint = new Coordinate(request()->latitude,  request()->longitude);
+                    if ($geofence->contains($insidePoint)) {
+                        if ($value['type'] === 'in' || $value['type'] === 'both') {
+                            // Mail::to('support@pernika.com')->send(new GeofenceMail([
+                            //     'asset' => $asset,
+                            //     'geofence' => $value
+                            // ]));
+                            EventTracking::create([
+                                'event_id' => 9,
+                                'ais_data_position_id' => $aisData->id,
+                                'mmsi' => $aisData->vessel->mmsi,
+                                'geofence_id' => $value['id']
+                            ]);
+                            $aisData->is_inside_geofence = 1;
+                            $aisData->update();
+                            Http::post('https://nr.monitormyvessel.com/sendgeofencealarm', [
+                                'msg' => $aisData->vessel->vessel_name . ' Inside ' . $value['geofence_name'] . ' Geofence'
+                            ]);
+                        }
+                        ReportGeofence::updateOrCreate(
+                            [
+                                'ais_data_position_id' => $aisData->id,
+                            ],
+                            [
+                                'event_id' => 9,
+                                'geofence_id' => $value['id'],
+                                'mmsi' => $aisData->vessel->mmsi,
+                                'in' => Carbon::parse($aisData->timestamp)
+                            ]
+                        );
+                    } else {
+                        if ($value['type'] === 'out' || $value['type'] === 'both') {
+                            // Mail::to('support@pernika.com')->send(new GeofenceMail([
+                            //     'asset' => $asset,
+                            //     'geofence' => $value
+                            // ]));
+                            $washere = EventTracking::where('mmsi', $aisData->vessel->mmsi)
+                                ->where('event_id', 9)->where('geofence_id', $value['id'])->first();
+                            if ($washere) {
+                                EventTracking::create([
+                                    'event_id' => 10,
+                                    'ais_data_position_id' => $aisData->id,
+                                    'mmsi' => $aisData->vessel->mmsi,
+                                    'geofence_id' => $value['id']
+                                ]);
+                                Http::post('https://nr.monitormyvessel.com/sendgeofencealarm', [
+                                    'msg' => $aisData->vessel->vessel_name . ' Outside ' . $value['geofence_name'] . ' Geofence'
+                                ]);
+                            }
+                        }
+                        $washere = EventTracking::where('mmsi', $aisData->vessel->mmsi)
+                            ->where('event_id', 9)->where('geofence_id', $value['id'])->first();
+                        if ($washere) {
+                            $existingReport = ReportGeofence::where('mmsi', $aisData->vessel->mmsi)
+                                ->where('geofence_id', $value['id'])
+                                ->whereNull('out')
+                                ->whereNotNull('in')
+                                ->first();
+
+                            if ($existingReport) {
+                                $existingReport->update([
+                                    'out' => Carbon::parse($aisData->timestamp),
+                                    'total_time' => $existingReport->in->diffInMinutes($aisData->timestamp)
+                                ]);
+                            }
+                        }
+                    }
+                } else {
+                    // Handle other cases
+                    $isInside = [];
                 }
             }
-        } catch (\Exception $e) {
         }
+        // } catch (\Exception $e) {
+        // }
 
         return response()->json([
             'aisData' => $aisData,
