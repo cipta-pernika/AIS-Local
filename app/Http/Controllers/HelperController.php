@@ -381,17 +381,23 @@ class HelperController extends Controller
                                 'msg' => $aisData->vessel->vessel_name . ' Inside ' . $value['geofence_name'] . ' Geofence'
                             ]);
                         }
-                        ReportGeofence::updateOrCreate(
-                            [
-                                'ais_data_position_id' => $aisData->id,
-                            ],
-                            [
-                                'event_id' => 9,
-                                'geofence_id' => $value['id'],
-                                'mmsi' => $aisData->vessel->mmsi,
-                                'in' => Carbon::parse($aisData->timestamp)
-                            ]
-                        );
+                        $existingReport = ReportGeofence::where('geofence_id', $value['id'])
+                            ->where('mmsi', $aisData->vessel->mmsi)
+                            ->orderBy('in', 'desc')
+                            ->first();
+                        if (!$existingReport || $existingReport->in->diffInHours(Carbon::parse($aisData->timestamp)) > 5) {
+                            ReportGeofence::updateOrCreate(
+                                [
+                                    'ais_data_position_id' => $aisData->id,
+                                ],
+                                [
+                                    'event_id' => 9,
+                                    'geofence_id' => $value['id'],
+                                    'mmsi' => $aisData->vessel->mmsi,
+                                    'in' => Carbon::parse($aisData->timestamp)
+                                ]
+                            );
+                        }
                     } else {
                         if ($value['type'] === 'out' || $value['type'] === 'both') {
                             // Mail::to('support@pernika.com')->send(new GeofenceMail([
@@ -454,17 +460,23 @@ class HelperController extends Controller
                                 'msg' => $aisData->vessel->vessel_name . ' Inside ' . $value['geofence_name'] . ' Geofence'
                             ]);
                         }
-                        ReportGeofence::updateOrCreate(
-                            [
-                                'ais_data_position_id' => $aisData->id,
-                            ],
-                            [
-                                'event_id' => 9,
-                                'geofence_id' => $value['id'],
-                                'mmsi' => $aisData->vessel->mmsi,
-                                'in' => Carbon::parse($aisData->timestamp)
-                            ]
-                        );
+                        $existingReport = ReportGeofence::where('geofence_id', $value['id'])
+                            ->where('mmsi', $aisData->vessel->mmsi)
+                            ->orderBy('in', 'desc')
+                            ->first();
+                        if (!$existingReport || $existingReport->in->diffInHours(Carbon::parse($aisData->timestamp)) > 5) {
+                            ReportGeofence::updateOrCreate(
+                                [
+                                    'ais_data_position_id' => $aisData->id,
+                                ],
+                                [
+                                    'event_id' => 9,
+                                    'geofence_id' => $value['id'],
+                                    'mmsi' => $aisData->vessel->mmsi,
+                                    'in' => Carbon::parse($aisData->timestamp)
+                                ]
+                            );
+                        }
                     } else {
                         if ($value['type'] === 'out' || $value['type'] === 'both') {
                             // Mail::to('support@pernika.com')->send(new GeofenceMail([
