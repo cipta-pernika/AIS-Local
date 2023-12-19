@@ -56,7 +56,8 @@ class outgeofence extends Command
 
                     if ($existingReport) {
                         $existingReport->update([
-                            'out' => Carbon::parse($ais_data->timestamp)
+                            'out' => Carbon::now(),
+                            'total_time' => $existingReport->in->diffInMinutes(Carbon::now())
                         ]);
                     }
                 }
