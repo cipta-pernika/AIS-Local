@@ -53,10 +53,7 @@ class ReportGeofenceResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('aisDataPosition.vessel.vessel_name')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('aisDataPosition.id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('geofence.id')
+                Tables\Columns\TextColumn::make('geofence.name')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('in')
