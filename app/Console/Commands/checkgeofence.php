@@ -82,12 +82,15 @@ class checkgeofence extends Command
                                 ->where('created_at', '>', now()->subMinutes(15))
                                 ->first();
                             if (!$existingEvent) {
-                                EventTracking::create([
-                                    'event_id' => 10,
-                                    'ais_data_position_id' => $ais_data->id,
-                                    'mmsi' => $ais_data->vessel->mmsi,
-                                    'geofence_id' => $geofence->id
-                                ]);
+                                $washere = EventTracking::where('mmsi', $ais_data->vessel->mmsi)->where('event_id', 9)->first();
+                                if ($washere) {
+                                    EventTracking::create([
+                                        'event_id' => 10,
+                                        'ais_data_position_id' => $ais_data->id,
+                                        'mmsi' => $ais_data->vessel->mmsi,
+                                        'geofence_id' => $geofence->id
+                                    ]);
+                                }
                             }
                         }
                     }
@@ -127,16 +130,18 @@ class checkgeofence extends Command
                                 ->where('created_at', '>', now()->subMinutes(15))
                                 ->first();
                             if (!$existingEvent) {
-
-                                EventTracking::create([
-                                    'event_id' => 10,
-                                    'ais_data_position_id' => $ais_data->id,
-                                    'mmsi' => $ais_data->vessel->mmsi,
-                                    'geofence_id' => $geofence->id
-                                ]);
-                                Http::post('https://nr.monitormyvessel.com/sendgeofencealarm', [
-                                    'msg' => $ais_data->vessel->vessel_name . ' Outside ' . $geofence->geofence_name . ' Geofence'
-                                ]);
+                                $washere = EventTracking::where('mmsi', $ais_data->vessel->mmsi)->where('event_id', 9)->first();
+                                if ($washere) {
+                                    EventTracking::create([
+                                        'event_id' => 10,
+                                        'ais_data_position_id' => $ais_data->id,
+                                        'mmsi' => $ais_data->vessel->mmsi,
+                                        'geofence_id' => $geofence->id
+                                    ]);
+                                    Http::post('https://nr.monitormyvessel.com/sendgeofencealarm', [
+                                        'msg' => $ais_data->vessel->vessel_name . ' Outside ' . $geofence->geofence_name . ' Geofence'
+                                    ]);
+                                }
                             }
                         }
                     }
