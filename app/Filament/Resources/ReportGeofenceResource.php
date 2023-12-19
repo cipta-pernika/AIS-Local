@@ -45,15 +45,12 @@ class ReportGeofenceResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('event.name')
-                    ->numeric()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('aisDataPosition.vessel.mmsi')
                     ->label('MMSI')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('aisDataPosition.vessel.vessel_name')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('geofence.name')
+                Tables\Columns\TextColumn::make('geofence.geofence_name')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('in')
