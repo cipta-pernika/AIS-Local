@@ -60,11 +60,8 @@ class AisDataPositionResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('sensor_data_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('vessel_id')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('vessel.mmsi')
+                    ->label('MMSI')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('latitude')
                     ->numeric()
