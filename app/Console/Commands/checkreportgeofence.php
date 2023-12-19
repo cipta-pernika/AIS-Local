@@ -53,9 +53,9 @@ class checkreportgeofence extends Command
                 $isInside = $this->isInsidePolygon($aisDatas, $geoParse, $geofence);
             }
 
-            if ($isInside && ($geofence->type === 'in' || $geofence->type === 'both')) {
+            if ($isInside) {
                 $this->createReportGeofence($aisDatas, $geofence, 'in');
-            } elseif (!$isInside && ($geofence->type === 'out' || $geofence->type === 'both')) {
+            } elseif (!$isInside) {
                 $this->createReportGeofence($aisDatas, $geofence, 'out');
             }
         }
