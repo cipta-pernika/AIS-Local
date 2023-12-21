@@ -30,7 +30,7 @@ class AppServiceProvider extends ServiceProvider
         Filament::serving(function () {
             Filament::registerNavigationItems([
                 NavigationItem::make('Maps')
-                    ->url(env('APP_ENV_URL') === 'local' ? 'http://localhost:3005' : 'https://coastal.cakrawala.id')
+                    ->url(env('APP_ENV_URL') === 'local' ? 'http://localhost:3005' : 'https://sopbuntutksopbjm.com')
                     ->icon('heroicon-o-map'),
                 NavigationItem::make('Performance Monitoring')
                     ->url('/pulse')
