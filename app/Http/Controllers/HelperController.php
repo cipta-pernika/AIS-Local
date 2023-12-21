@@ -250,8 +250,8 @@ class HelperController extends Controller
     public function aisdata()
     {
         $url = app()->isLocal()
-            ? 'http://localhost:8000/sendgeofencealarm'
-            : 'https://nr.monitormyvessel.com/sendgeofencealarm';
+            ? 'http://localhost:8000/sendgeofencealarmksop'
+            : 'https://nr.monitormyvessel.com/sendgeofencealarmksop';
 
         if (empty(request()->source)) {
             return response()->json([
