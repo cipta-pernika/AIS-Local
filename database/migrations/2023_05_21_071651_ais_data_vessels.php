@@ -29,6 +29,7 @@ return new class extends Migration
             $table->timestamp('reported_eta')->nullable();
             $table->timestamps();
 
+            $table->index('id');
             $table->index('mmsi');
         });
     }
