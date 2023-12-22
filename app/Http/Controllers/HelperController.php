@@ -678,7 +678,7 @@ class HelperController extends Controller
             ->orderBy('created_at', 'DESC')
             ->groupBy('vessel_id')
             ->whereBetween('created_at', [now()->subMinutes(10), now()])
-            ->limit(10)
+            ->limit(100)
             ->get();
 
         return response()->json([
