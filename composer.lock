@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c93c2f03cbfe83b7b8c845f6962368d2",
+    "content-hash": "0ad3eb5ef3354d2e97092ba49614dd7a",
     "packages": [
         {
             "name": "alperenersoy/filament-export",
@@ -13423,6 +13423,7 @@
     "aliases": [],
     "minimum-stability": "beta",
     "stability-flags": {
+        "alperenersoy/filament-export": 10,
         "laravel/pulse": 10
     },
     "prefer-stable": true,
