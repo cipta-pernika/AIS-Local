@@ -23,7 +23,7 @@ return new class extends Migration
             $table->unsignedSmallInteger('heading')->nullable();
             $table->string('navigation_status')->nullable();
             $table->integer('turning_rate')->nullable();
-            $table->unsignedTinyInteger('turning_direction')->nullable();
+            $table->integer('turning_direction')->nullable();
             $table->timestamp('timestamp');
             $table->decimal('distance', 8, 2)->nullable(); //distance from sensor
             $table->tinyInteger('is_inside_geofence')->default(0);
