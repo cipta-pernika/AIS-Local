@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Location;
 use App\Models\LocationType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class LocationController extends Controller
 {
@@ -60,9 +61,22 @@ class LocationController extends Controller
 
     public function getlocation()
     {
-        $locations = Location::with('locationType')
-            ->select('id', 'name', 'latitude', 'longitude', 'location_type_id')
-            ->get();
+        // Define a unique cache key for this query
+        $cacheKey = 'locations_cache';
+
+        // Check if the result is already in the cache
+        if (Cache::has($cacheKey)) {
+            // If cached, return the cached result
+            $locations = Cache::get($cacheKey);
+        } else {
+            // If not cached, perform the query and store the result in the cache
+            $locations = Location::with('locationType')
+                ->select('id', 'name', 'latitude', 'longitude', 'location_type_id')
+                ->get();
+
+            // Cache the result for 24 hours (adjust the duration as needed)
+            Cache::put($cacheKey, $locations, 60 * 24);
+        }
 
         return response()->json([
             'success' => true,
