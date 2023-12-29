@@ -22,6 +22,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
@@ -36,8 +37,24 @@ class HelperController extends Controller
 {
     public function eventtrackings()
     {
-        $event = EventTracking::where('event_id', 9)
-            ->orderBy('created_at', 'DESC')->with('aisDataPosition', 'aisDataPosition.vessel', 'geofence')->limit(50)->get();
+        // Define a unique cache key for this query
+        $cacheKey = 'event_trackings_cache';
+
+        // Check if the result is already in the cache
+        if (Cache::has($cacheKey)) {
+            // If cached, return the cached result
+            $event = Cache::get($cacheKey);
+        } else {
+            // If not cached, perform the query and store the result in the cache
+            $event = EventTracking::where('event_id', 9)
+                ->orderBy('created_at', 'DESC')
+                ->with('aisDataPosition', 'aisDataPosition.vessel', 'geofence')
+                ->limit(50)
+                ->get();
+
+            // Cache the result for 60 minutes (you can adjust the duration)
+            Cache::put($cacheKey, $event, 60);
+        }
 
         return response()->json([
             'success' => true,
@@ -56,20 +73,45 @@ class HelperController extends Controller
 
     public function dailyreport()
     {
-        $dateFrom = Carbon::parse(request('date_from'));
-        $dateTo = Carbon::parse(request('date_to'))->endOfDay();
+        // Create a unique cache key based on the date range
+        $cacheKey = 'dailyreport_' . request('date_from') . '_' . request('date_to');
 
-        $jumlahkapal = AisDataVessel::whereBetween('updated_at', [$dateFrom, $dateTo])->count();
-        $jumlahpesawat = AdsbDataPosition::whereBetween('updated_at', [$dateFrom, $dateTo])->count();
+        // Attempt to retrieve the data from the cache
+        $cachedData = Cache::get($cacheKey);
 
-        $jumlahkapalByType = AisDataVessel::select('vessel_type', DB::raw('count(*) as count'))
-            ->whereBetween('updated_at', [$dateFrom, $dateTo])
-            ->groupBy('vessel_type')
-            ->get();
+        if (!$cachedData) {
+            // If not cached, fetch and calculate the data
+            $dateFrom = Carbon::parse(request('date_from'));
+            $dateTo = Carbon::parse(request('date_to'))->endOfDay();
 
-        $jumlahradardata = RadarData::whereBetween('timestamp', [$dateFrom, $dateTo])->count();
+            $jumlahkapal = AisDataVessel::whereBetween('updated_at', [$dateFrom, $dateTo])->count();
+            $jumlahpesawat = AdsbDataPosition::whereBetween('updated_at', [$dateFrom, $dateTo])->count();
 
-        $radarImageUrl = Storage::disk('public')->url('radar/radar.png');
+            $jumlahkapalByType = AisDataVessel::select('vessel_type', DB::raw('count(*) as count'))
+                ->whereBetween('updated_at', [$dateFrom, $dateTo])
+                ->groupBy('vessel_type')
+                ->get();
+
+            $jumlahradardata = RadarData::whereBetween('timestamp', [$dateFrom, $dateTo])->count();
+
+            $radarImageUrl = Storage::disk('public')->url('radar/radar.png');
+
+            // Store the calculated data in the cache for 24 hours
+            Cache::put($cacheKey, [
+                'jumlahkapal' => $jumlahkapal,
+                'jumlahpesawat' => $jumlahpesawat,
+                'jumlahkapal_by_type' => $jumlahkapalByType,
+                'jumlahradardata' => $jumlahradardata,
+                'radar_image_url' => $radarImageUrl,
+            ], 24 * 60); // Cache for 24 hours
+        } else {
+            // Extract the data from the cached array
+            $jumlahkapal = $cachedData['jumlahkapal'];
+            $jumlahpesawat = $cachedData['jumlahpesawat'];
+            $jumlahkapalByType = $cachedData['jumlahkapal_by_type'];
+            $jumlahradardata = $cachedData['jumlahradardata'];
+            $radarImageUrl = $cachedData['radar_image_url'];
+        }
 
         return response()->json([
             'success' => true,
@@ -646,11 +688,24 @@ class HelperController extends Controller
 
     public function aisdataunique()
     {
-        $aisData = AisDataPosition::with('vessel', 'sensorData.sensor.datalogger')
-            ->orderBy('created_at', 'DESC')
-            ->groupBy('vessel_id')
-            ->whereBetween('created_at', [now()->subMinutes(10), now()])
-            ->get();
+        // Define a unique cache key for this query
+        $cacheKey = 'ais_data_unique_cache';
+
+        // Check if the result is already in the cache
+        if (Cache::has($cacheKey)) {
+            // If cached, return the cached result
+            $aisData = Cache::get($cacheKey);
+        } else {
+            // If not cached, perform the query and store the result in the cache
+            $aisData = AisDataPosition::with('vessel', 'sensorData.sensor.datalogger')
+                ->orderBy('created_at', 'DESC')
+                ->groupBy('vessel_id')
+                ->whereBetween('created_at', [now()->subMinutes(10), now()])
+                ->get();
+
+            // Cache the result for 10 minutes (adjust the duration as needed)
+            Cache::put($cacheKey, $aisData, 10);
+        }
 
         return response()->json([
             'success' => true,
@@ -689,24 +744,37 @@ class HelperController extends Controller
 
     public function aisdatalist()
     {
-        $aisData = AisDataPosition::with(['vessel', 'sensorData.sensor.datalogger'])
-            ->orderBy('created_at', 'DESC')
-            ->select('vessel_id', 'latitude', 'longitude', 'speed', 'course', 'heading', 'navigation_status', 'timestamp', 'id')
-            ->get()
-            ->groupBy('vessel_id')
-            ->map(function ($groupedData) {
-                $firstData = $groupedData->first();
-                $vesselData = $firstData->vessel;
+        // Create a descriptive cache key
+        $cacheKey = 'aisdatalist_grouped_vessels';
 
-                return array_merge(
-                    $vesselData->only(['mmsi', 'imo', 'vessel_name']),
-                    $firstData->only(['latitude', 'longitude', 'speed', 'course', 'heading', 'navigation_status', 'timestamp', 'id'])
-                );
-            })
-            ->values() // Reset the keys and convert back to a simple array.
-            ->toArray();
+        // Attempt to retrieve data from the cache
+        $cachedData = Cache::get($cacheKey);
 
-        // Now $aisData is an array of arrays, each representing the properties of a vessel.
+        if (!$cachedData) {
+            // If not cached, fetch and process the data
+            $aisData = AisDataPosition::with(['vessel', 'sensorData.sensor.datalogger'])
+                ->orderBy('created_at', 'DESC')
+                ->select('vessel_id', 'latitude', 'longitude', 'speed', 'course', 'heading', 'navigation_status', 'timestamp', 'id')
+                ->get()
+                ->groupBy('vessel_id')
+                ->map(function ($groupedData) {
+                    $firstData = $groupedData->first();
+                    $vesselData = $firstData->vessel;
+
+                    return array_merge(
+                        $vesselData->only(['mmsi', 'imo', 'vessel_name']),
+                        $firstData->only(['latitude', 'longitude', 'speed', 'course', 'heading', 'navigation_status', 'timestamp', 'id'])
+                    );
+                })
+                ->values()
+                ->toArray();
+
+            // Store the processed data in the cache for a suitable duration
+            Cache::put($cacheKey, $aisData, 15); // Cache for 15 minutes
+        } else {
+            // Data is already cached
+            $aisData = $cachedData;
+        }
 
         return response()->json([
             'success' => true,
@@ -741,19 +809,36 @@ class HelperController extends Controller
 
     public function livefeed()
     {
-        $aisData = AisDataPosition::with('vessel')
-            ->groupBy('vessel_id')
-            ->limit(10)
-            ->orderBy('created_at', 'DESC')
-            // ->whereBetween('created_at', [now()->subHours(12), now()])
-            ->get();
+        // Create a meaningful cache key
+        $cacheKey = 'livefeed_data';
 
-        $adsb = AdsbDataPosition::with('aircraft')
-            ->groupBy('aircraft_id')
-            ->limit(10)
-            ->orderBy('created_at', 'DESC')
-            // ->whereBetween('created_at', [now()->subHours(12), now()])
-            ->get();
+        // Attempt to retrieve data from the cache
+        $cachedData = Cache::get($cacheKey);
+
+        if (!$cachedData) {
+            // If not cached, fetch the data
+            $aisData = AisDataPosition::with('vessel')
+                ->groupBy('vessel_id')
+                ->limit(10)
+                ->orderBy('created_at', 'DESC')
+                ->get();
+
+            $adsb = AdsbDataPosition::with('aircraft')
+                ->groupBy('aircraft_id')
+                ->limit(10)
+                ->orderBy('created_at', 'DESC')
+                ->get();
+
+            // Store the data in the cache for a short duration
+            Cache::put($cacheKey, [
+                'aisData' => $aisData,
+                'adsb' => $adsb,
+            ], 5); // Cache for 5 minutes
+        } else {
+            // Extract data from the cached array
+            $aisData = $cachedData['aisData'];
+            $adsb = $cachedData['adsb'];
+        }
 
         return response()->json([
             'success' => true,
@@ -841,11 +926,24 @@ class HelperController extends Controller
 
     public function radardataupdate()
     {
-        $aisData = RadarData::with('sensorData.sensor.datalogger')
-            ->groupBy('target_id')
-            ->whereBetween('created_at', [now()->subMinutes(3), now()])
-            ->limit(10)
-            ->get();
+        // Define a unique cache key for this query
+        $cacheKey = 'radar_data_update_cache';
+
+        // Check if the result is already in the cache
+        if (Cache::has($cacheKey)) {
+            // If cached, return the cached result
+            $aisData = Cache::get($cacheKey);
+        } else {
+            // If not cached, perform the query and store the result in the cache
+            $aisData = RadarData::with('sensorData.sensor.datalogger')
+                ->groupBy('target_id')
+                ->whereBetween('created_at', [now()->subMinutes(3), now()])
+                ->limit(10)
+                ->get();
+
+            // Cache the result for 5 minutes (adjust the duration as needed)
+            Cache::put($cacheKey, $aisData, 5);
+        }
 
         return response()->json([
             'success' => true,

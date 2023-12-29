@@ -111,15 +111,23 @@ class GeofenceController extends Controller
 
     public function getgeofence()
     {
-        // $geo = Cache::remember('geofenceee', 120, function () {
-        //     return Geofence::join('geofence_bindings', 'geofence_bindings.geofence_id', 'geofences.id')
-        //         ->join('assets', 'geofence_bindings.asset_id', 'assets.id')
-        //         ->groupBy('geofences.id')
-        //         ->select(DB::raw('GROUP_CONCAT(DISTINCT assets.asset_name ORDER BY assets.id) AS assets_name'), 'geofences.type_geo', 'geofences.id', 'geometry', 'radius', 'type', 'geofence_name')
-        //         ->get();
-        // });
 
-        $geo =  Geofence::all();
+        // Create a descriptive cache key
+        $cacheKey = 'all_geofences';
+
+        // Attempt to retrieve data from the cache
+        $cachedData = Cache::get($cacheKey);
+
+        if (!$cachedData) {
+            // If not cached, fetch the data from the database
+            $geo = Geofence::all();
+
+            // Store the retrieved data in the cache
+            Cache::put($cacheKey, $geo, 60); // Cache for 60 minutes
+        } else {
+            // Data is already cached
+            $geo = $cachedData;
+        }
 
         return response()->json([
             'success' => true,
