@@ -57,7 +57,7 @@ class MapController extends Controller
 
         if (in_array('ais', $selectedSensors)) {
 
-            $aisTracks = AisDataPosition::orderBy('ais_data_positions.created_at', 'DESC')
+            $aisTracks = AisDataPosition::orderBy('ais_data_positions.created_at', 'ASC')
                 ->join('ais_data_vessels', 'ais_data_positions.vessel_id', 'ais_data_vessels.id')
                 ->select(
                     'ais_data_vessels.mmsi',
