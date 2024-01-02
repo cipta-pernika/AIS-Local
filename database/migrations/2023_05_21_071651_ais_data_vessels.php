@@ -27,6 +27,7 @@ return new class extends Migration
             $table->tinyInteger('out_of_range')->default(0);
             $table->integer('type_number')->nullable();
             $table->timestamp('reported_eta')->nullable();
+            $table->string('no_pkk')->nullable();
             $table->timestamps();
 
             $table->index('id');
