@@ -23,7 +23,15 @@ class IndentificationSeeder extends Seeder
         ]);
         Identification::create([
             'name' => 'Kapal Asing',
-            'desc' => '',
+            'desc' => 'Mengelola lalu lintas kapal asing dan lokal dengan memastikan kepatuhan terhadap peraturan dan prosedur pelabuhan.',
+        ]);
+        Identification::create([
+            'name' => 'Transhipment',
+            'desc' => 'Memantau dan mengelola proses transhipment (pemindahan kargo dari satu kapal ke kapal lain) yang mungkin terjadi di pelabuhan.',
+        ]);
+        Identification::create([
+            'name' => 'Bongkar Muat',
+            'desc' => 'Memastikan efisiensi dan keamanan proses bongkar muat kargo dari dan ke kapal.',
         ]);
     }
 }
