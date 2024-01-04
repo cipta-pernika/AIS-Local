@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\AisDataVessel;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 
@@ -32,8 +33,8 @@ class inaportnet extends Command
 
         // Set the API parameters
         $params = [
-            'bulan' => '01',
-            'tahun' => '2024',
+            'bulan' => Carbon::now()->format('m'), // Current month
+            'tahun' => Carbon::now()->format('Y'), // Current year
             'kode_pelabuhan' => 'IDBDJ',
         ];
 
