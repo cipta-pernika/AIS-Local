@@ -27,7 +27,25 @@ return new class extends Migration
             $table->tinyInteger('out_of_range')->default(0);
             $table->integer('type_number')->nullable();
             $table->timestamp('reported_eta')->nullable();
+
+            //data inaportnet
             $table->string('no_pkk')->nullable();
+            $table->string('jenis_layanan')->nullable();
+            $table->string('nama_negara')->nullable();
+            $table->string('tipe_kapal')->nullable();
+            $table->string('nama_perusahaan')->nullable();
+            $table->string('tgl_tiba')->nullable();
+            $table->string('tgl_brangkat')->nullable();
+            $table->string('bendera')->nullable();
+            $table->string('gt_kapal')->nullable();
+            $table->string('dwt')->nullable();
+            $table->string('nakhoda')->nullable();
+            $table->string('jenis_trayek')->nullable();
+            $table->string('pelabuhan_asal')->nullable();
+            $table->string('pelabuhan_tujuan')->nullable();
+            $table->string('lokasi_lambat_labuh')->nullable();
+            $table->string('nomor_spog')->nullable();
+
             $table->timestamps();
 
             $table->index('id');

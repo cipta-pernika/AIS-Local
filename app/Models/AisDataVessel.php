@@ -26,6 +26,22 @@ class AisDataVessel extends Model
         'dimension_to_port',
         'dimension_to_starboard',
         'type_number',
+        'no_pkk',
+        'jenis_layanan',
+        'nama_negara',
+        'tipe_kapal',
+        'nama_perusahaan',
+        'tgl_tiba',
+        'tgl_brangkat',
+        'bendera',
+        'gt_kapal',
+        'dwt',
+        'nakhoda',
+        'jenis_trayek',
+        'pelabuhan_asal',
+        'pelabuhan_tujuan',
+        'lokasi_lambat_labuh',
+        'nomor_spog',
     ];
 
     public function toSearchableArray()
