@@ -1,0 +1,24 @@
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\Pelabuhan;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
+
+class PelabuhanSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+        Pelabuhan::create([
+            'name' => 'Banjarmasin',
+            'un_locode' => 'IDBDJ',
+            'latitude' => -3.3265939,
+            'longitude' => 114.559263,
+            'address' => 'Jl. Barito Hilir Trisakti No. 6, Banjarmasin, Kalimantan Selatan - 70119'
+        ]);
+    }
+}

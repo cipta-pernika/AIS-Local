@@ -54,3 +54,5 @@ require __DIR__.'/auth.php';
 Route::resource('geofence-types', App\Http\Controllers\GeofenceTypeController::class);
 Route::resource('map-settings', App\Http\Controllers\MapSettingController::class);
 Route::resource('report-geofences', App\Http\Controllers\ReportGeofenceController::class);
+Route::resource('identifications', App\Http\Controllers\IdentificationController::class);
+Route::resource('pelabuhans', App\Http\Controllers\PelabuhanController::class);

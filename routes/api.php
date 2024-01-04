@@ -144,3 +144,9 @@ Route::resource('map-settings', App\Http\Controllers\API\MapSettingAPIController
 
 Route::resource('report-geofences', App\Http\Controllers\API\ReportGeofenceAPIController::class)
     ->except(['create', 'edit']);
+
+Route::resource('identifications', App\Http\Controllers\API\IdentificationAPIController::class)
+    ->except(['create', 'edit']);
+
+Route::resource('pelabuhans', App\Http\Controllers\API\PelabuhanAPIController::class)
+    ->except(['create', 'edit']);

@@ -1,1 +1,1 @@
-php artisan infyom:api_scaffold ReportGeofence --skip=views,menu,tests --fromTable --table=report_geofences
+php artisan infyom:api_scaffold Pelabuhan --skip=views,menu,tests --fromTable --table=pelabuhans

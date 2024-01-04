@@ -29,6 +29,8 @@ class DatabaseSeeder extends Seeder
             PermissionsTableSeeder::class,
             RolesTableSeeder::class,
             RoleHasPermissionsTableSeeder::class,
+            PelabuhanSeeder::class,
+            IndentificationSeeder::class,
             //paling akhir
             AdsbDataAircraftSeeder::class
         ]);
