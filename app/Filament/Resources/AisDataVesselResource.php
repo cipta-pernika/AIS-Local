@@ -68,7 +68,7 @@ class AisDataVesselResource extends Resource implements HasShieldPermissions
                 Tables\Columns\TextColumn::make('dimension_to_port'),
                 Tables\Columns\TextColumn::make('dimension_to_starboard'),
                 Tables\Columns\TextColumn::make('type_number'),
-                Tables\Columns\TextColumn::make('no_pkk'),
+                Tables\Columns\TextColumn::make('no_pkk')->sortable(),
             Tables\Columns\TextColumn::make('jenis_layanan')->sortable(),
             Tables\Columns\TextColumn::make('nama_negara')->sortable(),
             Tables\Columns\TextColumn::make('tipe_kapal')->sortable(),
