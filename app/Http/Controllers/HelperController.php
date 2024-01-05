@@ -784,15 +784,17 @@ class HelperController extends Controller
 
     public function adsbdatalist()
     {
-        $aisData = AdsbDataPosition::with('aircraft', 'sensorData.sensor.datalogger')
-            ->orderBy('created_at', 'DESC')
-            ->limit(200)
-            ->get();
-
-        return response()->json([
-            'success' => true,
-            'message' => $aisData,
-        ], 201);
+        return Cache::remember('adsbdatalist_cache', now()->addMinutes(60), function () {
+            $aisData = AdsbDataPosition::with('aircraft', 'sensorData.sensor.datalogger')
+                ->orderBy('created_at', 'DESC')
+                ->limit(200)
+                ->get();
+    
+            return response()->json([
+                'success' => true,
+                'message' => $aisData,
+            ], 201);
+        });
     }
 
     public function radardatalist()
