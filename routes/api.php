@@ -9,6 +9,7 @@ use App\Http\Controllers\GeofenceController;
 use App\Http\Controllers\HelperController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\SensorController;
+use App\Http\Controllers\SyncController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [AuthController::class, 'login']);
@@ -150,3 +151,6 @@ Route::resource('identifications', App\Http\Controllers\API\IdentificationAPICon
 
 Route::resource('pelabuhans', App\Http\Controllers\API\PelabuhanAPIController::class)
     ->except(['create', 'edit']);
+
+
+Route::get('inaportnet', [SyncController::class, 'inaportnet']);
