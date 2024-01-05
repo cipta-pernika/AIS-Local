@@ -68,6 +68,22 @@ class AisDataVesselResource extends Resource implements HasShieldPermissions
                 Tables\Columns\TextColumn::make('dimension_to_port'),
                 Tables\Columns\TextColumn::make('dimension_to_starboard'),
                 Tables\Columns\TextColumn::make('type_number'),
+                Tables\Columns\TextColumn::make('no_pkk'),
+            Tables\Columns\TextColumn::make('jenis_layanan')->sortable(),
+            Tables\Columns\TextColumn::make('nama_negara')->sortable(),
+            Tables\Columns\TextColumn::make('tipe_kapal')->sortable(),
+            Tables\Columns\TextColumn::make('nama_perusahaan')->sortable(),
+            Tables\Columns\TextColumn::make('tgl_tiba')->sortable(),
+            Tables\Columns\TextColumn::make('tgl_brangkat')->sortable(),
+            Tables\Columns\TextColumn::make('bendera'),
+            Tables\Columns\TextColumn::make('gt_kapal')->sortable(),
+            Tables\Columns\TextColumn::make('dwt'),
+            Tables\Columns\TextColumn::make('nakhoda'),
+            Tables\Columns\TextColumn::make('jenis_trayek'),
+            Tables\Columns\TextColumn::make('pelabuhan_asal')->sortable(),
+            Tables\Columns\TextColumn::make('pelabuhan_tujuan'),
+            Tables\Columns\TextColumn::make('lokasi_lambat_labuh'),
+            Tables\Columns\TextColumn::make('nomor_spog'),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('vessel_type')
