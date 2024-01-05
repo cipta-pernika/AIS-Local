@@ -68,4 +68,9 @@ class SyncController extends Controller
             'message' => $response,
         ], 201);
     }
+
+    public function impt()
+    {
+        
+    }
 }
