@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('inaportnet_bongkar_muats', function (Blueprint $table) {
             $table->id();
             $table->integer('id_rkbm');
+            $table->integer('ais_data_vessel_id')->nullable();
             $table->string('pbm_kode')->nullable();
             $table->string('no_pkk')->nullable();
             $table->string('no_surat_keluar')->nullable();

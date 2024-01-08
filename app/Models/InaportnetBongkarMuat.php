@@ -34,7 +34,8 @@ class InaportnetBongkarMuat extends Model
         'tipe_kapal',
         'pbm',
         'bongkar',
-        'muat'
+        'muat',
+        'ais_data_vessel_id'
     ];
 
     protected $casts = [
