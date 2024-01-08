@@ -1,10 +1,8 @@
-import 'leaflet-ais-tracksymbol-by-akora/dist/leaflet-ais-tracksymbol-by-akora.min.css';
-import 'leaflet-ais-tracksymbol-by-akora';
-
 export default function leafletAISMaps() {
     let markerClusterEnabled = false;
     let markers;
     let map;
+    let trackPlayback;
     return {
         init: async function () {
             map = L.map(this.$refs.map.id).setView(
@@ -52,7 +50,7 @@ export default function leafletAISMaps() {
             // Fetch AIS data from the API and create markers
             try {
                 const response = await axios.get(
-                    "https://ksop.cakrawala.id/api/aisdataunique"
+                    "https://lumensopbuntut.cakrawala.id/api/aisdataunique"
                 );
                 const aisData = response.data.message;
 
@@ -61,6 +59,38 @@ export default function leafletAISMaps() {
 
                 // Add the markers or marker cluster to the map
                 map.addLayer(markers);
+            } catch (error) {
+                console.error("Error fetching AIS data:", error);
+            }
+
+            // Fetch AIS data from the API and create markers
+            try {
+                const data = {
+                    mmsi: "",
+                    dateFrom: "2024-01-03",
+                    dateTo: "2024-01-04",
+                    sensor: ["ais"],
+                };
+                const playbackResponse = await axios.post(
+                    "https://backend.sopbuntutksopbjm.com/api/playback"
+                , data);
+                const playbackData = playbackResponse.data.message.ais[0].playback;
+
+                // Create a TrackPlayback instance
+                trackPlayback = L.trackplayback(playbackData, map, {
+                    trackPointOptions: {
+                        /* Additional options for track points */
+                    },
+                    markerOptions: {
+                        /* Additional options for playback markers */
+                    },
+                });
+
+                const trackplaybackControl = L.trackplaybackcontrol(trackPlayback);
+
+    trackplaybackControl.addTo(map);
+
+                trackPlayback.start();
             } catch (error) {
                 console.error("Error fetching AIS data:", error);
             }
@@ -99,7 +129,9 @@ export default function leafletAISMaps() {
                 id: "Content",
                 tab: '<i class="fa fa-info"></i>',
                 pane: `
-                       <button id="toggleMarkerCluster">Toggle Marker Cluster</button>`,
+                       <button id="toggleMarkerCluster">Toggle Marker Cluster</button>
+                       <button id="startPlayback">Start Playback</button>
+        <button id="stopPlayback">Stop Playback</button>`,
                 title: "Sidebar",
                 position: "top",
             });
@@ -131,6 +163,20 @@ export default function leafletAISMaps() {
                     } catch (error) {
                         console.error("Error fetching AIS data:", error);
                     }
+                });
+
+            // Event handler to start playback
+            document
+                .getElementById("startPlayback")
+                .addEventListener("click", function () {
+                    trackPlayback.start();
+                });
+
+            // Event handler to stop playback
+            document
+                .getElementById("stopPlayback")
+                .addEventListener("click", function () {
+                    trackPlayback.stop();
                 });
         },
     };

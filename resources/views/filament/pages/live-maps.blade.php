@@ -58,5 +58,10 @@ https://cdn.jsdelivr.net/npm/leaflet-pulse-icon@0.1.0/src/L.Icon.Pulse.min.css
 <link rel="stylesheet" href="https://unpkg.com/leaflet-ais-tracksymbol-by-akora@2.0.1/dist/leaflet-ais-tracksymbol-by-akora.css" />
 <script src="https://unpkg.com/leaflet-ais-tracksymbol-by-akora@2.0.1/dist/leaflet-ais-tracksymbol-by-akora.js"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/leaflet-plugin-trackplayback@1.0.5/dist/control.trackplayback.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/leaflet-plugin-trackplayback@1.0.5/dist/leaflet.trackplayback.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-plugin-trackplayback@1.0.5/dist/control.playback.min.css">
 @endpush
 </x-filament-panels::page>
