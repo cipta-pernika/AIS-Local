@@ -56,3 +56,4 @@ Route::resource('map-settings', App\Http\Controllers\MapSettingController::class
 Route::resource('report-geofences', App\Http\Controllers\ReportGeofenceController::class);
 Route::resource('identifications', App\Http\Controllers\IdentificationController::class);
 Route::resource('pelabuhans', App\Http\Controllers\PelabuhanController::class);
+Route::resource('inaportnet-bongkar-muats', App\Http\Controllers\InaportnetBongkarMuatController::class);

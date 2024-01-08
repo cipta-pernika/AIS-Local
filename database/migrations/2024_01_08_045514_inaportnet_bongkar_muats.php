@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ais_data_vessels', function (Blueprint $table) {
+        Schema::create('inaportnet_bongkar_muats', function (Blueprint $table) {
             $table->id();
             $table->integer('id_rkbm');
             $table->string('pbm_kode')->nullable();
@@ -30,44 +30,20 @@ return new class extends Migration
             $table->integer('gt_kapal')->nullable();
             $table->integer('panjang_kapal')->nullable();
             $table->integer('dwt')->nullable();
-
-
-            $table->string('vessel_name')->nullable();
-            $table->string('vessel_type')->nullable();
-            $table->string('mmsi')->unique();
-            $table->integer('imo')->nullable()->comment('ship id');
-            $table->string('callsign')->nullable();
-            $table->integer('draught')->nullable()->comment('Draught Reported (m)');
-            $table->string('dimension_to_bow')->nullable();
-            $table->string('dimension_to_stern')->nullable();
-            $table->string('dimension_to_port')->nullable();
-            $table->string('dimension_to_starboard')->nullable();
-            $table->string('reported_destination')->nullable();
-            $table->tinyInteger('out_of_range')->default(0);
-            $table->integer('type_number')->nullable();
-            $table->timestamp('reported_eta')->nullable();
-
-            //data inaportnet
-            $table->string('jenis_layanan')->nullable();
-            $table->string('nama_negara')->nullable();
-            $table->string('tipe_kapal')->nullable();
-            $table->string('nama_perusahaan')->nullable();
-            $table->string('tgl_tiba')->nullable();
-            $table->string('tgl_brangkat')->nullable();
+            $table->string('siupal_pemilik')->nullable();
+            $table->string('siupal_operator')->nullable();
             $table->string('bendera')->nullable();
-            $table->string('gt_kapal')->nullable();
-            $table->string('dwt')->nullable();
-            $table->string('nakhoda')->nullable();
-            $table->string('jenis_trayek')->nullable();
-            $table->string('pelabuhan_asal')->nullable();
-            $table->string('pelabuhan_tujuan')->nullable();
-            $table->string('lokasi_lambat_labuh')->nullable();
-            $table->string('nomor_spog')->nullable();
+            $table->string('nama_perusahaan')->nullable();
+            $table->string('nomor_produk')->nullable();
+            $table->string('tipe_kapal')->nullable();
+            $table->string('pbm')->nullable();
+            $table->longText('bongkar')->nullable();
+            $table->longText('muat')->nullable();
 
             $table->timestamps();
 
             $table->index('id');
-            $table->index('mmsi');
+            $table->index('no_pkk');
         });
     }
 
@@ -76,6 +52,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ais_data_vessels');
+        Schema::dropIfExists('inaportnet_bongkar_muats');
     }
 };

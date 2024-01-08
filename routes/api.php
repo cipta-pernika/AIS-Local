@@ -158,3 +158,6 @@ Route::get('impt', [SyncController::class, 'impt']);
 
 Route::resource('pelabuhans', App\Http\Controllers\API\PelabuhanAPIController::class)
     ->except(['create', 'edit']);
+
+Route::resource('inaportnet-bongkar-muats', App\Http\Controllers\API\InaportnetBongkarMuatAPIController::class)
+    ->except(['create', 'edit']);

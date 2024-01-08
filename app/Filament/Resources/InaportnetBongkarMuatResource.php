@@ -1,0 +1,177 @@
+<?php
+
+namespace App\Filament\Resources;
+
+use App\Filament\Resources\InaportnetBongkarMuatResource\Pages;
+use App\Filament\Resources\InaportnetBongkarMuatResource\RelationManagers;
+use App\Models\InaportnetBongkarMuat;
+use Filament\Forms;
+use Filament\Forms\Form;
+use Filament\Resources\Resource;
+use Filament\Tables;
+use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
+
+class InaportnetBongkarMuatResource extends Resource
+{
+    protected static ?string $model = InaportnetBongkarMuat::class;
+
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    protected static ?string $navigationGroup = 'Big Data';
+
+    public static function form(Form $form): Form
+    {
+        return $form
+            ->schema([
+                Forms\Components\TextInput::make('id_rkbm')
+                    ->required()
+                    ->numeric(),
+                Forms\Components\TextInput::make('pbm_kode')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('no_pkk')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('no_surat_keluar')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('kade')
+                    ->maxLength(255),
+                Forms\Components\DatePicker::make('rencana_bongkar'),
+                Forms\Components\DatePicker::make('rencana_muat'),
+                Forms\Components\DatePicker::make('mulai_bongkar'),
+                Forms\Components\DatePicker::make('mulai_muat'),
+                Forms\Components\DatePicker::make('selesai_bongkar'),
+                Forms\Components\DatePicker::make('selesai_muat'),
+                Forms\Components\TextInput::make('nomor_layanan_masuk')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('nomor_layanan_sps')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('nama_kapal')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('gt_kapal')
+                    ->numeric(),
+                Forms\Components\TextInput::make('panjang_kapal')
+                    ->numeric(),
+                Forms\Components\TextInput::make('dwt')
+                    ->numeric(),
+                Forms\Components\TextInput::make('siupal_pemilik')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('siupal_operator')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('bendera')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('nama_perusahaan')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('nomor_produk')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('tipe_kapal')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('pbm')
+                    ->maxLength(255),
+                Forms\Components\Textarea::make('bongkar')
+                    ->columnSpanFull(),
+                Forms\Components\Textarea::make('muat')
+                    ->columnSpanFull(),
+            ]);
+    }
+
+    public static function table(Table $table): Table
+    {
+        return $table
+            ->columns([
+                Tables\Columns\TextColumn::make('id_rkbm')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('pbm_kode')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('no_pkk')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('no_surat_keluar')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('kade')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('rencana_bongkar')
+                    ->date()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('rencana_muat')
+                    ->date()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('mulai_bongkar')
+                    ->date()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('mulai_muat')
+                    ->date()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('selesai_bongkar')
+                    ->date()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('selesai_muat')
+                    ->date()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('nomor_layanan_masuk')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('nomor_layanan_sps')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('nama_kapal')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('gt_kapal')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('panjang_kapal')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('dwt')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('siupal_pemilik')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('siupal_operator')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('bendera')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('nama_perusahaan')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('nomor_produk')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('tipe_kapal')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('pbm')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+            ])
+            ->filters([
+                //
+            ])
+            ->actions([
+                Tables\Actions\EditAction::make(),
+            ])
+            ->bulkActions([
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make(),
+                ]),
+            ]);
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            //
+        ];
+    }
+
+    public static function getPages(): array
+    {
+        return [
+            'index' => Pages\ListInaportnetBongkarMuats::route('/'),
+            'create' => Pages\CreateInaportnetBongkarMuat::route('/create'),
+            'edit' => Pages\EditInaportnetBongkarMuat::route('/{record}/edit'),
+        ];
+    }
+}
