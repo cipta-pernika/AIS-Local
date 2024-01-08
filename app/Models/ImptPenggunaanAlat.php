@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ImptPenggunaanAlatBongkarMuat extends Model
+class ImptPenggunaanAlat extends Model
 {
-    public $table = 'impt_penggunaan_alat_bongkar_muats';
+    public $table = 'impt_penggunaan_alats';
 
     public $fillable = [
         'impt_source_id',

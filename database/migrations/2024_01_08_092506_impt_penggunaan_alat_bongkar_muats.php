@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('impt_penggunaan_alat_bongkar_muats', function (Blueprint $table) {
+        Schema::create('impt_penggunaan_alats', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('impt_source_id');
             $table->integer('ais_data_vessel_id')->nullable();
@@ -41,6 +41,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('impt_penggunaan_alat_bongkar_muats');
+        Schema::dropIfExists('impt_penggunaan_alats');
     }
 };

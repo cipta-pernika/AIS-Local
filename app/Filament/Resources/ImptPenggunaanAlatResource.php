@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ImptPenggunaanAlatBongkarMuatResource\Pages;
-use App\Filament\Resources\ImptPenggunaanAlatBongkarMuatResource\RelationManagers;
-use App\Models\ImptPenggunaanAlatBongkarMuat;
+use App\Filament\Resources\ImptPenggunaanAlatResource\Pages;
+use App\Filament\Resources\ImptPenggunaanAlatResource\RelationManagers;
+use App\Models\ImptPenggunaanAlat;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,9 +13,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class ImptPenggunaanAlatBongkarMuatResource extends Resource
+class ImptPenggunaanAlatResource extends Resource
 {
-    protected static ?string $model = ImptPenggunaanAlatBongkarMuat::class;
+    protected static ?string $model = ImptPenggunaanAlat::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -128,9 +128,9 @@ class ImptPenggunaanAlatBongkarMuatResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListImptPenggunaanAlatBongkarMuats::route('/'),
-            'create' => Pages\CreateImptPenggunaanAlatBongkarMuat::route('/create'),
-            'edit' => Pages\EditImptPenggunaanAlatBongkarMuat::route('/{record}/edit'),
+            'index' => Pages\ListImptPenggunaanAlats::route('/'),
+            'create' => Pages\CreateImptPenggunaanAlat::route('/create'),
+            'edit' => Pages\EditImptPenggunaanAlat::route('/{record}/edit'),
         ];
     }
 }
