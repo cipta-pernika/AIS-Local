@@ -155,3 +155,6 @@ Route::resource('pelabuhans', App\Http\Controllers\API\PelabuhanAPIController::c
 
 Route::get('inaportnet', [SyncController::class, 'inaportnet']);
 Route::get('impt', [SyncController::class, 'impt']);
+
+Route::resource('pelabuhans', App\Http\Controllers\API\PelabuhanAPIController::class)
+    ->except(['create', 'edit']);

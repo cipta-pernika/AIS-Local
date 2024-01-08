@@ -12,7 +12,19 @@ class PelabuhanRepository extends BaseRepository
         'un_locode',
         'latitude',
         'longitude',
-        'address'
+        'radius',
+        'address',
+        'penanggung_jawab',
+        'no_izin_pengoperasian',
+        'tgl_izin_pengoperasian',
+        'penerbit_izin_pengoperasian',
+        'no_perjanjian_sewa_perairan',
+        'tgl_sewa_perairan',
+        'luas_perairan',
+        'jasa_pengunaan_perairan',
+        'keterangan',
+        'masa_berlaku_izin_operasi',
+        'masa_berlaku_perjanjian_sewa_perairan'
     ];
 
     public function getFieldsSearchable(): array

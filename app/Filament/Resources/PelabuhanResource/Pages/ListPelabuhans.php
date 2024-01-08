@@ -10,8 +10,6 @@ class ListPelabuhans extends ListRecords
 {
     protected static string $resource = PelabuhanResource::class;
 
-    protected ?string $heading = 'Pelabuhan';
-
     protected function getHeaderActions(): array
     {
         return [
