@@ -164,3 +164,6 @@ Route::resource('inaportnet-bongkar-muats', App\Http\Controllers\API\InaportnetB
 
 Route::resource('inaportnet-pergerakan-kapals', App\Http\Controllers\API\InaportnetPergerakanKapalAPIController::class)
     ->except(['create', 'edit']);
+
+Route::resource('impt-pelayanan-kapals', App\Http\Controllers\API\ImptPelayananKapalAPIController::class)
+    ->except(['create', 'edit']);

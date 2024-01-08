@@ -1,1 +1,1 @@
-php artisan infyom:api_scaffold InaportnetPergerakanKapal --skip=views,menu,tests --fromTable --table=inaportnet_pergerakan_kapals
+php artisan infyom:api_scaffold ImptPelayananKapal --skip=views,menu,tests --fromTable --table=impt_pelayanan_kapals

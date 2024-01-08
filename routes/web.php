@@ -58,3 +58,4 @@ Route::resource('identifications', App\Http\Controllers\IdentificationController
 Route::resource('pelabuhans', App\Http\Controllers\PelabuhanController::class);
 Route::resource('inaportnet-bongkar-muats', App\Http\Controllers\InaportnetBongkarMuatController::class);
 Route::resource('inaportnet-pergerakan-kapals', App\Http\Controllers\InaportnetPergerakanKapalController::class);
+Route::resource('impt-pelayanan-kapals', App\Http\Controllers\ImptPelayananKapalController::class);
