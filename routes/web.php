@@ -59,3 +59,4 @@ Route::resource('pelabuhans', App\Http\Controllers\PelabuhanController::class);
 Route::resource('inaportnet-bongkar-muats', App\Http\Controllers\InaportnetBongkarMuatController::class);
 Route::resource('inaportnet-pergerakan-kapals', App\Http\Controllers\InaportnetPergerakanKapalController::class);
 Route::resource('impt-pelayanan-kapals', App\Http\Controllers\ImptPelayananKapalController::class);
+Route::resource('impt-penggunaan-alat-bongkar-muats', App\Http\Controllers\ImptPenggunaanAlatBongkarMuatController::class);
