@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('nama_negara')->nullable();
             $table->string('tipe_kapal')->nullable();
             $table->string('nama_perusahaan')->nullable();
-            $table->string('tgl_tiba')->nullable();
-            $table->string('tgl_brangkat')->nullable();
+            $table->timestamp('tgl_tiba')->nullable();
+            $table->timestamp('tgl_brangkat')->nullable();
             $table->string('bendera')->nullable();
             $table->integer('gt_kapal')->nullable();
             $table->integer('dwt')->nullable();
