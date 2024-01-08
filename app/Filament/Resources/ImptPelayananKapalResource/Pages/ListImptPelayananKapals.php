@@ -10,6 +10,8 @@ class ListImptPelayananKapals extends ListRecords
 {
     protected static string $resource = ImptPelayananKapalResource::class;
 
+    protected static ?string $title = 'IMPT Pelayanan Kapal';
+
     protected function getHeaderActions(): array
     {
         return [

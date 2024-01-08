@@ -10,10 +10,11 @@ class ListImptPenggunaanAlats extends ListRecords
 {
     protected static string $resource = ImptPenggunaanAlatResource::class;
 
+    protected static ?string $title = 'IMPT Penggunaan Alat Bongkar Muat';
+
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
         ];
     }
 }

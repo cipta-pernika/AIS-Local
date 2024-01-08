@@ -10,6 +10,8 @@ class ListInaportnetBongkarMuats extends ListRecords
 {
     protected static string $resource = InaportnetBongkarMuatResource::class;
 
+    protected static ?string $title = 'INAPORTNET Bongkar Muat';
+
     protected function getHeaderActions(): array
     {
         return [

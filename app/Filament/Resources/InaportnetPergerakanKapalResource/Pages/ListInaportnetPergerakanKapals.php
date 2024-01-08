@@ -10,6 +10,8 @@ class ListInaportnetPergerakanKapals extends ListRecords
 {
     protected static string $resource = InaportnetPergerakanKapalResource::class;
 
+    protected static ?string $title = 'INAPORTNET Pergerakan Kapal';
+
     protected function getHeaderActions(): array
     {
         return [
