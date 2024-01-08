@@ -19,6 +19,10 @@ class ImptPenggunaanAlatResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $navigationGroup = 'Big Data';
+
+    protected static ?string $navigationLabel = 'IMPT Penggunaan Alat Bongkar Muat';
+
     public static function form(Form $form): Form
     {
         return $form

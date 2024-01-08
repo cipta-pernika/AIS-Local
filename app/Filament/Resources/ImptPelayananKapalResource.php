@@ -21,6 +21,8 @@ class ImptPelayananKapalResource extends Resource
 
     protected static ?string $navigationGroup = 'Big Data';
 
+    protected static ?string $navigationLabel = 'IMPT Pelayanan Kapal';
+
     public static function form(Form $form): Form
     {
         return $form
