@@ -27,7 +27,7 @@ class AisDataVesselResource extends Resource implements HasShieldPermissions
 
     public static function getGloballySearchableAttributes(): array
     {
-        return ['vessel_name', 'mmsi', 'imo', 'callsign'];
+        return ['vessel_name', 'mmsi', 'imo', 'callsign', 'no_pkk'];
     }
 
     public static function getPermissionPrefixes(): array

@@ -30,12 +30,4 @@ class ListAisDataVessels extends ListRecords
                 ])
         ];
     }
-
-    public static function getGlobalSearchResultDetails(Model $record): array
-    {
-        return [
-            'MMSI' => $record->mmsi,
-            'Callsign' => $record->callsign,
-        ];
-    }
 }

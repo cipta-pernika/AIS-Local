@@ -25,6 +25,11 @@ class ImptPelayananKapalResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'no_pkk';
 
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['no_pkk', 'nama_kapal', 'nama_agen_pelayaran'];
+    }
+
     public static function form(Form $form): Form
     {
         return $form

@@ -23,6 +23,13 @@ class ImptPenggunaanAlatResource extends Resource
 
     protected static ?string $navigationLabel = 'IMPT Penggunaan Alat Bongkar Muat';
 
+    protected static ?string $recordTitleAttribute = 'no_pkk';
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['no_pkk', 'nama_kapal', 'agen_perusahaan_te'];
+    }
+
     public static function form(Form $form): Form
     {
         return $form
