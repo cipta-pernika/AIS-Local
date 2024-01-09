@@ -10,7 +10,12 @@ use Flowframe\Trend\TrendValue;
 
 class AisDataChart extends ChartWidget
 {
-    protected static ?string $heading = 'Chart';
+    protected static ?string $heading = 'AIS DATA';
+
+    public function getDescription(): ?string
+    {
+        return 'Diagram Statistik AIS Data';
+    }
 
     protected function getData(): array
     {

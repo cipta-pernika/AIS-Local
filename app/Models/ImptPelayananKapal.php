@@ -48,6 +48,4 @@ class ImptPelayananKapal extends Model
         'created_at' => 'nullable',
         'updated_at' => 'nullable'
     ];
-
-    
 }
