@@ -23,11 +23,6 @@ class InaportnetBongkarMuatResource extends Resource
 
     protected static ?string $navigationLabel = 'INAPORTNET Bongkar Muat';
 
-    public static function getGloballySearchableAttributes(): array
-    {
-        return ['no_pkk', 'nama_perusahaan'];
-    }
-
     public static function form(Form $form): Form
     {
         return $form
