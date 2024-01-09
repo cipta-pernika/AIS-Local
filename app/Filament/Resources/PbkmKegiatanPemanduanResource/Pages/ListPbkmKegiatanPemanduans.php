@@ -10,10 +10,12 @@ class ListPbkmKegiatanPemanduans extends ListRecords
 {
     protected static string $resource = PbkmKegiatanPemanduanResource::class;
 
+    protected static ?string $title = 'PBKM Kegiatan Pemanduan';
+
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            // Actions\CreateAction::make(),
         ];
     }
 }
