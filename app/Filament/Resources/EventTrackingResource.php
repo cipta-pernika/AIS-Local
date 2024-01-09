@@ -23,6 +23,8 @@ class EventTrackingResource extends Resource
 
     protected static ?string $navigationGroup = 'Events';
 
+    protected static ?string $recordTitleAttribute = 'mmsi';
+
     public static function form(Form $form): Form
     {
         return $form

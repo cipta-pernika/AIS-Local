@@ -21,6 +21,8 @@ class AisDataPositionResource extends Resource
 
     protected static ?string $navigationGroup = 'AIS';
 
+    protected static ?string $recordTitleAttribute = 'vessel.mmsi';
+
     public static function form(Form $form): Form
     {
         return $form
