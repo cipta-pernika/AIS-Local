@@ -1,1 +1,1 @@
-php artisan infyom:api_scaffold ImptPenggunaanAlat --skip=views,menu,tests --fromTable --table=impt_penggunaan_alats
+php artisan infyom:api_scaffold PbkmKegiatanPemanduan --skip=views,menu,tests --fromTable --table=pbkm_kegiatan_pemanduans

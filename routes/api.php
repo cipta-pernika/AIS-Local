@@ -170,3 +170,6 @@ Route::resource('impt-pelayanan-kapals', App\Http\Controllers\API\ImptPelayananK
 
 Route::resource('impt-penggunaan-alats', App\Http\Controllers\API\ImptPenggunaanAlatAPIController::class)
     ->except(['create', 'edit']);
+
+Route::resource('pbkm-kegiatan-pemanduans', App\Http\Controllers\API\PbkmKegiatanPemanduanAPIController::class)
+    ->except(['create', 'edit']);
