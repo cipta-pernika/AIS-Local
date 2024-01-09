@@ -79,7 +79,8 @@ class InaportnetPergerakanKapalResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('no_pkk')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('ais_data_vessel_id')
+                    Tables\Columns\TextColumn::make('aisDataVessel.mmsi')
+                    ->label('MMSI')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('nama_kapal')

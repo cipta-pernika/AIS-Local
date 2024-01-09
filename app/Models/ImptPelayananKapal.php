@@ -48,4 +48,9 @@ class ImptPelayananKapal extends Model
         'created_at' => 'nullable',
         'updated_at' => 'nullable'
     ];
+
+    public function aisDataVessel(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(\App\Models\AisDataVessel::class, 'ais_data_vessel_id');
+    }
 }

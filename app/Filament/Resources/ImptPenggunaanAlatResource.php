@@ -66,7 +66,8 @@ class ImptPenggunaanAlatResource extends Resource
                 Tables\Columns\TextColumn::make('impt_source_id')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('ais_data_vessel_id')
+                    Tables\Columns\TextColumn::make('aisDataVessel.mmsi')
+                    ->label('MMSI')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('no_pkk')
