@@ -11,6 +11,7 @@ use Filament\Forms\Components\Section;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Actions;
 use Filament\Forms\Components\Actions\Action;
+use Filament\Support\Enums\ActionSize;
 use Filament\Support\Enums\VerticalAlignment;
 
 class Playback extends Page implements HasForms
@@ -42,7 +43,7 @@ class Playback extends Page implements HasForms
                         DateTimePicker::make('end_date')->seconds(false)->format('Y-m-d H:i')->displayFormat('Y-m-d H:i')->minutesStep(30)->native(false)
                             ->default($this->endDate)->timezone('Asia/Jakarta')->placeholder($this->endDate),
                         Actions::make([
-                            Action::make('submit')->color('primary')
+                            Action::make('submit')->outlined()->color('primary')
                                 ->action(function () {
                                     $this->startDate = $this->data['start_date'].':00';
                                     $this->endDate = $this->data['end_date'].':00';
@@ -52,5 +53,10 @@ class Playback extends Page implements HasForms
                     ->columns(4),
             ])
             ->statePath('data');
+    }
+
+    public function summary()
+    {
+        
     }
 }
