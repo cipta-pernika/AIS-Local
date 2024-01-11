@@ -21,6 +21,7 @@ return new class extends Migration
             $table->date('installation_date');
             $table->dateTime('last_online');
             $table->integer('coverage')->nullable();
+            $table->integer('pelabuhan_id')->nullable();
             $table->timestamps();
         });
     }

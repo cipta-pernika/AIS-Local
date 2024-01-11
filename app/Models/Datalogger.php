@@ -24,4 +24,9 @@ class Datalogger extends Model
     {
         return $this->hasMany(Sensor::class);
     }
+
+    public function pelabuhan(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(\App\Models\Pelabuhan::class, 'pelabuhan_id');
+    }
 }

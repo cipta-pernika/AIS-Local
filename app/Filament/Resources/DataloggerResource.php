@@ -55,6 +55,9 @@ class DataloggerResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('pelabuhan.name')
+                    ->label('Pelabuhan')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('serial_number')
