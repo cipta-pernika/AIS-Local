@@ -73,7 +73,8 @@ class AppServiceProvider extends ServiceProvider
         FilamentAsset::register([
             Css::make('leaflet-1-9-4-css', 'https://unpkg.com/leaflet@1.7.1/dist/leaflet.css'),
             Js::make('leaflet-1-9-4-js', 'https://unpkg.com/leaflet@1.7.1/dist/leaflet.js'),
-            AlpineComponent::make('aismaps-js', __DIR__ . '/../../resources/js/dist/aismaps.js')
+            AlpineComponent::make('aismaps-js', __DIR__ . '/../../resources/js/dist/aismaps.js'),
+            AlpineComponent::make('playback-js', __DIR__ . '/../../resources/js/dist/playback.js')
         ]);
     }
 }
