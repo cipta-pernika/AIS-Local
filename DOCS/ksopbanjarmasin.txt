@@ -14,7 +14,6 @@
 - clusterring ais
 - playback max 7 hari
 - playback ngak jalan
-- penambahan field pkk pada table ais data vessel
 
 List fitur yang sudah
 - Pergerakan Realtime
@@ -28,6 +27,7 @@ List fitur yang sudah
 - Event dalam coverage Ais Base Station Ais On/Off, Keluar / Masuk jangkauan AIS Receiver, Keluar / Masuk Geofence, Perubahan status navigasi
 - Cuaca 
 - Timezone UTC
+- penambahan field pkk pada table ais data vessel
 --------------------------------------------------------------------------------------------
 List fitur yang belum
 - Pergerakan kapal dari waktu mulai sd realtime atau waktu berjalan dilengkapi line atau path pergerakan kapal
