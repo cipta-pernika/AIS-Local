@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('geofences', function (Blueprint $table) {
             $table->id();
-            $table->string('user_id')->nullable();
+            $table->integer('user_id')->nullable();
+            $table->integer('pelabuhan_id')->nullable();
             $table->string('geofence_name')->nullable();
             $table->string('type')->nullable();
             $table->string('type_geo')->nullable();
@@ -22,6 +23,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->index('user_id');
+            $table->index('pelabuhan_id');
         });
     }
 

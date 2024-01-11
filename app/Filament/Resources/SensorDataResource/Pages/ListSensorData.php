@@ -10,6 +10,10 @@ class ListSensorData extends ListRecords
 {
     protected static string $resource = SensorDataResource::class;
 
+    public ?string $tableSortColumn = 'created_at';
+
+    public ?string $tableSortDirection = 'desc';
+
     protected function getHeaderActions(): array
     {
         return [

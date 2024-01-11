@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\GeofenceResource\Pages;
 use App\Filament\Resources\GeofenceResource\RelationManagers;
 use App\Models\Geofence;
+use App\Models\Pelabuhan;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -29,6 +30,16 @@ class GeofenceResource extends Resource
             ->schema([
                 // Forms\Components\TextInput::make('user_id')
                 //     ->maxLength(255),
+                Forms\Components\Select::make('pelabuhan_id')
+                    ->options([
+                        'both' => 'Both',
+                        'in' => 'In',
+                        'out' => 'Out',
+                    ])
+                    ->native(false)
+                    ->label('Pelabuhan')
+                    ->multiple(false)->options(Pelabuhan::all()->pluck('name', 'id'))
+                    ->searchable(),
                 Forms\Components\TextInput::make('geofence_name')
                     ->maxLength(255),
                 Forms\Components\Select::make('type')
@@ -37,14 +48,14 @@ class GeofenceResource extends Resource
                         'in' => 'In',
                         'out' => 'Out',
                     ])
-                    ->multiple(false),
+                    ->multiple(false)->native(false),
                 Forms\Components\Select::make('type_geo')
                     ->options([
                         'polygon' => 'Polygon',
                         'rectangle' => 'Rectangle',
                         'circle' => 'Circle',
                     ])
-                    ->multiple(false),
+                    ->multiple(false)->native(false),
                 Forms\Components\TextInput::make('radius')
                     ->maxLength(255),
                 Forms\Components\Textarea::make('geometry')
@@ -56,8 +67,11 @@ class GeofenceResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('user_id')
-                    ->searchable(),
+                Tables\Columns\TextColumn::make('pelabuhan.name')
+                    ->label('Pelabuhan')
+                    ->sortable(),
+                // Tables\Columns\TextColumn::make('user_id')
+                //     ->searchable(),
                 Tables\Columns\TextColumn::make('geofence_name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('type')
