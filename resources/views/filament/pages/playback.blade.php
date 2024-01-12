@@ -27,6 +27,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/leaflet-plugin-trackplayback@1.0.5/dist/control.trackplayback.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/leaflet-plugin-trackplayback@1.0.5/dist/leaflet.trackplayback.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-plugin-trackplayback@1.0.5/dist/control.playback.min.css">
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-plugin-trackplayback@1.0.5/dist/control.playback.min.css"> -->
+    <link rel="stylesheet" href="{{asset('js/leaflet-trackplayback/control/control.playback.min.css')}}">
     @endpush
 </x-filament-panels::page>
