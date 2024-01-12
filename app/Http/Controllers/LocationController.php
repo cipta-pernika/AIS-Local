@@ -75,7 +75,7 @@ class LocationController extends Controller
                 ->get();
 
             // Cache the result for 24 hours (adjust the duration as needed)
-            Cache::put($cacheKey, $locations, 60 * 24);
+            Cache::put($cacheKey, $locations, 60);
         }
 
         return response()->json([
