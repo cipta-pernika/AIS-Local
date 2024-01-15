@@ -711,7 +711,7 @@
         "type": "function",
         "z": "80f8a74d09dd9b8e",
         "name": "function 1",
-        "func": "msg.method = \"POST\"\nmsg.url = \"http://ais-local-lumen.test/api/aisdata\"\nconst aisdata1 = flow.get(\"dataais\")\nconst aisdata2 = msg.payload\nconst joinedObject = { ...aisdata2, ...aisdata1 };\nmsg.payload = joinedObject;\nreturn msg;",
+        "func": "msg.method = \"POST\"\nmsg.url = \"http://ais-local-lumen.test/api/aisdata\"\nconst aisdata1 = flow.get(\"dataais\")\nconst latlong = flow.get(\"latlong2\")\nconst aisdata2 = msg.payload\nconst joinedObject = { ...aisdata2, ...aisdata1, ...latlong };\nmsg.payload = joinedObject;\nreturn msg;",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
@@ -754,8 +754,9 @@
         "type": "function",
         "z": "80f8a74d09dd9b8e",
         "name": "function 2",
-        "func": "flow.set(\"dataais\", msg.payload)\nmsg.payload = msg.payload.source\nreturn msg;",
+        "func": "flow.set(\"dataais\", msg.payload)\nconst latlng = {lat2: msg.payload.latitude, long2: msg.payload.longitude}\nflow.set(\"latlong2\", latlng)\nmsg.payload = msg.payload.source\nreturn msg;",
         "outputs": 1,
+        "timeout": "",
         "noerr": 0,
         "initialize": "",
         "finalize": "",
@@ -877,7 +878,8 @@
         "y": 120,
         "wires": [
             [
-                "91f07b0b1beac785"
+                "91f07b0b1beac785",
+                "11913f59a4f89c5a"
             ]
         ]
     },
@@ -1450,7 +1452,8 @@
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "false",
+        "complete": "payload.long2",
+        "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
         "x": 1260,
@@ -1482,7 +1485,7 @@
         "type": "debug",
         "z": "80f8a74d09dd9b8e",
         "name": "debug 35",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -1512,6 +1515,23 @@
                 "8103d42455c2730a"
             ]
         ]
+    },
+    {
+        "id": "11913f59a4f89c5a",
+        "type": "debug",
+        "z": "80f8a74d09dd9b8e",
+        "name": "debug 36",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload.longitude",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1100,
+        "y": 280,
+        "wires": []
     },
     {
         "id": "24877ff6cd79cc8e",
@@ -1952,6 +1972,136 @@
             [
                 "7659c8213b74370b"
             ]
+        ]
+    },
+    {
+        "id": "8ab37bbc351540b6",
+        "type": "exec",
+        "z": "b7365955a007c1cd",
+        "command": "",
+        "addpay": "payload",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": true,
+        "oldrc": false,
+        "name": "",
+        "x": 270,
+        "y": 620,
+        "wires": [
+            [
+                "75103626754d0e1d"
+            ],
+            [
+                "75103626754d0e1d"
+            ],
+            [
+                "75103626754d0e1d"
+            ]
+        ]
+    },
+    {
+        "id": "015c0b81c20f1b4c",
+        "type": "cronplus",
+        "z": "b7365955a007c1cd",
+        "name": "git pull be",
+        "outputField": "payload",
+        "timeZone": "",
+        "storeName": "",
+        "commandResponseMsgOutput": "output1",
+        "defaultLocation": "",
+        "defaultLocationType": "default",
+        "outputs": 1,
+        "options": [
+            {
+                "name": "schedule1",
+                "topic": "topic1",
+                "payloadType": "str",
+                "payload": "cd C:\\laragon\\www\\AIS-Local-Lumen && git pull",
+                "expressionType": "cron",
+                "expression": "0 */10 * * * *",
+                "location": "",
+                "offset": "0",
+                "solarType": "all",
+                "solarEvents": "sunrise,sunset"
+            }
+        ],
+        "x": 100,
+        "y": 620,
+        "wires": [
+            [
+                "8ab37bbc351540b6"
+            ]
+        ]
+    },
+    {
+        "id": "75103626754d0e1d",
+        "type": "debug",
+        "z": "b7365955a007c1cd",
+        "name": "debug 37",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 460,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "918adf0e476e760c",
+        "type": "cronplus",
+        "z": "b7365955a007c1cd",
+        "name": "composer install",
+        "outputField": "payload",
+        "timeZone": "",
+        "storeName": "",
+        "commandResponseMsgOutput": "output1",
+        "defaultLocation": "",
+        "defaultLocationType": "default",
+        "outputs": 1,
+        "options": [
+            {
+                "name": "schedule1",
+                "topic": "topic1",
+                "payloadType": "str",
+                "payload": "cd C:\\laragon\\www\\AIS-Local-Lumen && composer install",
+                "expressionType": "cron",
+                "expression": "0 */10 * * * *",
+                "location": "",
+                "offset": "0",
+                "solarType": "all",
+                "solarEvents": "sunrise,sunset"
+            }
+        ],
+        "x": 160,
+        "y": 700,
+        "wires": [
+            [
+                "b102c59965ae2836"
+            ]
+        ]
+    },
+    {
+        "id": "b102c59965ae2836",
+        "type": "exec",
+        "z": "b7365955a007c1cd",
+        "command": "",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 310,
+        "y": 700,
+        "wires": [
+            [],
+            [],
+            []
         ]
     },
     {
