@@ -31,11 +31,6 @@ class GeofenceResource extends Resource
                 // Forms\Components\TextInput::make('user_id')
                 //     ->maxLength(255),
                 Forms\Components\Select::make('pelabuhan_id')
-                    ->options([
-                        'both' => 'Both',
-                        'in' => 'In',
-                        'out' => 'Out',
-                    ])
                     ->native(false)
                     ->label('Pelabuhan')
                     ->multiple(false)->options(Pelabuhan::all()->pluck('name', 'id'))
