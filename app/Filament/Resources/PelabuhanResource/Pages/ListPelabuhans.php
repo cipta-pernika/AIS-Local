@@ -16,18 +16,20 @@ class ListPelabuhans extends ListRecords
     {
         return [
             Actions\CreateAction::make(),
-            ImportAction::make()
-                ->fields([
-                    ImportField::make('name'),
-                    ImportField::make('latitude'),
-                    ImportField::make('longitude'),
-                    ImportField::make('penanggung_jawab'),
-                    ImportField::make('no_izin_pengoperasian'),
-                    ImportField::make('tgl_izin_pengoperasian'),
-                    ImportField::make('penerbit_izin_pengoperasian'),
-                    ImportField::make('no_perjanjian_sewa_perairan'),
-                    ImportField::make('tgl_sewa_perairan'),
-                ])
+            // ImportAction::make()
+            //     ->fields([
+            //         ImportField::make('name'),
+            //         ImportField::make('latitude'),
+            //         ImportField::make('longitude'),
+            //         ImportField::make('penanggung_jawab'),
+            //         ImportField::make('no_izin_pengoperasian'),
+            //         ImportField::make('tgl_izin_pengoperasian'),
+            //         ImportField::make('penerbit_izin_pengoperasian'),
+            //         ImportField::make('no_perjanjian_sewa_perairan'),
+            //         ImportField::make('tgl_sewa_perairan'),
+            //     ]),
+            \EightyNine\ExcelImport\ExcelImportAction::make()
+                ->color("primary"),
         ];
     }
 }
