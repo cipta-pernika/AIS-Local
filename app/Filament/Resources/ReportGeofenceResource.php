@@ -75,7 +75,11 @@ class ReportGeofenceResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('geofence')
+                    ->multiple()
+                    ->relationship('geofence', 'geofence_name')
+                    ->preload()
+                    ->searchable(),
             ])
             ->actions([
                 // Tables\Actions\EditAction::make(),

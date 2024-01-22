@@ -61,3 +61,5 @@ Route::resource('inaportnet-pergerakan-kapals', App\Http\Controllers\InaportnetP
 Route::resource('impt-pelayanan-kapals', App\Http\Controllers\ImptPelayananKapalController::class);
 Route::resource('impt-penggunaan-alats', App\Http\Controllers\ImptPenggunaanAlatController::class);
 Route::resource('pbkm-kegiatan-pemanduans', App\Http\Controllers\PbkmKegiatanPemanduanController::class);
+
+Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
