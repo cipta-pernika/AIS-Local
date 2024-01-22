@@ -35,6 +35,10 @@ use Location\Polygon;
 
 class HelperController extends Controller
 {
+    public function redirecttoplayback()
+    {
+        return redirect('admin/playback');
+    }
     public function eventtrackings()
     {
         // Define a unique cache key for this query

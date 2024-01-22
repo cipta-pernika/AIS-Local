@@ -62,4 +62,4 @@ Route::resource('impt-pelayanan-kapals', App\Http\Controllers\ImptPelayananKapal
 Route::resource('impt-penggunaan-alats', App\Http\Controllers\ImptPenggunaanAlatController::class);
 Route::resource('pbkm-kegiatan-pemanduans', App\Http\Controllers\PbkmKegiatanPemanduanController::class);
 
-Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+Route::get('redirecttoplayback', [HelperController::class, 'redirecttoplayback']);
