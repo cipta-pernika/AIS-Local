@@ -105,6 +105,7 @@ class AisDataPositionResource extends Resource
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('vessel_id')
+                    ->searchable()
                     ->options(AisDataVessel::whereNotNull('vessel_name')->get()->pluck('vessel_name', 'id')),
             ])
             ->actions([
