@@ -12,41 +12,46 @@ class GeofenceOverview extends BaseWidget
     protected static ?int $sort = 1;
     protected function getStats(): array
     {
-        $today = Carbon::today();
-        $sevenDaysAgo = $today->copy()->subDays(7);
+        $startDate = filled($this->filters['startDate'] ?? null) ?
+            Carbon::parse($this->filters['startDate']) :
+            now()->subDays(7);
+
+        $endDate = filled($this->filters['endDate'] ?? null) ?
+            Carbon::parse($this->filters['endDate']) :
+            now();
 
         $enterGeofenceCount = EventTracking::where('event_id', 9)
-            ->whereBetween('created_at', [$sevenDaysAgo, $today])
+            ->whereBetween('created_at', [$startDate, $endDate])
             ->count();
 
         $exitGeofenceCount = EventTracking::where('event_id', 10)
-            ->whereBetween('created_at', [$sevenDaysAgo, $today])
+            ->whereBetween('created_at', [$startDate, $endDate])
             ->count();
 
         $insideGeofenceCount = EventTracking::where('event_id', 9)
-            ->whereNotIn('event_id', [10]) // Exclude events with event_id 10 (exiting geofence)
-            ->whereBetween('created_at', [$sevenDaysAgo, $today])
+            ->whereNotIn('event_id', [10])
+            ->whereBetween('created_at', [$startDate, $endDate])
             ->count();
 
-        $enterPercentageChange = $this->calculatePercentageChange($enterGeofenceCount, $sevenDaysAgo, $today, 9);
-        $insidePercentageChange = $this->calculatePercentageChange($insideGeofenceCount, $sevenDaysAgo, $today, 9, true);
-        $exitPercentageChange = $this->calculatePercentageChange($exitGeofenceCount, $sevenDaysAgo, $today, 10);
+        $enterPercentageChange = $this->calculatePercentageChange($enterGeofenceCount, $startDate, $endDate, 9);
+        $insidePercentageChange = $this->calculatePercentageChange($insideGeofenceCount, $startDate, $endDate, 9, true);
+        $exitPercentageChange = $this->calculatePercentageChange($exitGeofenceCount, $startDate, $endDate, 10);
 
         return [
             Stat::make('Masuk Geofence', $enterGeofenceCount)
                 ->description($this->getIncreaseDescription($enterPercentageChange))
                 ->descriptionIcon('heroicon-m-arrow-trending-up')
-                ->chart($this->getChartData(9, $sevenDaysAgo, $today))
+                ->chart($this->getChartData(9, $startDate, $endDate))
                 ->color('success'),
             Stat::make('Berada di dalam Geofence', $insideGeofenceCount)
                 ->description($this->getIncreaseDescription($insidePercentageChange))
                 ->descriptionIcon('heroicon-m-arrow-trending-down')
-                ->chart($this->getChartData(9, $sevenDaysAgo, $today, true))
+                ->chart($this->getChartData(9, $startDate, $endDate, true))
                 ->color('danger'),
             Stat::make('Keluar Geofence', $exitGeofenceCount)
                 ->description($this->getIncreaseDescription($exitPercentageChange))
                 ->descriptionIcon('heroicon-m-arrow-trending-up')
-                ->chart($this->getChartData(10, $sevenDaysAgo, $today))
+                ->chart($this->getChartData(10, $startDate, $endDate))
                 ->color('success'),
         ];
     }
