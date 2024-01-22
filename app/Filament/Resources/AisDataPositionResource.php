@@ -5,6 +5,8 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\AisDataPositionResource\Pages;
 use App\Filament\Resources\AisDataPositionResource\RelationManagers;
 use App\Models\AisDataPosition;
+use App\Models\AisDataVessel;
+use App\Models\Pelabuhan;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -62,6 +64,7 @@ class AisDataPositionResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('vessel.mmsi')
                     ->label('MMSI')
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('latitude')
                     ->numeric()
@@ -101,7 +104,8 @@ class AisDataPositionResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('vessel_id')
+                    ->options(AisDataVessel::whereNotNull('vessel_name')->get()->pluck('vessel_name', 'id')),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
