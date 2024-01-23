@@ -3,9 +3,27 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 class EventTracking extends Model
 {
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::created(function ($post) {
+            Cache::forget('event_trackings_cache');
+        });
+
+        static::updated(function ($post) {
+            Cache::forget('event_trackings_cache');
+        });
+
+        static::deleted(function ($post) {
+            Cache::forget('event_trackings_cache');
+        });
+    }
+
     public $table = 'event_trackings';
 
     public $fillable = [

@@ -39,6 +39,7 @@ class HelperController extends Controller
     {
         return redirect('admin/playback');
     }
+
     public function eventtrackings()
     {
         // Define a unique cache key for this query
@@ -707,8 +708,7 @@ class HelperController extends Controller
                 ->whereBetween('created_at', [now()->subMinutes(10), now()])
                 ->get();
 
-            // Cache the result for 10 minutes (adjust the duration as needed)
-            Cache::put($cacheKey, $aisData, 10);
+            Cache::put($cacheKey, $aisData, 5);
         }
 
         return response()->json([
@@ -773,8 +773,7 @@ class HelperController extends Controller
                 ->values()
                 ->toArray();
 
-            // Store the processed data in the cache for a suitable duration
-            Cache::put($cacheKey, $aisData, 15); // Cache for 15 minutes
+            Cache::put($cacheKey, $aisData, 5);
         } else {
             // Data is already cached
             $aisData = $cachedData;
@@ -793,7 +792,7 @@ class HelperController extends Controller
                 ->orderBy('created_at', 'DESC')
                 ->limit(200)
                 ->get();
-    
+
             return response()->json([
                 'success' => true,
                 'message' => $aisData,
@@ -947,8 +946,7 @@ class HelperController extends Controller
                 ->limit(10)
                 ->get();
 
-            // Cache the result for 5 minutes (adjust the duration as needed)
-            Cache::put($cacheKey, $aisData, 5);
+            Cache::put($cacheKey, $aisData, 1);
         }
 
         return response()->json([

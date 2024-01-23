@@ -52,6 +52,8 @@ class GeofenceController extends Controller
         $geod = Geofence::where('id', $geo->id)
             ->first();
 
+        Cache::forget('all_geofences');
+
         return response()->json([
             'success' => true,
             'message' => $geod,

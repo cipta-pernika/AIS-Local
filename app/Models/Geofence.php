@@ -4,11 +4,31 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 class Geofence extends Model
 {
     use HasFactory;
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        // Event fired when a new record is created
+        static::created(function ($post) {
+            Cache::forget('all_geofences'); // Replace 'posts' with your actual cache key or tag
+        });
+
+        // Event fired when a record is updated
+        static::updated(function ($post) {
+            Cache::forget('all_geofences'); // Replace 'posts' with your actual cache key or tag
+        });
+
+        // Event fired when a record is deleted
+        static::deleted(function ($post) {
+            Cache::forget('all_geofences'); // Replace 'posts' with your actual cache key or tag
+        });
+    }
 
     public function pelabuhan(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
