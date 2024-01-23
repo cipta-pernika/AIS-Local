@@ -60,6 +60,7 @@ class ReportGeofenceResource extends Resource
                     ->dateTime()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('total_time')
+                    ->label('Total Time (Minute)')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('deleted_at')
                     ->dateTime()
