@@ -52,8 +52,8 @@ class SensorResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('datalogger_id')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('datalogger.name')
+                    ->label('Datalogger')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
