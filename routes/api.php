@@ -149,30 +149,20 @@ Route::resource('report-geofences', App\Http\Controllers\API\ReportGeofenceAPICo
 Route::resource('identifications', App\Http\Controllers\API\IdentificationAPIController::class)
     ->except(['create', 'edit']);
 
-Route::resource('pelabuhans', App\Http\Controllers\API\PelabuhanAPIController::class)
-    ->except(['create', 'edit']);
-
 
 Route::get('inaportnet', [SyncController::class, 'inaportnet']);
 Route::get('impt', [SyncController::class, 'impt']);
 
-Route::resource('pelabuhans', App\Http\Controllers\API\PelabuhanAPIController::class)
-    ->except(['create', 'edit']);
+Route::resource('pelabuhans', App\Http\Controllers\API\PelabuhanAPIController::class);
 
-Route::resource('inaportnet-bongkar-muats', App\Http\Controllers\API\InaportnetBongkarMuatAPIController::class)
-    ->except(['create', 'edit']);
+Route::resource('inaportnet-bongkar-muats', App\Http\Controllers\API\InaportnetBongkarMuatAPIController::class);
 
-Route::resource('inaportnet-pergerakan-kapals', App\Http\Controllers\API\InaportnetPergerakanKapalAPIController::class)
-    ->except(['create', 'edit']);
+Route::resource('inaportnet-pergerakan-kapals', App\Http\Controllers\API\InaportnetPergerakanKapalAPIController::class);
 
-Route::resource('impt-pelayanan-kapals', App\Http\Controllers\API\ImptPelayananKapalAPIController::class)
-    ->except(['create', 'edit']);
+Route::resource('impt-pelayanan-kapals', App\Http\Controllers\API\ImptPelayananKapalAPIController::class);
 
-Route::resource('impt-penggunaan-alats', App\Http\Controllers\API\ImptPenggunaanAlatAPIController::class)
-    ->except(['create', 'edit']);
+Route::resource('impt-penggunaan-alats', App\Http\Controllers\API\ImptPenggunaanAlatAPIController::class);
 
-Route::resource('pbkm-kegiatan-pemanduans', App\Http\Controllers\API\PbkmKegiatanPemanduanAPIController::class)
-    ->except(['create', 'edit']);
+Route::resource('pbkm-kegiatan-pemanduans', App\Http\Controllers\API\PbkmKegiatanPemanduanAPIController::class);
 
-Route::resource('terminals', App\Http\Controllers\API\TerminalAPIController::class)
-    ->except(['create', 'edit']);
+Route::resource('terminals', App\Http\Controllers\API\TerminalAPIController::class);
