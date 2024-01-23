@@ -702,11 +702,19 @@ class HelperController extends Controller
             $aisData = Cache::get($cacheKey);
         } else {
             // If not cached, perform the query and store the result in the cache
-            $aisData = AisDataPosition::with('vessel', 'sensorData.sensor.datalogger')
+            $query = AisDataPosition::with('vessel', 'sensorData.sensor.datalogger')
                 ->orderBy('created_at', 'DESC')
                 ->groupBy('vessel_id')
-                ->whereBetween('created_at', [now()->subMinutes(10), now()])
-                ->get();
+                ->whereBetween('created_at', [now()->subMinutes(10), now()]);
+
+            // Check if datalogger_id is provided in the request
+            if (request()->has('datalogger_id')) {
+                $query->whereHas('sensorData.sensor.datalogger', function ($subquery) {
+                    $subquery->where('id', request()->datalogger_id);
+                });
+            }
+
+            $aisData = $query->get();
 
             Cache::put($cacheKey, $aisData, 5);
         }
