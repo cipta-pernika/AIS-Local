@@ -63,3 +63,4 @@ Route::resource('impt-penggunaan-alats', App\Http\Controllers\ImptPenggunaanAlat
 Route::resource('pbkm-kegiatan-pemanduans', App\Http\Controllers\PbkmKegiatanPemanduanController::class);
 
 Route::get('redirecttoplayback', [HelperController::class, 'redirecttoplayback']);
+Route::resource('terminals', App\Http\Controllers\TerminalController::class);
