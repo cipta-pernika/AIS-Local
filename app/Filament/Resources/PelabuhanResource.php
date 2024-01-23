@@ -41,28 +41,28 @@ class PelabuhanResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('address')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('penanggung_jawab')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('no_izin_pengoperasian')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('tgl_izin_pengoperasian')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('penerbit_izin_pengoperasian')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('no_perjanjian_sewa_perairan')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('tgl_sewa_perairan')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('luas_perairan')
-                    ->numeric(),
-                Forms\Components\TextInput::make('jasa_pengunaan_perairan')
-                    ->numeric(),
-                Forms\Components\TextInput::make('keterangan')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('masa_berlaku_izin_operasi')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('masa_berlaku_perjanjian_sewa_perairan')
-                    ->maxLength(255),
+                // Forms\Components\TextInput::make('penanggung_jawab')
+                //     ->maxLength(255),
+                // Forms\Components\TextInput::make('no_izin_pengoperasian')
+                //     ->maxLength(255),
+                // Forms\Components\TextInput::make('tgl_izin_pengoperasian')
+                //     ->maxLength(255),
+                // Forms\Components\TextInput::make('penerbit_izin_pengoperasian')
+                //     ->maxLength(255),
+                // Forms\Components\TextInput::make('no_perjanjian_sewa_perairan')
+                //     ->maxLength(255),
+                // Forms\Components\TextInput::make('tgl_sewa_perairan')
+                //     ->maxLength(255),
+                // Forms\Components\TextInput::make('luas_perairan')
+                //     ->numeric(),
+                // Forms\Components\TextInput::make('jasa_pengunaan_perairan')
+                //     ->numeric(),
+                // Forms\Components\TextInput::make('keterangan')
+                //     ->maxLength(255),
+                // Forms\Components\TextInput::make('masa_berlaku_izin_operasi')
+                //     ->maxLength(255),
+                // Forms\Components\TextInput::make('masa_berlaku_perjanjian_sewa_perairan')
+                //     ->maxLength(255),
             ]);
     }
 
@@ -84,30 +84,30 @@ class PelabuhanResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('address')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('penanggung_jawab')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('no_izin_pengoperasian')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('tgl_izin_pengoperasian')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('penerbit_izin_pengoperasian')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('no_perjanjian_sewa_perairan')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('tgl_sewa_perairan')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('luas_perairan')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('jasa_pengunaan_perairan')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('keterangan')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('masa_berlaku_izin_operasi')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('masa_berlaku_perjanjian_sewa_perairan')
-                    ->searchable(),
+                // Tables\Columns\TextColumn::make('penanggung_jawab')
+                //     ->searchable(),
+                // Tables\Columns\TextColumn::make('no_izin_pengoperasian')
+                //     ->searchable(),
+                // Tables\Columns\TextColumn::make('tgl_izin_pengoperasian')
+                //     ->searchable(),
+                // Tables\Columns\TextColumn::make('penerbit_izin_pengoperasian')
+                //     ->searchable(),
+                // Tables\Columns\TextColumn::make('no_perjanjian_sewa_perairan')
+                //     ->searchable(),
+                // Tables\Columns\TextColumn::make('tgl_sewa_perairan')
+                //     ->searchable(),
+                // Tables\Columns\TextColumn::make('luas_perairan')
+                //     ->numeric()
+                //     ->sortable(),
+                // Tables\Columns\TextColumn::make('jasa_pengunaan_perairan')
+                //     ->numeric()
+                //     ->sortable(),
+                // Tables\Columns\TextColumn::make('keterangan')
+                //     ->searchable(),
+                // Tables\Columns\TextColumn::make('masa_berlaku_izin_operasi')
+                //     ->searchable(),
+                // Tables\Columns\TextColumn::make('masa_berlaku_perjanjian_sewa_perairan')
+                //     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
