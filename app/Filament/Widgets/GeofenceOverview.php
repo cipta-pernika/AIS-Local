@@ -5,6 +5,7 @@ namespace App\Filament\Widgets;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 use App\Models\EventTracking;
+use App\Models\Geofence;
 use Illuminate\Support\Carbon;
 
 class GeofenceOverview extends BaseWidget
@@ -27,6 +28,8 @@ class GeofenceOverview extends BaseWidget
         $exitGeofenceCount = EventTracking::where('event_id', 10)
             ->whereBetween('created_at', [$startDate, $endDate])
             ->count();
+
+        $pelabuhanStats = $this->getPelabuhanStats($startDate, $endDate);
 
         // $insideGeofenceCount = EventTracking::where('event_id', 9)
         //     ->whereNotIn('event_id', [10])
@@ -88,5 +91,60 @@ class GeofenceOverview extends BaseWidget
             ->count();
 
         return ($previousCount !== 0) ? (($count - $previousCount) / $previousCount) * 100 : 0;
+    }
+
+    protected function getPelabuhanStats(Carbon $startDate, Carbon $endDate): array
+    {
+        $pelabuhanStats = [];
+
+        // Get distinct geofence_ids from Geofence
+        $geofenceIds = Geofence::distinct('geofence_id')->pluck('geofence_id');
+
+        foreach ($geofenceIds as $geofenceId) {
+            $geofence = Geofence::find($geofenceId);
+
+            // Skip if there's no associated Geofence
+            if (!$geofence) {
+                continue;
+            }
+
+            $pelabuhanName = $geofence->pelabuhan_name;
+
+            $enterPelabuhanCount = EventTracking::where('event_id', 9)
+                ->where('geofence_id', $geofenceId)
+                ->whereBetween('created_at', [$startDate, $endDate])
+                ->count();
+
+            $exitPelabuhanCount = EventTracking::where('event_id', 10)
+                ->where('geofence_id', $geofenceId)
+                ->whereBetween('created_at', [$startDate, $endDate])
+                ->count();
+
+            $insidePelabuhanCount = $enterPelabuhanCount - $exitPelabuhanCount;
+
+            $enterPercentageChange = $this->calculatePercentageChange($enterPelabuhanCount, $startDate, $endDate, 9);
+            $insidePercentageChange = $this->calculatePercentageChange($insidePelabuhanCount, $startDate, $endDate, 9, true);
+            $exitPercentageChange = $this->calculatePercentageChange($exitPelabuhanCount, $startDate, $endDate, 10);
+
+            $pelabuhanStats[] = Stat::make("Masuk {$pelabuhanName}", $enterPelabuhanCount)
+                ->description($this->getIncreaseDescription($enterPercentageChange))
+                ->descriptionIcon('heroicon-m-arrow-trending-up')
+                ->chart($this->getChartData(9, $startDate, $endDate, false, $geofenceId))
+                ->color('success');
+
+            $pelabuhanStats[] = Stat::make("Berada di dalam {$pelabuhanName}", $insidePelabuhanCount)
+                ->description($this->getIncreaseDescription($insidePercentageChange))
+                ->descriptionIcon('heroicon-m-arrow-trending-down')
+                ->chart($this->getChartData(9, $startDate, $endDate, true, $geofenceId))
+                ->color('danger');
+
+            $pelabuhanStats[] = Stat::make("Keluar {$pelabuhanName}", $exitPelabuhanCount)
+                ->description($this->getIncreaseDescription($exitPercentageChange))
+                ->descriptionIcon('heroicon-m-arrow-trending-up')
+                ->chart($this->getChartData(10, $startDate, $endDate, false, $geofenceId))
+                ->color('success');
+        }
+
+        return $pelabuhanStats;
     }
 }
