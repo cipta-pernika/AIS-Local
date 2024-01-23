@@ -28,10 +28,11 @@ class GeofenceOverview extends BaseWidget
             ->whereBetween('created_at', [$startDate, $endDate])
             ->count();
 
-        $insideGeofenceCount = EventTracking::where('event_id', 9)
-            ->whereNotIn('event_id', [10])
-            ->whereBetween('created_at', [$startDate, $endDate])
-            ->count();
+        // $insideGeofenceCount = EventTracking::where('event_id', 9)
+        //     ->whereNotIn('event_id', [10])
+        //     ->whereBetween('created_at', [$startDate, $endDate])
+        //     ->count();
+        $insideGeofenceCount = $enterGeofenceCount - $exitGeofenceCount;
 
         $enterPercentageChange = $this->calculatePercentageChange($enterGeofenceCount, $startDate, $endDate, 9);
         $insidePercentageChange = $this->calculatePercentageChange($insideGeofenceCount, $startDate, $endDate, 9, true);
