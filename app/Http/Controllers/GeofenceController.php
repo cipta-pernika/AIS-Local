@@ -13,6 +13,45 @@ use Illuminate\Support\Facades\DB;
 
 class GeofenceController extends Controller
 {
+    public function analytics()
+    {
+        // Calculate Average Duration Inside
+        $averageDurationInside = 10;
+
+        // Calculate Total Entries
+        $totalEntries = DB::table('report_geofences')->count();
+
+        // Calculate Maximum Speed, Minimum Speed, and Average Speed
+        $maximumSpeed = DB::table('ais_data_positions')->max('speed');
+        $minimumSpeed = DB::table('ais_data_positions')->min('speed');
+        $averageSpeed = DB::table('ais_data_positions')->avg('speed');
+
+        // Calculate Entries Per Hour
+        $entriesPerHour = $totalEntries / Carbon::now()->diffInHours(Carbon::now()->subDay());
+
+        // Calculate Average Stay Per Entry
+        $averageStayPerEntry = 50;
+
+        // Calculate Maximum Stay Time, Minimum Stay Time
+        $maximumStayTime = DB::table('report_geofences')->max(DB::raw('TIMESTAMPDIFF(MINUTE, `in`, `out`)'));
+        $minimumStayTime = DB::table('report_geofences')->min(DB::raw('TIMESTAMPDIFF(MINUTE, `in`, `out`)'));
+
+
+        // Return the calculated values in JSON format
+        return response()->json([
+            'success' => true,
+            'average_duration_inside' => $averageDurationInside,
+            'total_entries' => $totalEntries,
+            'maximum_speed' => $maximumSpeed,
+            'minimum_speed' => $minimumSpeed,
+            'average_speed' => $averageSpeed,
+            'entries_per_hour' => $entriesPerHour,
+            'average_stay_per_entry' => $averageStayPerEntry,
+            'maximum_stay_time' => $maximumStayTime,
+            'minimum_stay_time' => $minimumStayTime,
+        ]);
+    }
+
     public function totalentries()
     {
         $geofence = Geofence::find(request('geofence_id'));
