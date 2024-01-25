@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('radius')->nullable();
             $table->longText('geometry')->nullable();
             $table->timestamps();
+            $table->softDeletes();
 
             $table->index('user_id');
             $table->index('pelabuhan_id');
