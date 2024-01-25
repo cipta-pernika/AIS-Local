@@ -98,7 +98,7 @@ class GeofenceOverview extends BaseWidget
         $pelabuhanStats = [];
 
         // Get distinct geofence_ids from Geofence
-        $geofenceIds = Geofence::distinct('geofence_id')->pluck('geofence_id');
+        $geofenceIds = Geofence::distinct('id')->pluck('id');
 
         foreach ($geofenceIds as $geofenceId) {
             $geofence = Geofence::find($geofenceId);
