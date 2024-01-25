@@ -1,1 +1,1 @@
-php artisan infyom:api_scaffold Terminal --skip=views,menu,tests --fromTable --table=terminals
+php artisan infyom:api_scaffold Location --skip=views,menu,tests --fromTable --table=locations

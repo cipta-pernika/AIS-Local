@@ -2,40 +2,36 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Cache;
 
 class Location extends Model
 {
-    use HasFactory;
+    public $table = 'locations';
 
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::created(function ($post) {
-            Cache::forget('locations_cache');
-        });
-
-        static::updated(function ($post) {
-            Cache::forget('locations_cache');
-        });
-
-        static::deleted(function ($post) {
-            Cache::forget('locations_cache');
-        });
-    }
-
-    protected $fillable = [
+    public $fillable = [
         'name',
         'location_type_id',
         'latitude',
         'longitude'
     ];
 
-    public function locationType()
+    protected $casts = [
+        'name' => 'string',
+        'latitude' => 'decimal:7',
+        'longitude' => 'decimal:7'
+    ];
+
+    public static array $rules = [
+        'name' => 'required|string|max:255',
+        'location_type_id' => 'required',
+        'latitude' => 'required|numeric',
+        'longitude' => 'required|numeric',
+        'created_at' => 'nullable',
+        'updated_at' => 'nullable'
+    ];
+
+    public function locationType(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(LocationType::class);
+        return $this->belongsTo(\App\Models\LocationType::class, 'location_type_id');
     }
 }

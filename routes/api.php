@@ -167,3 +167,5 @@ Route::resource('impt-penggunaan-alats', App\Http\Controllers\API\ImptPenggunaan
 Route::resource('pbkm-kegiatan-pemanduans', App\Http\Controllers\API\PbkmKegiatanPemanduanAPIController::class);
 
 Route::resource('terminals', App\Http\Controllers\API\TerminalAPIController::class);
+
+Route::resource('locations', App\Http\Controllers\API\LocationAPIController::class);

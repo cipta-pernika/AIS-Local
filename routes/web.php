@@ -64,3 +64,4 @@ Route::resource('pbkm-kegiatan-pemanduans', App\Http\Controllers\PbkmKegiatanPem
 
 Route::get('redirecttoplayback', [HelperController::class, 'redirecttoplayback']);
 Route::resource('terminals', App\Http\Controllers\TerminalController::class);
+Route::resource('locations', App\Http\Controllers\LocationController::class);

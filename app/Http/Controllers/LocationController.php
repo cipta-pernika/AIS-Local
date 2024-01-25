@@ -2,96 +2,127 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Location;
-use App\Models\LocationType;
+use App\Http\Requests\CreateLocationRequest;
+use App\Http\Requests\UpdateLocationRequest;
+use App\Http\Controllers\AppBaseController;
+use App\Repositories\LocationRepository;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
+use Flash;
 
-class LocationController extends Controller
+class LocationController extends AppBaseController
 {
-    public function getlocationtype()
-    {
-        $loctype = LocationType::all();
+    /** @var LocationRepository $locationRepository*/
+    private $locationRepository;
 
-        return response()->json([
-            'success' => true,
-            'message' => $loctype,
-        ], 200);
+    public function __construct(LocationRepository $locationRepo)
+    {
+        $this->locationRepository = $locationRepo;
     }
 
-    public function setlocation()
+    /**
+     * Display a listing of the Location.
+     */
+    public function index(Request $request)
     {
-        $data = request()->validate([
-            'name' => 'required|string',
-            'typeloc' => 'required|exists:location_types,id', // Validate that the location_type_id exists in the location_types table
-            'lat' => 'required|numeric',
-            'long' => 'required|numeric',
-        ]);
+        $locations = $this->locationRepository->paginate(10);
 
-        // Create a new Location model instance
-        $location = new Location([
-            'name' => $data['name'],
-            'latitude' => $data['lat'],
-            'longitude' => $data['long'],
-        ]);
-
-        // Save the location record and associate it with the specified location type
-        $locationType = LocationType::find($data['typeloc']);
-        $locationType->locations()->save($location);
-
-        // Fetch the complete Location record including the LocationType information
-        $location = Location::with('locationType') // Eager load the location type relationship
-            ->select(
-                'id',
-                'name',
-                'latitude',
-                'longitude',
-                'created_at',
-                'updated_at',
-                'location_type_id'
-            )
-            ->where('id', $location->id)
-            ->first();
-
-        return response()->json([
-            'success' => true,
-            'message' => $location,
-        ], 200);
+        return view('locations.index')
+            ->with('locations', $locations);
     }
 
-    public function getlocation()
+    /**
+     * Show the form for creating a new Location.
+     */
+    public function create()
     {
-        // Define a unique cache key for this query
-        $cacheKey = 'locations_cache';
+        return view('locations.create');
+    }
 
-        // Check if the result is already in the cache
-        if (Cache::has($cacheKey)) {
-            // If cached, return the cached result
-            $locations = Cache::get($cacheKey);
-        } else {
-            // If not cached, perform the query and store the result in the cache
-            $locations = Location::with('locationType')
-                ->select('id', 'name', 'latitude', 'longitude', 'location_type_id')
-                ->get();
+    /**
+     * Store a newly created Location in storage.
+     */
+    public function store(CreateLocationRequest $request)
+    {
+        $input = $request->all();
 
-            // Cache the result for 24 hours (adjust the duration as needed)
-            Cache::put($cacheKey, $locations, 60);
+        $location = $this->locationRepository->create($input);
+
+        Flash::success('Location saved successfully.');
+
+        return redirect(route('locations.index'));
+    }
+
+    /**
+     * Display the specified Location.
+     */
+    public function show($id)
+    {
+        $location = $this->locationRepository->find($id);
+
+        if (empty($location)) {
+            Flash::error('Location not found');
+
+            return redirect(route('locations.index'));
         }
 
-        return response()->json([
-            'success' => true,
-            'message' => $locations,
-        ], 200);
+        return view('locations.show')->with('location', $location);
     }
 
-    public function deletelocation()
+    /**
+     * Show the form for editing the specified Location.
+     */
+    public function edit($id)
     {
-        $loc = Location::find(request('idLoc'));
-        $loc->delete();
+        $location = $this->locationRepository->find($id);
 
-        return response()->json([
-            'success' => true,
-            'message' => $loc,
-        ], 200);
+        if (empty($location)) {
+            Flash::error('Location not found');
+
+            return redirect(route('locations.index'));
+        }
+
+        return view('locations.edit')->with('location', $location);
+    }
+
+    /**
+     * Update the specified Location in storage.
+     */
+    public function update($id, UpdateLocationRequest $request)
+    {
+        $location = $this->locationRepository->find($id);
+
+        if (empty($location)) {
+            Flash::error('Location not found');
+
+            return redirect(route('locations.index'));
+        }
+
+        $location = $this->locationRepository->update($request->all(), $id);
+
+        Flash::success('Location updated successfully.');
+
+        return redirect(route('locations.index'));
+    }
+
+    /**
+     * Remove the specified Location from storage.
+     *
+     * @throws \Exception
+     */
+    public function destroy($id)
+    {
+        $location = $this->locationRepository->find($id);
+
+        if (empty($location)) {
+            Flash::error('Location not found');
+
+            return redirect(route('locations.index'));
+        }
+
+        $this->locationRepository->delete($id);
+
+        Flash::success('Location deleted successfully.');
+
+        return redirect(route('locations.index'));
     }
 }
