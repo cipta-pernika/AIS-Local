@@ -45,18 +45,12 @@ class ReportGeofenceResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('event.name')
-                    ->numeric()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('aisDataPosition.vessel.mmsi')
                     ->label('MMSI')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('aisDataPosition.vessel.vessel_name')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('aisDataPosition.id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('geofence.id')
+                Tables\Columns\TextColumn::make('geofence.geofence_name')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('in')
@@ -66,7 +60,8 @@ class ReportGeofenceResource extends Resource
                     ->dateTime()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('total_time')
-                    ->searchable(),
+                    ->label('Total Time (Minute)')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()
@@ -81,10 +76,14 @@ class ReportGeofenceResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('geofence')
+                    ->multiple()
+                    ->relationship('geofence', 'geofence_name')
+                    ->preload()
+                    ->searchable(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
