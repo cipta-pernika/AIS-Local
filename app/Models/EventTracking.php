@@ -15,7 +15,8 @@ class EventTracking extends Model
         'notes',
         'mmsi',
         'ship_name',
-        'geofence_id'
+        'geofence_id',
+        'target_id'
     ];
 
     protected $casts = [

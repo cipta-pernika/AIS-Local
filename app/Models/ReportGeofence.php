@@ -15,7 +15,8 @@ class ReportGeofence extends Model
         'in',
         'out',
         'total_time',
-        'mmsi'
+        'mmsi',
+        'target_id'
     ];
 
     protected $casts = [
