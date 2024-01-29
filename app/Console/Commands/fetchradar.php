@@ -43,29 +43,31 @@ class fetchradar extends Command
             foreach ($data->features as $feature) {
                 $properties = $feature->properties;
                 $geometry = $feature->geometry->coordinates;
+                if ($geometry[1]) {
 
-                $datalogger = Datalogger::find(1);
-                $coordinate1 = new Coordinate($datalogger->latitude, $datalogger->longitude);
-                $coordinate2 = new Coordinate($geometry[1], $geometry[0]);
-                $distance = $coordinate1->getDistance($coordinate2, new Haversine());
-                $distanceInKilometers = $distance / 1000;
-                $distanceInNauticalMiles = $distanceInKilometers * 0.539957;
+                    $datalogger = Datalogger::find(1);
+                    $coordinate1 = new Coordinate($datalogger->latitude, $datalogger->longitude);
+                    $coordinate2 = new Coordinate($geometry[1], $geometry[0]);
+                    $distance = $coordinate1->getDistance($coordinate2, new Haversine());
+                    $distanceInKilometers = $distance / 1000;
+                    $distanceInNauticalMiles = $distanceInKilometers * 0.539957;
 
-                $radardata = RadarData::updateOrCreate(
-                    ['target_id' => $properties->name],
-                    [
-                        'latitude' => $geometry[1],
-                        'longitude' => $geometry[0],
-                        'altitude' => $properties->altitude,
-                        'speed' => $properties->speed,
-                        'course' => $properties->course,
-                        'heading' => $properties->heading,
-                        'range' => $properties->range,
-                        'bearing' => $properties->bearing,
-                        'timestamp' => Carbon::now(),
-                        'distance_from_fak' => $distanceInNauticalMiles
-                    ]
-                );
+                    $radardata = RadarData::updateOrCreate(
+                        ['target_id' => $properties->name],
+                        [
+                            'latitude' => $geometry[1],
+                            'longitude' => $geometry[0],
+                            'altitude' => $properties->altitude,
+                            'speed' => $properties->speed,
+                            'course' => $properties->course,
+                            'heading' => $properties->heading,
+                            'range' => $properties->range,
+                            'bearing' => $properties->bearing,
+                            'timestamp' => Carbon::now(),
+                            'distance_from_fak' => $distanceInNauticalMiles
+                        ]
+                    );
+                }
                 $defaultValue = env('APP_ENV_CHECK', 'local');
                 $url = $defaultValue == 'local'
                     ? 'http://localhost:8000/sendgeofencealarmksop'
