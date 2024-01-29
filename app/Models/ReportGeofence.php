@@ -51,4 +51,9 @@ class ReportGeofence extends Model
     {
         return $this->belongsTo(\App\Models\Geofence::class, 'geofence_id');
     }
+
+    public function target(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(\App\Models\RadarData::class, 'target_id');
+    }
 }
