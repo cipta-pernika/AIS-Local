@@ -63,20 +63,7 @@ class EventTrackingResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('aisDataPosition.speed')
                     ->label('Speed')
-                    ->sortable()
-                    ->formatStateUsing(function ($value, $record) {
-                        // Check if target_id is not null
-                        if ($record->target_id !== null) {
-                            // If not null, get the target's speed
-                            $targetSpeed = $record->target->speed;
-
-                            // You can modify the display logic based on your requirements
-                            return $targetSpeed;
-                        }
-
-                        // If target_id is null, use the original value
-                        return $value;
-                    }),
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('target.speed')
                     ->label('Speed (Radar)')
                     ->sortable(),
