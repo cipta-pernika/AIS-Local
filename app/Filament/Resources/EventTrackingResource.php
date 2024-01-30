@@ -52,6 +52,8 @@ class EventTrackingResource extends Resource
                 Tables\Columns\TextColumn::make('event.name')
                     ->numeric()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('target_id')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('aisDataPosition.vessel.mmsi')
                     ->label('MMSI')
                     ->sortable(),
