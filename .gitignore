@@ -21,3 +21,4 @@ yarn-error.log
 DOCS/node_modules
 bin\node_modules
 resources\js\node_modules
+database\sqlite\ksop.db
