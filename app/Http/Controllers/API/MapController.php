@@ -62,10 +62,10 @@ class MapController extends Controller
         $dataRadar = [];
 
         if (in_array('ais', $selectedSensors)) {
-
             $aisTracks = AisDataPosition::orderBy('ais_data_positions.created_at', 'ASC')
                 ->join('ais_data_vessels', 'ais_data_positions.vessel_id', 'ais_data_vessels.id')
-                ->with('reportGeofences')
+                ->leftJoin('report_geofences', 'ais_data_positions.id', '=', 'report_geofences.ais_data_position_id')
+                ->leftJoin('geofences', 'report_geofences.geofence_id', '=', 'geofences.id')
                 ->select(
                     'ais_data_vessels.mmsi',
                     'ais_data_positions.latitude',
@@ -76,13 +76,22 @@ class MapController extends Controller
                     'ais_data_positions.speed',
                     'ais_data_vessels.vessel_name',
                     'ais_data_vessels.imo',
-                    'ais_data_vessels.callsign'
+                    'ais_data_vessels.callsign',
+                    'ais_data_vessels.draught', // Add more columns as needed
+                    'ais_data_vessels.reported_destination',
+                    'ais_data_vessels.vessel_type',
+                    'ais_data_vessels.no_pkk',
+                    'report_geofences.in',
+                    'report_geofences.out',
+                    'report_geofences.total_time',
+                    'geofences.geofence_name',
+                    'geofences.id as geofence_id' // Add this line to select geofence_id
                 )
                 ->when($date, function ($query) use ($date, $date_until) {
                     $query->whereBetween('ais_data_positions.created_at', [$date, $date_until]);
                 })
                 ->when($mmsi, function ($query) use ($mmsi) {
-                    $query->where('ais_data_vessels.mmsi', $mmsi); // Filter by MMSI if provided
+                    $query->where('ais_data_vessels.mmsi', $mmsi);
                 })
                 ->get();
 
@@ -92,17 +101,29 @@ class MapController extends Controller
                 $geofenceInfo = [];
 
                 // Check if the vessel is inside any geofence
-                if ($track['report_geofences'] && $track['report_geofences'][0]['geofence']) {
-                    $geofenceName = $track['report_geofences'][0]['geofence']['geofence_name'];
+                if ($track->geofence_id) {
+                    $geofenceName = $track->geofence_name;
 
                     // Include geofence information
                     $geofenceInfo = [
                         ['key' => 'Geofence Name', 'value' => $geofenceName],
-                        ['key' => 'In', 'value' => $track['report_geofences'][0]['in']],
-                        ['key' => 'Out', 'value' => $track['report_geofences'][0]['out']],
-                        ['key' => 'Total Time', 'value' => $track['report_geofences'][0]['total_time']],
+                        ['key' => 'In', 'value' => $track->in ?? null],
+                        ['key' => 'Out', 'value' => $track->out ?? null],
+                        ['key' => 'Total Time', 'value' => $track->total_time ?? null],
                     ];
                 }
+                // Access additional vessel information from AisDataVessel model
+                $vesselInfo = [
+                    ['key' => 'Vessel Type', 'value' => $track->vessel_type],
+                    ['key' => 'Draught', 'value' => $track->draught],
+                    ['key' => 'Reported Destination', 'value' => $track->reported_destination],
+                    ['key' => 'Vessel Name', 'value' => $track->vessel_name],
+                    ['key' => 'IMO', 'value' => $track->imo],
+                    ['key' => 'Callsign', 'value' => $track->callsign],
+                    ['key' => 'No PKK', 'value' => $track->no_pkk],
+                    // Add more information as needed
+                ];
+                $dataAis[$mmsi]['vessel_info'] = $vesselInfo;
                 $dataAis[$mmsi]['playback'][] = [
                     'lat' => (float) $track['latitude'],
                     'lng' => (float) $track['longitude'],
