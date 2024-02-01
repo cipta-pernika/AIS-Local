@@ -54,6 +54,8 @@ class MapController extends Controller
         $mmsi = request('mmsi'); // Get the MMSI from the request
         $hexIdent = request('hex_ident'); // Get hex_ident from the request
         $targetId = request('target_id'); // Get target_id from the request
+        $pelabuhanId = request('pelabuhan_id');
+        $geofenceId = request('geofence_id');
 
         $dataAis = [];
         $dataAdsb = [];
@@ -63,6 +65,7 @@ class MapController extends Controller
 
             $aisTracks = AisDataPosition::orderBy('ais_data_positions.created_at', 'ASC')
                 ->join('ais_data_vessels', 'ais_data_positions.vessel_id', 'ais_data_vessels.id')
+                ->with('reportGeofences')
                 ->select(
                     'ais_data_vessels.mmsi',
                     'ais_data_positions.latitude',
@@ -86,13 +89,27 @@ class MapController extends Controller
             foreach ($aisTracks as $track) {
                 $mmsi = $track['mmsi'];
                 $dataAis[$mmsi]['mmsi'] = $mmsi;
+                $geofenceInfo = [];
+
+                // Check if the vessel is inside any geofence
+                if ($track['report_geofences'] && $track['report_geofences'][0]['geofence']) {
+                    $geofenceName = $track['report_geofences'][0]['geofence']['geofence_name'];
+
+                    // Include geofence information
+                    $geofenceInfo = [
+                        ['key' => 'Geofence Name', 'value' => $geofenceName],
+                        ['key' => 'In', 'value' => $track['report_geofences'][0]['in']],
+                        ['key' => 'Out', 'value' => $track['report_geofences'][0]['out']],
+                        ['key' => 'Total Time', 'value' => $track['report_geofences'][0]['total_time']],
+                    ];
+                }
                 $dataAis[$mmsi]['playback'][] = [
                     'lat' => (float) $track['latitude'],
                     'lng' => (float) $track['longitude'],
                     'dir' => ((int) $track['course'] * M_PI) / 180.0,
                     'time' => $track['created_at']->timestamp,
                     'heading' => (int) $track['heading'],
-                    'info' => [
+                    'info' => array_merge([
                         ['key' => 'MMSI', 'value' => $mmsi],
                         ['key' => 'Name', 'value' => $track['vessel_name']],
                         ['key' => 'IMO', 'value' => $track['imo']],
@@ -102,7 +119,7 @@ class MapController extends Controller
                         ['key' => 'Latitude', 'value' => $track['latitude']],
                         ['key' => 'Longitude', 'value' => $track['longitude']],
                         ['key' => 'Time Stamp ', 'value' => Carbon::parse($track['created_at'])->format('Y-m-d H:i:s')],
-                    ],
+                    ], $geofenceInfo),
                 ];
             }
 

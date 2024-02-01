@@ -41,6 +41,11 @@ class AisDataPosition extends Model
         return $this->belongsTo(Port::class);
     }
 
+    public function reportGeofences()
+    {
+        return $this->hasMany(ReportGeofence::class, 'ais_data_position_id');
+    }
+
     // Assuming it's in AisDataPosition model
     public static function isAisOn($vesselId)
     {
