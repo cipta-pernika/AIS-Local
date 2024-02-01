@@ -21,3 +21,6 @@ SrcNet.Port = 4378 # Receiving port
 
 
 Unlock code is E155638FCFA4658D1D90EECCE297DD80052BCC98C93D5BD5CD14084E9A9B0A1B22DA1BC0DBC11883D5F45F7DFB4F3786B5D0C299E885B9D4BFF4266AE061F510
+
+
+If you're trying to use a Simrad you need the correct project number which is 226. Best thing is to look at the README file in the spxserver executable directory and follow the instructions for Simrad configuration.
