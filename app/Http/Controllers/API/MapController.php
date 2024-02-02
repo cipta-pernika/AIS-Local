@@ -60,7 +60,7 @@ class MapController extends Controller
         $dataAis = [];
         $dataAdsb = [];
         $dataRadar = [];
-
+        $uniqueTimestamps = [];
         if (in_array('ais', $selectedSensors)) {
             $aisTracks = AisDataPosition::orderBy('ais_data_positions.created_at', 'ASC')
                 ->join('ais_data_vessels', 'ais_data_positions.vessel_id', 'ais_data_vessels.id')
@@ -100,6 +100,16 @@ class MapController extends Controller
                 $dataAis[$mmsi]['mmsi'] = $mmsi;
                 $geofenceInfo = [];
 
+                // Generate a unique timestamp for each entry in 'playback'
+                $timestamp = Carbon::parse($track['created_at'])->timestamp;
+
+                // Check for duplicates and skip if already processed
+                if (isset($uniqueTimestamps[$timestamp])) {
+                    continue;
+                }
+
+                $uniqueTimestamps[$timestamp] = true;
+
                 // Check if the vessel is inside any geofence
                 if ($track->geofence_id) {
                     $geofenceName = $track->geofence_name;
@@ -128,7 +138,7 @@ class MapController extends Controller
                     'lat' => (float) $track['latitude'],
                     'lng' => (float) $track['longitude'],
                     'dir' => ((int) $track['course'] * M_PI) / 180.0,
-                    'time' => $track['created_at']->timestamp,
+                    'time' => $timestamp,
                     'heading' => (int) $track['heading'],
                     'info' => array_merge([
                         ['key' => 'MMSI', 'value' => $mmsi],
