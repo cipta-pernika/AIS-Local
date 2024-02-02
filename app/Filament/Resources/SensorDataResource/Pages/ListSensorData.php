@@ -12,6 +12,8 @@ class ListSensorData extends ListRecords
 
     public ?string $tableSortColumn = 'created_at';
 
+    public ?string $tableSortDirection = 'desc';
+
     protected function getHeaderActions(): array
     {
         return [
