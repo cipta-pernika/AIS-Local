@@ -1523,8 +1523,8 @@ class HelperController extends Controller
 
         $defaultValue = env('APP_ENV_CHECK', 'local');
         $url = $defaultValue == 'local'
-            ? 'http://localhost:1880/sendgeofencealarm'
-            : 'https://nr.monitormyvessel.com/sendgeofencealarm';
+            ? 'http://localhost:1880/sendgeofencealarmgmk'
+            : 'https://nr.monitormyvessel.com/sendgeofencealarmgmk';
         $geofenceDatas = Geofence::all();
         foreach ($geofenceDatas as $value) {
             if ($value->geometry) {

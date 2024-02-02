@@ -116,7 +116,7 @@ class checkgeofence extends Command
                                 ]);
                                 $ais_data->is_inside_geofence = 1;
                                 $ais_data->update();
-                                Http::post('https://nr.monitormyvessel.com/sendgeofencealarm', [
+                                Http::post('https://nr.monitormyvessel.com/sendgeofencealarmgmk', [
                                     'msg' => $ais_data->vessel->vessel_name . ' Inside ' . $geofence->geofence_name . ' Geofence'
                                 ]);
                             }
@@ -134,7 +134,7 @@ class checkgeofence extends Command
                                     'mmsi' => $ais_data->vessel->mmsi,
                                     'geofence_id' => $geofence->id
                                 ]);
-                                Http::post('https://nr.monitormyvessel.com/sendgeofencealarm', [
+                                Http::post('https://nr.monitormyvessel.com/sendgeofencealarmgmk', [
                                     'msg' => $ais_data->vessel->vessel_name . ' Outside ' . $geofence->geofence_name . ' Geofence'
                                 ]);
                             }
