@@ -20,14 +20,14 @@ class MapController extends Controller
             $trackQuery = AisDataPosition::orderBy('created_at', 'DESC')
                 ->select('latitude', 'longitude', 'heading', 'vessel_id')
                 ->where('vessel_id', request('vessel_id'))
-                ->groupBy('vessel_id')
+                // ->groupBy('vessel_id')
                 ->with('vessel', 'sensorData.sensor.datalogger')
                 ->limit($map_setting->breadcrumb_point);
         } else {
             $trackQuery = AisDataPosition::orderBy('created_at', 'DESC')
                 ->select('latitude', 'longitude', 'heading', 'vessel_id')
                 ->where('vessel_id', request('vessel_id'))
-                ->groupBy('vessel_id')
+                // ->groupBy('vessel_id')
                 ->with('vessel', 'sensorData.sensor.datalogger')
                 ->limit(10);
         }
