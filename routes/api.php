@@ -67,6 +67,7 @@ Route::post('radarpng', [HelperController::class, 'radarpng']);
 //map
 Route::post('breadcrumb', [MapController::class, 'breadcrumb']);
 Route::post('playback', [MapController::class, 'playback']);
+Route::post('checkplayback', [MapController::class, 'checkplayback']);
 
 //export
 Route::post('exportais', [ExportController::class, 'exportais']);
