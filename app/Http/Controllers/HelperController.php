@@ -832,13 +832,13 @@ class HelperController extends Controller
             // If not cached, fetch the data
             $aisData = AisDataPosition::with('vessel')
                 ->groupBy('vessel_id')
-                ->limit(10)
+                ->limit(50)
                 ->orderBy('created_at', 'DESC')
                 ->get();
 
             $adsb = AdsbDataPosition::with('aircraft')
                 ->groupBy('aircraft_id')
-                ->limit(10)
+                ->limit(50)
                 ->orderBy('created_at', 'DESC')
                 ->get();
 
