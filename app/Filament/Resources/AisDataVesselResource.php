@@ -14,6 +14,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Malzariey\FilamentDaterangepickerFilter\Filters\DateRangeFilter;
 
 class AisDataVesselResource extends Resource implements HasShieldPermissions
 {
@@ -97,6 +98,7 @@ class AisDataVesselResource extends Resource implements HasShieldPermissions
                         'Tug' => 'Tug',
                         'Cargo' => 'Cargo',
                     ]),
+                DateRangeFilter::make('created_at'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

@@ -13,6 +13,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Malzariey\FilamentDaterangepickerFilter\Filters\DateRangeFilter;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 
 class EventTrackingResource extends Resource
@@ -86,6 +87,7 @@ class EventTrackingResource extends Resource
                     ->relationship('geofence', 'geofence_name')
                     ->preload()
                     ->searchable(),
+                DateRangeFilter::make('created_at'),
             ])
             ->actions([
                 // Tables\Actions\EditAction::make(),

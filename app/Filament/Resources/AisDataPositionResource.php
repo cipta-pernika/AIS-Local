@@ -15,6 +15,7 @@ use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Malzariey\FilamentDaterangepickerFilter\Filters\DateRangeFilter;
 
 class AisDataPositionResource extends Resource
 {
@@ -108,6 +109,7 @@ class AisDataPositionResource extends Resource
                 Tables\Filters\SelectFilter::make('vessel_id')
                     ->searchable()
                     ->options(AisDataVessel::whereNotNull('vessel_name')->get()->pluck('vessel_name', 'id')),
+                DateRangeFilter::make('created_at'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
