@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ReportGeofenceResource\Pages;
 use App\Filament\Resources\ReportGeofenceResource\RelationManagers;
+use AlperenErsoy\FilamentExport\Actions\FilamentExportBulkAction;
 use App\Models\ReportGeofence;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -88,6 +89,7 @@ class ReportGeofenceResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    FilamentExportBulkAction::make('export')
                 ]),
             ]);
     }
