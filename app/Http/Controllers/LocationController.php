@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateLocationRequest;
 use App\Http\Requests\UpdateLocationRequest;
 use App\Http\Controllers\AppBaseController;
+use App\Models\LocationType;
 use App\Repositories\LocationRepository;
 use Illuminate\Http\Request;
 use Flash;
@@ -124,5 +125,15 @@ class LocationController extends AppBaseController
         Flash::success('Location deleted successfully.');
 
         return redirect(route('locations.index'));
+    }
+
+    public function getlocationtype()
+    {
+        $loctype = LocationType::all();
+
+        return response()->json([
+            'success' => true,
+            'message' => $loctype,
+        ], 200);
     }
 }
