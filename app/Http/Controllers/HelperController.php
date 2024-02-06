@@ -58,7 +58,7 @@ class HelperController extends Controller
                 ->get();
 
             // Cache the result for 60 minutes (you can adjust the duration)
-            Cache::put($cacheKey, $event, 60);
+            Cache::put($cacheKey, $event, 600);
         }
 
         return response()->json([
@@ -716,7 +716,7 @@ class HelperController extends Controller
 
             $aisData = $query->get();
 
-            Cache::put($cacheKey, $aisData, 5);
+            Cache::put($cacheKey, $aisData, 50);
         }
 
         return response()->json([
@@ -846,7 +846,7 @@ class HelperController extends Controller
             Cache::put($cacheKey, [
                 'aisData' => $aisData,
                 'adsb' => $adsb,
-            ], 5); // Cache for 5 minutes
+            ], 500); // Cache for 5 minutes
         } else {
             // Extract data from the cached array
             $aisData = $cachedData['aisData'];
