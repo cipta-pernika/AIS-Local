@@ -28,13 +28,24 @@ class LocationAPIController extends AppBaseController
      */
     public function index(Request $request): JsonResponse
     {
-        $locations = $this->locationRepository->all(
-            $request->except(['skip', 'limit']),
-            $request->get('skip'),
-            $request->get('limit')
-        );
+        $query = Location::query();
 
-        return $this->sendResponse($locations->toArray(), 'Locations retrieved successfully');
+        // Assuming Location model has a relationship with Geofence model named 'geofence'
+        $query->with('geofence')
+            ->where($request->except(['skip', 'limit']))
+            ->when($request->has('skip'), function ($query) use ($request) {
+                return $query->skip($request->get('skip'));
+            })
+            ->when($request->has('limit'), function ($query) use ($request) {
+                return $query->limit($request->get('limit'));
+            });
+
+        $locations = $query->get();
+
+        return response()->json([
+            'data' => $locations,
+            'message' => 'Locations retrieved successfully'
+        ]);
     }
 
     /**

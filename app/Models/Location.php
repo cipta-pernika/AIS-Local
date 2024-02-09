@@ -34,4 +34,9 @@ class Location extends Model
     {
         return $this->belongsTo(\App\Models\LocationType::class, 'location_type_id');
     }
+
+    public function geofence()
+    {
+        return $this->belongsTo(Geofence::class, 'id', 'id');
+    }
 }
