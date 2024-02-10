@@ -37,4 +37,9 @@ class Geofence extends Model
     {
         return $this->belongsTo(\App\Models\Pelabuhan::class, 'pelabuhan_id');
     }
+
+    public function location(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(\App\Models\Location::class, 'location_id');
+    }
 }

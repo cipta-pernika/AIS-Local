@@ -35,8 +35,13 @@ class Location extends Model
         return $this->belongsTo(\App\Models\LocationType::class, 'location_type_id');
     }
 
-    public function geofence()
+    // public function geofence()
+    // {
+    //     return $this->belongsTo(Geofence::class, 'id', 'id');
+    // }
+
+    public function geofences(): HasMany
     {
-        return $this->belongsTo(Geofence::class, 'id', 'id');
+        return $this->hasMany(Geofence::class, 'location_id');
     }
 }
