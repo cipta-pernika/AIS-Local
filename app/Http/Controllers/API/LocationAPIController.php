@@ -31,7 +31,7 @@ class LocationAPIController extends AppBaseController
         $query = Location::query();
 
         // Assuming Location model has a relationship with Geofence model named 'geofence'
-        $query->with('geofence')
+        $query->with('geofences')
             ->where($request->except(['skip', 'limit']))
             ->when($request->has('skip'), function ($query) use ($request) {
                 return $query->skip($request->get('skip'));
