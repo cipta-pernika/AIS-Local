@@ -77,7 +77,14 @@ class LocationTypeSeeder extends Seeder
                 'icon' => 'images/locicon/482374whatsapp-icon-png-715x715.png',
                 'created_at' => new DateTime,
                 'updated_at' => new DateTime
-            ]
+            ],
+            [
+                'name' => 'Terminal',
+                'description' => 'Terminal',
+                'icon' => 'images\locicon\loc.png',
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime
+            ],
         ]);
     }
 }

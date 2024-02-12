@@ -44,8 +44,7 @@ class LocationResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('location_type_id')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('locationType.name')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
