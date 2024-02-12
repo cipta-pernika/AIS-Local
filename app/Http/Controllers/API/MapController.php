@@ -98,6 +98,7 @@ class MapController extends Controller
             foreach ($aisTracks as $track) {
                 $mmsi = $track['mmsi'];
                 $dataAis[$mmsi]['mmsi'] = $mmsi;
+                $dataAis[$mmsi]['playback'] = [];
                 $geofenceInfo = [];
 
                 // Generate a unique timestamp for each entry in 'playback'
