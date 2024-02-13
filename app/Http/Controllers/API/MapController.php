@@ -62,28 +62,39 @@ class MapController extends Controller
         $dataRadar = [];
         $uniqueTimestamps = [];
         if (in_array('ais', $selectedSensors)) {
-            $aisTracks = AisDataPosition::orderBy('created_at', 'ASC')
+            $aisTracks = AisDataPosition::orderBy('ais_data_positions.created_at', 'ASC')
                 ->join('ais_data_vessels', 'ais_data_positions.vessel_id', 'ais_data_vessels.id')
                 ->leftJoin('report_geofences', 'ais_data_positions.id', '=', 'report_geofences.ais_data_position_id')
                 ->leftJoin('geofences', 'report_geofences.geofence_id', '=', 'geofences.id')
+                ->leftJoin('sensor_datas', 'ais_data_positions.sensor_data_id', '=', 'sensor_datas.id')
+                ->leftJoin('sensors', 'sensor_datas.sensor_id', '=', 'sensors.id')
+                ->leftJoin('dataloggers', 'sensors.datalogger_id', '=', 'dataloggers.id')
                 ->select(
                     'ais_data_vessels.*',
                     'ais_data_positions.latitude',
                     'ais_data_positions.longitude',
                     'ais_data_positions.course',
                     'ais_data_positions.heading',
+                    'ais_data_positions.sensor_data_id',
                     'ais_data_positions.created_at as position_created_at',
                     'report_geofences.in',
                     'report_geofences.out',
                     'report_geofences.total_time',
                     'geofences.geofence_name',
-                    'geofences.id as geofence_id'
+                    'geofences.id as geofence_id',
+                    'dataloggers.pelabuhan_id' // Select all columns from dataloggers
                 )
                 ->when($date, function ($query) use ($date, $date_until) {
                     $query->whereBetween('ais_data_positions.created_at', [$date, $date_until]);
                 })
                 ->when($mmsi, function ($query) use ($mmsi) {
                     $query->where('ais_data_vessels.mmsi', $mmsi);
+                })
+                ->when($geofenceId, function ($query) use ($geofenceId) {
+                    $query->where('geofence_id', $geofenceId);
+                })
+                ->when($pelabuhanId, function ($query) use ($pelabuhanId) {
+                    $query->where('dataloggers.pelabuhan_id', $pelabuhanId); // Assuming pelabuhan_id is in dataloggers table
                 })
                 ->get();
 
