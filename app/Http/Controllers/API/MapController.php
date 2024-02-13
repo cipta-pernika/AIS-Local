@@ -62,30 +62,22 @@ class MapController extends Controller
         $dataRadar = [];
         $uniqueTimestamps = [];
         if (in_array('ais', $selectedSensors)) {
-            $aisTracks = AisDataPosition::orderBy('ais_data_positions.created_at', 'ASC')
+            $aisTracks = AisDataPosition::orderBy('created_at', 'ASC')
                 ->join('ais_data_vessels', 'ais_data_positions.vessel_id', 'ais_data_vessels.id')
                 ->leftJoin('report_geofences', 'ais_data_positions.id', '=', 'report_geofences.ais_data_position_id')
                 ->leftJoin('geofences', 'report_geofences.geofence_id', '=', 'geofences.id')
                 ->select(
-                    'ais_data_vessels.mmsi',
+                    'ais_data_vessels.*',
                     'ais_data_positions.latitude',
                     'ais_data_positions.longitude',
                     'ais_data_positions.course',
                     'ais_data_positions.heading',
-                    'ais_data_positions.created_at',
-                    'ais_data_positions.speed',
-                    'ais_data_vessels.vessel_name',
-                    'ais_data_vessels.imo',
-                    'ais_data_vessels.callsign',
-                    'ais_data_vessels.draught', // Add more columns as needed
-                    'ais_data_vessels.reported_destination',
-                    'ais_data_vessels.vessel_type',
-                    'ais_data_vessels.no_pkk',
+                    'ais_data_positions.created_at as position_created_at',
                     'report_geofences.in',
                     'report_geofences.out',
                     'report_geofences.total_time',
                     'geofences.geofence_name',
-                    'geofences.id as geofence_id' // Add this line to select geofence_id
+                    'geofences.id as geofence_id'
                 )
                 ->when($date, function ($query) use ($date, $date_until) {
                     $query->whereBetween('ais_data_positions.created_at', [$date, $date_until]);
@@ -95,70 +87,44 @@ class MapController extends Controller
                 })
                 ->get();
 
+            $dataAis = [];
+
             foreach ($aisTracks as $track) {
-                $mmsi = $track['mmsi'];
-                $dataAis[$mmsi]['mmsi'] = $mmsi;
-                $dataAis[$mmsi]['playback'] = [];
-                $geofenceInfo = [];
+                $mmsi = $track->mmsi;
+                $timestamp = Carbon::parse($track->position_created_at)->timestamp;
 
-                // Generate a unique timestamp for each entry in 'playback'
-                $timestamp = Carbon::parse($track['created_at'])->timestamp;
+                if (!isset($uniqueTimestamps[$timestamp])) {
+                    $uniqueTimestamps[$timestamp] = true;
+                    $geofenceName = $track->geofence_id ? $track->geofence_name : null;
 
-                // Check for duplicates and skip if already processed
-                if (isset($uniqueTimestamps[$timestamp])) {
-                    continue;
-                }
-
-                $uniqueTimestamps[$timestamp] = true;
-
-                // Check if the vessel is inside any geofence
-                if ($track->geofence_id) {
-                    $geofenceName = $track->geofence_name;
-
-                    // Include geofence information
-                    $geofenceInfo = [
-                        ['key' => 'Geofence Name', 'value' => $geofenceName],
-                        ['key' => 'In', 'value' => $track->in ?? null],
-                        ['key' => 'Out', 'value' => $track->out ?? null],
-                        ['key' => 'Total Time', 'value' => $track->total_time ?? null],
+                    $dataAis[$mmsi]['mmsi'] = $mmsi;
+                    $dataAis[$mmsi]['playback'][] = [
+                        'lat' => (float) $track->latitude,
+                        'lng' => (float) $track->longitude,
+                        'dir' => ((int) $track->course * M_PI) / 180.0,
+                        'time' => $timestamp,
+                        'heading' => (int) $track->heading,
+                        'mmsi' => $mmsi,
+                        'vessel_name' => $track->vessel_name,
+                        'imo' => $track->imo,
+                        'callsign' => $track->callsign,
+                        'vessel_type' => $track->vessel_type,
+                        'draught' => $track->draught,
+                        'reported_destination' => $track->reported_destination,
+                        'no_pkk' => $track->no_pkk,
+                        'geofence_name' => $geofenceName,
+                        'in' => $track->in ?? null,
+                        'out' => $track->out ?? null,
+                        'total_time' => $track->total_time ?? null,
                     ];
                 }
-                // Access additional vessel information from AisDataVessel model
-                $vesselInfo = [
-                    ['key' => 'Vessel Type', 'value' => $track->vessel_type],
-                    ['key' => 'Draught', 'value' => $track->draught],
-                    ['key' => 'Reported Destination', 'value' => $track->reported_destination],
-                    ['key' => 'Vessel Name', 'value' => $track->vessel_name],
-                    ['key' => 'IMO', 'value' => $track->imo],
-                    ['key' => 'Callsign', 'value' => $track->callsign],
-                    ['key' => 'No PKK', 'value' => $track->no_pkk],
-                    // Add more information as needed
-                ];
-                $dataAis[$mmsi]['vessel_info'] = $vesselInfo;
-                $dataAis[$mmsi]['playback'][] = [
-                    'lat' => (float) $track['latitude'],
-                    'lng' => (float) $track['longitude'],
-                    'dir' => ((int) $track['course'] * M_PI) / 180.0,
-                    'time' => $timestamp,
-                    'heading' => (int) $track['heading'],
-                    'info' => array_merge([
-                        ['key' => 'MMSI', 'value' => $mmsi],
-                        ['key' => 'Name', 'value' => $track['vessel_name']],
-                        ['key' => 'IMO', 'value' => $track['imo']],
-                        ['key' => 'Callsign', 'value' => $track['callsign']],
-                        ['key' => 'SOG', 'value' => $track['speed']],
-                        ['key' => 'COG', 'value' => $track['course']],
-                        ['key' => 'Latitude', 'value' => $track['latitude']],
-                        ['key' => 'Longitude', 'value' => $track['longitude']],
-                        ['key' => 'Time Stamp ', 'value' => Carbon::parse($track['created_at'])->format('Y-m-d H:i:s')],
-                    ], $geofenceInfo),
-                ];
             }
 
-            $dataAis = collect($dataAis)->sortByDesc(function ($item, $key) {
+            $dataAis = collect($dataAis)->sortByDesc(function ($item) {
                 return count($item['playback']);
             })->values()->all();
         }
+
 
         if (in_array('adsb', $selectedSensors)) {
 
