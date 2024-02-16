@@ -8,6 +8,7 @@ use App\Models\ReportSopBuntut;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Tables\Actions\Action;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -74,9 +75,14 @@ class ReportSopBuntutResource extends Resource
                         'Kelanis' => 'Kelanis',
                     ]),
                 DateRangeFilter::make('tgl_tiba'),
-                DateRangeFilter::make('created_at'),
+                DateRangeFilter::make('in')->label('Masuk Geofence'),
+                DateRangeFilter::make('out')->label('Keluar Geofence'),
                 DateRangeFilter::make('tgl_brangkat'),
-            ])
+            ])->filtersFormColumns(2)->filtersTriggerAction(
+                fn (Action $action) => $action
+                    ->button()
+                    ->label('Filter'),
+            )
             ->actions([
                 // Tables\Actions\EditAction::make(),
             ])
