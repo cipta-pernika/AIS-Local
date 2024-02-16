@@ -30,9 +30,8 @@ class LocationTypeResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('description')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('icon')
-                    ->required()
-                    ->maxLength(255),
+                Forms\Components\FileUpload::make('icon'),
+                Forms\Components\ColorPicker::make('color'),
             ]);
     }
 
@@ -44,8 +43,8 @@ class LocationTypeResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('description')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('icon')
-                    ->searchable(),
+                Tables\Columns\ImageColumn::make('icon')->defaultImageUrl(url('/images/locicon/loc.png')),
+                Tables\Columns\ColorColumn::make('color'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

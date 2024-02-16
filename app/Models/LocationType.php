@@ -12,7 +12,8 @@ class LocationType extends Model
     protected $fillable = [
         'name',
         'description',
-        'icon'
+        'icon',
+        'color'
     ];
 
     public function locations()
