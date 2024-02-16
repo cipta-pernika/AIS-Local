@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ReportSopBuntutResource\Pages;
+use AlperenErsoy\FilamentExport\Actions\FilamentExportHeaderAction;
 use App\Filament\Resources\ReportSopBuntutResource\RelationManagers;
 use App\Models\ReportSopBuntut;
 use Filament\Forms;
@@ -85,6 +86,10 @@ class ReportSopBuntutResource extends Resource
             )
             ->actions([
                 // Tables\Actions\EditAction::make(),
+            ])
+            ->headerActions([
+                FilamentExportHeaderAction::make('export')->disableAdditionalColumns() // Disable additional columns input
+                    ->disableFilterColumns()
             ])
             ->bulkActions([
                 // Tables\Actions\BulkActionGroup::make([
