@@ -22,6 +22,8 @@ class ReportSopBuntutResource extends Resource
 
     protected static ?string $navigationGroup = 'Report';
 
+    protected static ?string $navigationLabel = 'Report SOP BUNTUT';
+
     public static function form(Form $form): Form
     {
         return $form
