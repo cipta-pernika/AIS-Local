@@ -38,9 +38,9 @@ class ReportSopBuntutResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('no_pkk'),
-                TextColumn::make('vessel_name'),
-                TextColumn::make('nama_perusahaan'),
+                TextColumn::make('no_pkk')->searchable(),
+                TextColumn::make('vessel_name')->searchable(),
+                TextColumn::make('nama_perusahaan')->searchable(),
                 TextColumn::make('vessel_type'),
                 TextColumn::make('draught')->numeric(),
                 TextColumn::make('dimension_to_bow')->numeric(),
@@ -49,10 +49,10 @@ class ReportSopBuntutResource extends Resource
                 TextColumn::make('dimension_to_starboard')->numeric(),
                 TextColumn::make('bendera'),
                 TextColumn::make('tgl_tiba'),
-                TextColumn::make('pelabuhan_asal'),
+                TextColumn::make('pelabuhan_asal')->searchable(),
                 TextColumn::make('lokasi_lambat_labuh'),
                 TextColumn::make('tgl_brangkat'),
-                TextColumn::make('pelabuhan_tujuan'),
+                TextColumn::make('pelabuhan_tujuan')->searchable(),
                 TextColumn::make('geofence_id'),
                 TextColumn::make('in'),
                 TextColumn::make('out'),
