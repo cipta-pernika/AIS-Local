@@ -13,6 +13,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Tables\Columns\TextColumn;
+use Malzariey\FilamentDaterangepickerFilter\Filters\DateRangeFilter;
 
 class ReportSopBuntutResource extends Resource
 {
@@ -58,7 +59,23 @@ class ReportSopBuntutResource extends Resource
                 TextColumn::make('created_at'),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('vessel_type')
+                    ->options([
+                        'Fishing' => 'Fishing',
+                        'Tug' => 'Tug',
+                        'Cargo' => 'Cargo',
+                    ]),
+                Tables\Filters\SelectFilter::make('bendera')
+                    ->options([
+                        'ID' => 'Indonesia',
+                    ]),
+                Tables\Filters\SelectFilter::make('pelabuhan_asal')
+                    ->options([
+                        'Kelanis' => 'Kelanis',
+                    ]),
+                DateRangeFilter::make('tgl_tiba'),
+                DateRangeFilter::make('created_at'),
+                DateRangeFilter::make('tgl_brangkat'),
             ])
             ->actions([
                 // Tables\Actions\EditAction::make(),
