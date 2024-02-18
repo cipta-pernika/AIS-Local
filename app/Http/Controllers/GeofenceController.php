@@ -90,6 +90,7 @@ class GeofenceController extends Controller
         }
 
         $geod = Geofence::where('id', $geo->id)
+            ->with('pelabuhan')
             ->first();
 
         Cache::forget('all_geofences');
