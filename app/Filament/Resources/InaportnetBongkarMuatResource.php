@@ -12,6 +12,9 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Tables\Columns\Layout\Split;
+use Filament\Tables\Columns\ViewColumn;
+use Filament\Tables\Actions\Action;
 
 class InaportnetBongkarMuatResource extends Resource
 {
@@ -34,13 +37,13 @@ class InaportnetBongkarMuatResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\TextInput::make('no_pkk')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('pbm_kode')
+                    ->maxLength(255),
                 Forms\Components\TextInput::make('id_rkbm')
                     ->required()
                     ->numeric(),
-                Forms\Components\TextInput::make('pbm_kode')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('no_pkk')
-                    ->maxLength(255),
                 Forms\Components\TextInput::make('no_surat_keluar')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('kade')
@@ -88,87 +91,110 @@ class InaportnetBongkarMuatResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id_rkbm')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('pbm_kode')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('no_pkk')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('no_surat_keluar')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('kade')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('rencana_bongkar')
-                    ->date()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('rencana_muat')
-                    ->date()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('mulai_bongkar')
-                    ->date()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('mulai_muat')
-                    ->date()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('selesai_bongkar')
-                    ->date()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('selesai_muat')
-                    ->date()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('nomor_layanan_masuk')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('nomor_layanan_sps')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('aisDataVessel.mmsi')
-                    ->label('MMSI')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('nama_kapal')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('gt_kapal')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('panjang_kapal')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('dwt')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('siupal_pemilik')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('siupal_operator')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('bendera')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('nama_perusahaan')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('nomor_produk')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('tipe_kapal')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('pbm')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                // Split::make([
+                // Tables\Columns\TextColumn::make('no_pkk')
+                //     ->searchable(),
+                // Tables\Columns\TextColumn::make('pbm_kode')
+                //     ->searchable(),
+                // Tables\Columns\TextColumn::make('id_rkbm')
+                //     ->numeric()
+                //     ->sortable(),
+                // ])->from('xl'),
+                ViewColumn::make('id_rkbm')
+                    ->view('filament.tables.columns.no-rkbm')
+                    ->label('Nomor PKK'),
+                ViewColumn::make('nama_kapal')
+                    ->view('filament.tables.columns.nama-kapal')
+                    ->label('Nama Kapal'),
+                ViewColumn::make('nama_perusahaan')
+                    ->view('filament.tables.columns.nama-perusahaan')
+                    ->label('Nama Perusahaan'),
+                ViewColumn::make('mulai_bongkar')
+                    ->view('filament.tables.columns.mulai-bongkar')
+                    ->label('Jadwal Bongkar'),
+                ViewColumn::make('bendera')
+                    ->view('filament.tables.columns.cctv')
+                    ->label('CCTV'),
+                // Tables\Columns\TextColumn::make('no_surat_keluar')
+                //     ->searchable(),
+                // Tables\Columns\TextColumn::make('kade')
+                //     ->searchable(),
+                // Tables\Columns\TextColumn::make('rencana_bongkar')
+                //     ->date()
+                //     ->sortable(),
+                // Tables\Columns\TextColumn::make('rencana_muat')
+                //     ->date()
+                //     ->sortable(),
+                // Tables\Columns\TextColumn::make('mulai_bongkar')
+                //     ->date()
+                //     ->sortable(),
+                // Tables\Columns\TextColumn::make('mulai_muat')
+                //     ->date()
+                //     ->sortable(),
+                // Tables\Columns\TextColumn::make('selesai_bongkar')
+                //     ->date()
+                //     ->sortable(),
+                // Tables\Columns\TextColumn::make('selesai_muat')
+                //     ->date()
+                //     ->sortable(),
+                // Tables\Columns\TextColumn::make('nomor_layanan_masuk')
+                //     ->searchable(),
+                // Tables\Columns\TextColumn::make('nomor_layanan_sps')
+                //     ->searchable(),
+                // Tables\Columns\TextColumn::make('aisDataVessel.mmsi')
+                //     ->label('MMSI')
+                //     ->numeric()
+                //     ->sortable(),
+                // Tables\Columns\TextColumn::make('nama_kapal')
+                //     ->searchable(),
+                // Tables\Columns\TextColumn::make('gt_kapal')
+                //     ->numeric()
+                //     ->sortable(),
+                // Tables\Columns\TextColumn::make('panjang_kapal')
+                //     ->numeric()
+                //     ->sortable(),
+                // Tables\Columns\TextColumn::make('dwt')
+                //     ->numeric()
+                //     ->sortable(),
+                // Tables\Columns\TextColumn::make('siupal_pemilik')
+                //     ->searchable(),
+                // Tables\Columns\TextColumn::make('siupal_operator')
+                //     ->searchable(),
+                // Tables\Columns\TextColumn::make('bendera')
+                //     ->searchable(),
+                // Tables\Columns\TextColumn::make('nama_perusahaan')
+                //     ->searchable(),
+                // Tables\Columns\TextColumn::make('nomor_produk')
+                //     ->searchable(),
+                // Tables\Columns\TextColumn::make('tipe_kapal')
+                //     ->searchable(),
+                // Tables\Columns\TextColumn::make('pbm')
+                //     ->searchable(),
+                // Tables\Columns\TextColumn::make('created_at')
+                //     ->dateTime()
+                //     ->sortable()
+                //     ->toggleable(isToggledHiddenByDefault: true),
+                // Tables\Columns\TextColumn::make('updated_at')
+                //     ->dateTime()
+                //     ->sortable()
+                //     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                // Tables\Actions\EditAction::make(),
+                Action::make('delete')
+                    ->label('Cek Posisi')
+                    ->requiresConfirmation(),
+                Action::make('delete')
+                    ->label('Playback')
+                    ->requiresConfirmation()
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                // Tables\Actions\BulkActionGroup::make([
+                //     Tables\Actions\DeleteBulkAction::make(),
+                // ]),
             ]);
     }
 
