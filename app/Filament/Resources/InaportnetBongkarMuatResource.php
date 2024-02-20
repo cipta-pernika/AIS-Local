@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Tables\Columns\Layout\Split;
 use Filament\Tables\Columns\ViewColumn;
 use Filament\Tables\Actions\Action;
+use Illuminate\Database\Eloquent\Model;
 
 class InaportnetBongkarMuatResource extends Resource
 {
@@ -184,12 +185,10 @@ class InaportnetBongkarMuatResource extends Resource
             ])
             ->actions([
                 // Tables\Actions\EditAction::make(),
-                Action::make('delete')
-                    ->label('Cek Posisi')
-                    ->requiresConfirmation(),
-                Action::make('delete')
-                    ->label('Playback')
-                    ->requiresConfirmation()
+                Action::make('checkPosisi')
+                    ->label('Cek Posisi')->url(fn (Model $record): string => route('cekposisi', ['record' => $record]))->openUrlInNewTab(),
+                Action::make('playback')
+                    ->label('Playback')->url(fn (Model $record): string => route('playback', ['record' => $record]))->openUrlInNewTab()
             ])
             ->bulkActions([
                 // Tables\Actions\BulkActionGroup::make([

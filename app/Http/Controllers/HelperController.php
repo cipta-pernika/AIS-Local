@@ -14,6 +14,7 @@ use App\Models\Datalogger;
 use App\Models\EventTracking;
 use App\Models\Geofence;
 use App\Models\GeofenceBinding;
+use App\Models\InaportnetBongkarMuat;
 use App\Models\RadarData;
 use App\Models\ReportGeofence;
 use App\Models\Sensor;
@@ -35,6 +36,67 @@ use Location\Polygon;
 
 class HelperController extends Controller
 {
+    public function playback()
+    {
+        $inaportnet = InaportnetBongkarMuat::find(request('record'));
+        $ais_vessel = AisDataVessel::where('vessel_name', 'like', "%$inaportnet->nama_kapal%")->first();
+
+        if ($ais_vessel) {
+            $ais_position = AisDataPosition::where('vessel_id', $ais_vessel->id)->first();
+
+            // If ais_position is found
+            if ($ais_position) {
+                $mmsi = $ais_vessel->mmsi;
+                $startDate = date('Y-m-d', strtotime($ais_position->timestamp));
+                $endDate = date('Y-m-d', strtotime($ais_position->timestamp . '+7 days'));
+
+                // Constructing the URL
+                $url = "https://sopbuntutksopbjm.com/playback?type=mmsi&value=$mmsi&start_date=$startDate&end_date=$endDate&is_ais=true";
+                return redirect($url);
+            }
+
+            // If ais_position is not found
+            $url = "https://sopbuntutksopbjm.com/?msg=Position not found for the vessel.";
+            return redirect($url);
+        } else {
+            // Redirect with error message
+            $errorMessage = urlencode('Vessel not found in AIS data.');
+            $url = "https://sopbuntutksopbjm.com/?msg=$errorMessage";
+            return redirect($url);
+        }
+    }
+
+    public function cekposisi()
+    {
+        $inaportnet = InaportnetBongkarMuat::find(request('record'));
+        $ais_vessel = AisDataVessel::where('vessel_name', 'like', "%$inaportnet->nama_kapal%")->first();
+
+        if ($ais_vessel) {
+            $ais_position = AisDataPosition::where('vessel_id', $ais_vessel->id)->first();
+
+            // If ais_position is found
+            if ($ais_position) {
+                $latitude = $ais_position->latitude;
+                $longitude = $ais_position->longitude;
+                $timestamp = $ais_position->timestamp;
+
+                // Redirect with latitude, longitude, and timestamp
+                $url = "https://sopbuntutksopbjm.com/?lat=$latitude&lng=$longitude&timestamp=$timestamp";
+                return redirect($url);
+            }
+
+            // If ais_position is not found
+            $url = "https://sopbuntutksopbjm.com/?msg=Position not found for the vessel.";
+            return redirect($url);
+        } else {
+            // Redirect with error message
+            $errorMessage = urlencode('Vessel not found in AIS data.');
+            $url = "https://sopbuntutksopbjm.com/?msg=$errorMessage";
+            return redirect($url);
+        }
+    }
+
+
     public function redirecttoplayback()
     {
         return redirect('admin/playback');
