@@ -32,10 +32,10 @@ class AppServiceProvider extends ServiceProvider
                 NavigationItem::make('Maps')
                     ->url(env('APP_ENV_URL') === 'local' ? 'http://localhost:3005' : 'https://sopbuntutksopbjm.com')
                     ->icon('heroicon-o-map'),
-                NavigationItem::make('Performance Monitoring')
-                    ->url('/pulse')
-                    ->icon('heroicon-o-trophy')
-                    ->group('Logs'),
+                // NavigationItem::make('Performance Monitoring')
+                //     ->url('/pulse')
+                //     ->icon('heroicon-o-trophy')
+                //     ->group('Logs'),
                 // NavigationItem::make('Klasifikasi Jenis Kapal')
                 //     ->url('/admin/classifications')
                 //     ->icon('heroicon-o-trophy')

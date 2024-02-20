@@ -42,7 +42,7 @@ class HelperController extends Controller
         $ais_vessel = AisDataVessel::where('vessel_name', 'like', "%$inaportnet->nama_kapal%")->first();
 
         if ($ais_vessel) {
-            $ais_position = AisDataPosition::where('vessel_id', $ais_vessel->id)->first();
+            $ais_position = AisDataPosition::where('vessel_id', $ais_vessel->id)->orderBy('created_at', 'DESC')->first();
 
             // If ais_position is found
             if ($ais_position) {
