@@ -2,7 +2,7 @@
 /node_modules
 /public/build
 /public/hot
-/public/storage
+# /public/storage
 /storage/*.key
 /vendor
 .env
@@ -22,3 +22,4 @@ DOCS/node_modules
 bin\node_modules
 resources\js\node_modules
 database/sqlite/ksop.db
+!public\storage\images\locicon
