@@ -170,3 +170,5 @@ Route::resource('pbkm-kegiatan-pemanduans', App\Http\Controllers\API\PbkmKegiata
 Route::resource('terminals', App\Http\Controllers\API\TerminalAPIController::class);
 
 Route::resource('locations', App\Http\Controllers\API\LocationAPIController::class);
+
+Route::post('cekposisi', [MapController::class, 'cekposisi']);

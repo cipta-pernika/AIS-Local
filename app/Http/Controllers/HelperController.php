@@ -86,7 +86,7 @@ class HelperController extends Controller
             }
 
             // If ais_position is not found
-            $url = "https://sopbuntutksopbjm.com/?msg=Position not found for the vessel.";
+            $url = "https://sopbuntutksopbjm.com/?msg=Position not found for the vessel.&mmsi=$ais_vessel->mmsi";
             return redirect($url);
         } else {
             // Redirect with error message

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\AdsbDataPosition;
 use App\Models\AisDataPosition;
+use App\Models\AisDataVessel;
 use App\Models\MapSetting;
 use App\Models\RadarData;
 use Carbon\Carbon;
@@ -12,6 +13,22 @@ use Illuminate\Http\Request;
 
 class MapController extends Controller
 {
+    public function cekposisi()
+    {
+        $mmsi = request('mmsi');
+        $ais_vessel = AisDataVessel::where('mmsi', $mmsi)->first();
+
+        if ($ais_vessel) {
+            $ais_position = AisDataPosition::where('vessel_id', $ais_vessel->id)->with('reportGeofences')->orderBy('created_at', 'DESC')->first();
+        }
+
+        return response()->json([
+            'success' => true,
+            'vessel_info' => $ais_vessel,
+            'vessel_position_geofence' => $ais_position
+        ], 200);
+    }
+
     public function breadcrumb()
     {
         $map_setting = MapSetting::select('breadcrumb', 'breadcrumb_point')->first();
