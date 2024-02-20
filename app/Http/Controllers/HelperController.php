@@ -81,17 +81,17 @@ class HelperController extends Controller
                 $timestamp = $ais_position->timestamp;
 
                 // Redirect with latitude, longitude, and timestamp
-                $url = "https://sopbuntutksopbjm.com/?lat=$latitude&lng=$longitude&timestamp=$timestamp";
+                $url = "admin/cek-posisi/?lat=$latitude&lng=$longitude&timestamp=$timestamp";
                 return redirect($url);
             }
 
             // If ais_position is not found
-            $url = "https://sopbuntutksopbjm.com/?msg=Position not found for the vessel.";
+            $url = "admin/cek-posisi/?msg=Position not found for the vessel.&mmsi=$ais_vessel->mmsi";
             return redirect($url);
         } else {
             // Redirect with error message
             $errorMessage = urlencode('Vessel not found in AIS data.');
-            $url = "https://sopbuntutksopbjm.com/?msg=$errorMessage";
+            $url = "admin/cek-posisi/?msg=$errorMessage";
             return redirect($url);
         }
     }

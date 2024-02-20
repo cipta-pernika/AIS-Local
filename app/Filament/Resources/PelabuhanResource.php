@@ -21,6 +21,8 @@ class PelabuhanResource extends Resource
 
     protected static ?string $navigationGroup = 'Master Data';
 
+    protected static ?string $navigationLabel = 'Pelabuhan';
+
     public static function form(Form $form): Form
     {
         return $form

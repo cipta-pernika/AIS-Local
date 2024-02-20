@@ -22,6 +22,8 @@ class TerminalResource extends Resource
 
     protected static ?string $navigationGroup = 'Master Data';
 
+    protected static ?string $navigationLabel = 'Terminal';
+
     public static function form(Form $form): Form
     {
         return $form

@@ -66,7 +66,7 @@ const defaultOptions = {
 
 compile({
     ...defaultOptions,
-    entryPoints: ['./resources/js/aismaps.js', "./resources/js/playback.js"],
+    entryPoints: ['./resources/js/aismaps.js', "./resources/js/playback.js", "./resources/js/cekposisi.js"],
     // outfile: './resources/js/dist/aismaps.js',
     outdir: 'resources/js/dist',
     // entryPoints: [
