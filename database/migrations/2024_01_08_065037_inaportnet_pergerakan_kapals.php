@@ -35,6 +35,8 @@ return new class extends Migration
             $table->string('waktu_respon')->nullable();
             $table->string('nomor_spog')->nullable();
 
+            $table->string('no_pkk_assign')->nullable();
+
             $table->timestamps();
 
             $table->index('id');

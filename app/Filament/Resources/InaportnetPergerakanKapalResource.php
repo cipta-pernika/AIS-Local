@@ -102,11 +102,23 @@ class InaportnetPergerakanKapalResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('tipe_kapal')
                     ->searchable()->action(
-                        Action::make('select')
-                            ->requiresConfirmation()
-                            ->action(function (InaportnetPergerakanKapal $record): void {
-                                $this->dispatch('select-post', post: $record->getKey());
-                            }),
+                        Action::make('assign')->icon('heroicon-m-pencil-square')
+                            ->button()
+                            // ->hidden(!auth()->user()->can('update', $this->post))
+                            // ->badge(5)
+                            ->badgeColor('success')
+                            ->label('Assign')
+                            ->labeledFrom('md')
+                            ->form([
+                                Select::make('no_pkk_assign')
+                                    ->label('No PKK')
+                                    ->options(AisDataVessel::query()->whereNotNull('no_pkk')->pluck('no_pkk', 'no_pkk'))
+                                    ->required(),
+                            ])
+                            ->action(function (array $data, InaportnetPergerakanKapal $record): void {
+                                $record->no_pkk_assign = $data['no_pkk_assign'];
+                                $record->update();
+                            })
                     ),
                 Tables\Columns\TextColumn::make('nama_perusahaan')
                     ->searchable(),
@@ -171,14 +183,14 @@ class InaportnetPergerakanKapalResource extends Resource
                     ->label('Assign')
                     ->labeledFrom('md')
                     ->form([
-                        Select::make('assignId')
+                        Select::make('no_pkk_assign')
                             ->label('No PKK')
-                            ->options(AisDataVessel::query()->whereNotNull('no_pkk')->pluck('no_pkk', 'id'))
+                            ->options(AisDataVessel::query()->whereNotNull('no_pkk')->pluck('no_pkk', 'no_pkk'))
                             ->required(),
                     ])
                     ->action(function (array $data, InaportnetPergerakanKapal $record): void {
-                        $record->assignId()->associate($data['assignId']);
-                        $record->save();
+                        $record->no_pkk_assign = $data['no_pkk_assign'];
+                        $record->update();
                     })
             ], position: ActionsPosition::BeforeColumns)
             ->bulkActions([

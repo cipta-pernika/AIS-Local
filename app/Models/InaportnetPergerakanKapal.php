@@ -29,7 +29,8 @@ class InaportnetPergerakanKapal extends Model
         'pelabuhan_tujuan',
         'lokasi_lambat_labuh',
         'waktu_respon',
-        'nomor_spog'
+        'nomor_spog',
+        'no_pkk_assign'
     ];
 
     protected $casts = [
@@ -91,8 +92,8 @@ class InaportnetPergerakanKapal extends Model
         // For example, dispatch an event, update data, etc.
     }
 
-    public function assignId(): \Illuminate\Database\Eloquent\Relations\BelongsTo
-    {
-        return $this->belongsTo(\App\Models\AisDataVessel::class, 'no_pkk');
-    }
+    // public function assignId(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    // {
+    //     return $this->belongsTo(\App\Models\AisDataVessel::class, 'no_pkk_assign', 'no_pkk');
+    // }
 }
