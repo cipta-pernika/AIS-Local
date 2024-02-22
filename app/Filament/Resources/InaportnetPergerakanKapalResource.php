@@ -14,7 +14,9 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Get;
 use Filament\Tables\Actions\Action;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class InaportnetPergerakanKapalResource extends Resource
@@ -177,7 +179,22 @@ class InaportnetPergerakanKapalResource extends Resource
                 // Tables\Actions\EditAction::make(),
                 Action::make('assign')->icon('heroicon-m-pencil-square')
                     ->button()
-                    // ->hidden(!auth()->user()->can('update', $this->post))
+                    // ->hidden($record->no_pkk_assign !== null)
+                    // ->hidden(function (array $data) {
+                    //     return isset($data['no_pkk_assign']) && $data['no_pkk_assign'] !== null;
+                    // })
+                    // ->hidden(fn (Get $get): bool => $get('no_pkk_assign') !== null)
+                    // ->hidden(function () use ($assignId) {
+                    //     return $assignId !== null;
+                    // })
+                    ->hidden(function (Table $table, Model $record) {
+                        // Check if no_pkk_assign is not null
+                        if ($record->no_pkk_assign !== null) {
+                            return true; // Hide the action
+                        }
+
+                        return false; // Show the action
+                    })
                     // ->badge(5)
                     ->badgeColor('success')
                     ->label('Assign')
@@ -185,6 +202,8 @@ class InaportnetPergerakanKapalResource extends Resource
                     ->form([
                         Select::make('no_pkk_assign')
                             ->label('No PKK')
+                            ->native(false)
+                            ->searchable()
                             ->options(AisDataVessel::query()->whereNotNull('no_pkk')->pluck('no_pkk', 'no_pkk'))
                             ->required(),
                     ])
@@ -192,6 +211,9 @@ class InaportnetPergerakanKapalResource extends Resource
                         $record->no_pkk_assign = $data['no_pkk_assign'];
                         $record->update();
                     })
+                    ->fillForm(fn (InaportnetPergerakanKapal $record): array => [
+                        'no_pkk_assign' => $record->no_pkk_assign,
+                    ])
             ], position: ActionsPosition::BeforeColumns)
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
