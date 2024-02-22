@@ -17,9 +17,11 @@ class LocationTypeResource extends Resource
 {
     protected static ?string $model = LocationType::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-s-map-pin';
 
-    protected static ?string $navigationGroup = 'Location';
+    protected static ?string $navigationGroup = 'PoI (Lokasi)';
+
+    protected static ?string $navigationLabel = 'Data Master';
 
     public static function form(Form $form): Form
     {

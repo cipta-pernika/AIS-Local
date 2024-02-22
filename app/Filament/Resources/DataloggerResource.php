@@ -19,7 +19,7 @@ class DataloggerResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $navigationGroup = 'Master Data';
+    protected static ?string $navigationGroup = 'Informasi Penting';
 
     protected static ?int $navigationSort = 98;
 

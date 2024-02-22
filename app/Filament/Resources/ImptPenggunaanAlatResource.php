@@ -17,7 +17,7 @@ class ImptPenggunaanAlatResource extends Resource
 {
     protected static ?string $model = ImptPenggunaanAlat::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-circle-stack';
 
     protected static ?string $navigationGroup = 'Big Data';
 

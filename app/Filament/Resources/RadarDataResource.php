@@ -21,6 +21,8 @@ class RadarDataResource extends Resource
 
     protected static ?string $navigationGroup = 'RADAR';
 
+    protected static ?string $navigationLabel = 'Radar Data';
+
     public static function form(Form $form): Form
     {
         return $form

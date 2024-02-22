@@ -20,7 +20,7 @@ class EventTrackingResource extends Resource
 {
     protected static ?string $model = EventTracking::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-c-arrow-trending-up';
 
     protected static ?string $navigationGroup = 'Events';
 

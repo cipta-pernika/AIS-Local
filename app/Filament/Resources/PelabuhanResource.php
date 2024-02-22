@@ -17,9 +17,11 @@ class PelabuhanResource extends Resource
 {
     protected static ?string $model = Pelabuhan::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-m-building-office-2';
 
-    protected static ?string $navigationGroup = 'Master Data';
+    protected static ?string $navigationGroup = 'Informasi Penting';
+
+    protected static ?string $navigationLabel = 'Pelabuhan';
 
     public static function form(Form $form): Form
     {

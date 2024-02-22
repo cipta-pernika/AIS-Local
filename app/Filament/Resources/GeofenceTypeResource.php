@@ -17,7 +17,7 @@ class GeofenceTypeResource extends Resource
 {
     protected static ?string $model = GeofenceType::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-c-cursor-arrow-ripple';
 
     protected static ?string $navigationGroup = 'Geofence';
 
