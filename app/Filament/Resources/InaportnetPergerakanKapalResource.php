@@ -193,7 +193,7 @@ class InaportnetPergerakanKapalResource extends Resource
                             return true; // Hide the action
                         }
 
-                        if ($record->tipe_kapal === 'TONGKANG / BARGE') {
+                        if ($record->tipe_kapal !== 'TONGKANG / BARGE') {
                             return true; // Hide the action
                         }
 
