@@ -21,6 +21,11 @@ class AdsbDataFlightResource extends Resource
 
     protected static ?string $navigationGroup = 'ADS-B';
 
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false;
+    }
+
     public static function form(Form $form): Form
     {
         return $form

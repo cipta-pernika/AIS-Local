@@ -83,4 +83,16 @@ class InaportnetPergerakanKapal extends Model
     {
         return $this->belongsTo(\App\Models\AisDataVessel::class, 'ais_data_vessel_id');
     }
+
+    public function selectPost($postId)
+    {
+        dd($postId);
+        // Handle the select-post action here
+        // For example, dispatch an event, update data, etc.
+    }
+
+    public function assignId(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(\App\Models\AisDataVessel::class, 'no_pkk');
+    }
 }

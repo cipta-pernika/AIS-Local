@@ -4,6 +4,8 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\InaportnetPergerakanKapalResource\Pages;
 use App\Filament\Resources\InaportnetPergerakanKapalResource\RelationManagers;
+use App\Models\AisDataVessel;
+use Filament\Tables\Enums\ActionsPosition;
 use App\Models\InaportnetPergerakanKapal;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -11,6 +13,8 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Forms\Components\Select;
+use Filament\Tables\Actions\Action;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class InaportnetPergerakanKapalResource extends Resource
@@ -86,7 +90,7 @@ class InaportnetPergerakanKapalResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('no_pkk')
                     ->searchable(),
-                    Tables\Columns\TextColumn::make('aisDataVessel.mmsi')
+                Tables\Columns\TextColumn::make('aisDataVessel.mmsi')
                     ->label('MMSI')
                     ->numeric()
                     ->sortable(),
@@ -97,7 +101,13 @@ class InaportnetPergerakanKapalResource extends Resource
                 Tables\Columns\TextColumn::make('nama_negara')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('tipe_kapal')
-                    ->searchable(),
+                    ->searchable()->action(
+                        Action::make('select')
+                            ->requiresConfirmation()
+                            ->action(function (InaportnetPergerakanKapal $record): void {
+                                $this->dispatch('select-post', post: $record->getKey());
+                            }),
+                    ),
                 Tables\Columns\TextColumn::make('nama_perusahaan')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('tgl_tiba')
@@ -140,11 +150,37 @@ class InaportnetPergerakanKapalResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('tipe_kapal')
+                    ->options([
+                        'TONGKANG / BARGE' => 'TONGKANG / BARGE',
+                        'KAPAL MOTOR TUNDA (TUG BOAT)' => 'KAPAL MOTOR TUNDA (TUG BOAT)'
+                    ]),
             ])
+            ->filtersTriggerAction(
+                fn (Action $action) => $action
+                    ->button()
+                    ->label('Filter'),
+            )
             ->actions([
-                Tables\Actions\EditAction::make(),
-            ])
+                // Tables\Actions\EditAction::make(),
+                Action::make('assign')->icon('heroicon-m-pencil-square')
+                    ->button()
+                    // ->hidden(!auth()->user()->can('update', $this->post))
+                    // ->badge(5)
+                    ->badgeColor('success')
+                    ->label('Assign')
+                    ->labeledFrom('md')
+                    ->form([
+                        Select::make('assignId')
+                            ->label('No PKK')
+                            ->options(AisDataVessel::query()->whereNotNull('no_pkk')->pluck('no_pkk', 'id'))
+                            ->required(),
+                    ])
+                    ->action(function (array $data, InaportnetPergerakanKapal $record): void {
+                        $record->assignId()->associate($data['assignId']);
+                        $record->save();
+                    })
+            ], position: ActionsPosition::BeforeColumns)
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
