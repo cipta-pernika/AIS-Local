@@ -133,13 +133,17 @@ class ListBargePairing extends Component implements HasForms, HasTable
                         Select::make('no_pkk_assign')
                             ->label('No PKK')
                             ->native(false)
-                            ->searchable()
+                            ->relationship(
+                                name: 'assignId',
+                                modifyQueryUsing: fn (Builder $query) => $query->orderBy('no_pkk')->orderBy('vessel_name'),
+                            )
+                            ->searchable(['no_pkk', 'vessel_name', 'nama_perusahaan'])
                             ->options(AisDataVessel::query()->whereNotNull('no_pkk')->pluck('no_pkk', 'no_pkk'))
-                            ->getSearchResultsUsing(fn (string $search): array => AisDataVessel::where('no_pkk', 'like', "%{$search}%")
-                                ->whereNotNull('no_pkk')
-                                ->limit(50)->pluck('no_pkk', 'no_pkk')->toArray())
-                            ->getOptionLabelUsing(fn ($value): ?string => AisDataVessel::find($value)?->name)
-                            ->getOptionLabelFromRecordUsing(fn (Model $record) => "{$record->no_pkk} {$record->vessel_name}")
+                            // ->getSearchResultsUsing(fn (string $search): array => AisDataVessel::where('no_pkk', 'like', "%{$search}%")
+                            //     ->whereNotNull('no_pkk')
+                            //     ->limit(50)->pluck('no_pkk', 'no_pkk')->toArray())
+                            // ->getOptionLabelUsing(fn ($value): ?string => AisDataVessel::find($value)?->name)
+                            ->getOptionLabelFromRecordUsing(fn (Model $record) => "{$record->no_pkk} ~ {$record->vessel_name} ~ {$record->nama_perusahaan}")
                             ->required(),
                     ])
                     ->action(function (array $data, InaportnetPergerakanKapal $record): void {
