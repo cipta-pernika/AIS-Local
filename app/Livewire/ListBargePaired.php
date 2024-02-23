@@ -30,6 +30,7 @@ class ListBargePaired extends Component implements HasForms, HasTable
             ->query(InaportnetPergerakanKapal::query()->where('tipe_kapal', 'TONGKANG / BARGE')->whereNotNull('no_pkk_assign'))
             ->columns([
                 TextColumn::make('no_pkk'),
+                TextColumn::make('no_pkk_assign'),
                 TextColumn::make('aisDataVessel.mmsi')
                     ->label('MMSI')
                     ->numeric()

@@ -103,25 +103,26 @@ class InaportnetPergerakanKapalResource extends Resource
                 Tables\Columns\TextColumn::make('nama_negara')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('tipe_kapal')
-                    ->searchable()->action(
-                        Action::make('assign')->icon('heroicon-m-pencil-square')
-                            ->button()
-                            // ->hidden(!auth()->user()->can('update', $this->post))
-                            // ->badge(5)
-                            ->badgeColor('success')
-                            ->label('Assign')
-                            ->labeledFrom('md')
-                            ->form([
-                                Select::make('no_pkk_assign')
-                                    ->label('No PKK')
-                                    ->options(AisDataVessel::query()->whereNotNull('no_pkk')->pluck('no_pkk', 'no_pkk'))
-                                    ->required(),
-                            ])
-                            ->action(function (array $data, InaportnetPergerakanKapal $record): void {
-                                $record->no_pkk_assign = $data['no_pkk_assign'];
-                                $record->update();
-                            })
-                    ),
+                    ->searchable(),
+                    // ->action(
+                    //     Action::make('assign')->icon('heroicon-m-pencil-square')
+                    //         ->button()
+                    //         // ->hidden(!auth()->user()->can('update', $this->post))
+                    //         // ->badge(5)
+                    //         ->badgeColor('success')
+                    //         ->label('Assign')
+                    //         ->labeledFrom('md')
+                    //         ->form([
+                    //             Select::make('no_pkk_assign')
+                    //                 ->label('No PKK')
+                    //                 ->options(AisDataVessel::query()->whereNotNull('no_pkk')->pluck('no_pkk', 'no_pkk'))
+                    //                 ->required(),
+                    //         ])
+                    //         ->action(function (array $data, InaportnetPergerakanKapal $record): void {
+                    //             $record->no_pkk_assign = $data['no_pkk_assign'];
+                    //             $record->update();
+                    //         })
+                    // ),
                 Tables\Columns\TextColumn::make('nama_perusahaan')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('tgl_tiba')
@@ -177,65 +178,65 @@ class InaportnetPergerakanKapalResource extends Resource
             )
             ->actions([
                 // Tables\Actions\EditAction::make(),
-                Action::make('assign')->icon('heroicon-m-pencil-square')
-                    ->button()
-                    // ->hidden($record->no_pkk_assign !== null)
-                    // ->hidden(function (array $data) {
-                    //     return isset($data['no_pkk_assign']) && $data['no_pkk_assign'] !== null;
-                    // })
-                    // ->hidden(fn (Get $get): bool => $get('no_pkk_assign') !== null)
-                    // ->hidden(function () use ($assignId) {
-                    //     return $assignId !== null;
-                    // })
-                    ->hidden(function (Table $table, Model $record) {
-                        // Check if no_pkk_assign is not null
-                        if ($record->no_pkk_assign !== null) {
-                            return true; // Hide the action
-                        }
+                // Action::make('assign')->icon('heroicon-m-pencil-square')
+                //     ->button()
+                //     // ->hidden($record->no_pkk_assign !== null)
+                //     // ->hidden(function (array $data) {
+                //     //     return isset($data['no_pkk_assign']) && $data['no_pkk_assign'] !== null;
+                //     // })
+                //     // ->hidden(fn (Get $get): bool => $get('no_pkk_assign') !== null)
+                //     // ->hidden(function () use ($assignId) {
+                //     //     return $assignId !== null;
+                //     // })
+                //     ->hidden(function (Table $table, Model $record) {
+                //         // Check if no_pkk_assign is not null
+                //         if ($record->no_pkk_assign !== null) {
+                //             return true; // Hide the action
+                //         }
 
-                        if ($record->tipe_kapal !== 'TONGKANG / BARGE') {
-                            return true; // Hide the action
-                        }
+                //         if ($record->tipe_kapal !== 'TONGKANG / BARGE') {
+                //             return true; // Hide the action
+                //         }
 
-                        return false; // Show the action
-                    })
-                    // ->badge(5)
-                    ->badgeColor('success')
-                    ->label('Assign')
-                    ->labeledFrom('md')
-                    ->form([
-                        // Select::make('no_pkk_assign')
-                        //     ->label('No PKK')
-                        //     ->native(false)
-                        //     ->searchable()
-                        //     ->relationship(
-                        //         name: 'assignId',
-                        //         modifyQueryUsing: fn (Builder $query) => $query->orderBy('no_pkk')->orderBy('vessel_name')->whereNotNull('no_pkk'),
-                        //     )
-                        //     // ->options(AisDataVessel::query()->whereNotNull('no_pkk')->pluck('no_pkk', 'no_pkk'))
-                        //     // ->getSearchResultsUsing(fn (string $search): array => AisDataVessel::where('no_pkk', 'like', "%{$search}%")
-                        //     //     ->whereNotNull('no_pkk')
-                        //     //     ->limit(50)->pluck('no_pkk', 'no_pkk')->toArray())
-                        //     // ->getOptionLabelUsing(fn ($value): ?string => AisDataVessel::find($value)?->name)
-                        //     ->getOptionLabelFromRecordUsing(fn (Model $record) => "{$record->no_pkk} {$record->vessel_name}")
-                        //     ->required(),
-                        Select::make('assignId')
-                            ->label('No PKK')
-                            ->required()
-                            ->relationship(
-                                name: 'assignId',
-                                modifyQueryUsing: fn (Builder $query) => $query->orderBy('no_pkk')->orderBy('vessel_name'),
-                            )
-                            ->getOptionLabelFromRecordUsing(fn (Model $record) => "{$record->no_pkk} ~ {$record->vessel_name} ~ {$record->nama_perusahaan}")
-                            ->searchable(['no_pkk', 'vessel_name', 'nama_perusahaan'])
-                    ])
-                    ->action(function (array $data, InaportnetPergerakanKapal $record): void {
-                        $record->no_pkk_assign = $data['no_pkk_assign'];
-                        $record->update();
-                    })
-                    ->fillForm(fn (InaportnetPergerakanKapal $record): array => [
-                        'no_pkk_assign' => $record->no_pkk_assign,
-                    ])
+                //         return false; // Show the action
+                //     })
+                //     // ->badge(5)
+                //     ->badgeColor('success')
+                //     ->label('Assign')
+                //     ->labeledFrom('md')
+                //     ->form([
+                //         // Select::make('no_pkk_assign')
+                //         //     ->label('No PKK')
+                //         //     ->native(false)
+                //         //     ->searchable()
+                //         //     ->relationship(
+                //         //         name: 'assignId',
+                //         //         modifyQueryUsing: fn (Builder $query) => $query->orderBy('no_pkk')->orderBy('vessel_name')->whereNotNull('no_pkk'),
+                //         //     )
+                //         //     // ->options(AisDataVessel::query()->whereNotNull('no_pkk')->pluck('no_pkk', 'no_pkk'))
+                //         //     // ->getSearchResultsUsing(fn (string $search): array => AisDataVessel::where('no_pkk', 'like', "%{$search}%")
+                //         //     //     ->whereNotNull('no_pkk')
+                //         //     //     ->limit(50)->pluck('no_pkk', 'no_pkk')->toArray())
+                //         //     // ->getOptionLabelUsing(fn ($value): ?string => AisDataVessel::find($value)?->name)
+                //         //     ->getOptionLabelFromRecordUsing(fn (Model $record) => "{$record->no_pkk} {$record->vessel_name}")
+                //         //     ->required(),
+                //         Select::make('assignId')
+                //             ->label('No PKK')
+                //             ->required()
+                //             ->relationship(
+                //                 name: 'assignId',
+                //                 modifyQueryUsing: fn (Builder $query) => $query->orderBy('no_pkk')->orderBy('vessel_name'),
+                //             )
+                //             ->getOptionLabelFromRecordUsing(fn (Model $record) => "{$record->no_pkk} ~ {$record->vessel_name} ~ {$record->nama_perusahaan}")
+                //             ->searchable(['no_pkk', 'vessel_name', 'nama_perusahaan'])
+                //     ])
+                //     ->action(function (array $data, InaportnetPergerakanKapal $record): void {
+                //         $record->no_pkk_assign = $data['no_pkk_assign'];
+                //         $record->update();
+                //     })
+                //     ->fillForm(fn (InaportnetPergerakanKapal $record): array => [
+                //         'no_pkk_assign' => $record->no_pkk_assign,
+                //     ])
             ], position: ActionsPosition::BeforeColumns)
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
