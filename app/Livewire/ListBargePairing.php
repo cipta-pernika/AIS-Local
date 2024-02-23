@@ -23,7 +23,7 @@ class ListBargePairing extends Component implements HasForms, HasTable
 {
     use InteractsWithTable;
     use InteractsWithForms;
-    
+
     public function table(Table $table): Table
     {
         return $table
@@ -107,7 +107,6 @@ class ListBargePairing extends Component implements HasForms, HasTable
                 Action::make('assign')->icon('heroicon-m-pencil-square')
                     ->button()
                     ->hidden(function (Table $table, Model $record) {
-                        // Check if no_pkk_assign is not null
                         if ($record->no_pkk_assign !== null) {
                             return true; // Hide the action
                         }
@@ -122,15 +121,26 @@ class ListBargePairing extends Component implements HasForms, HasTable
                     ->label('Assign')
                     ->labeledFrom('md')
                     ->form([
-                        Select::make('assignId')
+                        // Select::make('assignId')
+                        //     ->label('No PKK')
+                        //     ->required()
+                        //     ->relationship(
+                        //         name: 'assignId',
+                        //         modifyQueryUsing: fn (Builder $query) => $query->orderBy('no_pkk')->orderBy('vessel_name'),
+                        //     )
+                        //     ->getOptionLabelFromRecordUsing(fn (Model $record) => "{$record->no_pkk} ~ {$record->vessel_name} ~ {$record->nama_perusahaan}")
+                        //     ->searchable(['no_pkk', 'vessel_name', 'nama_perusahaan'])
+                        Select::make('no_pkk_assign')
                             ->label('No PKK')
-                            ->required()
-                            ->relationship(
-                                name: 'assignId',
-                                modifyQueryUsing: fn (Builder $query) => $query->orderBy('no_pkk')->orderBy('vessel_name'),
-                            )
-                            ->getOptionLabelFromRecordUsing(fn (Model $record) => "{$record->no_pkk} ~ {$record->vessel_name} ~ {$record->nama_perusahaan}")
-                            ->searchable(['no_pkk', 'vessel_name', 'nama_perusahaan'])
+                            ->native(false)
+                            ->searchable()
+                            ->options(AisDataVessel::query()->whereNotNull('no_pkk')->pluck('no_pkk', 'no_pkk'))
+                            ->getSearchResultsUsing(fn (string $search): array => AisDataVessel::where('no_pkk', 'like', "%{$search}%")
+                                ->whereNotNull('no_pkk')
+                                ->limit(50)->pluck('no_pkk', 'no_pkk')->toArray())
+                            ->getOptionLabelUsing(fn ($value): ?string => AisDataVessel::find($value)?->name)
+                            ->getOptionLabelFromRecordUsing(fn (Model $record) => "{$record->no_pkk} {$record->vessel_name}")
+                            ->required(),
                     ])
                     ->action(function (array $data, InaportnetPergerakanKapal $record): void {
                         $record->no_pkk_assign = $data['no_pkk_assign'];
@@ -144,7 +154,7 @@ class ListBargePairing extends Component implements HasForms, HasTable
                 // ...
             ]);
     }
-    
+
     public function render(): View
     {
         return view('livewire.list-barge-pairing');

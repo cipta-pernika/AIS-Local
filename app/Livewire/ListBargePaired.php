@@ -107,29 +107,25 @@ class ListBargePaired extends Component implements HasForms, HasTable
                 Action::make('assign')->icon('heroicon-m-pencil-square')
                     ->button()
                     ->hidden(function (Table $table, Model $record) {
-                        // Check if no_pkk_assign is not null
-                        if ($record->no_pkk_assign !== null) {
-                            return true; // Hide the action
-                        }
 
                         if ($record->tipe_kapal !== 'TONGKANG / BARGE') {
                             return true; // Hide the action
                         }
 
-                        return false; // Show the action
+                        return false;
                     })
                     ->badgeColor('success')
                     ->label('Assign')
                     ->labeledFrom('md')
                     ->form([
-                        Select::make('assignId')
+                        Select::make('no_pkk_assign')
                             ->label('No PKK')
                             ->required()
-                            ->relationship(
-                                name: 'assignId',
-                                modifyQueryUsing: fn (Builder $query) => $query->orderBy('no_pkk')->orderBy('vessel_name'),
-                            )
-                            ->getOptionLabelFromRecordUsing(fn (Model $record) => "{$record->no_pkk} ~ {$record->vessel_name} ~ {$record->nama_perusahaan}")
+                            // ->relationship(
+                            //     name: 'assignId',
+                            //     modifyQueryUsing: fn (Builder $query) => $query->orderBy('no_pkk')->orderBy('vessel_name'),
+                            // )
+                            // ->getOptionLabelFromRecordUsing(fn (Model $record) => "{$record->no_pkk} ~ {$record->vessel_name} ~ {$record->nama_perusahaan}")
                             ->searchable(['no_pkk', 'vessel_name', 'nama_perusahaan'])
                     ])
                     ->action(function (array $data, InaportnetPergerakanKapal $record): void {
