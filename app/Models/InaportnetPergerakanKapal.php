@@ -96,4 +96,9 @@ class InaportnetPergerakanKapal extends Model
     // {
     //     return $this->belongsTo(\App\Models\AisDataVessel::class, 'no_pkk_assign', 'no_pkk');
     // }
+
+    public function assignId(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(\App\Models\AisDataVessel::class, 'no_pkk', 'no_pkk');
+    }
 }
