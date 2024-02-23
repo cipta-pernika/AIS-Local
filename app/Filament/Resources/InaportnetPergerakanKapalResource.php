@@ -220,12 +220,14 @@ class InaportnetPergerakanKapalResource extends Resource
                         //     ->getOptionLabelFromRecordUsing(fn (Model $record) => "{$record->no_pkk} {$record->vessel_name}")
                         //     ->required(),
                         Select::make('assignId')
+                            ->label('No PKK')
+                            ->required()
                             ->relationship(
                                 name: 'assignId',
                                 modifyQueryUsing: fn (Builder $query) => $query->orderBy('no_pkk')->orderBy('vessel_name'),
                             )
                             ->getOptionLabelFromRecordUsing(fn (Model $record) => "{$record->no_pkk} ~ {$record->vessel_name} ~ {$record->nama_perusahaan}")
-                            ->searchable(['no_pkk', 'vessel_name'])
+                            ->searchable(['no_pkk', 'vessel_name', 'nama_perusahaan'])
                     ])
                     ->action(function (array $data, InaportnetPergerakanKapal $record): void {
                         $record->no_pkk_assign = $data['no_pkk_assign'];
