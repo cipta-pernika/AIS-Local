@@ -54,6 +54,7 @@ class AisDataVesselResource extends Resource implements HasShieldPermissions
                     'Tug' => 'Tug',
                     'Cargo' => 'Cargo',
                 ])->native(false),
+                Forms\Components\TextInput::make('no_pkk'),
             ]);
     }
 
