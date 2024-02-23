@@ -21,7 +21,7 @@ class LocationResource extends Resource
 
     protected static ?string $navigationGroup = 'PoI (Lokasi)';
 
-    protected static ?string $navigationLabel = 'Tambah, Ubah dan Hapus';
+    protected static ?string $navigationLabel = 'Daftar Lokasi';
 
     public static function form(Form $form): Form
     {
