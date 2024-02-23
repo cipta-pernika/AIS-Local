@@ -135,10 +135,10 @@ class ListBargePairing extends Component implements HasForms, HasTable
                             ->native(false)
                             ->relationship(
                                 name: 'assignId',
-                                modifyQueryUsing: fn (Builder $query) => $query->orderBy('no_pkk')->orderBy('vessel_name'),
+                                modifyQueryUsing: fn (Builder $query) => $query->orderBy('no_pkk')->orderBy('vessel_name')->where('isAssign', 0),
                             )
                             ->searchable(['no_pkk', 'vessel_name', 'nama_perusahaan'])
-                            ->options(AisDataVessel::query()->whereNotNull('no_pkk')->pluck('no_pkk', 'no_pkk'))
+                            ->options(AisDataVessel::query()->whereNotNull('no_pkk')->pluck('no_pkk', 'no_pkk')->where('isAssign', 0))
                             // ->getSearchResultsUsing(fn (string $search): array => AisDataVessel::where('no_pkk', 'like', "%{$search}%")
                             //     ->whereNotNull('no_pkk')
                             //     ->limit(50)->pluck('no_pkk', 'no_pkk')->toArray())
@@ -149,6 +149,10 @@ class ListBargePairing extends Component implements HasForms, HasTable
                     ->action(function (array $data, InaportnetPergerakanKapal $record): void {
                         $record->no_pkk_assign = $data['no_pkk_assign'];
                         $record->update();
+
+                        $aisDataVessel = AisDataVessel::whereNotNull('no_pkk')->where('isAssign', 0)->where('no_pkk', $data['no_pkk_assign'])->first();
+                        $aisDataVessel->isAssign = 1;
+                        $aisDataVessel->update();
                     })
                     ->fillForm(fn (InaportnetPergerakanKapal $record): array => [
                         'no_pkk_assign' => $record->no_pkk_assign,

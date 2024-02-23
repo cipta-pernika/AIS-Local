@@ -46,6 +46,8 @@ return new class extends Migration
             $table->string('lokasi_lambat_labuh')->nullable();
             $table->string('nomor_spog')->nullable();
 
+            $table->tinyInteger('isAssign')->default(0);
+
             $table->timestamps();
 
             $table->index('id');
