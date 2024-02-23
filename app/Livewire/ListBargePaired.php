@@ -19,7 +19,7 @@ use Illuminate\Database\Eloquent\Model;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Contracts\View\View;
 
-class ListBargePairing extends Component implements HasForms, HasTable
+class ListBargePaired extends Component implements HasForms, HasTable
 {
     use InteractsWithTable;
     use InteractsWithForms;
@@ -27,7 +27,7 @@ class ListBargePairing extends Component implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(InaportnetPergerakanKapal::query()->where('tipe_kapal', 'TONGKANG / BARGE'))
+            ->query(InaportnetPergerakanKapal::query()->where('tipe_kapal', 'TONGKANG / BARGE')->whereNotNull('no_pkk_assign'))
             ->columns([
                 TextColumn::make('no_pkk'),
                 TextColumn::make('aisDataVessel.mmsi')
@@ -144,9 +144,9 @@ class ListBargePairing extends Component implements HasForms, HasTable
                 // ...
             ]);
     }
-    
+
     public function render(): View
     {
-        return view('livewire.list-barge-pairing');
+        return view('livewire.list-barge-paired');
     }
 }
