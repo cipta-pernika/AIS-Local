@@ -17,7 +17,7 @@ class RadarDataResource extends Resource
 {
     protected static ?string $model = RadarData::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-c-ellipsis-horizontal-circle';
 
     protected static ?string $navigationGroup = 'RADAR';
 

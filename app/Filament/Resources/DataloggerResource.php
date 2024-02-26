@@ -17,7 +17,7 @@ class DataloggerResource extends Resource
 {
     protected static ?string $model = Datalogger::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-s-computer-desktop';
 
     protected static ?string $navigationGroup = 'Informasi Penting';
 

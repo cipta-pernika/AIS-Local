@@ -6,7 +6,7 @@ use Filament\Pages\Page;
 
 class BargePairingTo extends Page
 {
-    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+    protected static ?string $navigationIcon = 'heroicon-c-arrow-top-right-on-square';
 
     protected static string $view = 'filament.pages.barge-pairing-to';
 

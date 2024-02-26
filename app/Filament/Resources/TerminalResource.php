@@ -18,7 +18,7 @@ class TerminalResource extends Resource
 {
     protected static ?string $model = Terminal::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-c-building-office-2';
 
     protected static ?string $navigationGroup = 'Informasi Penting';
 

@@ -17,7 +17,7 @@ class SensorDataResource extends Resource
 {
     protected static ?string $model = SensorData::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-s-device-tablet';
 
     protected static ?string $navigationGroup = 'Logs';
 
