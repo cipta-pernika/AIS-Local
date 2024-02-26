@@ -140,7 +140,7 @@ class LocationController extends AppBaseController
 
     public function getlocation()
     {
-        $loctype = Location::all();
+        $loctype = Location::with('locationType')->get();
 
         return response()->json([
             'success' => true,
