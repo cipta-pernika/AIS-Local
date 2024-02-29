@@ -20,13 +20,7 @@ class MapController extends Controller
 
         if ($ais_vessel) {
             $ais_position = AisDataPosition::where('vessel_id', $ais_vessel->id)
-                ->with(['reportGeofences', 'reportGeofences.geofence', 'reportGeofences.geofence.pelabuhan', 'reportGeofences.geofence.location'])
                 ->orderBy('created_at', 'DESC')->first();
-
-            // If no reportGeofences are found, set it to null
-            if ($ais_position && $ais_position->reportGeofences->isEmpty()) {
-                $ais_position->reportGeofences = null;
-            }
         }
 
         return response()->json([

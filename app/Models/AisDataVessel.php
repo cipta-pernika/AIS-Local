@@ -58,4 +58,9 @@ class AisDataVessel extends Model
     {
         return $this->hasMany(AisDataPosition::class, 'vessel_id');
     }
+
+    public function reportGeofences()
+    {
+        return $this->hasMany(ReportGeofence::class, 'mmsi', 'mmsi');
+    }
 }
