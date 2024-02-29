@@ -20,9 +20,9 @@ class MapController extends Controller
 
         if ($ais_vessel) {
             $ais_position = AisDataPosition::where('vessel_id', $ais_vessel->id)
-                ->with(['reportGeofence' => function ($query) {
+                ->with(['reportGeofences' => function ($query) {
                     $query->withDefault();
-                }, 'reportGeofence.geofence', 'reportGeofence.geofence.pelabuhan', 'reportGeofence.geofence.location'])
+                }, 'reportGeofences.geofence', 'reportGeofences.geofence.pelabuhan', 'reportGeofences.geofence.location'])
                 ->orderBy('created_at', 'DESC')->first();
         }
 
