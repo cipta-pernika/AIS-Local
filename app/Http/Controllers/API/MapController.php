@@ -20,7 +20,9 @@ class MapController extends Controller
 
         if ($ais_vessel) {
             $ais_position = AisDataPosition::where('vessel_id', $ais_vessel->id)
-                ->with('reportGeofence', 'reportGeofence.geofence', 'reportGeofence.geofence.pelabuhan', 'reportGeofence.geofence.location')
+                ->with(['reportGeofence' => function ($query) {
+                    $query->withDefault();
+                }, 'reportGeofence.geofence', 'reportGeofence.geofence.pelabuhan', 'reportGeofence.geofence.location'])
                 ->orderBy('created_at', 'DESC')->first();
         }
 
@@ -30,6 +32,7 @@ class MapController extends Controller
             'vessel_position_geofence' => $ais_position
         ], 200);
     }
+
 
     public function breadcrumb()
     {
