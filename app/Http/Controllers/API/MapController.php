@@ -34,6 +34,7 @@ class MapController extends Controller
     }
 
 
+
     public function breadcrumb()
     {
         $map_setting = MapSetting::select('breadcrumb', 'breadcrumb_point')->first();
