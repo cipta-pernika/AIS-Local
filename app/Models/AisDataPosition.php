@@ -43,7 +43,7 @@ class AisDataPosition extends Model
 
     public function reportGeofences()
     {
-        return $this->hasMany(ReportGeofence::class, 'ais_data_position_id');
+        return $this->belongsTo(ReportGeofence::class, 'ais_data_position_id');
     }
 
     // Assuming it's in AisDataPosition model
