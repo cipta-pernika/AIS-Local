@@ -19,7 +19,9 @@ class MapController extends Controller
         $ais_vessel = AisDataVessel::where('mmsi', $mmsi)->first();
 
         if ($ais_vessel) {
-            $ais_position = AisDataPosition::where('vessel_id', $ais_vessel->id)->with('reportGeofences')->orderBy('created_at', 'DESC')->first();
+            $ais_position = AisDataPosition::where('vessel_id', $ais_vessel->id)
+                ->with('reportGeofences', 'reportGeofences.geofence', 'reportGeofences.geofence.pelabuhan', 'reportGeofences.geofence.location')
+                ->orderBy('created_at', 'DESC')->first();
         }
 
         return response()->json([
