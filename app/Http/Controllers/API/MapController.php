@@ -16,7 +16,7 @@ class MapController extends Controller
     public function cekposisi()
     {
         $mmsi = request('mmsi');
-        $ais_vessel = AisDataVessel::where('mmsi', $mmsi)->with('reportGeofences')->first();
+        $ais_vessel = AisDataVessel::where('mmsi', $mmsi)->with('reportGeofences', 'reportGeofences.geofence')->first();
 
         if ($ais_vessel) {
             $ais_position = AisDataPosition::where('vessel_id', $ais_vessel->id)
