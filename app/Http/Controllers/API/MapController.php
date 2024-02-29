@@ -17,7 +17,12 @@ class MapController extends Controller
     {
         $mmsi = request('mmsi');
         $ais_vessel = AisDataVessel::where('mmsi', $mmsi)
-            ->with('reportGeofences', 'reportGeofences.geofence', 'reportGeofences.geofence.geofenceType')->first();
+            ->with([
+                'reportGeofences' => function ($query) {
+                    $query->orderBy('created_at', 'DESC')->take(5)
+                        ->with('geofence', 'geofence.geofenceType');
+                }
+            ])->first();
 
         if ($ais_vessel) {
             $ais_position = AisDataPosition::where('vessel_id', $ais_vessel->id)
