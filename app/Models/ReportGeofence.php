@@ -41,10 +41,10 @@ class ReportGeofence extends Model
     {
         return $this->belongsTo(\App\Models\AisDataPosition::class, 'ais_data_position_id');
     }
-    public function aisDataPositions()
-    {
-        return $this->hasMany(AisDataPosition::class, 'ais_data_position_id', 'id');
-    }
+    // public function aisDataPositions()
+    // {
+    //     return $this->hasMany(AisDataPosition::class, 'ais_data_position_id', 'id');
+    // }
 
     public function event(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
