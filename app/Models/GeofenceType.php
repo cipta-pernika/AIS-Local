@@ -30,5 +30,8 @@ class GeofenceType extends Model
         'updated_at' => 'nullable'
     ];
 
-    
+    public function geofences()
+    {
+        return $this->hasMany(Geofence::class);
+    }
 }

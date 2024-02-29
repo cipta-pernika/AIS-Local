@@ -42,4 +42,9 @@ class Geofence extends Model
     {
         return $this->belongsTo(\App\Models\Location::class, 'location_id');
     }
+
+    public function geofenceType()
+    {
+        return $this->belongsTo(GeofenceType::class);
+    }
 }
