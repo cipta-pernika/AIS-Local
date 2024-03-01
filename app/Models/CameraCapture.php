@@ -26,5 +26,13 @@ class CameraCapture extends Model
         'updated_at' => 'nullable'
     ];
 
-    
+    public function pelabuhan(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(\App\Models\Pelabuhan::class, 'pelabuhan_id');
+    }
+
+    public function geofence(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(\App\Models\Geofence::class, 'geofence_id');
+    }
 }

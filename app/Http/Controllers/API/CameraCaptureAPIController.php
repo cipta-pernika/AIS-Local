@@ -51,7 +51,7 @@ class CameraCaptureAPIController extends AppBaseController
         $image = $request->file('image');
 
         // Store the image in a folder by day
-        $folderPath = 'camera_captures/' . Carbon::now()->format('Y/m/d');
+        $folderPath = 'images/camera_captures/' . Carbon::now()->format('Y/m/d');
         $imagePath = $image->store($folderPath);
 
         // Create a new CameraCapture instance
