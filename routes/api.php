@@ -174,4 +174,4 @@ Route::resource('locations', App\Http\Controllers\API\LocationAPIController::cla
 Route::post('cekposisi', [MapController::class, 'cekposisi']);
 
 Route::resource('camera-captures', App\Http\Controllers\API\CameraCaptureAPIController::class)
-    ->except(['create', 'edit']);
+    ->except(['edit']);

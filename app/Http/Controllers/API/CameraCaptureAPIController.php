@@ -9,6 +9,7 @@ use App\Repositories\CameraCaptureRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
+use Carbon\Carbon;
 
 /**
  * Class CameraCaptureAPIController
@@ -43,10 +44,24 @@ class CameraCaptureAPIController extends AppBaseController
      */
     public function store(CreateCameraCaptureAPIRequest $request): JsonResponse
     {
-        $input = $request->all();
+        // Validate the request
+        $validatedData = $request->validated();
 
-        $cameraCapture = $this->cameraCaptureRepository->create($input);
+        // Get the image file from the request
+        $image = $request->file('image');
 
+        // Store the image in a folder by day
+        $folderPath = 'camera_captures/' . Carbon::now()->format('Y/m/d');
+        $imagePath = $image->store($folderPath);
+
+        // Create a new CameraCapture instance
+        $cameraCapture = new CameraCapture();
+        $cameraCapture->pelabuhan_id = $validatedData['pelabuhan_id'];
+        $cameraCapture->geofence_id = $validatedData['geofence_id'];
+        $cameraCapture->image = $imagePath;
+        $cameraCapture->save();
+
+        // Return success response
         return $this->sendResponse($cameraCapture->toArray(), 'Camera Capture saved successfully');
     }
 
