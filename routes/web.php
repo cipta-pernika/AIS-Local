@@ -67,3 +67,4 @@ Route::resource('terminals', App\Http\Controllers\TerminalController::class);
 Route::resource('locations', App\Http\Controllers\LocationController::class);
 Route::get('cekposisi', [HelperController::class, 'cekposisi'])->name('cekposisi');
 Route::get('playback', [HelperController::class, 'playback'])->name('playback');
+Route::resource('camera-captures', App\Http\Controllers\CameraCaptureController::class);
