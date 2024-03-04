@@ -89,7 +89,7 @@ class GeofenceResource extends Resource
                     ->options(Pelabuhan::all()->pluck('name', 'id')),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

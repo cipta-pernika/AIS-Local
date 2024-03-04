@@ -14,7 +14,11 @@ use App\Models\Datalogger;
 use App\Models\EventTracking;
 use App\Models\Geofence;
 use App\Models\GeofenceBinding;
+use App\Models\ImptPelayananKapal;
+use App\Models\ImptPenggunaanAlat;
 use App\Models\InaportnetBongkarMuat;
+use App\Models\InaportnetPergerakanKapal;
+use App\Models\PbkmKegiatanPemanduan;
 use App\Models\RadarData;
 use App\Models\ReportGeofence;
 use App\Models\Sensor;
@@ -68,7 +72,27 @@ class HelperController extends Controller
 
     public function cekposisi()
     {
-        $inaportnet = InaportnetBongkarMuat::find(request('record'));
+        $source = request('source');
+        $record = request('record');
+
+        switch ($source) {
+            case 'inaportnet-pergerakan-kapal':
+                $inaportnet = InaportnetPergerakanKapal::find($record);
+                break;
+            case 'imptPenggunaanAlat':
+                $inaportnet = ImptPenggunaanAlat::find($record);
+                break;
+            case 'impt_pelayanan_kapal':
+                $inaportnet = ImptPelayananKapal::find($record);
+                break;
+            case 'pbkm-kegiatan-pemanduan':
+                $inaportnet = PbkmKegiatanPemanduan::find($record);
+                break;
+            default:
+                $inaportnet = InaportnetBongkarMuat::find($record);
+                break;
+        }
+
         $ais_vessel = AisDataVessel::where('vessel_name', 'like', "%$inaportnet->nama_kapal%")->first();
 
         if ($ais_vessel) {

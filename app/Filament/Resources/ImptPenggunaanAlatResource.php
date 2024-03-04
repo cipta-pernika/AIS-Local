@@ -11,6 +11,8 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Tables\Actions\Action;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ImptPenggunaanAlatResource extends Resource
@@ -121,7 +123,11 @@ class ImptPenggunaanAlatResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                // Tables\Actions\EditAction::make(),
+                Action::make('checkPosisi')
+                    ->label('Cek Posisi')->url(fn (Model $record): string => route('cekposisi', ['record' => $record, 'source' => 'imptPenggunaanAlat']))->openUrlInNewTab(),
+                Action::make('playback')
+                    ->label('Playback')->url(fn (Model $record): string => route('playback', ['record' => $record, 'source' => 'imptPenggunaanAlat']))->openUrlInNewTab()
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

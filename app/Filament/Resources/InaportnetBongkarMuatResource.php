@@ -9,6 +9,7 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Enums\ActionsPosition;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -115,7 +116,13 @@ class InaportnetBongkarMuatResource extends Resource
                     ->label('Jadwal Bongkar'),
                 ViewColumn::make('bendera')
                     ->view('filament.tables.columns.cctv')
-                    ->label('CCTV'),
+                    ->label('Mulai Bongkar/Muat'),
+                ViewColumn::make('no_surat_keluar')
+                    ->view('filament.tables.columns.cctv')
+                    ->label('Sedang Bongkar/Muat'),
+                ViewColumn::make('kade')
+                    ->view('filament.tables.columns.cctv')
+                    ->label('Selesai Bongkar/Muat'),
                 // Tables\Columns\TextColumn::make('no_surat_keluar')
                 //     ->searchable(),
                 // Tables\Columns\TextColumn::make('kade')
@@ -189,7 +196,7 @@ class InaportnetBongkarMuatResource extends Resource
                     ->label('Cek Posisi')->url(fn (Model $record): string => route('cekposisi', ['record' => $record]))->openUrlInNewTab(),
                 Action::make('playback')
                     ->label('Playback')->url(fn (Model $record): string => route('playback', ['record' => $record]))->openUrlInNewTab()
-            ])
+            ], position: ActionsPosition::BeforeColumns)
             ->bulkActions([
                 // Tables\Actions\BulkActionGroup::make([
                 //     Tables\Actions\DeleteBulkAction::make(),

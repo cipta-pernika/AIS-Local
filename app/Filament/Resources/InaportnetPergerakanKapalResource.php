@@ -177,6 +177,10 @@ class InaportnetPergerakanKapalResource extends Resource
                     ->label('Filter'),
             )
             ->actions([
+                Action::make('checkPosisi')
+                    ->label('Cek Posisi')->url(fn (Model $record): string => route('cekposisi', ['record' => $record, 'source' => 'inaportnet-pergerakan-kapal']))->openUrlInNewTab(),
+                Action::make('playback')
+                    ->label('Playback')->url(fn (Model $record): string => route('playback', ['record' => $record, 'source' => 'inaportnet-pergerakan-kapal']))->openUrlInNewTab()
                 // Tables\Actions\EditAction::make(),
                 // Action::make('assign')->icon('heroicon-m-pencil-square')
                 //     ->button()

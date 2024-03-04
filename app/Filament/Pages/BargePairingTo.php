@@ -11,4 +11,6 @@ class BargePairingTo extends Page
     protected static string $view = 'filament.pages.barge-pairing-to';
 
     protected static ?string $navigationGroup = 'Barge';
+
+    protected ?string $subheading = 'Daftar Tongkang yg belum berpasangan';
 }
