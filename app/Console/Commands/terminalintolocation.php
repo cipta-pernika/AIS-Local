@@ -29,13 +29,15 @@ class terminalintolocation extends Command
     {
         $terminals = Terminal::all();
 
-        foreach($terminals as $terminal){
-            $location = new Location();
-            $location->name = $terminal->name;
-            $location->location_type_id = 9;
-            $location->latitude = $terminal->latitude;
-            $location->longitude = $terminal->longitude;
-            $location->save();
+        foreach ($terminals as $terminal) {
+            Location::updateOrCreate(
+                ['name' => $terminal->name],
+                [
+                    'location_type_id' => 9,
+                    'latitude' => $terminal->latitude,
+                    'longitude' => $terminal->longitude,
+                ]
+            );
         }
     }
 }
