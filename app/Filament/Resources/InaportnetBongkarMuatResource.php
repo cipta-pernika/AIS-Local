@@ -17,6 +17,7 @@ use Filament\Tables\Columns\Layout\Split;
 use Filament\Tables\Columns\ViewColumn;
 use Filament\Tables\Actions\Action;
 use Illuminate\Database\Eloquent\Model;
+use Malzariey\FilamentDaterangepickerFilter\Filters\DateRangeFilter;
 
 class InaportnetBongkarMuatResource extends Resource
 {
@@ -188,7 +189,7 @@ class InaportnetBongkarMuatResource extends Resource
                 //     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                DateRangeFilter::make('created_at'),
             ])
             ->actions([
                 // Tables\Actions\EditAction::make(),

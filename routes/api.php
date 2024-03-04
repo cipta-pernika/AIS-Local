@@ -176,3 +176,6 @@ Route::post('cekposisi', [MapController::class, 'cekposisi']);
 
 Route::resource('camera-captures', App\Http\Controllers\API\CameraCaptureAPIController::class)
     ->except(['edit']);
+
+Route::resource('report-geofence-bongkar-muats', App\Http\Controllers\API\ReportGeofenceBongkarMuatAPIController::class)
+    ->except(['create', 'edit']);
