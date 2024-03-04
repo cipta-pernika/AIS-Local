@@ -58,6 +58,7 @@ Route::post('aisdata', [HelperController::class, 'aisdata']);
 Route::post('adsbdatav2', [HelperController::class, 'adsbdatav2']);
 Route::post('adsbdata', [HelperController::class, 'adsbdata']);
 Route::post('radardata', [HelperController::class, 'radardata']);
+Route::post('radardataspx', [HelperController::class, 'radardataspx']);
 Route::post('position', [HelperController::class, 'position']);
 
 Route::post('radararpha', [HelperController::class, 'radararpha']);
