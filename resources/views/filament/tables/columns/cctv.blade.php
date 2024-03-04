@@ -1,5 +1,5 @@
 <div class="p-2">
-    <a href="https://unair.ac.id/wp-content/uploads/2020/04/pelabuhan.jpg" target="_blank">
-        <img class="w-32" src="https://unair.ac.id/wp-content/uploads/2020/04/pelabuhan.jpg" />
+    <a href="{{$getState()}}" target="_blank">
+        <img class="w-32" src="{{$getState()}}" />
     </a>
 </div>
