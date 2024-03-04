@@ -79,6 +79,7 @@ class GeofenceController extends Controller
         $geo->type_geo = request('typeShape');
         $geo->radius = request('radius');
         $geo->pelabuhan_id = request('pelabuhan_id');
+        $geo->geofence_type_id = request('typeGeofence');
         $geo->geometry = json_encode(request('geoDraw'));
         $geo->save();
 
