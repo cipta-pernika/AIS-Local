@@ -65,6 +65,12 @@ class GeofenceResource extends Resource
                 Tables\Columns\TextColumn::make('pelabuhan.name')
                     ->label('Pelabuhan')
                     ->sortable(),
+                Tables\Columns\TextColumn::make('location.name')
+                    ->label('Location/TERSUS')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('geofenceType.name')
+                    ->label('Tipe Geofence')
+                    ->sortable(),
                 // Tables\Columns\TextColumn::make('user_id')
                 //     ->searchable(),
                 Tables\Columns\TextColumn::make('geofence_name')
