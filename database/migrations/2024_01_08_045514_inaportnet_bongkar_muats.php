@@ -23,8 +23,12 @@ return new class extends Migration
             $table->date('rencana_muat')->nullable();
             $table->date('mulai_bongkar')->nullable();
             $table->date('mulai_muat')->nullable();
+            $table->date('actual_mulai_bongkar')->nullable();
+            $table->date('actual_mulai_muat')->nullable();
             $table->date('selesai_bongkar')->nullable();
             $table->date('selesai_muat')->nullable();
+            $table->date('actual_selesai_bongkar')->nullable();
+            $table->date('actual_selesai_muat')->nullable();
             $table->string('nomor_layanan_masuk')->nullable();
             $table->string('nomor_layanan_sps')->nullable();
             $table->string('nama_kapal')->nullable();
