@@ -37,7 +37,9 @@ return new class extends Migration
             $table->time('jam_pandu_turun_kapal')->nullable();
             $table->integer('biaya_layanan')->nullable();
             $table->integer('jumlah_pnbp')->nullable();
-
+            $table->longText('image_mulai')->nullable();
+            $table->longText('image_sedang')->nullable();
+            $table->longText('image_selesai')->nullable();
             $table->timestamps();
 
             $table->index('id');

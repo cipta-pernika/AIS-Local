@@ -34,7 +34,9 @@ return new class extends Migration
             $table->string('lokasi_lambat_labuh')->nullable();
             $table->string('waktu_respon')->nullable();
             $table->string('nomor_spog')->nullable();
-
+            $table->longText('image_mulai')->nullable();
+            $table->longText('image_sedang')->nullable();
+            $table->longText('image_selesai')->nullable();
             $table->string('no_pkk_assign')->nullable();
 
             $table->timestamps();

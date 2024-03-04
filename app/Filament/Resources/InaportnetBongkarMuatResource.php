@@ -114,13 +114,13 @@ class InaportnetBongkarMuatResource extends Resource
                 ViewColumn::make('mulai_bongkar')
                     ->view('filament.tables.columns.mulai-bongkar')
                     ->label('Jadwal Bongkar'),
-                ViewColumn::make('bendera')
+                ViewColumn::make('image_mulai')
                     ->view('filament.tables.columns.cctv')
                     ->label('Mulai Bongkar/Muat'),
-                ViewColumn::make('no_surat_keluar')
+                ViewColumn::make('image_sedang')
                     ->view('filament.tables.columns.cctv')
                     ->label('Sedang Bongkar/Muat'),
-                ViewColumn::make('kade')
+                ViewColumn::make('image_selesai')
                     ->view('filament.tables.columns.cctv')
                     ->label('Selesai Bongkar/Muat'),
                 // Tables\Columns\TextColumn::make('no_surat_keluar')

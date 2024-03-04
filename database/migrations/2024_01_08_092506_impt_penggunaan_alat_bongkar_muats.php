@@ -28,7 +28,9 @@ return new class extends Migration
             $table->integer('jumlah_biaya')->nullable();
             $table->integer('jumlah_pnbp')->nullable();
             $table->timestamp('date')->nullable();
-
+            $table->longText('image_mulai')->nullable();
+            $table->longText('image_sedang')->nullable();
+            $table->longText('image_selesai')->nullable();
             $table->timestamps();
 
             $table->index('id');

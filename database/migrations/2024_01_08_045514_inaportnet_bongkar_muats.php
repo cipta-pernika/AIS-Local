@@ -40,7 +40,9 @@ return new class extends Migration
             $table->string('pbm')->nullable();
             $table->longText('bongkar')->nullable();
             $table->longText('muat')->nullable();
-
+            $table->longText('image_mulai')->nullable();
+            $table->longText('image_sedang')->nullable();
+            $table->longText('image_selesai')->nullable();
             $table->timestamps();
 
             $table->index('id');
