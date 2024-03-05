@@ -41,7 +41,10 @@ return new class extends Migration
             $table->longText('image_sedang')->nullable();
             $table->longText('image_selesai')->nullable();
             $table->timestamps();
-
+            $table->timestamp('actual_mulai_bongkar')->nullable();
+            $table->timestamp('actual_mulai_muat')->nullable();
+            $table->timestamp('actual_selesai_bongkar')->nullable();
+            $table->timestamp('actual_selesai_muat')->nullable();
             $table->index('id');
             $table->index('no_pkk');
         });
