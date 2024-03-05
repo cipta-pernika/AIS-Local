@@ -133,7 +133,9 @@ class InaportnetBongkarMuatResource extends Resource
                     ->view('filament.tables.columns.cctvakhir')
                     ->label('Selesai Bongkar/Muat'),
                 Tables\Columns\TextColumn::make('nama_kapal')
-                    ->searchable(),
+                    ->searchable()->toggleable(),
+                Tables\Columns\TextColumn::make('no_pkk')
+                    ->searchable()->toggleable(),
                 // Tables\Columns\TextColumn::make('no_surat_keluar')
                 //     ->searchable(),
                 // Tables\Columns\TextColumn::make('kade')
