@@ -71,9 +71,11 @@ class ReportGeofenceResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('aisDataPosition.vessel.no_pandu')
                     ->searchable()
+                    ->label('No Pandu')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('aisDataPosition.vessel.nama_pandu')
                     ->searchable()
+                    ->label('nama Pandu')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('deleted_at')
                     ->dateTime()
