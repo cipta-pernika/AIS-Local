@@ -106,7 +106,7 @@ class InaportnetBongkarMuatResource extends Resource
                 ViewColumn::make('id_rkbm')
                     ->view('filament.tables.columns.no-rkbm')
                     ->label('Nomor PKK'),
-                ViewColumn::make('nama_kapal')
+                ViewColumn::make('tipe_kapal')
                     ->view('filament.tables.columns.nama-kapal')
                     ->label('Nama Kapal'),
                 ViewColumn::make('nama_perusahaan')
@@ -124,6 +124,8 @@ class InaportnetBongkarMuatResource extends Resource
                 ViewColumn::make('image_selesai')
                     ->view('filament.tables.columns.cctvakhir')
                     ->label('Selesai Bongkar/Muat'),
+                Tables\Columns\TextColumn::make('nama_kapal')
+                    ->searchable(),
                 // Tables\Columns\TextColumn::make('no_surat_keluar')
                 //     ->searchable(),
                 // Tables\Columns\TextColumn::make('kade')

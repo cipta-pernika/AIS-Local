@@ -20,7 +20,7 @@
         "jeffgreco13/filament-breezy": "v2.2.9",
         "konnco/filament-import": "1.6.1",
         "laravel/fortify": "v1.20.1",
-        "laravel/framework": "v10.44.0",
+        "laravel/framework": "v10.46.0",
         "laravel/octane": "v2.3.3",
         "laravel/pulse": "*",
         "laravel/sanctum": "v3.3.3",
