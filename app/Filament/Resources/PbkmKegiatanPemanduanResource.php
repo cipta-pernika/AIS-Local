@@ -14,6 +14,14 @@ use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Actions\Action;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Tables\Filters\QueryBuilder;
+use Filament\Tables\Filters\QueryBuilder\Constraints\BooleanConstraint;
+use Filament\Tables\Filters\QueryBuilder\Constraints\DateConstraint;
+use Filament\Tables\Filters\QueryBuilder\Constraints\NumberConstraint;
+use Filament\Tables\Filters\QueryBuilder\Constraints\RelationshipConstraint;
+use Filament\Tables\Filters\QueryBuilder\Constraints\RelationshipConstraint\Operators\IsRelatedToOperator;
+use Filament\Tables\Filters\QueryBuilder\Constraints\SelectConstraint;
+use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
 
 class PbkmKegiatanPemanduanResource extends Resource
 {
@@ -166,7 +174,15 @@ class PbkmKegiatanPemanduanResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                TextConstraint::make('nama_kapal'),
+                TextConstraint::make('nomor_spk_pandu'),
+                TextConstraint::make('no_pkk'),
+                TextConstraint::make('nomor_imo'),
+                TextConstraint::make('nomor_spog'),
+                TextConstraint::make('nama_agent'),
+                TextConstraint::make('nama_dermaga_tujuan'),
+                TextConstraint::make('nama_pandu'),
+                NumberConstraint::make('dwt'),
             ])
             ->actions([
                 Action::make('checkPosisi')
