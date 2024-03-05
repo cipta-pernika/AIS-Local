@@ -11,7 +11,7 @@
         "bezhansalleh/filament-shield": "^3.2.3",
         "doctrine/dbal": "~3.7.3",
         "eightynine/filament-excel-import": "^v3.0.2",
-        "filament/filament": "v3.2.34",
+        "filament/filament": "v3.2.43",
         "flowframe/laravel-trend": "^0.1.5",
         "guzzlehttp/guzzle": "^7.8.1",
         "http-interop/http-factory-guzzle": "^1.2",
