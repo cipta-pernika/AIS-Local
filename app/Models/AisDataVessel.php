@@ -42,6 +42,9 @@ class AisDataVessel extends Model
         'pelabuhan_tujuan',
         'lokasi_lambat_labuh',
         'nomor_spog',
+        'jenis_muatan',
+        'no_pandu',
+        'nama_pandu'
     ];
 
     public function toSearchableArray()

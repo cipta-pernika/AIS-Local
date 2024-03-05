@@ -58,6 +58,12 @@ class AisDataVesselResource extends Resource implements HasShieldPermissions
                 Forms\Components\TextInput::make('mmsi'),
                 Forms\Components\TextInput::make('imo'),
                 Forms\Components\TextInput::make('callsign'),
+                Forms\Components\TextInput::make('jenis_muatan'),
+                Forms\Components\TextInput::make('no_pandu'),
+                Forms\Components\TextInput::make('nama_pandu'),
+                Forms\Components\TextInput::make('pelabuhan_tujuan'),
+                Forms\Components\TextInput::make('pelabuhan_asal'),
+                Forms\Components\TextInput::make('lokasi_lambat_labuh'),
             ]);
     }
 

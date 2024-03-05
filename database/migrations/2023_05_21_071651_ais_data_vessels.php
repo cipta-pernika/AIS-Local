@@ -45,6 +45,10 @@ return new class extends Migration
             $table->string('pelabuhan_tujuan')->nullable();
             $table->string('lokasi_lambat_labuh')->nullable();
             $table->string('nomor_spog')->nullable();
+            
+            $table->string('jenis_muatan')->nullable();
+            $table->string('no_pandu')->nullable();
+            $table->string('nama_pandu')->nullable();
 
             $table->tinyInteger('isAssign')->default(0);
 
