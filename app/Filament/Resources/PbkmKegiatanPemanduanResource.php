@@ -130,6 +130,18 @@ class PbkmKegiatanPemanduanResource extends Resource
                 Tables\Columns\TextColumn::make('loa')
                     ->numeric()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('actual_mulai_bongkar')
+                    ->dateTime()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('actual_mulai_muat')
+                    ->dateTime()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('actual_selesai_bongkar')
+                    ->dateTime()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('actual_selesai_muat')
+                    ->dateTime()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('tanggal_pandu_naik_kapal')
                     ->date()
                     ->sortable(),
