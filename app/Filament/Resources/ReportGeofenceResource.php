@@ -69,6 +69,12 @@ class ReportGeofenceResource extends Resource
                 Tables\Columns\TextColumn::make('total_time')
                     ->label('Total Time (Minute)')
                     ->sortable(),
+                Tables\Columns\TextColumn::make('aisDataPosition.vessel.no_pandu')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('aisDataPosition.vessel.nama_pandu')
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()
