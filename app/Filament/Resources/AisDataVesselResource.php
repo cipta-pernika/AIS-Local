@@ -55,6 +55,9 @@ class AisDataVesselResource extends Resource implements HasShieldPermissions
                     'Cargo' => 'Cargo',
                 ])->native(false),
                 Forms\Components\TextInput::make('no_pkk'),
+                Forms\Components\TextInput::make('mmsi'),
+                Forms\Components\TextInput::make('imo'),
+                Forms\Components\TextInput::make('callsign'),
             ]);
     }
 
