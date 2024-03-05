@@ -55,13 +55,14 @@ class EventTrackingResource extends Resource
                 //     ->sortable(),
                 Tables\Columns\TextColumn::make('event.name')
                     ->numeric()
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('aisDataPosition.vessel.mmsi')
                     ->label('MMSI')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('aisDataPosition.vessel.vessel_name')
+                Tables\Columns\TextColumn::make('aisDataPosition.vessel.vessel_name')->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('geofence.geofence_name')
+                Tables\Columns\TextColumn::make('geofence.geofence_name')->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('aisDataPosition.speed')
                     ->label('Speed')
