@@ -49,16 +49,21 @@ class ReportGeofenceResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('aisDataPosition.vessel.mmsi')
                     ->label('MMSI')
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('aisDataPosition.vessel.vessel_name')
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('geofence.geofence_name')
+                    ->searchable()
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('in')
                     ->dateTime()
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('out')
+                    ->searchable()
                     ->dateTime()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('total_time')
