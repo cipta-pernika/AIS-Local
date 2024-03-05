@@ -119,10 +119,10 @@ class InaportnetBongkarMuatResource extends Resource
                     ->view('filament.tables.columns.cctv')
                     ->label('Mulai Bongkar/Muat'),
                 ViewColumn::make('image_sedang')
-                    ->view('filament.tables.columns.cctv')
+                    ->view('filament.tables.columns.cctvsedang')
                     ->label('Sedang Bongkar/Muat'),
                 ViewColumn::make('image_selesai')
-                    ->view('filament.tables.columns.cctv')
+                    ->view('filament.tables.columns.cctvakhir')
                     ->label('Selesai Bongkar/Muat'),
                 // Tables\Columns\TextColumn::make('no_surat_keluar')
                 //     ->searchable(),
