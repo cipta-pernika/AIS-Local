@@ -18,6 +18,14 @@ use Filament\Tables\Columns\ViewColumn;
 use Filament\Tables\Actions\Action;
 use Illuminate\Database\Eloquent\Model;
 use Malzariey\FilamentDaterangepickerFilter\Filters\DateRangeFilter;
+use Filament\Tables\Filters\QueryBuilder;
+use Filament\Tables\Filters\QueryBuilder\Constraints\BooleanConstraint;
+use Filament\Tables\Filters\QueryBuilder\Constraints\DateConstraint;
+use Filament\Tables\Filters\QueryBuilder\Constraints\NumberConstraint;
+use Filament\Tables\Filters\QueryBuilder\Constraints\RelationshipConstraint;
+use Filament\Tables\Filters\QueryBuilder\Constraints\RelationshipConstraint\Operators\IsRelatedToOperator;
+use Filament\Tables\Filters\QueryBuilder\Constraints\SelectConstraint;
+use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
 
 class InaportnetBongkarMuatResource extends Resource
 {
@@ -192,7 +200,17 @@ class InaportnetBongkarMuatResource extends Resource
             ])
             ->filters([
                 DateRangeFilter::make('created_at'),
+                QueryBuilder::make()
+                    ->constraints([
+                        TextConstraint::make('nama_kapal'),
+                    ])
             ])
+            ->filtersFormColumns(2)
+            ->filtersTriggerAction(
+                fn (Action $action) => $action
+                    ->button()
+                    ->label('Filter'),
+            )
             ->actions([
                 // Tables\Actions\EditAction::make(),
                 Action::make('checkPosisi')
