@@ -174,15 +174,18 @@ class PbkmKegiatanPemanduanResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                TextConstraint::make('nama_kapal'),
-                TextConstraint::make('nomor_spk_pandu'),
-                TextConstraint::make('no_pkk'),
-                TextConstraint::make('nomor_imo'),
-                TextConstraint::make('nomor_spog'),
-                TextConstraint::make('nama_agent'),
-                TextConstraint::make('nama_dermaga_tujuan'),
-                TextConstraint::make('nama_pandu'),
-                NumberConstraint::make('dwt'),
+                QueryBuilder::make()
+                    ->constraints([
+                        TextConstraint::make('nama_kapal'),
+                        TextConstraint::make('nomor_spk_pandu'),
+                        TextConstraint::make('no_pkk'),
+                        TextConstraint::make('nomor_imo'),
+                        TextConstraint::make('nomor_spog'),
+                        TextConstraint::make('nama_agent'),
+                        TextConstraint::make('nama_dermaga_tujuan'),
+                        TextConstraint::make('nama_pandu'),
+                        NumberConstraint::make('dwt'),
+                    ])
             ])
             ->actions([
                 Action::make('checkPosisi')
