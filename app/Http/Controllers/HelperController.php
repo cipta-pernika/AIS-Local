@@ -23,6 +23,7 @@ use App\Models\RadarData;
 use App\Models\ReportGeofence;
 use App\Models\Sensor;
 use App\Models\SensorData;
+use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Contracts\Database\Eloquent\Builder;
@@ -37,6 +38,7 @@ use Location\Coordinate;
 use Location\Distance\Haversine;
 use Location\Distance\Vincenty;
 use Location\Polygon;
+use Filament\Notifications\Notification;
 
 class HelperController extends Controller
 {
@@ -514,6 +516,14 @@ class HelperController extends Controller
                             Http::post($url, [
                                 'msg' => $aisData->vessel->vessel_name . ' Inside ' . $value['geofence_name'] . ' Geofence'
                             ]);
+                            try {
+                                $recipient = User::first();
+
+                                Notification::make()
+                                    ->title($aisData->vessel->vessel_name . ' Inside ' . $value['geofence_name'] . ' Geofence')
+                                    ->sendToDatabase($recipient);
+                            } catch (\Exception $e) {
+                            }
                         }
                         $existingReport = ReportGeofence::where('geofence_id', $value['id'])
                             ->where('mmsi', $aisData->vessel->mmsi)
@@ -550,6 +560,14 @@ class HelperController extends Controller
                                 Http::post($url, [
                                     'msg' => $aisData->vessel->vessel_name . ' Outside ' . $value['geofence_name'] . ' Geofence'
                                 ]);
+                                try {
+                                    $recipient = User::first();
+
+                                    Notification::make()
+                                        ->title($aisData->vessel->vessel_name . ' Outside ' . $value['geofence_name'] . ' Geofence')
+                                        ->sendToDatabase($recipient);
+                                } catch (\Exception $e) {
+                                }
                             }
                         }
                         $washere = EventTracking::where('mmsi', $aisData->vessel->mmsi)
@@ -593,6 +611,14 @@ class HelperController extends Controller
                             Http::post($url, [
                                 'msg' => $aisData->vessel->vessel_name . ' Inside ' . $value['geofence_name'] . ' Geofence'
                             ]);
+                            try {
+                                $recipient = User::first();
+
+                                Notification::make()
+                                    ->title($aisData->vessel->vessel_name . ' Inside ' . $value['geofence_name'] . ' Geofence')
+                                    ->sendToDatabase($recipient);
+                            } catch (\Exception $e) {
+                            }
                         }
                         $existingReport = ReportGeofence::where('geofence_id', $value['id'])
                             ->where('mmsi', $aisData->vessel->mmsi)
@@ -642,6 +668,14 @@ class HelperController extends Controller
                                 Http::post($url, [
                                     'msg' => $aisData->vessel->vessel_name . ' Outside ' . $value['geofence_name'] . ' Geofence'
                                 ]);
+                                try {
+                                    $recipient = User::first();
+    
+                                    Notification::make()
+                                        ->title($aisData->vessel->vessel_name . ' Outside ' . $value['geofence_name'] . ' Geofence')
+                                        ->sendToDatabase($recipient);
+                                } catch (\Exception $e) {
+                                }
                             }
                         }
                         $washere = EventTracking::where('mmsi', $aisData->vessel->mmsi)
@@ -2008,6 +2042,14 @@ class HelperController extends Controller
                                             // For example:
                                             // Log::error('HTTP POST failed: ' . $e->getMessage());
                                         }
+                                        try {
+                                            $recipient = User::first();
+            
+                                            Notification::make()
+                                                ->title($radarData->target_id . ' Inside ' . $value['geofence_name'] . ' Geofence ~ Speed  ' . $radarData->speed)
+                                                ->sendToDatabase($recipient);
+                                        } catch (\Exception $e) {
+                                        }
                                     }
                                 }
                                 $existingReport = ReportGeofence::where('geofence_id', $value['id'])
@@ -2052,6 +2094,14 @@ class HelperController extends Controller
                                             Http::post($url, ['msg' => $message]);
                                         } catch (\Exception $e) {
                                         }
+                                        try {
+                                            $recipient = User::first();
+            
+                                            Notification::make()
+                                                ->title($message)
+                                                ->sendToDatabase($recipient);
+                                        } catch (\Exception $e) {
+                                        }
                                     }
                                 }
                             }
@@ -2082,6 +2132,14 @@ class HelperController extends Controller
                                             Http::post($url, [
                                                 'msg' => $radarData->target_id . ' Inside ' . $value['geofence_name'] . ' Geofence ~ Speed  ' . $radarData->speed
                                             ]);
+                                        } catch (\Exception $e) {
+                                        }
+                                        try {
+                                            $recipient = User::first();
+            
+                                            Notification::make()
+                                                ->title($radarData->target_id . ' Inside ' . $value['geofence_name'] . ' Geofence ~ Speed  ' . $radarData->speed)
+                                                ->sendToDatabase($recipient);
                                         } catch (\Exception $e) {
                                         }
                                     }
@@ -2127,6 +2185,14 @@ class HelperController extends Controller
                                             Http::post($url, [
                                                 'msg' => $radarData->target_id . ' Outside ' . $value['geofence_name'] . ' Geofence ~ Speed  ' . $radarData->speed
                                             ]);
+                                        } catch (\Exception $e) {
+                                        }
+                                        try {
+                                            $recipient = User::first();
+            
+                                            Notification::make()
+                                                ->title($radarData->target_id . ' Outside ' . $value['geofence_name'] . ' Geofence ~ Speed  ' . $radarData->speed)
+                                                ->sendToDatabase($recipient);
                                         } catch (\Exception $e) {
                                         }
                                     }
@@ -2226,6 +2292,14 @@ class HelperController extends Controller
                                         // For example:
                                         // Log::error('HTTP POST failed: ' . $e->getMessage());
                                     }
+                                    try {
+                                        $recipient = User::first();
+        
+                                        Notification::make()
+                                            ->title($radarData->target_id . ' Inside ' . $value['geofence_name'] . ' Geofence ~ Speed  ' . $radarData->speed)
+                                            ->sendToDatabase($recipient);
+                                    } catch (\Exception $e) {
+                                    }
                                 }
                             }
                             $existingReport = ReportGeofence::where('geofence_id', $value['id'])
@@ -2270,6 +2344,14 @@ class HelperController extends Controller
                                         Http::post($url, ['msg' => $message]);
                                     } catch (\Exception $e) {
                                     }
+                                    try {
+                                        $recipient = User::first();
+        
+                                        Notification::make()
+                                            ->title($message)
+                                            ->sendToDatabase($recipient);
+                                    } catch (\Exception $e) {
+                                    }
                                 }
                             }
                         }
@@ -2300,6 +2382,14 @@ class HelperController extends Controller
                                         Http::post($url, [
                                             'msg' => $radarData->target_id . ' Inside ' . $value['geofence_name'] . ' Geofence ~ Speed  ' . $radarData->speed
                                         ]);
+                                    } catch (\Exception $e) {
+                                    }
+                                    try {
+                                        $recipient = User::first();
+        
+                                        Notification::make()
+                                            ->title($radarData->target_id . ' Inside ' . $value['geofence_name'] . ' Geofence ~ Speed  ' . $radarData->speed)
+                                            ->sendToDatabase($recipient);
                                     } catch (\Exception $e) {
                                     }
                                 }
@@ -2345,6 +2435,14 @@ class HelperController extends Controller
                                         Http::post($url, [
                                             'msg' => $radarData->target_id . ' Outside ' . $value['geofence_name'] . ' Geofence ~ Speed  ' . $radarData->speed
                                         ]);
+                                    } catch (\Exception $e) {
+                                    }
+                                    try {
+                                        $recipient = User::first();
+        
+                                        Notification::make()
+                                            ->title($radarData->target_id . ' Outside ' . $value['geofence_name'] . ' Geofence ~ Speed  ' . $radarData->speed)
+                                            ->sendToDatabase($recipient);
                                     } catch (\Exception $e) {
                                     }
                                 }
