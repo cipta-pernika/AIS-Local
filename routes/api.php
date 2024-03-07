@@ -16,7 +16,7 @@ Route::post('/login', [AuthController::class, 'login']);
 // Route::post('/register', [RegisteredUserController::class, 'store']);
 
 Route::middleware('auth:sanctum')->group(function () {
-    
+
     // Route::get('playbackais', [HelperController::class, 'playbackais']);
 });
 
@@ -39,7 +39,7 @@ Route::get('adsbunique', [HelperController::class, 'adsbunique']);
 Route::get('radarimage', [HelperController::class, 'radarimage']);
 Route::get('aisdataupdate', [HelperController::class, 'aisdataupdate']);
 Route::get('adsbupdate', [HelperController::class, 'adsbupdate']);
-Route::get('adsbdataupdate', [HelperController::class, 'adsbupdate']);                   
+Route::get('adsbdataupdate', [HelperController::class, 'adsbupdate']);
 Route::get('radardataupdate', [HelperController::class, 'radardataupdate']);
 
 Route::get('aisdatauniquefe', [HelperController::class, 'aisdatauniquefe']);
@@ -179,3 +179,6 @@ Route::resource('camera-captures', App\Http\Controllers\API\CameraCaptureAPICont
 
 Route::resource('report-geofence-bongkar-muats', App\Http\Controllers\API\ReportGeofenceBongkarMuatAPIController::class)
     ->except(['create', 'edit']);
+
+
+Route::get('notifications', [LocationController::class, 'notifications']);

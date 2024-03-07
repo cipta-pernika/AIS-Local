@@ -10,9 +10,36 @@ use App\Models\LocationType;
 use App\Repositories\LocationRepository;
 use Illuminate\Http\Request;
 use Flash;
+use Illuminate\Notifications\DatabaseNotification as DatabaseNotificationModel;
 
 class LocationController extends AppBaseController
 {
+    public function notifications(Request $request)
+    {
+        $perPage = 10; // Number of posts per page
+        $page = $request->input('page', 1);
+
+        $posts = DatabaseNotificationModel::orderBy('created_at', 'desc')
+            ->skip(($page - 1) * $perPage)
+            ->take($perPage)
+            ->get();
+
+        // Calculate the next page number
+        $nextPage = $page + 1;
+
+        // Check if there are more posts available for the next page
+        $hasMorePosts = DatabaseNotificationModel::count() > $page * $perPage;
+
+        return response()->json([
+            'status' => 'success',
+            'data' => [
+                'posts' => $posts,
+                'next_page' => $hasMorePosts ? $nextPage : null
+            ]
+        ]);
+    }
+
+
     /** @var LocationRepository $locationRepository*/
     private $locationRepository;
 
