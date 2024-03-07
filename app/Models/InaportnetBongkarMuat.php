@@ -36,7 +36,16 @@ class InaportnetBongkarMuat extends Model
         'bongkar',
         'muat',
         'ais_data_vessel_id',
-        'no_pkk_assign'
+        'no_pkk_assign',
+        'image_mulai',
+        'image_sedang',
+        'image_selesai',
+        'image_mulai_2',
+        'image_sedang_2',
+        'image_selesai_2',
+        'image_mulai_3',
+        'image_sedang_3',
+        'image_selesai_3',
     ];
 
     protected $casts = [

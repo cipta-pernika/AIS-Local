@@ -96,6 +96,24 @@ class InaportnetBongkarMuatResource extends Resource
                     ->columnSpanFull(),
                 Forms\Components\Textarea::make('muat')
                     ->columnSpanFull(),
+                Forms\Components\FileUpload::make('image_mulai')->image()
+                    ->imageEditor(),
+                Forms\Components\FileUpload::make('image_sedang')->image()
+                    ->imageEditor(),
+                Forms\Components\FileUpload::make('image_selesai')->image()
+                    ->imageEditor(),
+                Forms\Components\FileUpload::make('image_mulai_2')->image()
+                    ->imageEditor(),
+                Forms\Components\FileUpload::make('image_sedang_2')->image()
+                    ->imageEditor(),
+                Forms\Components\FileUpload::make('image_selesai_2')->image()
+                    ->imageEditor(),
+                Forms\Components\FileUpload::make('image_mulai_3')->image()
+                    ->imageEditor(),
+                Forms\Components\FileUpload::make('image_sedang_3')->image()
+                    ->imageEditor(),
+                Forms\Components\FileUpload::make('image_selesai_3')->image()
+                    ->imageEditor(),
             ]);
     }
 
