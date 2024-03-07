@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\InaportnetBongkarMuatResource\Pages;
 use App\Filament\Resources\InaportnetBongkarMuatResource\RelationManagers;
 use App\Models\InaportnetBongkarMuat;
+use Carbon\Carbon;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -201,7 +202,7 @@ class InaportnetBongkarMuatResource extends Resource
                 //     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                DateRangeFilter::make('created_at'),
+                DateRangeFilter::make('created_at')->startDate(Carbon::now())->endDate(Carbon::now()),
                 QueryBuilder::make()
                     ->constraints([
                         TextConstraint::make('nama_kapal'),
