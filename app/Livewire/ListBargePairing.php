@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\AisDataVessel;
 use App\Models\InaportnetBongkarMuat;
 use App\Models\InaportnetPergerakanKapal;
+use Carbon\Carbon;
 use Livewire\Component;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
@@ -28,7 +29,7 @@ class ListBargePairing extends Component implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(InaportnetBongkarMuat::query()->where('tipe_kapal', 'TONGKANG / BARGE')->whereNull('no_pkk_assign'))
+            ->query(InaportnetBongkarMuat::query()->where('tipe_kapal', 'TONGKANG / BARGE')->whereNull('no_pkk_assign')->whereDate('created_at', Carbon::now()))
             ->columns([
                 TextColumn::make('no_pkk'),
                 TextColumn::make('aisDataVessel.mmsi')
@@ -139,7 +140,7 @@ class ListBargePairing extends Component implements HasForms, HasTable
                             //     modifyQueryUsing: fn (Builder $query) => $query->orderBy('no_pkk')->orderBy('vessel_name')->where('isAssign', 0),
                             // )
                             ->searchable(['no_pkk', 'vessel_name', 'nama_perusahaan'])
-                            ->options(AisDataVessel::query()->whereNotNull('no_pkk')->where('isAssign', 0)->get()
+                            ->options(AisDataVessel::query()->whereNotNull('no_pkk')->where('isAssign', 0)->whereDate('created_at', Carbon::now()->get()
                                 ->map(function ($record) {
                                     return [
                                         'value' => $record->no_pkk,
