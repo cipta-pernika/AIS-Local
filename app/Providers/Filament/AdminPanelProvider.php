@@ -76,6 +76,7 @@ class AdminPanelProvider extends PanelProvider
                     ]),
                 BreezyCore::make(),
             ])
+            ->databaseNotifications()
             ->plugin(
                 BreezyCore::make(),
                 \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make()
