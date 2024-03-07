@@ -32,7 +32,7 @@ class LocationTypeResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('description')
                     ->maxLength(255),
-                Forms\Components\FileUpload::make('icon'),
+                Forms\Components\FileUpload::make('icon')->disk('minio'),
                 Forms\Components\ColorPicker::make('color'),
             ]);
     }

@@ -26,6 +26,7 @@
         "laravel/sanctum": "v3.3.3",
         "laravel/scout": "v10.8.3",
         "laravel/tinker": "v2.9.0",
+        "league/flysystem-aws-s3-v3": "^3.24",
         "malzariey/filament-daterangepicker-filter": "^2.3.1",
         "meilisearch/meilisearch-php": "v1.6.1",
         "mjaschen/phpgeo": "^5.0.0",

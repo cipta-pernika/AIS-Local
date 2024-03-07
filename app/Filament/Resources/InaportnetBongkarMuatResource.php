@@ -96,23 +96,23 @@ class InaportnetBongkarMuatResource extends Resource
                     ->columnSpanFull(),
                 Forms\Components\Textarea::make('muat')
                     ->columnSpanFull(),
-                Forms\Components\FileUpload::make('image_mulai')->image()
+                Forms\Components\FileUpload::make('image_mulai')->image()->disk('minio')
                     ->imageEditor(),
-                Forms\Components\FileUpload::make('image_sedang')->image()
+                Forms\Components\FileUpload::make('image_sedang')->image()->disk('minio')
                     ->imageEditor(),
-                Forms\Components\FileUpload::make('image_selesai')->image()
+                Forms\Components\FileUpload::make('image_selesai')->image()->disk('minio')
                     ->imageEditor(),
-                Forms\Components\FileUpload::make('image_mulai_2')->image()
+                Forms\Components\FileUpload::make('image_mulai_2')->image()->disk('minio')
                     ->imageEditor(),
-                Forms\Components\FileUpload::make('image_sedang_2')->image()
+                Forms\Components\FileUpload::make('image_sedang_2')->image()->disk('minio')
                     ->imageEditor(),
-                Forms\Components\FileUpload::make('image_selesai_2')->image()
+                Forms\Components\FileUpload::make('image_selesai_2')->image()->disk('minio')
                     ->imageEditor(),
-                Forms\Components\FileUpload::make('image_mulai_3')->image()
+                Forms\Components\FileUpload::make('image_mulai_3')->image()->disk('minio')
                     ->imageEditor(),
-                Forms\Components\FileUpload::make('image_sedang_3')->image()
+                Forms\Components\FileUpload::make('image_sedang_3')->image()->disk('minio')
                     ->imageEditor(),
-                Forms\Components\FileUpload::make('image_selesai_3')->image()
+                Forms\Components\FileUpload::make('image_selesai_3')->image()->disk('minio')
                     ->imageEditor(),
             ]);
     }

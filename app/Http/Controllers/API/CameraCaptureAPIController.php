@@ -10,6 +10,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * Class CameraCaptureAPIController
@@ -50,9 +51,9 @@ class CameraCaptureAPIController extends AppBaseController
         // Get the image file from the request
         $image = $request->file('image');
 
-        // Store the image in a folder by day
+        // Store the image in MinIO
         $folderPath = 'images/camera_captures/' . Carbon::now()->format('Y/m/d');
-        $imagePath = $image->store($folderPath);
+        $imagePath = Storage::disk('minio')->putFile($folderPath, $image);
 
         // Create a new CameraCapture instance
         $cameraCapture = new CameraCapture();

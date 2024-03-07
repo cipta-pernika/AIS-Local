@@ -29,6 +29,7 @@ class CameraCaptureResource extends Resource
                 Forms\Components\TextInput::make('geofence_id')
                     ->numeric(),
                 Forms\Components\FileUpload::make('image')
+                    ->disk('minio')
                     ->image()
                     ->required(),
             ]);
