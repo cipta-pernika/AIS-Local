@@ -18,7 +18,7 @@ class AuthController extends Controller
             $user = Auth::user();
 
             // Retrieve additional user details
-            $userWithDetails = User::with('roles')->find($user->id);
+            $userWithDetails = User::with('roles', 'roles.permissions')->find($user->id);
 
             // Generate API token
             $token = $user->createToken('API Token')->plainTextToken;
@@ -27,7 +27,6 @@ class AuthController extends Controller
             return response()->json([
                 'token' => $token,
                 'user' => $userWithDetails,
-                'roles' => $userWithDetails->roles // Assuming user has roles relation
             ], 200);
         }
 
