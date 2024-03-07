@@ -6,6 +6,7 @@ use App\Filament\Resources\ReportSopBuntutResource\Pages;
 use AlperenErsoy\FilamentExport\Actions\FilamentExportHeaderAction;
 use App\Filament\Resources\ReportSopBuntutResource\RelationManagers;
 use App\Models\ReportSopBuntut;
+use Carbon\Carbon;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -79,6 +80,7 @@ class ReportSopBuntutResource extends Resource
                 DateRangeFilter::make('in')->label('Masuk Geofence'),
                 DateRangeFilter::make('out')->label('Keluar Geofence'),
                 DateRangeFilter::make('tgl_brangkat'),
+                DateRangeFilter::make('created_at')->startDate(Carbon::now()->subDays(7))->endDate(Carbon::now()),
             ])->filtersFormColumns(2)->filtersTriggerAction(
                 fn (Action $action) => $action
                     ->button()

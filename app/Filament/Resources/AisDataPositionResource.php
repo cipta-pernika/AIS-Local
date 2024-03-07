@@ -7,6 +7,7 @@ use App\Filament\Resources\AisDataPositionResource\RelationManagers;
 use App\Models\AisDataPosition;
 use App\Models\AisDataVessel;
 use App\Models\Pelabuhan;
+use Carbon\Carbon;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -117,7 +118,7 @@ class AisDataPositionResource extends Resource
                 Tables\Filters\SelectFilter::make('vessel_id')
                     ->searchable()
                     ->options(AisDataVessel::whereNotNull('vessel_name')->get()->pluck('vessel_name', 'id')),
-                DateRangeFilter::make('created_at'),
+                DateRangeFilter::make('created_at')->startDate(Carbon::now()->subDays(7))->endDate(Carbon::now()),
                 QueryBuilder::make()
                     ->constraints([
                         TextConstraint::make('vessel.mmsi'),

@@ -6,6 +6,7 @@ use App\Filament\Resources\ReportGeofenceResource\Pages;
 use App\Filament\Resources\ReportGeofenceResource\RelationManagers;
 use AlperenErsoy\FilamentExport\Actions\FilamentExportBulkAction;
 use App\Models\ReportGeofence;
+use Carbon\Carbon;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -100,7 +101,7 @@ class ReportGeofenceResource extends Resource
                     ->relationship('geofence', 'geofence_name')
                     ->preload()
                     ->searchable(),
-                DateRangeFilter::make('created_at'),
+                DateRangeFilter::make('created_at')->startDate(Carbon::now()->subDays(7))->endDate(Carbon::now()),
             ])
             ->actions([
                 // Tables\Actions\EditAction::make(),

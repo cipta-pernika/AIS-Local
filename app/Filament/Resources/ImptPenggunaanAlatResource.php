@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ImptPenggunaanAlatResource\Pages;
 use App\Filament\Resources\ImptPenggunaanAlatResource\RelationManagers;
 use App\Models\ImptPenggunaanAlat;
+use Carbon\Carbon;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -14,6 +15,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Actions\Action;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Malzariey\FilamentDaterangepickerFilter\Filters\DateRangeFilter;
 
 class ImptPenggunaanAlatResource extends Resource
 {
@@ -120,7 +122,7 @@ class ImptPenggunaanAlatResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                DateRangeFilter::make('created_at')->startDate(Carbon::now())->endDate(Carbon::now()),
             ])
             ->actions([
                 // Tables\Actions\EditAction::make(),

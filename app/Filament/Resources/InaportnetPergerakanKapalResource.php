@@ -7,6 +7,8 @@ use App\Filament\Resources\InaportnetPergerakanKapalResource\RelationManagers;
 use App\Models\AisDataVessel;
 use Filament\Tables\Enums\ActionsPosition;
 use App\Models\InaportnetPergerakanKapal;
+use Carbon\Carbon;
+use Malzariey\FilamentDaterangepickerFilter\Filters\DateRangeFilter;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -165,6 +167,7 @@ class InaportnetPergerakanKapalResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
+                DateRangeFilter::make('created_at')->startDate(Carbon::now())->endDate(Carbon::now()),
                 Tables\Filters\SelectFilter::make('tipe_kapal')
                     ->options([
                         'TONGKANG / BARGE' => 'TONGKANG / BARGE',

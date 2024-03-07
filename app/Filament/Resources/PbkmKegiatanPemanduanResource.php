@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\PbkmKegiatanPemanduanResource\Pages;
 use App\Filament\Resources\PbkmKegiatanPemanduanResource\RelationManagers;
 use App\Models\PbkmKegiatanPemanduan;
+use Carbon\Carbon;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -22,6 +23,7 @@ use Filament\Tables\Filters\QueryBuilder\Constraints\RelationshipConstraint;
 use Filament\Tables\Filters\QueryBuilder\Constraints\RelationshipConstraint\Operators\IsRelatedToOperator;
 use Filament\Tables\Filters\QueryBuilder\Constraints\SelectConstraint;
 use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
+use Malzariey\FilamentDaterangepickerFilter\Filters\DateRangeFilter;
 
 class PbkmKegiatanPemanduanResource extends Resource
 {
@@ -174,6 +176,7 @@ class PbkmKegiatanPemanduanResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
+                DateRangeFilter::make('created_at')->startDate(Carbon::now()->subDays(7))->endDate(Carbon::now()),
                 QueryBuilder::make()
                     ->constraints([
                         TextConstraint::make('nama_kapal'),
