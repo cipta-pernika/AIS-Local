@@ -312,7 +312,7 @@ class HelperController extends Controller
         $angleA = rad2deg(asin(10 / $c));
         $angleB = rad2deg(asin($distance / $c));
         $tilt = number_format($angleA, 0, '', '') * 10;
-        $zoom = 25;
+        $zoom = 30;
 
         $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">
         <AbsoluteHigh>
