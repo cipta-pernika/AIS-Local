@@ -53,6 +53,7 @@ return new class extends Migration
             $table->longText('image_mulai_3')->nullable();
             $table->longText('image_sedang_3')->nullable();
             $table->longText('image_selesai_3')->nullable();
+            $table->string('no_pkk_assign')->nullable();
             $table->timestamps();
 
             $table->index('id');

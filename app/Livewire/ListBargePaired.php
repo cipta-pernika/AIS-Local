@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\AisDataVessel;
+use App\Models\InaportnetBongkarMuat;
 use App\Models\InaportnetPergerakanKapal;
 use Livewire\Component;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -27,7 +28,7 @@ class ListBargePaired extends Component implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(InaportnetPergerakanKapal::query()->where('tipe_kapal', 'TONGKANG / BARGE')->whereNotNull('no_pkk_assign'))
+            ->query(InaportnetBongkarMuat::query()->where('tipe_kapal', 'TONGKANG / BARGE')->whereNotNull('no_pkk_assign'))
             ->columns([
                 TextColumn::make('no_pkk'),
                 TextColumn::make('no_pkk_assign'),
@@ -54,7 +55,7 @@ class ListBargePaired extends Component implements HasForms, HasTable
                                     ->options(AisDataVessel::query()->whereNotNull('no_pkk')->pluck('no_pkk', 'no_pkk'))
                                     ->required(),
                             ])
-                            ->action(function (array $data, InaportnetPergerakanKapal $record): void {
+                            ->action(function (array $data, InaportnetBongkarMuat $record): void {
                                 $record->no_pkk_assign = $data['no_pkk_assign'];
                                 $record->update();
                             })
@@ -129,11 +130,11 @@ class ListBargePaired extends Component implements HasForms, HasTable
                             // ->getOptionLabelFromRecordUsing(fn (Model $record) => "{$record->no_pkk} ~ {$record->vessel_name} ~ {$record->nama_perusahaan}")
                             ->searchable(['no_pkk', 'vessel_name', 'nama_perusahaan'])
                     ])
-                    ->action(function (array $data, InaportnetPergerakanKapal $record): void {
+                    ->action(function (array $data, InaportnetBongkarMuat $record): void {
                         $record->no_pkk_assign = $data['no_pkk_assign'];
                         $record->update();
                     })
-                    ->fillForm(fn (InaportnetPergerakanKapal $record): array => [
+                    ->fillForm(fn (InaportnetBongkarMuat $record): array => [
                         'no_pkk_assign' => $record->no_pkk_assign,
                     ])
             ], position: ActionsPosition::BeforeColumns)
