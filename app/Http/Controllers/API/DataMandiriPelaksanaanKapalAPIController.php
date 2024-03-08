@@ -28,13 +28,34 @@ class DataMandiriPelaksanaanKapalAPIController extends AppBaseController
      */
     public function index(Request $request): JsonResponse
     {
-        $dataMandiriPelaksanaanKapals = $this->dataMandiriPelaksanaanKapalRepository->all(
-            $request->except(['skip', 'limit']),
-            $request->get('skip'),
-            $request->get('limit')
-        );
+        $perPage = $request->get('limit', 10);
 
-        return $this->sendResponse($dataMandiriPelaksanaanKapals->toArray(), 'Data Mandiri Pelaksanaan Kapals retrieved successfully');
+        $query = DataMandiriPelaksanaanKapal::query();
+
+        // Apply any other filters from the request (excluding skip and limit)
+        $query->where($request->except(['skip', 'limit']));
+
+        // Retrieve all addon categories using the query
+        $allAddons = $query->get();
+
+        // Manually paginate the results
+        $addons = $allAddons->slice(
+            $request->get('skip', 0),
+            $perPage
+        )->values(); // Reset keys to start from 0
+
+        $addons->load(['aisDataPosition', 'geofence', 'imptPelayananKapal', 'imptPenggunaanAlat', 'reportGeofence', 'inaportnetBongkarMuat', 'pbkmKegiatanPemanduan']);
+
+        // Return a JSON response containing the paginated data and pagination meta
+        return $this->sendResponse([
+            'data' => $addons->toArray(), // Paginated data
+            'pagination' => [
+                'total' => $allAddons->count(), // Total number of records
+                'per_page' => $perPage, // Records per page
+                'current_page' => $request->get('skip', 0) / $perPage + 1, // Current page number
+                'last_page' => ceil($allAddons->count() / $perPage), // Last page number
+            ],
+        ], 'Data Mandiri Pelaksanaan retrieved successfully');
     }
 
     /**
