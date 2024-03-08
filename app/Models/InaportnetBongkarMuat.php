@@ -46,6 +46,10 @@ class InaportnetBongkarMuat extends Model
         'image_mulai_3',
         'image_sedang_3',
         'image_selesai_3',
+        'actual_mulai_bongkar',
+        'actual_mulai_muat',
+        'actual_selesai_bongkar',
+        'actual_selesai_muat',
     ];
 
     protected $casts = [

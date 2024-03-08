@@ -32,7 +32,11 @@ class PbkmKegiatanPemanduan extends Model
         'jam_pandu_naik_kapal',
         'jam_pandu_turun_kapal',
         'biaya_layanan',
-        'jumlah_pnbp'
+        'jumlah_pnbp',
+        'actual_mulai_bongkar',
+        'actual_mulai_muat',
+        'actual_selesai_bongkar',
+        'actual_selesai_muat',
     ];
 
     protected $casts = [
