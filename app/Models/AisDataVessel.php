@@ -44,7 +44,10 @@ class AisDataVessel extends Model
         'nomor_spog',
         'jenis_muatan',
         'no_pandu',
-        'nama_pandu'
+        'nama_pandu',
+        'nama_kapal_eks',
+        'nama_kapal_pemilik',
+        ''
     ];
 
     public function toSearchableArray()

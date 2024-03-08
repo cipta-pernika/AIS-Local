@@ -50,6 +50,11 @@ return new class extends Migration
             $table->string('no_pandu')->nullable();
             $table->string('nama_pandu')->nullable();
 
+            //siska
+            $table->string('nama_kapal_eks')->nullable();
+            $table->string('nama_kapal_pemilik')->nullable();
+            $table->string('loa')->nullable();
+
             $table->tinyInteger('isAssign')->default(0);
 
             $table->timestamps();
