@@ -70,3 +70,4 @@ Route::get('playback', [HelperController::class, 'playback'])->name('playback');
 Route::resource('camera-captures', App\Http\Controllers\CameraCaptureController::class);
 Route::resource('report-geofence-bongkar-muats', App\Http\Controllers\ReportGeofenceBongkarMuatController::class);
 Route::resource('data-mandiri-pelaksanaan-kapals', App\Http\Controllers\DataMandiriPelaksanaanKapalController::class);
+Route::resource('certificates', App\Http\Controllers\CertificateController::class);

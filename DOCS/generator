@@ -1,1 +1,1 @@
-php artisan infyom:api_scaffold DataMandiriPelaksanaanKapal --skip=views,menu,tests --fromTable --table=data_mandiri_kapals
+php artisan infyom:api_scaffold Certificate --skip=views,menu,tests --fromTable --table=certificates
