@@ -143,7 +143,7 @@ class HelperController extends Controller
             // If not cached, perform the query and store the result in the cache
             $event = EventTracking::where('event_id', 9)
                 ->orderBy('created_at', 'DESC')
-                ->with('aisDataPosition', 'aisDataPosition.vessel', 'geofence')
+                ->with('aisDataPosition', 'aisDataPosition.vessel', 'geofence', 'event', 'aisDataPosition.reportGeofences')
                 ->limit(50)
                 ->get();
 
