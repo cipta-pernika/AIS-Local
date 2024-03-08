@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\DataMandiriPelaksanaanKapal;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -26,12 +27,15 @@ class ReportController extends Controller
         }
 
         // Retrieve data based on the provided start and end dates
-        $summaryData = DataMandiriPelaksanaanKapal::whereBetween('created_at', [$request->start_date, $request->end_date])
+        $summaryData = DataMandiriPelaksanaanKapal::whereBetween('created_at', [
+            Carbon::parse($request->start_date),
+            Carbon::parse($request->end_date)
+        ])
             ->selectRaw('
-        SUM(CASE WHEN isPassing = 1 THEN 1 ELSE 0 END) AS passing_count,
-        SUM(CASE WHEN isPandu = 1 THEN 1 ELSE 0 END) AS pandu_count,
-        SUM(CASE WHEN isBongkarMuat = 1 THEN 1 ELSE 0 END) AS bongkar_muat_count
-    ')
+            SUM(CASE WHEN isPassing = 1 THEN 1 ELSE 0 END) AS passing_count,
+            SUM(CASE WHEN isPandu = 1 THEN 1 ELSE 0 END) AS pandu_count,
+            SUM(CASE WHEN isBongkarMuat = 1 THEN 1 ELSE 0 END) AS bongkar_muat_count
+        ')
             ->first();
 
         // Return the summary report
