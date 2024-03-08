@@ -21,6 +21,8 @@ class CameraCaptureResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-s-camera';
 
+    protected static ?string $navigationGroup = 'Informasi Penting';
+
     public static function form(Form $form): Form
     {
         return $form
