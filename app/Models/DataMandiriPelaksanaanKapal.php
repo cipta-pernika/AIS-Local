@@ -20,7 +20,8 @@ class DataMandiriPelaksanaanKapal extends Model
         'isBongkarMuat',
         'geofence_id',
         'ais_data_position_id',
-        'report_geofence_id'
+        'report_geofence_id',
+        'report_geofence_bongkar_muat_id'
     ];
 
     protected $casts = [

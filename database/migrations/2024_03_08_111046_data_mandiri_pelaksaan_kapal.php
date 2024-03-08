@@ -25,6 +25,7 @@ return new class extends Migration
             $table->unsignedBigInteger('geofence_id')->nullable();
             $table->unsignedBigInteger('ais_data_position_id')->nullable();
             $table->unsignedBigInteger('report_geofence_id')->nullable();
+            $table->unsignedBigInteger('report_geofence_bongkar_muat_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
@@ -41,6 +42,7 @@ return new class extends Migration
                 ->references('id')->on('pbkm_kegiatan_pemanduans')
                 ->onDelete('cascade');
             $table->foreign('report_geofence_id')->references('id')->on('report_geofences')->onDelete('cascade');
+            $table->foreign('report_geofence_bongkar_muat_id')->references('id')->on('report_geofence_bongkar_muats')->onDelete('cascade');
 
 
             // Indexes
