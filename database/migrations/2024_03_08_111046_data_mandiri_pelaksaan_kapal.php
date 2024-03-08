@@ -30,6 +30,7 @@ return new class extends Migration
 
             // Foreign key constraints
             $table->foreign('ais_data_position_id')->references('id')->on('ais_data_positions')->onDelete('cascade');
+            $table->foreign('ais_data_vessel_id')->references('id')->on('ais_data_vessels')->onDelete('cascade');
             $table->foreign('geofence_id')->references('id')->on('geofences')->onDelete('cascade');
             $table->foreign('inaportnet_bongkar_muat_id', 'fk_inaportnet_bongkar_muat_id')
                 ->references('id')->on('inaportnet_bongkar_muats')
