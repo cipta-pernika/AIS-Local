@@ -164,27 +164,48 @@ class MapController extends Controller
                     // Add more information as needed
                 ];
                 $dataAis[$mmsi]['vessel_info'] = $vesselInfo;
-                $dataAis[$mmsi]['playback'][] = [
-                    'lat' => (float) $track['latitude'],
-                    'lng' => (float) $track['longitude'],
-                    'dir' => ((int) $track['course'] * M_PI) / 180.0,
-                    'time' => $timestamp,
-                    'heading' => (int) $track['heading'],
-                    'info' => array_merge([
-                        'mmsi' => $mmsi,
-                        'name' => $track['vessel_name'],
-                        'imo' => $track['imo'],
-                        'callsign' => $track['callsign'],
-                        'sog' => $track['speed'],
-                        'cog' => $track['course'],
-                        'geofenceName' => $geofenceName ?? null,
-                        'in' => $track->in ?? null,
-                        'out' => $track->out ?? null,
-                        'latitude' => $track['latitude'],
-                        'longitude' => $track['longitude'],
-                        'timeStamp' => Carbon::parse($track['created_at'])->format('Y-m-d H:i:s')
-                    ]),
-                ];
+                if ($track->geofence_id) {
+                    $dataAis[$mmsi]['playback'][] = [
+                        'lat' => (float) $track['latitude'],
+                        'lng' => (float) $track['longitude'],
+                        'dir' => ((int) $track['course'] * M_PI) / 180.0,
+                        'time' => $timestamp,
+                        'heading' => (int) $track['heading'],
+                        'info' => array_merge([
+                            'mmsi' => $mmsi,
+                            'name' => $track['vessel_name'],
+                            'imo' => $track['imo'],
+                            'callsign' => $track['callsign'],
+                            'sog' => $track['speed'],
+                            'cog' => $track['course'],
+                            'geofenceName' => $geofenceName ?? null,
+                            'in' => $track->in ?? null,
+                            'out' => $track->out ?? null,
+                            'latitude' => $track['latitude'],
+                            'longitude' => $track['longitude'],
+                            'timeStamp' => Carbon::parse($track['created_at'])->format('Y-m-d H:i:s')
+                        ]),
+                    ];
+                } else {
+                    $dataAis[$mmsi]['playback'][] = [
+                        'lat' => (float) $track['latitude'],
+                        'lng' => (float) $track['longitude'],
+                        'dir' => ((int) $track['course'] * M_PI) / 180.0,
+                        'time' => $timestamp,
+                        'heading' => (int) $track['heading'],
+                        'info' => array_merge([
+                            'mmsi' => $mmsi,
+                            'name' => $track['vessel_name'],
+                            'imo' => $track['imo'],
+                            'callsign' => $track['callsign'],
+                            'sog' => $track['speed'],
+                            'cog' => $track['course'],
+                            'latitude' => $track['latitude'],
+                            'longitude' => $track['longitude'],
+                            'timeStamp' => Carbon::parse($track['created_at'])->format('Y-m-d H:i:s')
+                        ]),
+                    ];
+                }
             }
 
             $dataAis = collect($dataAis)->sortByDesc(function ($item, $key) {
