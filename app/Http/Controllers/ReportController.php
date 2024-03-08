@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\DataMandiriPelaksanaanKapal;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class ReportController extends Controller
@@ -26,11 +27,11 @@ class ReportController extends Controller
             ], 422);
         }
 
+        $startDateTime = Carbon::parse($request->start_date)->startOfDay();
+        $endDateTime = Carbon::parse($request->end_date)->endOfDay();
+
         // Retrieve data based on the provided start and end dates
-        $summaryData = DataMandiriPelaksanaanKapal::whereBetween('created_at', [
-            Carbon::parse($request->start_date),
-            Carbon::parse($request->end_date)
-        ])
+        $summaryData = DataMandiriPelaksanaanKapal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])
             ->selectRaw('
             SUM(CASE WHEN isPassing = 1 THEN 1 ELSE 0 END) AS passing_count,
             SUM(CASE WHEN isPandu = 1 THEN 1 ELSE 0 END) AS pandu_count,
