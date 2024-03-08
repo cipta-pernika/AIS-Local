@@ -182,3 +182,7 @@ Route::resource('report-geofence-bongkar-muats', App\Http\Controllers\API\Report
 
 
 Route::get('notifications', [LocationController::class, 'notifications']);
+
+
+Route::resource('data-mandiri-pelaksanaan-kapals', App\Http\Controllers\API\DataMandiriPelaksanaanKapalAPIController::class)
+    ->except(['create', 'edit']);

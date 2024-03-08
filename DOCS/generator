@@ -1,1 +1,1 @@
-php artisan infyom:api_scaffold ReportGeofenceBongkarMuat --skip=views,menu,tests --fromTable --table=report_geofence_bongkar_muats
+php artisan infyom:api_scaffold DataMandiriPelaksanaanKapal --skip=views,menu,tests --fromTable --table=data_mandiri_kapals
