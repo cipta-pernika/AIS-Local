@@ -8,6 +8,7 @@ use App\Http\Controllers\ExportController;
 use App\Http\Controllers\GeofenceController;
 use App\Http\Controllers\HelperController;
 use App\Http\Controllers\LocationController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SensorController;
 use App\Http\Controllers\SyncController;
 use Illuminate\Support\Facades\Route;
@@ -189,3 +190,5 @@ Route::resource('data-mandiri-pelaksanaan-kapals', App\Http\Controllers\API\Data
 
 Route::resource('certificates', App\Http\Controllers\API\CertificateAPIController::class)
     ->except(['create', 'edit']);
+
+Route::get('summaryreport', [ReportController::class, 'summaryreport']);
