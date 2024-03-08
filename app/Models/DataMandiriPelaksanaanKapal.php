@@ -47,6 +47,11 @@ class DataMandiriPelaksanaanKapal extends Model
         'deleted_at' => 'nullable'
     ];
 
+    public function aisDataVessel(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(\App\Models\AisDataVessel::class, 'ais_data_vessel_id');
+    }
+
     public function aisDataPosition(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(\App\Models\AisDataPosition::class, 'ais_data_position_id');

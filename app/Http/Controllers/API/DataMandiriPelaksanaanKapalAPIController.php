@@ -44,7 +44,10 @@ class DataMandiriPelaksanaanKapalAPIController extends AppBaseController
             $perPage
         )->values(); // Reset keys to start from 0
 
-        $addons->load(['aisDataPosition', 'geofence', 'imptPelayananKapal', 'imptPenggunaanAlat', 'reportGeofence', 'inaportnetBongkarMuat', 'pbkmKegiatanPemanduan']);
+        $addons->load([
+            'aisDataVessel', 'aisDataPosition', 'geofence', 'imptPelayananKapal', 'imptPenggunaanAlat', 'reportGeofence',
+            'inaportnetBongkarMuat', 'pbkmKegiatanPemanduan'
+        ]);
 
         // Return a JSON response containing the paginated data and pagination meta
         return $this->sendResponse([
