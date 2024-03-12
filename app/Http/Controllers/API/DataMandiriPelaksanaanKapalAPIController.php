@@ -30,13 +30,18 @@ class DataMandiriPelaksanaanKapalAPIController extends AppBaseController
     {
         $perPage = $request->get('limit', 10);
 
-        $query = DataMandiriPelaksanaanKapal::query();
+        if ($request->has('search')) {
+            $searchTerm = $request->input('search');
 
-        // Apply any other filters from the request (excluding skip and limit)
-        $query->where($request->except(['skip', 'limit']));
-
-        // Retrieve all addon categories using the query
-        $allAddons = $query->get();
+            $allAddons = DataMandiriPelaksanaanKapal::whereHas('aisDataVessel', function ($query) use ($searchTerm) {
+                $query->where('vessel_name', 'like', '%' . $searchTerm . '%');
+            })->get();
+        } else {
+            // Retrieve all airlines using the repository's "all" method
+            $allAddons = $this->dataMandiriPelaksanaanKapalRepository->all(
+                $request->except(['skip', 'limit'])
+            );
+        }
 
         // Manually paginate the results
         $addons = $allAddons->slice(
