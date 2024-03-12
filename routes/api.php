@@ -187,6 +187,7 @@ Route::get('notifications', [LocationController::class, 'notifications']);
 
 Route::resource('data-mandiri-pelaksanaan-kapals', App\Http\Controllers\API\DataMandiriPelaksanaanKapalAPIController::class)
     ->except(['create', 'edit']);
+Route::post('datamandiripdf', [HelperController::class, 'datamandiripdf']);
 
 Route::resource('certificates', App\Http\Controllers\API\CertificateAPIController::class)
     ->except(['create', 'edit']);

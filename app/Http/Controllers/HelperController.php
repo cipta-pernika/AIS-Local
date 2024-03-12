@@ -41,6 +41,7 @@ use Location\Distance\Vincenty;
 use Location\Polygon;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 class HelperController extends Controller
 {
@@ -243,6 +244,70 @@ class HelperController extends Controller
             'jumlahkapalByType' => $jumlahkapalByType,
             'jumlahradardata' => $jumlahradardata,
         ]);
+
+        return $pdf->download('daily-report.pdf');
+    }
+
+    public function datamandiripdf(Request $request)
+    {
+        // Manually validate request parameters
+        $validator = Validator::make($request->all(), [
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+        ]);
+
+        // If validation fails, return error response
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        $startDateTime = Carbon::parse($request->start_date)->startOfDay();
+        $endDateTime = Carbon::parse($request->end_date)->endOfDay();
+
+
+        // Retrieve data based on the provided start and end dates
+        $summaryData = DataMandiriPelaksanaanKapal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])
+            ->selectRaw('
+        SUM(CASE WHEN isPassing = 1 THEN 1 ELSE 0 END) AS passing_count,
+        SUM(CASE WHEN isPandu = 1 THEN 1 ELSE 0 END) AS pandu_count,
+        SUM(CASE WHEN isBongkarMuat = 1 THEN 1 ELSE 0 END) AS bongkar_muat_count
+    ')
+            ->first();
+
+        // If validation fails, return error response
+        $perPage = $request->get('limit', 10);
+
+        if ($request->has('search')) {
+            $searchTerm = $request->input('search');
+
+            $allAddons = DataMandiriPelaksanaanKapal::whereHas('aisDataVessel', function ($query) use ($searchTerm) {
+                $query->where('vessel_name', 'like', '%' . $searchTerm . '%');
+            })->get();
+        } else {
+            $allAddons = DataMandiriPelaksanaanKapal::all();
+        }
+
+        // Manually paginate the results
+        $addons = $allAddons->slice(
+            $request->get('skip', 0),
+            $perPage
+        )->values(); // Reset keys to start from 0
+
+        $addons->load([
+            'aisDataVessel', 'aisDataPosition', 'geofence', 'imptPelayananKapal', 'imptPenggunaanAlat', 'reportGeofence',
+            'inaportnetBongkarMuat', 'pbkmKegiatanPemanduan'
+        ]);
+
+            // dd($addons);
+
+        $pdf = Pdf::loadView('pdf.datamandiripdf', [
+            'summaryData' => $summaryData,
+            'addons' => $addons,
+        ])->setPaper('a4', 'landscape');
 
         return $pdf->download('daily-report.pdf');
     }
