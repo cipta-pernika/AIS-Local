@@ -537,7 +537,7 @@ class HelperController extends Controller
                                 $aisData->update();
 
                                 Http::post($url, [
-                                    'msg' => $aisData->vessel->vessel_name . ' Inside ' . $value['geofence_name'] . ' Geofence'
+                                    'msg' => $aisData->vessel->vessel_name . ' Inside ' . $value['geofence_name'] . ' Geofence', 'type' => 'notif'
                                 ]);
                                 try {
                                     $recipient = User::first();
@@ -581,7 +581,7 @@ class HelperController extends Controller
                                         'geofence_id' => $value['id']
                                     ]);
                                     Http::post($url, [
-                                        'msg' => $aisData->vessel->vessel_name . ' Outside ' . $value['geofence_name'] . ' Geofence'
+                                        'msg' => $aisData->vessel->vessel_name . ' Outside ' . $value['geofence_name'] . ' Geofence', 'type' => 'notif'
                                     ]);
                                     try {
                                         $recipient = User::first();
@@ -632,7 +632,7 @@ class HelperController extends Controller
                                 $aisData->is_inside_geofence = 1;
                                 $aisData->update();
                                 Http::post($url, [
-                                    'msg' => $aisData->vessel->vessel_name . ' Inside ' . $value['geofence_name'] . ' Geofence'
+                                    'msg' => $aisData->vessel->vessel_name . ' Inside ' . $value['geofence_name'] . ' Geofence', 'type' => 'notif'
                                 ]);
                                 try {
                                     $recipient = User::first();
@@ -689,7 +689,7 @@ class HelperController extends Controller
                                         'geofence_id' => $value['id']
                                     ]);
                                     Http::post($url, [
-                                        'msg' => $aisData->vessel->vessel_name . ' Outside ' . $value['geofence_name'] . ' Geofence'
+                                        'msg' => $aisData->vessel->vessel_name . ' Outside ' . $value['geofence_name'] . ' Geofence', 'type' => 'notif'
                                     ]);
                                     try {
                                         $recipient = User::first();
@@ -2058,7 +2058,7 @@ class HelperController extends Controller
 
                                         try {
                                             Http::post($url, [
-                                                'msg' => $radarData->target_id . ' Inside ' . $value['geofence_name'] . ' Geofence ~ Speed  ' . $radarData->speed
+                                                'msg' => $radarData->target_id . ' Inside ' . $value['geofence_name'] . ' Geofence ~ Speed  ' . $radarData->speed, 'type' => 'notif'
                                             ]);
                                         } catch (\Exception $e) {
                                             // Handle the exception here, you can log it or take appropriate action
@@ -2114,7 +2114,7 @@ class HelperController extends Controller
 
                                         $message = $radarData->target_id . ' Outside ' . $value['geofence_name'] . ' Geofence ~ Speed  ' . $radarData->speed;
                                         try {
-                                            Http::post($url, ['msg' => $message]);
+                                            Http::post($url, ['msg' => $message, 'type' => 'notif']);
                                         } catch (\Exception $e) {
                                         }
                                         try {
@@ -2153,7 +2153,7 @@ class HelperController extends Controller
                                         $radarData->update();
                                         try {
                                             Http::post($url, [
-                                                'msg' => $radarData->target_id . ' Inside ' . $value['geofence_name'] . ' Geofence ~ Speed  ' . $radarData->speed
+                                                'msg' => $radarData->target_id . ' Inside ' . $value['geofence_name'] . ' Geofence ~ Speed  ' . $radarData->speed, 'type' => 'notif'
                                             ]);
                                         } catch (\Exception $e) {
                                         }
@@ -2206,7 +2206,7 @@ class HelperController extends Controller
                                         ]);
                                         try {
                                             Http::post($url, [
-                                                'msg' => $radarData->target_id . ' Outside ' . $value['geofence_name'] . ' Geofence ~ Speed  ' . $radarData->speed
+                                                'msg' => $radarData->target_id . ' Outside ' . $value['geofence_name'] . ' Geofence ~ Speed  ' . $radarData->speed, 'type' => 'notif'
                                             ]);
                                         } catch (\Exception $e) {
                                         }
