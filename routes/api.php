@@ -192,3 +192,5 @@ Route::resource('certificates', App\Http\Controllers\API\CertificateAPIControlle
     ->except(['create', 'edit']);
 
 Route::get('summaryreport', [ReportController::class, 'summaryreport']);
+
+Route::get('data-mandiri-pelaksanaan-kapals-dummy', [ReportController::class, 'datamandiri']);

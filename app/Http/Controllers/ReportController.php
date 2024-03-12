@@ -45,4 +45,48 @@ class ReportController extends Controller
             'summary_data' => $summaryData,
         ]);
     }
+
+    public function datamandiri(Request $request)
+    {
+        $data = DataMandiriPelaksanaanKapal::whereNotNull('ais_data_vessel_id')
+            ->whereNotNull('inaportnet_bongkar_muat_id')
+            ->whereNotNull('inaportnet_pergerakan_kapal_id')
+            ->whereNotNull('impt_pelayanan_kapal_id')
+            ->whereNotNull('impt_penggunaan_alat_id')
+            ->whereNotNull('pbkm_kegiatan_pemanduan_id')
+            ->whereNotNull('geofence_id')
+            ->whereNotNull('ais_data_position_id')
+            ->whereNotNull('report_geofence_id')
+            ->whereNotNull('report_geofence_bongkar_muat_id')
+            ->with(
+                'aisDataVessel',
+                'aisDataPosition',
+                'geofence',
+                'imptPelayananKapal',
+                'imptPenggunaanAlat',
+                'reportGeofence',
+                'inaportnetBongkarMuat',
+                'pbkmKegiatanPemanduan'
+            )->get();
+
+        $perPage = $request->get('limit', 10);
+
+        // Manually paginate the results
+        $paginatedData = $data->slice(
+            $request->get('skip', 0),
+            $perPage
+        )->values();
+
+        return response()->json([
+            'data' => $paginatedData->toArray(), // Paginated data
+            'pagination' => [
+                'total' => $data->count(), // Total number of records
+                'per_page' => $perPage, // Records per page
+                'current_page' => $request->get('skip', 0) / $perPage + 1, // Current page number
+                'last_page' => ceil($data->count() / $perPage), // Last page number
+            ],
+            'success' => true,
+            'message' => 'Data Mandiri Pelaksanaan retrieved successfully'
+        ]);
+    }
 }
