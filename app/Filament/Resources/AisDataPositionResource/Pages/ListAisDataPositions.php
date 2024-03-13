@@ -21,7 +21,7 @@ class ListAisDataPositions extends ListRecords
         return [
             // Actions\CreateAction::make(),
             ActionGroup::make([
-                ExportAction::make(),
+                ExportAction::make()->label('Export'),
             ])
         ];
     }

@@ -47,7 +47,30 @@ class HelperController extends Controller
 {
     public function playback()
     {
-        $inaportnet = InaportnetBongkarMuat::find(request('record'));
+        $source = request('source');
+        $record = request('record');
+
+        switch ($source) {
+            case 'inaportnet-pergerakan-kapal':
+                $inaportnet = InaportnetPergerakanKapal::find($record);
+                break;
+            case 'imptPenggunaanAlat':
+                $inaportnet = ImptPenggunaanAlat::find($record);
+                break;
+            case 'impt_pelayanan_kapal':
+                $inaportnet = ImptPelayananKapal::find($record);
+                break;
+            case 'pbkm-kegiatan-pemanduan':
+                $inaportnet = PbkmKegiatanPemanduan::find($record);
+                break;
+            case 'report-geofence':
+                $inaportnet = ReportGeofence::find($record);
+                break;
+            default:
+                $inaportnet = InaportnetBongkarMuat::find($record);
+                break;
+        }
+
         $ais_vessel = AisDataVessel::where('vessel_name', 'like', "%$inaportnet->nama_kapal%")->first();
 
         if ($ais_vessel) {
@@ -302,7 +325,7 @@ class HelperController extends Controller
             'inaportnetBongkarMuat', 'pbkmKegiatanPemanduan'
         ]);
 
-            // dd($addons);
+        // dd($addons);
 
         $pdf = Pdf::loadView('pdf.datamandiripdf', [
             'summaryData' => $summaryData,
