@@ -77,6 +77,10 @@ class AisDataPositionResource extends Resource
                     ->label('MMSI')
                     ->searchable()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('vessel.vessel_name')
+                    ->label('Nama Kapal')
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('latitude')
                     ->numeric()
                     ->sortable(),
