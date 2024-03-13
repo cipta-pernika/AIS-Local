@@ -39,7 +39,30 @@ class ReportController extends Controller
         ')
             ->first();
 
-        // Return the summary report
+        // Modify the structure of the summary data
+        $summaryData['pandu_count'] = [
+            'pandu_count' => $summaryData['pandu_count'],
+            'detail' => [
+                'valid' => '5',
+                'tidak_terjadwal' => '10',
+                'terlambat' => '4'
+            ]
+        ];
+
+        $summaryData['bongkar_muat_count'] = [
+            'bongkar_muat_count' => $summaryData['bongkar_muat_count'],
+            'detail' => [
+                'valid' => '5',
+                'tidak_terjadwal' => '10',
+                'terlambat' => '4'
+            ]
+        ];
+
+        // Remove the original pandu_count and bongkar_muat_count keys
+        unset($summaryData['pandu_count']);
+        unset($summaryData['bongkar_muat_count']);
+
+        // Return the modified summary report
         return response()->json([
             'success' => true,
             'summary_data' => $summaryData,
