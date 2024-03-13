@@ -295,6 +295,7 @@
             <td class="border1-td">
                 <p style="text-indent: 0pt; text-align: left">{{ $summaryData['passing_count'] }}</p>
             </td>
+            @dd($summaryData['pandu_count'])
             <td class="border4-td">
                 <p style="text-indent: 0pt; text-align: left">{{ $summaryData['pandu_count'] && $summaryData['pandu_count']['tervalidasi']}}</p>
             </td>
