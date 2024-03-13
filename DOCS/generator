@@ -1,1 +1,1 @@
-php artisan infyom:api_scaffold Certificate --skip=views,menu,tests --fromTable --table=certificates
+php artisan infyom:api_scaffold ReportGeofencePandu --skip=views,menu,tests --fromTable --table=report_geofence_pandus

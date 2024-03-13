@@ -195,3 +195,7 @@ Route::resource('certificates', App\Http\Controllers\API\CertificateAPIControlle
 Route::get('summaryreport', [ReportController::class, 'summaryreport']);
 
 Route::get('data-mandiri-pelaksanaan-kapals-dummy', [ReportController::class, 'datamandiri']);
+
+
+Route::resource('report-geofence-pandus', App\Http\Controllers\API\ReportGeofencePanduAPIController::class)
+    ->except(['create', 'edit']);
