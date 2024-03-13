@@ -58,10 +58,6 @@ class ReportController extends Controller
             ]
         ];
 
-        // Remove the original pandu_count and bongkar_muat_count keys
-        unset($summaryData['pandu_count']);
-        unset($summaryData['bongkar_muat_count']);
-
         // Return the modified summary report
         return response()->json([
             'success' => true,
