@@ -306,7 +306,7 @@ class MapController extends Controller
     public function checkplayback()
     {
         $date = Carbon::parse(request('dateFrom'));
-        $date_until = Carbon::parse(request('dateTo'));
+        $date_until = Carbon::parse(request('dateTo'))->addDays(1);
         $selectedSensors = request('sensor');
 
         $mmsi = request('mmsi'); // Get the MMSI from the request
@@ -350,48 +350,6 @@ class MapController extends Controller
                 })
                 ->count();
             if ($aisTracksCount > 0) {
-                $hasPlaybackData = true;
-            }
-        }
-
-        if (in_array('adsb', $selectedSensors)) {
-
-            $adsbTracksCount = AdsbDataPosition::join('adsb_data_aircrafts', 'adsb_data_positions.aircraft_id', 'adsb_data_aircrafts.id')
-                ->select(
-                    'adsb_data_positions.latitude',
-                    'adsb_data_positions.longitude',
-                    'adsb_data_positions.heading',
-                    'adsb_data_positions.created_at',
-                    'adsb_data_positions.ground_speed',
-                    'adsb_data_aircrafts.hex_ident',
-                    'adsb_data_aircrafts.registration',
-                    'adsb_data_aircrafts.callsign'
-                )
-                ->orderBy('created_at', 'DESC')
-                ->when($date, function ($query) use ($date, $date_until) {
-                    $query->whereBetween('adsb_data_positions.created_at', [$date, $date_until]);
-                })
-                ->when($hexIdent, function ($query) use ($hexIdent) {
-                    $query->where('adsb_data_aircrafts.hex_ident', $hexIdent); // Filter by hex_ident if provided
-                })
-                ->count();
-
-            if ($adsbTracksCount > 0) {
-                $hasPlaybackData = true;
-            }
-        }
-
-        if (in_array('radar', $selectedSensors)) {
-            $radarDataTracksCount = RadarData::orderBy('created_at', 'DESC')
-                ->when($date, function ($query) use ($date, $date_until) {
-                    $query->whereBetween('created_at', [$date, $date_until]);
-                })
-                ->when($targetId, function ($query) use ($targetId) {
-                    $query->where('target_id', $targetId); // Filter by target_id if provided
-                })
-                ->count();
-
-            if ($radarDataTracksCount > 0) {
                 $hasPlaybackData = true;
             }
         }
