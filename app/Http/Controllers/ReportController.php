@@ -41,7 +41,7 @@ class ReportController extends Controller
 
         // Modify the structure of the summary data
         $summaryData['pandu_count'] = [
-            'pandu_count' => $summaryData['pandu_count'],
+            'total' => $summaryData['pandu_count'],
             'detail' => [
                 'valid' => '5',
                 'tidak_terjadwal' => '10',
@@ -50,7 +50,7 @@ class ReportController extends Controller
         ];
 
         $summaryData['bongkar_muat_count'] = [
-            'bongkar_muat_count' => $summaryData['bongkar_muat_count'],
+            'total' => $summaryData['bongkar_muat_count'],
             'detail' => [
                 'valid' => '5',
                 'tidak_terjadwal' => '10',
