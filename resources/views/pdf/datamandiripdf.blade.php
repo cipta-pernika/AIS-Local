@@ -63,6 +63,7 @@
 
         .border1-td {
             width: 100pt;
+            padding: 5px;
             border-top-style: solid;
             border-top-width: 1pt;
             border-left-style: solid;
@@ -75,6 +76,7 @@
 
         .border2-td {
             width: 242pt;
+            padding: 5px;
             border-top-style: solid;
             border-top-width: 1pt;
             border-left-style: solid;
@@ -87,6 +89,7 @@
 
         .border3-td {
             width: 231pt;
+            padding: 5px;
             border-top-style: solid;
             border-top-width: 1pt;
             border-left-style: solid;
@@ -99,6 +102,7 @@
 
         .border4-td {
             width: 71pt;
+            padding: 5px;
             border-top-style: solid;
             border-top-width: 1pt;
             border-left-style: solid;
@@ -111,6 +115,7 @@
 
         .border5-td {
             width: 100pt;
+            padding: 5px;
             border-top-style: solid;
             border-top-width: 1pt;
             border-left-style: solid;
@@ -123,6 +128,7 @@
 
         .border6-td {
             width: 89pt;
+            padding: 5px;
             border-top-style: solid;
             border-top-width: 1pt;
             border-left-style: solid;
@@ -135,6 +141,7 @@
 
         .border7-td {
             width: 66pt;
+            padding: 5px;
             border-top-style: solid;
             border-top-width: 1pt;
             border-left-style: solid;
@@ -147,6 +154,7 @@
 
         .border8-td {
             width: 97pt;
+            padding: 5px;
             border-top-style: solid;
             border-top-width: 1pt;
             border-left-style: solid;
@@ -159,6 +167,7 @@
 
         .border9-td {
             width: 68pt;
+            padding: 5px;
             border-top-style: solid;
             border-top-width: 1pt;
             border-left-style: solid;
@@ -171,6 +180,7 @@
 
         .border10-td {
             width: 26pt;
+            padding: 5px;
             border-top-style: solid;
             border-top-width: 1pt;
             border-left-style: solid;
@@ -182,7 +192,8 @@
         }
 
         .border11-td {
-            width: 140pt;
+            width: 130pt;
+            padding: 5px;
             border-top-style: solid;
             border-top-width: 1pt;
             border-left-style: solid;
@@ -194,7 +205,8 @@
         }
 
         .border12-td {
-            width: 120pt;
+            width: 115pt;
+            padding: 5px;
             border-top-style: solid;
             border-top-width: 1pt;
             border-left-style: solid;
@@ -206,7 +218,8 @@
         }
 
         .border13-td {
-            width: 150pt;
+            width: 130pt;
+            padding: 5px;
             border-top-style: solid;
             border-top-width: 1pt;
             border-left-style: solid;
@@ -218,7 +231,8 @@
         }
 
         .border14-td {
-            width: 156pt;
+            width: 126pt;
+            padding: 5px;
             border-top-style: solid;
             border-top-width: 1pt;
             border-left-style: solid;
@@ -331,7 +345,7 @@
                 </p>
             </td>
             <td class="border11-td">
-                <p class="s1" style="font-size: 16px; padding-top: 2pt; padding-left: 36pt; text-indent: 0pt; text-align: left;">
+                <p class="s1" style="font-size: 16px; padding-top: 2pt; padding-left: 20pt; text-indent: 0pt; text-align: left;">
                     Informasi Kapal
                 </p>
             </td>
@@ -346,12 +360,12 @@
                 </p>
             </td>
             <td class="border13-td">
-                <p class="s1" style="font-size: 16px; padding-top: 2pt; padding-left: 50pt; text-indent: 0pt; text-align: left; ">
+                <p class="s1" style="font-size: 16px; padding-top: 2pt; padding-left: 45pt; text-indent: 0pt; text-align: left; ">
                     No PKK
                 </p>
             </td>
             <td class="border14-td">
-                <p class="s1" style="font-size: 16px;  padding-top: 2pt; padding-left: 20pt; text-indent: 0pt; text-align: left; ">
+                <p class="s1" style="font-size: 16px;  padding-top: 2pt; padding-left: 5pt; text-indent: 0pt; text-align: left; ">
                     BUP/TUKS/TERSUS
                 </p>
             </td>

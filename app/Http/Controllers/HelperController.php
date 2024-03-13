@@ -357,7 +357,7 @@ class HelperController extends Controller
             'summaryData' => $summaryData,
             'addons' => $addons,
             'total_kapal' => $total_kapal,
-        ])->setPaper('a4', 'landscape');
+        ])->setPaper('a3', 'landscape');
 
         return $pdf->download('daily-report.pdf');
     }
