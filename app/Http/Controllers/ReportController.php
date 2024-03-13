@@ -39,6 +39,9 @@ class ReportController extends Controller
         ')
             ->first();
 
+        // Calculate total kapal
+        $total_kapal = $summaryData['passing_count'] + $summaryData['pandu_count'] + $summaryData['bongkar_muat_count'];
+
         // Modify the structure of the summary data
         $summaryData['pandu_count'] = [
             'total' => $summaryData['pandu_count'],
@@ -62,6 +65,7 @@ class ReportController extends Controller
         return response()->json([
             'success' => true,
             'summary_data' => $summaryData,
+            'total_kapal' => $total_kapal,
         ]);
     }
 
