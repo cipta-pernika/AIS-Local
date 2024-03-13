@@ -112,6 +112,11 @@ class ReportGeofenceResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
+                    /* `Actions\CreateAction::make()` is creating a new instance of the `CreateAction` class
+                    from the `Filament\Actions` namespace. This action is typically used to create a new
+                    record or entity within the context of a Filament resource. In this case, it is being
+                    added to the header actions of the `ListReportGeofences` page to allow users to create
+                    new geofences within the report. */
                     // Tables\Actions\DeleteBulkAction::make(),
                     FilamentExportBulkAction::make('export')
                 ]),

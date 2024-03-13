@@ -47,6 +47,20 @@ class ReportGeofenceBongkarMuat extends Model
         return $this->belongsTo(\App\Models\AisDataPosition::class, 'ais_data_position_id');
     }
 
+    public function aisDataVessel()
+    {
+        return $this->belongsTo(AisDataVessel::class, 'mmsi', 'mmsi');
+    }
+    // public function aisDataPositions()
+    // {
+    //     return $this->hasMany(AisDataPosition::class, 'ais_data_position_id', 'id');
+    // }
+
+    public function event(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(\App\Models\Event::class, 'event_id');
+    }
+
     public function geofence(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(\App\Models\Geofence::class, 'geofence_id');

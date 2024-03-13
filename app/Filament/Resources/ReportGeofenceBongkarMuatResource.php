@@ -46,16 +46,17 @@ class ReportGeofenceBongkarMuatResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('aisDataPosition.id')
+                Tables\Columns\TextColumn::make('aisDataPosition.vessel.mmsi')
+                    ->label('MMSI')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('aisDataPosition.vessel.vessel_name')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('geofence.geofence_name')
+                    ->searchable()
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('geofence.id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('mmsi')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('nama_kapal')
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('id_rkbm')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('in')
