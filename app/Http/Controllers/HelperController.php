@@ -913,7 +913,7 @@ class HelperController extends Controller
             $query = AisDataPosition::with('vessel', 'sensorData.sensor.datalogger')
                 ->orderBy('created_at', 'DESC')
                 ->groupBy('vessel_id')
-                ->whereBetween('created_at', [now()->subMinutes(10), now()]);
+                ->whereBetween('created_at', [now()->subMinutes(60), now()]);
 
             // Check if datalogger_id is provided in the request
             if (request()->has('datalogger_id')) {
@@ -924,7 +924,7 @@ class HelperController extends Controller
 
             $aisData = $query->get();
 
-            Cache::put($cacheKey, $aisData, 50);
+            Cache::put($cacheKey, $aisData, 10);
         }
 
         return response()->json([
