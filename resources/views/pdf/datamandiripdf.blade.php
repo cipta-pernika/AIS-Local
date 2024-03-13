@@ -296,26 +296,27 @@
                 <p style="text-indent: 0pt; text-align: left">{{ $summaryData['passing_count'] }}</p>
             </td>
             <td class="border4-td">
-                <p style="text-indent: 0pt; text-align: left">{{ $summaryData['pandu_count'] && $$summaryData['pandu_count']['detail']['valid']}}</p>
+                <p style="text-indent: 0pt; text-align: left">{{ isset($summaryData['pandu_count']) && isset($summaryData['pandu_count']['detail']['valid']) ? $summaryData['pandu_count']['detail']['valid'] : '' }}</p>
             </td>
             <td class="border5-td">
-                <p style="text-indent: 0pt; text-align: left">{{ $summaryData['pandu_count'] && $summaryData['pandu_count']['detail']['tidak_terjadwal']}}</p>
+                <p style="text-indent: 0pt; text-align: left">{{ isset($summaryData['pandu_count']) && isset($summaryData['pandu_count']['detail']['tidak_terjadwal']) ? $summaryData['pandu_count']['detail']['tidak_terjadwal'] : '' }}</p>
             </td>
             <td class="border6-td">
-                <p style="text-indent: 0pt; text-align: left">{{ $summaryData['pandu_count'] && $summaryData['pandu_count']['detail']['terlambat']}}</p>
+                <p style="text-indent: 0pt; text-align: left">{{ isset($summaryData['pandu_count']) && isset($summaryData['pandu_count']['detail']['terlambat']) ? $summaryData['pandu_count']['detail']['terlambat'] : '' }}</p>
             </td>
             <td class="border7-td">
-                <p style="text-indent: 0pt; text-align: left">{{ $summaryData['bongkar_muat_count'] && $summaryData['bongkar_muat_count']['detail']['valid']}}</p>
+                <p style="text-indent: 0pt; text-align: left">{{ isset($summaryData['bongkar_muat_count']) && isset($summaryData['bongkar_muat_count']['detail']['valid']) ? $summaryData['bongkar_muat_count']['detail']['valid'] : '' }}</p>
             </td>
             <td class="border8-td">
-                <p style="text-indent: 0pt; text-align: left">{{ $summaryData['bongkar_muat_count'] && $summaryData['bongkar_muat_count']['detail']['tidak_terjadwal']}}</p>
+                <p style="text-indent: 0pt; text-align: left">{{ isset($summaryData['bongkar_muat_count']) && isset($summaryData['bongkar_muat_count']['detail']['tidak_terjadwal']) ? $summaryData['bongkar_muat_count']['detail']['tidak_terjadwal'] : '' }}</p>
             </td>
             <td class="border9-td">
-                <p style="text-indent: 0pt; text-align: left">{{ $summaryData['bongkar_muat_count'] && $summaryData['bongkar_muat_count']['detail']['terlambat']}}</p>
+                <p style="text-indent: 0pt; text-align: left">{{ isset($summaryData['bongkar_muat_count']) && isset($summaryData['bongkar_muat_count']['detail']['terlambat']) ? $summaryData['bongkar_muat_count']['detail']['terlambat'] : '' }}</p>
             </td>
             <td class="border1-td">
-                <p style="text-indent: 0pt; text-align: left">{{ $summaryData['passing_count']['total'] + $summaryData['pandu_count']['total'] + $summaryData['bongkar_muat_count']['total'] }}</p>
+                <p style="text-indent: 0pt; text-align: left">{{ ($summaryData['pandu_count']['total'] ?? 0) + ($summaryData['bongkar_muat_count']['total'] ?? 0) + ($summaryData['passing_count'] ?? 0) }}</p>
             </td>
+
         </tr>
     </table>
     <h1 style=" font-size: 22px; padding-top: 15pt; padding-left: 8pt; text-indent: 0pt; text-align: left; ">
