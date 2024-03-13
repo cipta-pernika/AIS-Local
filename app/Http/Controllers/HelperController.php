@@ -305,6 +305,28 @@ class HelperController extends Controller
     ')
             ->first();
 
+        // Calculate total kapal
+        $total_kapal = $summaryData['passing_count'] + $summaryData['pandu_count'] + $summaryData['bongkar_muat_count'];
+
+        // Modify the structure of the summary data
+        $summaryData['pandu_count'] = [
+            'total' => $summaryData['pandu_count'],
+            'detail' => [
+                'valid' => '5',
+                'tidak_terjadwal' => '10',
+                'terlambat' => '4'
+            ]
+        ];
+
+        $summaryData['bongkar_muat_count'] = [
+            'total' => $summaryData['bongkar_muat_count'],
+            'detail' => [
+                'valid' => '5',
+                'tidak_terjadwal' => '10',
+                'terlambat' => '4'
+            ]
+        ];
+
         // If validation fails, return error response
         $perPage = $request->get('limit', 10);
 
@@ -334,6 +356,7 @@ class HelperController extends Controller
         $pdf = Pdf::loadView('pdf.datamandiripdf', [
             'summaryData' => $summaryData,
             'addons' => $addons,
+            'total_kapal' => $total_kapal,
         ])->setPaper('a4', 'landscape');
 
         return $pdf->download('daily-report.pdf');
