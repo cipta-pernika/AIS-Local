@@ -262,7 +262,7 @@
         <tr style="height: 14pt">
             <td class="border4-td">
                 <p class="s1" style="padding-top: 2pt;padding-left: 12pt;text-indent: 0pt;text-align: left;">
-                    Tervalidasi
+                    valid
                 </p>
             </td>
             <td class="border5-td">
@@ -272,12 +272,12 @@
             </td>
             <td class="border6-td">
                 <p class="s1" style=" padding-top: 2pt; padding-left: 22pt; text-indent: 0pt; text-align: left; ">
-                    Terlambat
+                    terlambat
                 </p>
             </td>
             <td class="border7-td">
                 <p class="s1" style=" padding-top: 2pt; padding-left: 10pt; text-indent: 0pt; text-align: left; ">
-                    Tervalidasi
+                    valid
                 </p>
             </td>
             <td class="border8-td">
@@ -287,7 +287,7 @@
             </td>
             <td class="border9-td">
                 <p class="s1" style=" padding-top: 2pt; padding-left: 12pt; text-indent: 0pt; text-align: left; ">
-                    Terlambat
+                    terlambat
                 </p>
             </td>
         </tr>
@@ -295,27 +295,26 @@
             <td class="border1-td">
                 <p style="text-indent: 0pt; text-align: left">{{ $summaryData['passing_count'] }}</p>
             </td>
-            @dd($summaryData['pandu_count'])
             <td class="border4-td">
-                <p style="text-indent: 0pt; text-align: left">{{ $summaryData['pandu_count'] && $summaryData['pandu_count']['tervalidasi']}}</p>
+                <p style="text-indent: 0pt; text-align: left">{{ $summaryData['pandu_count'] && $$summaryData['pandu_count']['detail']['valid']}}</p>
             </td>
             <td class="border5-td">
-                <p style="text-indent: 0pt; text-align: left">{{ $summaryData['pandu_count'] && $summaryData['pandu_count']['tidakTerjadwal']}}</p>
+                <p style="text-indent: 0pt; text-align: left">{{ $summaryData['pandu_count'] && $summaryData['pandu_count']['detail']['tidak_terjadwal']}}</p>
             </td>
             <td class="border6-td">
-                <p style="text-indent: 0pt; text-align: left">{{ $summaryData['pandu_count'] && $summaryData['pandu_count']['terlambat']}}</p>
+                <p style="text-indent: 0pt; text-align: left">{{ $summaryData['pandu_count'] && $summaryData['pandu_count']['detail']['terlambat']}}</p>
             </td>
             <td class="border7-td">
-                <p style="text-indent: 0pt; text-align: left">{{ $summaryData['bongkar_muat_count'] && $summaryData['bongkar_muat_count']['tervalidasi']}}</p>
+                <p style="text-indent: 0pt; text-align: left">{{ $summaryData['bongkar_muat_count'] && $summaryData['bongkar_muat_count']['detail']['valid']}}</p>
             </td>
             <td class="border8-td">
-                <p style="text-indent: 0pt; text-align: left">{{ $summaryData['bongkar_muat_count'] && $summaryData['bongkar_muat_count']['tidakTerjadwal']}}</p>
+                <p style="text-indent: 0pt; text-align: left">{{ $summaryData['bongkar_muat_count'] && $summaryData['bongkar_muat_count']['detail']['tidak_terjadwal']}}</p>
             </td>
             <td class="border9-td">
-                <p style="text-indent: 0pt; text-align: left">{{ $summaryData['bongkar_muat_count'] && $summaryData['bongkar_muat_count']['terlambat']}}</p>
+                <p style="text-indent: 0pt; text-align: left">{{ $summaryData['bongkar_muat_count'] && $summaryData['bongkar_muat_count']['detail']['terlambat']}}</p>
             </td>
             <td class="border1-td">
-                <p style="text-indent: 0pt; text-align: left">{{ $summaryData['passing_count'] + $summaryData['pandu_count'] + $summaryData['bongkar_muat_count'] }}</p>
+                <p style="text-indent: 0pt; text-align: left">{{ $summaryData['passing_count']['total'] + $summaryData['pandu_count']['total'] + $summaryData['bongkar_muat_count']['total'] }}</p>
             </td>
         </tr>
     </table>
