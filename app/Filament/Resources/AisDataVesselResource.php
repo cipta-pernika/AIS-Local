@@ -73,7 +73,7 @@ class AisDataVesselResource extends Resource implements HasShieldPermissions
             ->columns([
                 Tables\Columns\TextColumn::make('vessel_name')->searchable(),
                 Tables\Columns\TextColumn::make('vessel_type')->sortable(),
-                Tables\Columns\TextColumn::make('mmsi')->searchable(),
+                Tables\Columns\TextColumn::make('mmsi')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('imo')->searchable(),
                 Tables\Columns\TextColumn::make('callsign')->searchable(),
                 Tables\Columns\TextColumn::make('draught'),

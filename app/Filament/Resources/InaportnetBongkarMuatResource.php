@@ -130,6 +130,7 @@ class InaportnetBongkarMuatResource extends Resource
                 //     ->numeric()
                 //     ->sortable(),
                 // ])->from('xl'),
+                Tables\Columns\TextColumn::make('mmsi')->searchable()->sortable(),
                 ViewColumn::make('id_rkbm')
                     ->view('filament.tables.columns.no-rkbm')
                     ->label('Nomor PKK'),

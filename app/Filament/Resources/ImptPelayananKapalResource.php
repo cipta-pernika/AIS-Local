@@ -67,12 +67,13 @@ class ImptPelayananKapalResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('no_pkk')
                     ->searchable(),
-                    Tables\Columns\TextColumn::make('aisDataVessel.mmsi')
+                Tables\Columns\TextColumn::make('aisDataVessel.mmsi')
                     ->label('MMSI')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('nama_kapal')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('mmsi')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('gt')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('nama_agen_pelayaran')

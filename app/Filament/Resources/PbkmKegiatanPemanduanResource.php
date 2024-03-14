@@ -146,6 +146,7 @@ class PbkmKegiatanPemanduanResource extends Resource
                 Tables\Columns\TextColumn::make('actual_mulai_muat')
                     ->dateTime()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('mmsi')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('actual_selesai_bongkar')
                     ->dateTime()
                     ->sortable(),
