@@ -199,3 +199,6 @@ Route::get('data-mandiri-pelaksanaan-kapals-dummy', [ReportController::class, 'd
 
 Route::resource('report-geofence-pandus', App\Http\Controllers\API\ReportGeofencePanduAPIController::class)
     ->except(['create', 'edit']);
+
+Route::resource('tidak-terjadwals', App\Http\Controllers\API\TidakTerjadwalAPIController::class)
+    ->except(['create', 'edit']);

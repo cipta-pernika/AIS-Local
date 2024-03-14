@@ -72,3 +72,4 @@ Route::resource('report-geofence-bongkar-muats', App\Http\Controllers\ReportGeof
 Route::resource('data-mandiri-pelaksanaan-kapals', App\Http\Controllers\DataMandiriPelaksanaanKapalController::class);
 Route::resource('certificates', App\Http\Controllers\CertificateController::class);
 Route::resource('report-geofence-pandus', App\Http\Controllers\ReportGeofencePanduController::class);
+Route::resource('tidak-terjadwals', App\Http\Controllers\TidakTerjadwalController::class);

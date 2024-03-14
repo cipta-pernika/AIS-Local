@@ -1,1 +1,1 @@
-php artisan infyom:api_scaffold ReportGeofencePandu --skip=views,menu,tests --fromTable --table=report_geofence_pandus
+php artisan infyom:api_scaffold TidakTerjadwal --skip=views,menu,tests --fromTable --table=tidak_terjadwals

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\DataMandiriPelaksanaanKapal;
+use App\Models\InaportnetBongkarMuat;
+use App\Models\ReportGeofenceBongkarMuat;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -39,6 +41,9 @@ class ReportController extends Controller
         ')
             ->first();
 
+        $total_data_mandiri_ais = ReportGeofenceBongkarMuat::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->count();
+        $total_data_inaportnet = InaportnetBongkarMuat::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->count();
+
         // Calculate total kapal
         $total_kapal = $summaryData['passing_count'] + $summaryData['pandu_count'] + $summaryData['bongkar_muat_count'];
 
@@ -46,7 +51,7 @@ class ReportController extends Controller
         $summaryData['pandu_count'] = [
             'total' => $summaryData['pandu_count'],
             'detail' => [
-                'valid' => '5',
+                'valid' => $summaryData['pandu_count'],
                 'tidak_terjadwal' => '10',
                 'terlambat' => '4'
             ]
@@ -55,7 +60,7 @@ class ReportController extends Controller
         $summaryData['bongkar_muat_count'] = [
             'total' => $summaryData['bongkar_muat_count'],
             'detail' => [
-                'valid' => '5',
+                'valid' => $summaryData['bongkar_muat_count'],
                 'tidak_terjadwal' => '10',
                 'terlambat' => '4'
             ]
