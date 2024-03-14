@@ -79,7 +79,7 @@ class HelperController extends Controller
         if ($source == 'report-geofence') {
             $ais_vessel = AisDataVessel::where('mmsi', $inaportnet->mmsi)->first();
         } else {
-            $ais_vessel = AisDataVessel::where('vessel_name', 'like', "%$inaportnet->nama_kapal%")->first();
+            $ais_vessel = AisDataVessel::where('vessel_name', 'like', "%$inaportnet->nama_kapal%")->orWhere('mmsi', $inaportnet->mmsi)->first();
         }
 
         if ($ais_vessel) {
@@ -130,7 +130,7 @@ class HelperController extends Controller
                 break;
         }
 
-        $ais_vessel = AisDataVessel::where('vessel_name', 'like', "%$inaportnet->nama_kapal%")->first();
+        $ais_vessel = AisDataVessel::where('vessel_name', 'like', "%$inaportnet->nama_kapal%")->orWhere('mmsi', $inaportnet->mmsi)->first();
 
         if ($ais_vessel) {
             $ais_position = AisDataPosition::where('vessel_id', $ais_vessel->id)->first();
