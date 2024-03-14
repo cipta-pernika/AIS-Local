@@ -45,6 +45,9 @@ return new class extends Migration
             $table->timestamp('actual_mulai_muat')->nullable();
             $table->timestamp('actual_selesai_bongkar')->nullable();
             $table->timestamp('actual_selesai_muat')->nullable();
+            $table->string('mmsi')->nullable();
+            $table->string('foto_di_kapal')->nullable();
+            $table->string('bpjp')->nullable();
             $table->index('id');
             $table->index('no_pkk');
         });

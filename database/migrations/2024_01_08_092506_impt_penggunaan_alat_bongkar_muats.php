@@ -31,6 +31,7 @@ return new class extends Migration
             $table->longText('image_mulai')->nullable();
             $table->longText('image_sedang')->nullable();
             $table->longText('image_selesai')->nullable();
+            $table->string('mmsi')->nullable();
             $table->timestamps();
 
             $table->index('id');
