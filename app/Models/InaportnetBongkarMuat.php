@@ -50,6 +50,7 @@ class InaportnetBongkarMuat extends Model
         'actual_mulai_muat',
         'actual_selesai_bongkar',
         'actual_selesai_muat',
+        'mmsi',
     ];
 
     protected $casts = [

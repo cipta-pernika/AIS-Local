@@ -23,7 +23,8 @@ class ImptPenggunaanAlat extends Model
         'lama_penggunaaan',
         'jumlah_biaya',
         'jumlah_pnbp',
-        'date'
+        'date',
+        'mmsi',
     ];
 
     protected $casts = [

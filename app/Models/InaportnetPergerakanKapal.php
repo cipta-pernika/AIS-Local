@@ -30,7 +30,8 @@ class InaportnetPergerakanKapal extends Model
         'lokasi_lambat_labuh',
         'waktu_respon',
         'nomor_spog',
-        'no_pkk_assign'
+        'no_pkk_assign',
+        'mmsi',
     ];
 
     protected $casts = [

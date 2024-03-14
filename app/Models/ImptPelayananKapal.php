@@ -19,7 +19,8 @@ class ImptPelayananKapal extends Model
         'posisi',
         'jumlah_biaya',
         'jumlah_pnbp',
-        'date'
+        'date',
+        'mmsi',
     ];
 
     protected $casts = [
