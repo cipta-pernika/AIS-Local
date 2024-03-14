@@ -55,7 +55,7 @@ class ReportController extends Controller
         $total_muat = $summaryData['bongkar_muat_count'] + $total_tidak_terjadwal_bongkar;
 
         // Calculate total kapal
-        $total_kapal = $summaryData['passing_count'] + $summaryData['pandu_count'] + $summaryData['bongkar_muat_count'];
+        $total_kapal = $summaryData['passing_count'] + $total_pandu + $total_muat;
 
         // Modify the structure of the summary data
         $summaryData['pandu_count'] = [
