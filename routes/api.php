@@ -205,3 +205,9 @@ Route::resource('tidak-terjadwals', App\Http\Controllers\API\TidakTerjadwalAPICo
 
 Route::resource('pandu-tidak-terjadwals', App\Http\Controllers\API\PanduTidakTerjadwalAPIController::class)
     ->except(['create', 'edit']);
+
+Route::resource('bongkar-muat-terlambats', App\Http\Controllers\API\BongkarMuatTerlambatAPIController::class)
+    ->except(['create', 'edit']);
+
+Route::resource('pandu-terlambats', App\Http\Controllers\API\PanduTerlambatAPIController::class)
+    ->except(['create', 'edit']);

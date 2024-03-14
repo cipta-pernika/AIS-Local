@@ -74,3 +74,5 @@ Route::resource('certificates', App\Http\Controllers\CertificateController::clas
 Route::resource('report-geofence-pandus', App\Http\Controllers\ReportGeofencePanduController::class);
 Route::resource('tidak-terjadwals', App\Http\Controllers\TidakTerjadwalController::class);
 Route::resource('pandu-tidak-terjadwals', App\Http\Controllers\PanduTidakTerjadwalController::class);
+Route::resource('bongkar-muat-terlambats', App\Http\Controllers\BongkarMuatTerlambatController::class);
+Route::resource('pandu-terlambats', App\Http\Controllers\PanduTerlambatController::class);
