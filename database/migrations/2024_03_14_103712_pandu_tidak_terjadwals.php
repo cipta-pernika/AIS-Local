@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tidak_terjadwals', function (Blueprint $table) {
+        Schema::create('pandu_tidak_terjadwals', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('ais_data_vessel_id')->nullable();
             $table->tinyInteger('isPassing')->default(0);
-            $table->string('id_rkbm')->nullable();
             $table->unsignedBigInteger('geofence_id')->nullable();
+            $table->string('nomor_spk_pandu')->nullable();
             $table->unsignedBigInteger('ais_data_position_id')->nullable();
             $table->unsignedBigInteger('report_geofence_id')->nullable();
             $table->timestamps();
@@ -41,6 +41,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tidak_terjadwals');
+        Schema::dropIfExists('pandu_tidak_terjadwals');
     }
 };
