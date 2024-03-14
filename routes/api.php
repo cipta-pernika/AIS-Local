@@ -202,3 +202,6 @@ Route::resource('report-geofence-pandus', App\Http\Controllers\API\ReportGeofenc
 
 Route::resource('tidak-terjadwals', App\Http\Controllers\API\TidakTerjadwalAPIController::class)
     ->except(['create', 'edit']);
+
+Route::resource('pandu-tidak-terjadwals', App\Http\Controllers\API\PanduTidakTerjadwalAPIController::class)
+    ->except(['create', 'edit']);

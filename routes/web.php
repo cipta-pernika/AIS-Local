@@ -73,3 +73,4 @@ Route::resource('data-mandiri-pelaksanaan-kapals', App\Http\Controllers\DataMand
 Route::resource('certificates', App\Http\Controllers\CertificateController::class);
 Route::resource('report-geofence-pandus', App\Http\Controllers\ReportGeofencePanduController::class);
 Route::resource('tidak-terjadwals', App\Http\Controllers\TidakTerjadwalController::class);
+Route::resource('pandu-tidak-terjadwals', App\Http\Controllers\PanduTidakTerjadwalController::class);
