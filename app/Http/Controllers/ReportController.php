@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BongkarMuatTerlambat;
 use App\Models\DataMandiriPelaksanaanKapal;
 use App\Models\InaportnetBongkarMuat;
+use App\Models\PanduTerlambat;
 use App\Models\PanduTidakTerjadwal;
 use App\Models\ReportGeofenceBongkarMuat;
 use App\Models\TidakTerjadwal;
@@ -47,26 +49,30 @@ class ReportController extends Controller
         $total_data_inaportnet = InaportnetBongkarMuat::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->count();
         $total_tidak_terjadwal_bongkar = TidakTerjadwal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->count();
         $total_pandu_tidak_tejadwal = PanduTidakTerjadwal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->count();
+        $total_late_bongkar = BongkarMuatTerlambat::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->count();
+        $total_late_pandu = PanduTerlambat::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->count();
+        $total_pandu = $summaryData['pandu_count'] + $total_pandu_tidak_tejadwal;
+        $total_muat = $summaryData['bongkar_muat_count'] + $total_tidak_terjadwal_bongkar;
 
         // Calculate total kapal
         $total_kapal = $summaryData['passing_count'] + $summaryData['pandu_count'] + $summaryData['bongkar_muat_count'];
 
         // Modify the structure of the summary data
         $summaryData['pandu_count'] = [
-            'total' => $summaryData['pandu_count'] + $total_pandu_tidak_tejadwal,
+            'total' => $total_pandu,
             'detail' => [
                 'valid' => $summaryData['pandu_count'],
                 'tidak_terjadwal' => $total_pandu_tidak_tejadwal,
-                'terlambat' => $summaryData['pandu_count'] - $total_pandu_tidak_tejadwal
+                'terlambat' => $total_late_pandu
             ]
         ];
 
         $summaryData['bongkar_muat_count'] = [
-            'total' => $summaryData['bongkar_muat_count'] + $total_tidak_terjadwal_bongkar,
+            'total' => $total_muat,
             'detail' => [
                 'valid' => $summaryData['bongkar_muat_count'],
                 'tidak_terjadwal' => $total_tidak_terjadwal_bongkar,
-                'terlambat' => $summaryData['bongkar_muat_count'] - $total_tidak_terjadwal_bongkar
+                'terlambat' => $total_late_bongkar
             ]
         ];
 
