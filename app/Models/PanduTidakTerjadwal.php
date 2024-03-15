@@ -14,7 +14,12 @@ class PanduTidakTerjadwal extends Model
         'geofence_id',
         'nomor_spk_pandu',
         'ais_data_position_id',
-        'report_geofence_id'
+        'report_geofence_id',
+        'inaportnet_bongkar_muat_id',
+        'inaportnet_pergerakan_kapal_id',
+        'impt_pelayanan_kapal_id',
+        'impt_penggunaan_alat_id',
+        'pbkm_kegiatan_pemanduan_id',
     ];
 
     protected $casts = [
