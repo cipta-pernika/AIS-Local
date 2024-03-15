@@ -53,4 +53,25 @@ class PanduTidakTerjadwal extends Model
     {
         return $this->belongsTo(\App\Models\ReportGeofence::class, 'report_geofence_id');
     }
+
+
+    public function imptPelayananKapal(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(\App\Models\ImptPelayananKapal::class, 'impt_pelayanan_kapal_id');
+    }
+
+    public function imptPenggunaanAlat(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(\App\Models\ImptPenggunaanAlat::class, 'impt_penggunaan_alat_id');
+    }
+
+    public function inaportnetBongkarMuat(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(\App\Models\InaportnetBongkarMuat::class, 'inaportnet_bongkar_muat_id');
+    }
+
+    public function pbkmKegiatanPemanduan(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(\App\Models\PbkmKegiatanPemanduan::class, 'pbkm_kegiatan_pemanduan_id');
+    }
 }
