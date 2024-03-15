@@ -65,6 +65,16 @@ class DataMandiriPelaksanaanKapalAPIController extends AppBaseController
             $query->where('isPassing', $isPassing);
         }        
 
+        if ($request->has('isPanduValid')) {
+            $isPassing = (int)$request->input('isPanduValid');
+            $query->where('isPandu', $isPassing);
+        }    
+
+        if ($request->has('isBongkarMuatValid')) {
+            $isPassing = (int)$request->input('isBongkarMuatValid');
+            $query->where('isBongkarMuat', $isPassing);
+        }    
+
         // Apply filter by isPanduValid, isPanduTidakTerjadwal, isPanduLate, isBongkarMuatValid, isBongkarTidakTerjadwal, or isBongkarLate
         $filterKeys = ['isPanduValid', 'isPanduTidakTerjadwal', 'isPanduLate', 'isBongkarMuatValid', 'isBongkarTidakTerjadwal', 'isBongkarLate'];
         $appliedFilter = null;
