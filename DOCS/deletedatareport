@@ -1,0 +1,5 @@
+TRUNCATE TABLE data_mandiri_kapals;
+TRUNCATE TABLE tidak_terjadwals;
+TRUNCATE TABLE pandu_tidak_terjadwals;
+TRUNCATE TABLE pandu_terlambats;
+TRUNCATE TABLE bongkar_muat_terlambats;
