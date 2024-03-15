@@ -129,7 +129,7 @@ class PbkmKegiatanPemanduanResource extends Resource
                 //     ->searchable(),
                 ImageColumn::make('foto_di_kapal')
                     ->getStateUsing(function (PbkmKegiatanPemanduan $record): string {
-                        return $record->foto_di_kapal;
+                        return $record->foto_di_kapal ?? '';
                     })
                     ->extraImgAttributes([
                         'img' => 'src'
