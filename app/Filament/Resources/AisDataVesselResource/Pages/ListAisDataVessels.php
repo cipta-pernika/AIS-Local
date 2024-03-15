@@ -27,7 +27,7 @@ class ListAisDataVessels extends ListRecords
                         ->label('Vessel Name'),
                     ImportField::make('vessel_type')
                         ->label('Vessel Type'),
-                ])
+                ])->label('Import')
         ];
     }
 }
