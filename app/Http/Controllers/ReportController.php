@@ -81,7 +81,7 @@ class ReportController extends Controller
             'success' => true,
             'summary_data' => $summaryData,
             'total_kapal' => $total_kapal,
-            'total_tidak_teridentifikasi' => $total_tidak_teridentifikasi,
+            'total_tidak_teridentifikasi' => $total_tidak_teridentifikasi - $total_kapal,
         ]);
     }
 
