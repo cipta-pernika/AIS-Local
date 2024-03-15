@@ -134,8 +134,13 @@ class PbkmKegiatanPemanduanResource extends Resource
                     ->extraImgAttributes([
                         'img' => 'src'
                     ]),
-                Tables\Columns\TextColumn::make('bpjp')
-                    ->searchable(),
+                ImageColumn::make('bpjp')
+                    ->getStateUsing(function (PbkmKegiatanPemanduan $record): string {
+                        return $record->bpjp ?? '';
+                    })
+                    ->extraImgAttributes([
+                        'img' => 'src'
+                    ]),
                 Tables\Columns\TextColumn::make('nama_pandu')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('nama_kapal')
