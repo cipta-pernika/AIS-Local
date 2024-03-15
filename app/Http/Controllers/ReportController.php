@@ -36,7 +36,6 @@ class ReportController extends Controller
         $startDateTime = Carbon::parse($request->start_date)->startOfDay();
         $endDateTime = Carbon::parse($request->end_date)->endOfDay();
 
-        // Retrieve data based on the provided start and end dates
         $summaryData = DataMandiriPelaksanaanKapal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])
             ->selectRaw('
             SUM(CASE WHEN isPassing = 1 THEN 1 ELSE 0 END) AS passing_count,
@@ -51,6 +50,7 @@ class ReportController extends Controller
         $total_pandu_tidak_tejadwal = PanduTidakTerjadwal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->count();
         $total_late_bongkar = BongkarMuatTerlambat::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->count();
         $total_late_pandu = PanduTerlambat::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->count();
+        $total_tidak_teridentifikasi = DataMandiriPelaksanaanKapal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->count();
         $total_pandu = $summaryData['pandu_count'] + $total_pandu_tidak_tejadwal + $total_late_pandu;
         $total_muat = $summaryData['bongkar_muat_count'] + $total_tidak_terjadwal_bongkar + $total_late_bongkar;
 
@@ -81,6 +81,7 @@ class ReportController extends Controller
             'success' => true,
             'summary_data' => $summaryData,
             'total_kapal' => $total_kapal,
+            'total_tidak_teridentifikasi' => $total_tidak_teridentifikasi,
         ]);
     }
 
