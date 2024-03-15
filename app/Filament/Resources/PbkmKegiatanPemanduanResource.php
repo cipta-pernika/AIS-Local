@@ -124,6 +124,10 @@ class PbkmKegiatanPemanduanResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('no_pandu')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('foto_di_kapal')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('bpjp')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('nama_pandu')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('nama_kapal')
