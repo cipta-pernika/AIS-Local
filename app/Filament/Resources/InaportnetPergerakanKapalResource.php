@@ -96,7 +96,6 @@ class InaportnetPergerakanKapalResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('aisDataVessel.mmsi')
                     ->label('MMSI')
-                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('nama_kapal')
                     ->searchable(),

@@ -104,7 +104,6 @@ class PbkmKegiatanPemanduanResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('aisDataVessel.mmsi')
                     ->label('MMSI')
-                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('tanggal_spk_pandu')
                     ->dateTime()

@@ -79,7 +79,6 @@ class ImptPenggunaanAlatResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('aisDataVessel.mmsi')
                     ->label('MMSI')
-                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('no_pkk')
                     ->searchable(),
