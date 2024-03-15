@@ -13,6 +13,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Actions\Action;
+use Filament\Tables\Columns\ImageColumn;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Tables\Filters\QueryBuilder;
@@ -124,8 +125,15 @@ class PbkmKegiatanPemanduanResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('no_pandu')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('foto_di_kapal')
-                    ->searchable(),
+                // Tables\Columns\TextColumn::make('foto_di_kapal')
+                //     ->searchable(),
+                ImageColumn::make('foto_di_kapal')
+                    ->getStateUsing(function (PbkmKegiatanPemanduan $record): string {
+                        return $record->foto_di_kapal;
+                    })
+                    ->extraImgAttributes([
+                        'img' => 'src'
+                    ]),
                 Tables\Columns\TextColumn::make('bpjp')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('nama_pandu')
