@@ -9,6 +9,10 @@ use App\Repositories\DataMandiriPelaksanaanKapalRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
+use App\Models\BongkarMuatTerlambat;
+use App\Models\PanduTerlambat;
+use App\Models\PanduTidakTerjadwal;
+use App\Models\TidakTerjadwal;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -37,45 +41,50 @@ class DataMandiriPelaksanaanKapalAPIController extends AppBaseController
 
         $perPage = $request->get('limit', 10);
 
-        // Initialize the query builder with constraints based on start_date and end_date
-        $query = DataMandiriPelaksanaanKapal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime]);
+        // Initialize the main query builder with constraints based on start_date and end_date
+        $mainQuery = DataMandiriPelaksanaanKapal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime]);
 
         // Apply search filter if provided
         if ($request->has('search')) {
             $searchTerm = $request->input('search');
-            $query->whereHas('aisDataVessel', function ($query) use ($searchTerm) {
+            $mainQuery->whereHas('aisDataVessel', function ($query) use ($searchTerm) {
                 $query->where('vessel_name', 'like', '%' . $searchTerm . '%');
             });
         }
 
+        // Apply filter by isPassing if provided
         if ($request->has('isPassing')) {
             $isPassing = (int)$request->input('isPassing');
-            $query->where('isPassing', $isPassing);
+            $mainQuery->where('isPassing', $isPassing);
         }
 
+        // Apply filter by isPanduValid if provided
         if ($request->has('isPanduValid')) {
-            $isPassing = (int)$request->input('isPanduValid');
-            $query->where('isPandu', $isPassing);
+            $isPanduValid = (int)$request->input('isPanduValid');
+            $mainQuery->where('isPandu', $isPanduValid);
         }
 
+        // Apply filter by isBongkarMuatValid if provided
         if ($request->has('isBongkarMuatValid')) {
-            $isPassing = (int)$request->input('isBongkarMuatValid');
-            $query->where('isBongkarMuat', $isPassing);
+            $isBongkarMuatValid = (int)$request->input('isBongkarMuatValid');
+            $mainQuery->where('isBongkarMuat', $isBongkarMuatValid);
         }
 
-        // Apply filter by isPanduValid, isPanduTidakTerjadwal, isPanduLate, isBongkarMuatValid, isBongkarTidakTerjadwal, or isBongkarLate
-        $filterKeys = ['isPanduValid', 'isPanduTidakTerjadwal', 'isPanduLate', 'isBongkarMuatValid', 'isBongkarTidakTerjadwal', 'isBongkarLate'];
-        $appliedFilter = null;
-
-        foreach ($filterKeys as $key) {
-            if ($request->has($key)) {
-                $appliedFilter = $key;
-                // $query->where($key, $request->input($key));
-                break; // Only one filter is allowed, so exit loop after applying the first one
-            }
+        // Check for specific conditions and apply corresponding queries
+        if ($request->has('isPanduTidakTerjadwal')) {
+            $query = PanduTidakTerjadwal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime]);
+        } elseif ($request->has('isPanduLate')) {
+            $query = PanduTerlambat::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime]);
+        } elseif ($request->has('isBongkarTidakTerjadwal')) {
+            $query = TidakTerjadwal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime]);
+        } elseif ($request->has('isBongkarLate')) {
+            $query = BongkarMuatTerlambat::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime]);
+        } else {
+            // Default to the main query if no specific condition is provided
+            $query = $mainQuery;
         }
 
-        // Retrieve filtered data
+        // Retrieve filtered data based on the selected query
         $allAddons = $query->get();
 
         // Manually paginate the results
@@ -100,6 +109,7 @@ class DataMandiriPelaksanaanKapalAPIController extends AppBaseController
             ],
         ], 'Data Mandiri Pelaksanaan retrieved successfully');
     }
+
 
     /**
      * Store a newly created DataMandiriPelaksanaanKapal in storage.
