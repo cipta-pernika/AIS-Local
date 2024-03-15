@@ -31,21 +31,9 @@ class DataMandiriPelaksanaanKapalAPIController extends AppBaseController
      */
     public function index(Request $request): JsonResponse
     {
-        $validator = Validator::make($request->all(), [
-            'start_date' => 'required|date',
-            'end_date' => 'required|date|after_or_equal:start_date',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Validation failed',
-                'errors' => $validator->errors(),
-            ], 422);
-        }
-
-        $startDateTime = Carbon::parse($request->start_date)->startOfDay();
-        $endDateTime = Carbon::parse($request->end_date)->endOfDay();
+        // Set default values for start date and end date if they are not provided
+        $startDateTime = Carbon::parse($request->start_date ?? now())->startOfDay();
+        $endDateTime = Carbon::parse($request->end_date ?? now()->addDay())->endOfDay();
 
         $perPage = $request->get('limit', 10);
 
@@ -63,17 +51,17 @@ class DataMandiriPelaksanaanKapalAPIController extends AppBaseController
         if ($request->has('isPassing')) {
             $isPassing = (int)$request->input('isPassing');
             $query->where('isPassing', $isPassing);
-        }        
+        }
 
         if ($request->has('isPanduValid')) {
             $isPassing = (int)$request->input('isPanduValid');
             $query->where('isPandu', $isPassing);
-        }    
+        }
 
         if ($request->has('isBongkarMuatValid')) {
             $isPassing = (int)$request->input('isBongkarMuatValid');
             $query->where('isBongkarMuat', $isPassing);
-        }    
+        }
 
         // Apply filter by isPanduValid, isPanduTidakTerjadwal, isPanduLate, isBongkarMuatValid, isBongkarTidakTerjadwal, or isBongkarLate
         $filterKeys = ['isPanduValid', 'isPanduTidakTerjadwal', 'isPanduLate', 'isBongkarMuatValid', 'isBongkarTidakTerjadwal', 'isBongkarLate'];
