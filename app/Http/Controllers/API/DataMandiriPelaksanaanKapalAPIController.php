@@ -9,6 +9,9 @@ use App\Repositories\DataMandiriPelaksanaanKapalRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 /**
  * Class DataMandiriPelaksanaanKapalAPIController
@@ -28,20 +31,49 @@ class DataMandiriPelaksanaanKapalAPIController extends AppBaseController
      */
     public function index(Request $request): JsonResponse
     {
+        $validator = Validator::make($request->all(), [
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        $startDateTime = Carbon::parse($request->start_date)->startOfDay();
+        $endDateTime = Carbon::parse($request->end_date)->endOfDay();
+
         $perPage = $request->get('limit', 10);
 
+        // Initialize the query builder with constraints based on start_date and end_date
+        $query = DataMandiriPelaksanaanKapal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime]);
+
+        // Apply search filter if provided
         if ($request->has('search')) {
             $searchTerm = $request->input('search');
-
-            $allAddons = DataMandiriPelaksanaanKapal::whereHas('aisDataVessel', function ($query) use ($searchTerm) {
+            $query->whereHas('aisDataVessel', function ($query) use ($searchTerm) {
                 $query->where('vessel_name', 'like', '%' . $searchTerm . '%');
-            })->get();
-        } else {
-            // Retrieve all airlines using the repository's "all" method
-            $allAddons = $this->dataMandiriPelaksanaanKapalRepository->all(
-                $request->except(['skip', 'limit'])
-            );
+            });
         }
+
+        // Apply filter by isPanduValid, isPanduTidakTerjadwal, isPanduLate, isBongkarMuatValid, isBongkarTidakTerjadwal, or isBongkarLate
+        $filterKeys = ['isPanduValid', 'isPanduTidakTerjadwal', 'isPanduLate', 'isBongkarMuatValid', 'isBongkarTidakTerjadwal', 'isBongkarLate'];
+        $appliedFilter = null;
+
+        foreach ($filterKeys as $key) {
+            if ($request->has($key)) {
+                $appliedFilter = $key;
+                // $query->where($key, $request->input($key));
+                break; // Only one filter is allowed, so exit loop after applying the first one
+            }
+        }
+
+        // Retrieve filtered data
+        $allAddons = $query->get();
 
         // Manually paginate the results
         $addons = $allAddons->slice(
