@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a14ba3b9648d1818850a2016906f2357",
+    "content-hash": "f200aab160bab54825b8a0e7d55566d0",
     "packages": [
         {
             "name": "alperenersoy/filament-export",
@@ -2466,28 +2466,28 @@
         },
         {
             "name": "flowframe/laravel-trend",
-            "version": "v0.1.5",
+            "version": "v0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Flowframe/laravel-trend.git",
-                "reference": "bc43bf7840ff60aca39e856ad96f5e990fac83d7"
+                "reference": "bae1232325a59a7c9e99a372c80afab82309503b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Flowframe/laravel-trend/zipball/bc43bf7840ff60aca39e856ad96f5e990fac83d7",
-                "reference": "bc43bf7840ff60aca39e856ad96f5e990fac83d7",
+                "url": "https://api.github.com/repos/Flowframe/laravel-trend/zipball/bae1232325a59a7c9e99a372c80afab82309503b",
+                "reference": "bae1232325a59a7c9e99a372c80afab82309503b",
                 "shasum": ""
             },
             "require": {
-                "illuminate/contracts": "^8.37|^9|^10.0",
-                "php": "^8.0",
+                "illuminate/contracts": "^8.37|^9|^10.0|^11.0",
+                "php": "^8.2",
                 "spatie/laravel-package-tools": "^1.4.3"
             },
             "require-dev": {
-                "nunomaduro/collision": "^5.3|^6.1",
-                "orchestra/testbench": "^6.15|^7.0|^8.0",
-                "pestphp/pest": "^1.18",
-                "pestphp/pest-plugin-laravel": "^1.1",
+                "nunomaduro/collision": "^5.3|^6.1|^8.0",
+                "orchestra/testbench": "^6.15|^7.0|^8.0|^9.0",
+                "pestphp/pest": "^1.18|^2.34",
+                "pestphp/pest-plugin-laravel": "^1.1|^2.3",
                 "spatie/laravel-ray": "^1.23",
                 "vimeo/psalm": "^4.8|^5.6"
             },
@@ -2528,7 +2528,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Flowframe/laravel-trend/issues",
-                "source": "https://github.com/Flowframe/laravel-trend/tree/v0.1.5"
+                "source": "https://github.com/Flowframe/laravel-trend/tree/v0.2.0"
             },
             "funding": [
                 {
@@ -2536,7 +2536,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-03-22T20:51:43+00:00"
+            "time": "2024-03-14T13:45:40+00:00"
         },
         {
             "name": "fruitcake/php-cors",
@@ -3142,27 +3142,27 @@
         },
         {
             "name": "inertiajs/inertia-laravel",
-            "version": "v0.6.11",
+            "version": "v1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/inertiajs/inertia-laravel.git",
-                "reference": "2a1e19048f95c0e4adb2b2733f9119e49c4fc09f"
+                "reference": "fcf3d6db1a259a55d8d18cf43fc971202c1f6b0d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/inertiajs/inertia-laravel/zipball/2a1e19048f95c0e4adb2b2733f9119e49c4fc09f",
-                "reference": "2a1e19048f95c0e4adb2b2733f9119e49c4fc09f",
+                "url": "https://api.github.com/repos/inertiajs/inertia-laravel/zipball/fcf3d6db1a259a55d8d18cf43fc971202c1f6b0d",
+                "reference": "fcf3d6db1a259a55d8d18cf43fc971202c1f6b0d",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "laravel/framework": "^6.0|^7.0|^8.74|^9.0|^10.0",
-                "php": "^7.2|~8.0.0|~8.1.0|~8.2.0|~8.3.0"
+                "laravel/framework": "^8.74|^9.0|^10.0|^11.0",
+                "php": "^7.3|~8.0.0|~8.1.0|~8.2.0|~8.3.0"
             },
             "require-dev": {
                 "mockery/mockery": "^1.3.3",
-                "orchestra/testbench": "^4.0|^5.0|^6.4|^7.0|^8.0",
-                "phpunit/phpunit": "^8.0|^9.5.8",
+                "orchestra/testbench": "^6.4|^7.0|^8.0|^9.0",
+                "phpunit/phpunit": "^8.0|^9.5.8|^10.4",
                 "roave/security-advisories": "dev-master"
             },
             "suggest": {
@@ -3174,6 +3174,9 @@
                     "providers": [
                         "Inertia\\ServiceProvider"
                     ]
+                },
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
                 }
             },
             "autoload": {
@@ -3202,7 +3205,7 @@
             ],
             "support": {
                 "issues": "https://github.com/inertiajs/inertia-laravel/issues",
-                "source": "https://github.com/inertiajs/inertia-laravel/tree/v0.6.11"
+                "source": "https://github.com/inertiajs/inertia-laravel/tree/v1.0.0"
             },
             "funding": [
                 {
@@ -3210,7 +3213,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-10-27T10:59:02+00:00"
+            "time": "2024-03-09T00:30:58+00:00"
         },
         {
             "name": "infyomlabs/laravel-generator",
