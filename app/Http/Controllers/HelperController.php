@@ -88,8 +88,8 @@ class HelperController extends Controller
             // If ais_position is found
             if ($ais_position) {
                 $mmsi = $ais_vessel->mmsi;
-                $startDate = date('Y-m-d', strtotime($ais_position->timestamp));
-                $endDate = date('Y-m-d', strtotime($ais_position->timestamp . '+7 days'));
+                $startDate = Carbon::parse($ais_position->timestamp)->subDays(3)->toDateString();
+                $endDate = Carbon::parse($ais_position->timestamp)->addDays(3)->toDateString();
 
                 // Constructing the URL
                 $url = "https://sopbuntutksopbjm.com/playback?type=mmsi&value=$mmsi&start_date=$startDate&end_date=$endDate&is_ais=true";

@@ -21,6 +21,8 @@ return new class extends Migration
             $table->integer('bongkar_muat_tidak_terjadwal')->default(0);
             $table->integer('bongkar_muat_terlambat')->default(0);
             $table->integer('total_kapal')->default(0);
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
             $table->timestamps();
         });
     }
