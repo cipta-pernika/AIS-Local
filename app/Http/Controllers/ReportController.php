@@ -37,47 +37,70 @@ class ReportController extends Controller
         $startDateTime = Carbon::parse($request->start_date)->startOfDay();
         $endDateTime = Carbon::parse($request->end_date)->endOfDay();
 
-        // Calculate summary data
-        $summaryData = DataMandiriPelaksanaanKapal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])
+        // Calculate summary data grouped by day
+        $summaryData = DataMandiriPelaksanaanKapal::whereBetween('created_at', [$startDateTime, $endDateTime])
             ->selectRaw('
-            SUM(CASE WHEN isPassing = 1 THEN 1 ELSE 0 END) AS passing_count,
-            SUM(CASE WHEN isPandu = 1 THEN 1 ELSE 0 END) AS pandu_count,
-            SUM(CASE WHEN isBongkarMuat = 1 THEN 1 ELSE 0 END) AS bongkar_muat_count
-        ')
-            ->first();
+    DATE(created_at) as date,
+    SUM(CASE WHEN isPassing = 1 THEN 1 ELSE 0 END) AS passing_count,
+    SUM(CASE WHEN isPandu = 1 THEN 1 ELSE 0 END) AS pandu_count,
+    SUM(CASE WHEN isBongkarMuat = 1 THEN 1 ELSE 0 END) AS bongkar_muat_count
+')
+            ->groupBy(DB::raw('DATE(created_at)'))
+            ->get();
 
-        // Calculate other totals
-        $total_data_mandiri_ais = ReportGeofenceBongkarMuat::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->count();
-        $total_data_inaportnet = InaportnetBongkarMuat::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->count();
-        $total_tidak_terjadwal_bongkar = TidakTerjadwal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->count();
-        $total_pandu_tidak_tejadwal = PanduTidakTerjadwal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->count();
-        $total_late_bongkar = BongkarMuatTerlambat::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->count();
-        $total_late_pandu = PanduTerlambat::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->count();
-        $total_tidak_teridentifikasi = DataMandiriPelaksanaanKapal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->count();
-        $total_pandu = $summaryData->pandu_count + $total_pandu_tidak_tejadwal + $total_late_pandu;
-        $total_muat = $summaryData->bongkar_muat_count + $total_tidak_terjadwal_bongkar + $total_late_bongkar;
+        // Initialize totals
+        $total_data_mandiri_ais = 0;
+        $total_data_inaportnet = 0;
+        $total_tidak_terjadwal_bongkar = 0;
+        $total_pandu_tidak_tejadwal = 0;
+        $total_late_bongkar = 0;
+        $total_late_pandu = 0;
+        $total_tidak_teridentifikasi = 0;
+        $total_pandu = 0;
+        $total_muat = 0;
+        $total_kapal = 0;
 
-        // Calculate total kapal
-        $total_kapal = $summaryData->passing_count + $total_pandu + $total_muat;
+        // Calculate other totals from grouped data
+        foreach ($summaryData as $summary) {
+            $total_data_mandiri_ais += $summary->passing_count;
+            $total_data_inaportnet += $summary->pandu_count;
+            $total_tidak_terjadwal_bongkar += $summary->bongkar_muat_count;
+
+            // You can add more calculations here if needed
+        }
+
+        // Calculate total pandu, muat, and kapal
+        $total_pandu = $total_data_inaportnet + $total_pandu_tidak_tejadwal + $total_late_pandu;
+        $total_muat = $total_tidak_terjadwal_bongkar + $total_late_bongkar;
+        $total_kapal = $total_pandu + $total_muat;
 
         // Modify the structure of the summary data
-        $summaryData->pandu_count = [
-            'total' => $total_pandu,
-            'detail' => [
-                'valid' => $summaryData->pandu_count,
-                'tidak_terjadwal' => $total_pandu_tidak_tejadwal,
-                'terlambat' => $total_late_pandu
-            ]
-        ];
+        $modifiedSummaryData = [];
+        foreach ($summaryData as $summary) {
+            $modifiedSummaryData[] = [
+                'date' => $summary->date,
+                'summary_data' => [
+                    'pandu_count' => [
+                        'total' => $total_pandu,
+                        'detail' => [
+                            'valid' => $summary->pandu_count,
+                            'tidak_terjadwal' => $total_pandu_tidak_tejadwal,
+                            'terlambat' => $total_late_pandu
+                        ]
+                    ],
+                    'bongkar_muat_count' => [
+                        'total' => $total_muat,
+                        'detail' => [
+                            'valid' => $summary->bongkar_muat_count,
+                            'tidak_terjadwal' => $total_tidak_terjadwal_bongkar,
+                            'terlambat' => $total_late_bongkar
+                        ]
+                    ],
+                ],
+            ];
+        }
 
-        $summaryData->bongkar_muat_count = [
-            'total' => $total_muat,
-            'detail' => [
-                'valid' => $summaryData->bongkar_muat_count,
-                'tidak_terjadwal' => $total_tidak_terjadwal_bongkar,
-                'terlambat' => $total_late_bongkar
-            ]
-        ];
+        dd($modifiedSummaryData);
 
         // Save the summary data into the database
         Konsolidasi::create([
