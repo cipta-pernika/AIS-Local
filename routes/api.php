@@ -236,11 +236,11 @@ Route::resource('p-n-b-p-jasa-tambat-kapals', App\Http\Controllers\API\PNBPJasaT
 Route::resource('p-n-b-p-jasa-barangs', App\Http\Controllers\API\PNBPJasaBarangAPIController::class)
     ->except(['create', 'edit']);
 
-Route::resource('p-n-b-p-jasa-pengawasan-bongkar-muats', App\Http\Controllers\API\PNBPJasaPengawasanBongkarMuatAPIController::class)
-    ->except(['create', 'edit']);
+// Route::resource('p-n-b-p-jasa-pengawasan-bongkar-muats', App\Http\Controllers\API\PNBPJasaPengawasanBongkarMuatAPIController::class)
+//     ->except(['create', 'edit']);
 
-Route::resource('p-n-b-p-jasa-bongkar-muat-berbahayas', App\Http\Controllers\API\PNBPJasaBongkarMuatBerbahayaAPIController::class)
-    ->except(['create', 'edit']);
+// Route::resource('p-n-b-p-jasa-bongkar-muat-berbahayas', App\Http\Controllers\API\PNBPJasaBongkarMuatBerbahayaAPIController::class)
+//     ->except(['create', 'edit']);
 
 Route::post('konsolidasi', [ReportController::class, 'konsolidasi']);
 
