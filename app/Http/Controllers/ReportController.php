@@ -16,6 +16,63 @@ use Illuminate\Support\Facades\Validator;
 
 class ReportController extends Controller
 {
+    public function konsolidasi(Request $request)
+    {
+        // Manually validate request parameters
+        $validator = Validator::make($request->all(), [
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+        ]);
+
+        // If validation fails, return error response
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        $startDateTime = Carbon::parse($request->start_date)->startOfDay();
+        $endDateTime = Carbon::parse($request->end_date)->endOfDay();
+
+        // Calculate total tidak terjadwal bongkar
+        $total_tidak_terjadwal_bongkar = TidakTerjadwal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->count();
+
+        // Calculate total pandu tidak terjadwal
+        $total_pandu_tidak_terjadwal = PanduTidakTerjadwal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->count();
+
+        // Calculate total bongkar muat terlambat
+        $total_late_bongkar = BongkarMuatTerlambat::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->count();
+
+        // Calculate total pandu terlambat
+        $total_late_pandu = PanduTerlambat::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->count();
+
+        // Calculate total tidak teridentifikasi
+        $total_tidak_teridentifikasi = DataMandiriPelaksanaanKapal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->count();
+
+        // Calculate total pandu
+        $total_pandu = $total_pandu_tidak_terjadwal + $total_late_pandu;
+
+        // Calculate total muat
+        $total_muat = $total_tidak_terjadwal_bongkar + $total_late_bongkar;
+
+        // Calculate total kapal
+        $total_kapal = $total_pandu + $total_muat;
+
+        // Return the consolidated data
+        return response()->json([
+            'success' => true,
+            'message' => 'Konsolidasi berhasil',
+            'data' => [
+                'total_kapal' => $total_kapal,
+                'total_pandu' => $total_pandu,
+                'total_muat' => $total_muat,
+                'total_tidak_teridentifikasi' => $total_tidak_teridentifikasi
+            ]
+        ]);
+    }
+
     public function summaryreport(Request $request)
     {
         // Manually validate request parameters
