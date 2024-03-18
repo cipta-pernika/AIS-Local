@@ -227,11 +227,11 @@ Route::resource('p-n-b-p-jasa-v-t-s-kapal-asings', App\Http\Controllers\API\PNBP
 Route::resource('p-n-b-p-jasa-tambat-kapals', App\Http\Controllers\API\PNBPJasaTambatKapalAPIController::class)
     ->except(['create', 'edit']);
 
-Route::resource('p-n-b-p-jasa-pemanduan-kapal-marabahans', App\Http\Controllers\API\PNBPJasaPemanduanKapalMarabahanAPIController::class)
-    ->except(['create', 'edit']);
+// Route::resource('p-n-b-p-jasa-pemanduan-kapal-marabahans', App\Http\Controllers\API\PNBPJasaPemanduanKapalMarabahanAPIController::class)
+//     ->except(['create', 'edit']);
 
-Route::resource('p-n-b-p-jasa-pemanduan-kapal-trisaktis', App\Http\Controllers\API\PNBPJasaPemanduanKapalTrisaktiAPIController::class)
-    ->except(['create', 'edit']);
+// Route::resource('p-n-b-p-jasa-pemanduan-kapal-trisaktis', App\Http\Controllers\API\PNBPJasaPemanduanKapalTrisaktiAPIController::class)
+//     ->except(['create', 'edit']);
 
 Route::resource('p-n-b-p-jasa-barangs', App\Http\Controllers\API\PNBPJasaBarangAPIController::class)
     ->except(['create', 'edit']);
