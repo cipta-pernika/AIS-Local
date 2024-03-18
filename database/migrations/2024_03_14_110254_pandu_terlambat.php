@@ -20,6 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('impt_penggunaan_alat_id')->nullable();
             $table->unsignedBigInteger('pbkm_kegiatan_pemanduan_id')->nullable();
             $table->string('nomor_spk_pandu')->nullable();
+            $table->timestamp('tanggal_spk_pandu')->nullable();
             $table->tinyInteger('isPassing')->default(0);
             $table->tinyInteger('isPandu')->default(0);
             $table->tinyInteger('isBongkarMuat')->default(0);

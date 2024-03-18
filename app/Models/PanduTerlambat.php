@@ -13,6 +13,7 @@ class PanduTerlambat extends Model
         'nomor_spk_pandu',
         'geofence_id',
         'ais_data_position_id',
+        'tanggal_spk_pandu',
         'report_geofence_id',
         'inaportnet_bongkar_muat_id',
         'inaportnet_pergerakan_kapal_id',
