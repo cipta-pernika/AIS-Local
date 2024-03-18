@@ -76,3 +76,13 @@ Route::resource('tidak-terjadwals', App\Http\Controllers\TidakTerjadwalControlle
 Route::resource('pandu-tidak-terjadwals', App\Http\Controllers\PanduTidakTerjadwalController::class);
 Route::resource('bongkar-muat-terlambats', App\Http\Controllers\BongkarMuatTerlambatController::class);
 Route::resource('pandu-terlambats', App\Http\Controllers\PanduTerlambatController::class);
+Route::resource('p-n-b-p-jasa-labuh-kapals', App\Http\Controllers\PNBPJasaLabuhKapalController::class);
+Route::resource('p-n-b-p-jasa-rambu-kapals', App\Http\Controllers\PNBPJasaRambuKapalController::class);
+Route::resource('p-n-b-p-jasa-v-t-s-kapals', App\Http\Controllers\PNBPJasaVTSKapalController::class);
+Route::resource('p-n-b-p-jasa-v-t-s-kapal-asings', App\Http\Controllers\PNBPJasaVTSKapalAsingController::class);
+Route::resource('p-n-b-p-jasa-tambat-kapals', App\Http\Controllers\PNBPJasaTambatKapalController::class);
+Route::resource('p-n-b-p-jasa-pemanduan-kapal-marabahans', App\Http\Controllers\PNBPJasaPemanduanKapalMarabahanController::class);
+Route::resource('p-n-b-p-jasa-pemanduan-kapal-trisaktis', App\Http\Controllers\PNBPJasaPemanduanKapalTrisaktiController::class);
+Route::resource('p-n-b-p-jasa-barangs', App\Http\Controllers\PNBPJasaBarangController::class);
+Route::resource('p-n-b-p-jasa-pengawasan-bongkar-muats', App\Http\Controllers\PNBPJasaPengawasanBongkarMuatController::class);
+Route::resource('p-n-b-p-jasa-bongkar-muat-berbahayas', App\Http\Controllers\PNBPJasaBongkarMuatBerbahayaController::class);

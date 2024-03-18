@@ -211,3 +211,33 @@ Route::resource('bongkar-muat-terlambats', App\Http\Controllers\API\BongkarMuatT
 
 Route::resource('pandu-terlambats', App\Http\Controllers\API\PanduTerlambatAPIController::class)
     ->except(['create', 'edit']);
+
+Route::resource('p-n-b-p-jasa-labuh-kapals', App\Http\Controllers\API\PNBPJasaLabuhKapalAPIController::class)
+    ->except(['create', 'edit']);
+
+Route::resource('p-n-b-p-jasa-rambu-kapals', App\Http\Controllers\API\PNBPJasaRambuKapalAPIController::class)
+    ->except(['create', 'edit']);
+
+Route::resource('p-n-b-p-jasa-v-t-s-kapals', App\Http\Controllers\API\PNBPJasaVTSKapalAPIController::class)
+    ->except(['create', 'edit']);
+
+Route::resource('p-n-b-p-jasa-v-t-s-kapal-asings', App\Http\Controllers\API\PNBPJasaVTSKapalAsingAPIController::class)
+    ->except(['create', 'edit']);
+
+Route::resource('p-n-b-p-jasa-tambat-kapals', App\Http\Controllers\API\PNBPJasaTambatKapalAPIController::class)
+    ->except(['create', 'edit']);
+
+Route::resource('p-n-b-p-jasa-pemanduan-kapal-marabahans', App\Http\Controllers\API\PNBPJasaPemanduanKapalMarabahanAPIController::class)
+    ->except(['create', 'edit']);
+
+Route::resource('p-n-b-p-jasa-pemanduan-kapal-trisaktis', App\Http\Controllers\API\PNBPJasaPemanduanKapalTrisaktiAPIController::class)
+    ->except(['create', 'edit']);
+
+Route::resource('p-n-b-p-jasa-barangs', App\Http\Controllers\API\PNBPJasaBarangAPIController::class)
+    ->except(['create', 'edit']);
+
+Route::resource('p-n-b-p-jasa-pengawasan-bongkar-muats', App\Http\Controllers\API\PNBPJasaPengawasanBongkarMuatAPIController::class)
+    ->except(['create', 'edit']);
+
+Route::resource('p-n-b-p-jasa-bongkar-muat-berbahayas', App\Http\Controllers\API\PNBPJasaBongkarMuatBerbahayaAPIController::class)
+    ->except(['create', 'edit']);

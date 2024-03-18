@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('pnbp_pemanduan_kapal_trisakti', function (Blueprint $table) {
             $table->id();
-            $table->enum('jenis', ['Pemanduan', 'Penundaan']);
+            $table->string('jenis');
             $table->string('rumus');
             $table->string('variabel');
             $table->decimal('tarif_tetap', 10, 2);
