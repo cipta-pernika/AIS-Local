@@ -178,11 +178,12 @@ class HelperController extends Controller
                 ->orderBy('created_at', 'DESC')
                 ->with('aisDataPosition', 'aisDataPosition.vessel', 'geofence', 'event', 'aisDataPosition.reportGeofences')
                 ->whereNotNull('mmsi')
+                ->whereNotNull('ais_data_position_id')
                 ->limit(50)
                 ->get();
 
             // Cache the result for 60 minutes (you can adjust the duration)
-            Cache::put($cacheKey, $event, 600);
+            Cache::put($cacheKey, $event, 60);
         }
 
         return response()->json([
