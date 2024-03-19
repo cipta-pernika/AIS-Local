@@ -94,7 +94,7 @@ class DataMandiriPelaksanaanKapalAPIController extends AppBaseController
         )->values(); // Reset keys to start from 0
 
         $addons->load([
-            'aisDataVessel', 'aisDataPosition', 'geofence', 'imptPelayananKapal', 'imptPenggunaanAlat', 'reportGeofence',
+            'aisDataVessel', 'aisDataPosition', 'geofence', 'imptPelayananKapal', 'imptPenggunaanAlat', 'reportGeofence', 'reportGeofence.geofence', 
             'inaportnetBongkarMuat', 'pbkmKegiatanPemanduan'
         ]);
 
