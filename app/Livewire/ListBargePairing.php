@@ -39,10 +39,8 @@ class ListBargePairing extends Component implements HasForms, HasTable
                 TextColumn::make('nama_kapal')
                     ->searchable(),
                 TextColumn::make('jenis_layanan'),
-                TextColumn::make('nama_negara')
-                    ->searchable(),
-                TextColumn::make('tipe_kapal')
-                    ->searchable()->action(
+                TextColumn::make('nama_negara'),
+                TextColumn::make('tipe_kapal')->action(
                         Action::make('assign')->icon('heroicon-m-pencil-square')
                             ->button()
                             ->badgeColor('success')
@@ -59,38 +57,25 @@ class ListBargePairing extends Component implements HasForms, HasTable
                                 $record->update();
                             })
                     ),
-                TextColumn::make('nama_perusahaan')
-                    ->searchable(),
-                TextColumn::make('tgl_tiba')
-                    ->searchable(),
-                TextColumn::make('tgl_brangkat')
-                    ->searchable(),
-                TextColumn::make('bendera')
-                    ->searchable(),
+                TextColumn::make('nama_perusahaan'),
+                TextColumn::make('tgl_tiba'),
+                TextColumn::make('tgl_brangkat'),
+                TextColumn::make('bendera'),
                 TextColumn::make('gt_kapal')
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('dwt')
                     ->numeric()
                     ->sortable(),
-                TextColumn::make('no_imo')
-                    ->searchable(),
-                TextColumn::make('call_sign')
-                    ->searchable(),
-                TextColumn::make('nakhoda')
-                    ->searchable(),
-                TextColumn::make('jenis_trayek')
-                    ->searchable(),
-                TextColumn::make('pelabuhan_asal')
-                    ->searchable(),
-                TextColumn::make('pelabuhan_tujuan')
-                    ->searchable(),
-                TextColumn::make('lokasi_lambat_labuh')
-                    ->searchable(),
-                TextColumn::make('waktu_respon')
-                    ->searchable(),
-                TextColumn::make('nomor_spog')
-                    ->searchable(),
+                TextColumn::make('no_imo'),
+                TextColumn::make('call_sign'),
+                TextColumn::make('nakhoda'),
+                TextColumn::make('jenis_trayek'),
+                TextColumn::make('pelabuhan_asal'),
+                TextColumn::make('pelabuhan_tujuan'),
+                TextColumn::make('lokasi_lambat_labuh'),
+                TextColumn::make('waktu_respon'),
+                TextColumn::make('nomor_spog'),
             ])
             ->filters([
                 // SelectFilter::make('tipe_kapal')
