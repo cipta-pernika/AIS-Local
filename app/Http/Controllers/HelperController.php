@@ -177,6 +177,7 @@ class HelperController extends Controller
             $event = EventTracking::where('event_id', 9)
                 ->orderBy('created_at', 'DESC')
                 ->with('aisDataPosition', 'aisDataPosition.vessel', 'geofence', 'event', 'aisDataPosition.reportGeofences')
+                ->whereNotNull('mmsi')
                 ->limit(50)
                 ->get();
 
