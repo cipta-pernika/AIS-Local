@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\GeofenceResource\Pages;
 use App\Filament\Resources\GeofenceResource\RelationManagers;
 use App\Models\Geofence;
+use App\Models\GeofenceType;
 use App\Models\Pelabuhan;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -34,6 +35,11 @@ class GeofenceResource extends Resource
                     ->native(false)
                     ->label('Pelabuhan')
                     ->multiple(false)->options(Pelabuhan::all()->pluck('name', 'id'))
+                    ->searchable(),
+                Forms\Components\Select::make('geofence_type_id')
+                    ->native(false)
+                    ->label('Type Geofence')
+                    ->multiple(false)->options(GeofenceType::all()->pluck('name', 'id'))
                     ->searchable(),
                 Forms\Components\TextInput::make('geofence_name')
                     ->maxLength(255),
