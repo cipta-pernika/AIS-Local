@@ -99,6 +99,8 @@ class GeofenceResource extends Resource
             ->filters([
                 Tables\Filters\SelectFilter::make('pelabuhan_id')
                     ->options(Pelabuhan::all()->pluck('name', 'id')),
+                Tables\Filters\SelectFilter::make('geofence_type_id')
+                    ->options(GeofenceType::all()->pluck('name', 'id')),
             ])
             ->actions([
                 // Tables\Actions\EditAction::make(),
