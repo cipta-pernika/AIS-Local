@@ -120,6 +120,9 @@ class MapController extends Controller
                 ->when($mmsi, function ($query) use ($mmsi) {
                     $query->where('ais_data_vessels.mmsi', $mmsi);
                 })
+                ->when($geofenceId, function ($query) use ($geofenceId) {
+                    $query->where('geofence_id', $geofenceId);
+                })
                 ->get();
 
             foreach ($aisTracks as $track) {
@@ -347,6 +350,9 @@ class MapController extends Controller
                 })
                 ->when($mmsi, function ($query) use ($mmsi) {
                     $query->where('ais_data_vessels.mmsi', $mmsi);
+                })
+                ->when($geofenceId, function ($query) use ($geofenceId) {
+                    $query->where('geofence_id', $geofenceId);
                 })
                 ->exists();
         }
