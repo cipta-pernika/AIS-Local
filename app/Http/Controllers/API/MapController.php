@@ -96,7 +96,6 @@ class MapController extends Controller
                 ->leftJoin('sensor_datas', 'ais_data_positions.sensor_data_id', '=', 'sensor_datas.id')
                 ->leftJoin('sensors', 'sensor_datas.sensor_id', '=', 'sensors.id')
                 ->leftJoin('dataloggers', 'sensors.datalogger_id', '=', 'dataloggers.id')
-                ->leftJoin('pelabuhans', 'dataloggers.pelabuhan_id', '=', 'pelabuhans.id')
                 ->select(
                     'ais_data_vessels.mmsi',
                     'ais_data_positions.latitude',
@@ -131,7 +130,7 @@ class MapController extends Controller
                     $query->where('geofence_id', $geofenceId);
                 })
                 ->when($pelabuhanId, function ($query) use ($pelabuhanId) {
-                    $query->where('pelabuhan_id', $pelabuhanId)->limit(100);
+                    $query->where('dataloggers.pelabuhan_id', $pelabuhanId)->limit(100);
                 })
                 ->get();
 
