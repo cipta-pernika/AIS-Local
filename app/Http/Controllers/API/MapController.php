@@ -119,8 +119,7 @@ class MapController extends Controller
                     'geofences.id as geofence_id',
                     'sensor_datas.id as sensor_data_id',
                     'sensors.id as sensor_id',
-                    'dataloggers.id as datalogger_id',
-                    'pelabuhans.id as pelabuhan_id'
+                    'dataloggers.id as datalogger_id'
                 )
                 ->when($date, function ($query) use ($date, $date_until) {
                     $query->whereBetween('ais_data_positions.created_at', [$date, $date_until]);
