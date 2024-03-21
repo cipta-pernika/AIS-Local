@@ -247,3 +247,6 @@ Route::post('konsolidasi', [ReportController::class, 'konsolidasi']);
 
 Route::resource('konsolidasis', App\Http\Controllers\API\KonsolidasiAPIController::class)
     ->except(['create', 'edit']);
+
+Route::resource('data-b-u-ps', App\Http\Controllers\API\DataBUPAPIController::class)
+    ->except(['create', 'edit']);
