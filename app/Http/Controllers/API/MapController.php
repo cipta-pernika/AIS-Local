@@ -78,9 +78,9 @@ class MapController extends Controller
         $date_until = Carbon::parse(request('dateTo'))->addDays(1);
         $selectedSensors = request('sensor');
 
-        $mmsi = request('mmsi'); // Get the MMSI from the request
-        $hexIdent = request('hex_ident'); // Get hex_ident from the request
-        $targetId = request('target_id'); // Get target_id from the request
+        $mmsi = request('mmsi');
+        $hexIdent = request('hex_ident');
+        $targetId = request('target_id');
         $pelabuhanId = request('pelabuhan_id');
         $geofenceId = request('geofence_id');
 
@@ -93,6 +93,10 @@ class MapController extends Controller
                 ->join('ais_data_vessels', 'ais_data_positions.vessel_id', 'ais_data_vessels.id')
                 ->leftJoin('report_geofences', 'ais_data_positions.id', '=', 'report_geofences.ais_data_position_id')
                 ->leftJoin('geofences', 'report_geofences.geofence_id', '=', 'geofences.id')
+                ->leftJoin('sensor_datas', 'ais_data_positions.sensor_data_id', '=', 'sensor_datas.id')
+                ->leftJoin('sensors', 'sensor_datas.sensor_id', '=', 'sensors.id')
+                ->leftJoin('dataloggers', 'sensors.datalogger_id', '=', 'dataloggers.id')
+                ->leftJoin('pelabuhans', 'dataloggers.pelabuhan_id', '=', 'pelabuhans.id')
                 ->select(
                     'ais_data_vessels.mmsi',
                     'ais_data_positions.latitude',
@@ -112,7 +116,11 @@ class MapController extends Controller
                     'report_geofences.out',
                     'report_geofences.total_time',
                     'geofences.geofence_name',
-                    'geofences.id as geofence_id' // Add this line to select geofence_id
+                    'geofences.id as geofence_id',
+                    'sensor_datas.id as sensor_data_id',
+                    'sensors.id as sensor_id',
+                    'dataloggers.id as datalogger_id',
+                    'pelabuhans.id as pelabuhan_id'
                 )
                 ->when($date, function ($query) use ($date, $date_until) {
                     $query->whereBetween('ais_data_positions.created_at', [$date, $date_until]);
@@ -122,6 +130,9 @@ class MapController extends Controller
                 })
                 ->when($geofenceId, function ($query) use ($geofenceId) {
                     $query->where('geofence_id', $geofenceId);
+                })
+                ->when($pelabuhanId, function ($query) use ($pelabuhanId) {
+                    $query->where('pelabuhan_id', $pelabuhanId)->limit(100);
                 })
                 ->get();
 
