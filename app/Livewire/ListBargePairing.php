@@ -124,7 +124,7 @@ class ListBargePairing extends Component implements HasForms, HasTable
                             //     modifyQueryUsing: fn (Builder $query) => $query->orderBy('no_pkk')->orderBy('vessel_name')->where('isAssign', 0),
                             // )
                             ->searchable(['no_pkk', 'vessel_name', 'nama_perusahaan'])
-                            ->options(AisDataVessel::query()->whereNotNull('no_pkk')->where('isAssign', 0)->whereDate('created_at', Carbon::today())->get()
+                            ->options(AisDataVessel::query()->whereNotNull('no_pkk')->where('isAssign', 0)->get()
                                 ->map(function ($record) {
                                     return [
                                         'value' => $record->no_pkk,
