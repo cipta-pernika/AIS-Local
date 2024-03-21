@@ -348,15 +348,12 @@ class MapController extends Controller
                 ->when($mmsi, function ($query) use ($mmsi) {
                     $query->where('ais_data_vessels.mmsi', $mmsi);
                 })
-                ->count();
-            if ($aisTracksCount > 0) {
-                $hasPlaybackData = true;
-            }
+                ->exists();
         }
 
         $response = [
             'success' => true,
-            'has_playback_data' => $hasPlaybackData,
+            'has_playback_data' => $aisTracksCount,
         ];
 
         return response()->json($response, 200);
