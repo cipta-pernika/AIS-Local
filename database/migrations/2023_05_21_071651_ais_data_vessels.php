@@ -37,7 +37,7 @@ return new class extends Migration
             $table->string('tgl_tiba')->nullable();
             $table->string('tgl_brangkat')->nullable();
             $table->string('bendera')->nullable();
-            $table->string('gt_kapal')->nullable();
+            $table->integer('gt_kapal')->nullable();
             $table->string('dwt')->nullable();
             $table->string('nakhoda')->nullable();
             $table->string('jenis_trayek')->nullable();

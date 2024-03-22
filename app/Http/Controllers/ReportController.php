@@ -100,9 +100,6 @@ class ReportController extends Controller
             ];
         }
 
-        dd($modifiedSummaryData);
-
-        // Save the summary data into the database
         Konsolidasi::create([
             'passing' => $summaryData->passing_count ?? 0,
             'pandu_tervalidasi' => $summaryData->pandu_count['detail']['valid'] ?? 0,
@@ -115,7 +112,6 @@ class ReportController extends Controller
         ]);
 
 
-        // Return the modified summary report
         return response()->json([
             'success' => true,
             'summary_data' => $summaryData,
