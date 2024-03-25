@@ -66,6 +66,15 @@ class MapController extends Controller
 
         $track = $trackQuery->get();
 
+        // Latitude and longitude values from the payload
+        $providedLatitude = request('latitude');
+        $providedLongitude = request('longitude');
+
+        // Filter out matching latitude and longitude values
+        $track = $track->reject(function ($position) use ($providedLatitude, $providedLongitude) {
+            return $position->latitude == $providedLatitude && $position->longitude == $providedLongitude;
+        });
+
         return response()->json([
             'success' => true,
             'message' => $track,
