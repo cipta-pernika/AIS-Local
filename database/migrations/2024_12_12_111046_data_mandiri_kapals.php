@@ -34,16 +34,16 @@ return new class extends Migration
             $table->json('bongkar_muat_tidak_terjadwal')->nullable();
             $table->json('bongkar_muat_late')->nullable();
 
-            $table->decimal('pnbp_jasa_labuh_kapal', 10, 2);
-            $table->decimal('pnbp_jasa_rambu_kapal', 10, 2);
-            $table->decimal('pnbp_jasa_vts_kapal_domestik', 10, 2);
-            $table->decimal('pnbp_jasa_vts_kapal_asing', 10, 2);
-            $table->decimal('pnbp_jasa_tambat_kapal', 10, 2);
-            $table->decimal('pnbp_jasa_pemanduan_penundaan_marabahan', 10, 2);
-            $table->decimal('pnbp_jasa_pemanduan_penundaan_trisakti', 10, 2);
-            $table->decimal('pnbp_jasa_barang', 10, 2);
-            $table->decimal('pnbp_jasa_pengawasan_bongkar_muat_1_percent', 10, 2);
-            $table->decimal('pnbp_bongkar_muat_barang_berbahaya', 10, 2);
+            $table->decimal('pnbp_jasa_labuh_kapal', 15, 2);
+            $table->decimal('pnbp_jasa_rambu_kapal', 15, 2);
+            $table->decimal('pnbp_jasa_vts_kapal_domestik', 15, 2);
+            $table->decimal('pnbp_jasa_vts_kapal_asing', 15, 2);
+            $table->decimal('pnbp_jasa_tambat_kapal', 15, 2);
+            $table->decimal('pnbp_jasa_pemanduan_penundaan_marabahan', 15, 2);
+            $table->decimal('pnbp_jasa_pemanduan_penundaan_trisakti', 15, 2);
+            $table->decimal('pnbp_jasa_barang', 15, 2);
+            $table->decimal('pnbp_jasa_pengawasan_bongkar_muat_1_percent', 15, 2);
+            $table->decimal('pnbp_bongkar_muat_barang_berbahaya', 15, 2);
 
             $table->timestamps();
             $table->softDeletes();
