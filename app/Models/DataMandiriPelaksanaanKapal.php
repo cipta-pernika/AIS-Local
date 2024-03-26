@@ -22,7 +22,10 @@ class DataMandiriPelaksanaanKapal extends Model
         'ais_data_position_id',
         'report_geofence_id',
         'report_geofence_bongkar_muat_id',
-        'pnbp_jasa_labuh_kapal'
+        'report_geofence_pandu_id',
+        'pnbp_jasa_labuh_kapal',
+        'pnbp_jasa_vts_kapal_domestik',
+        'pnbp_jasa_vts_kapal_asing'
     ];
 
     protected $casts = [
