@@ -42,7 +42,7 @@ class DataMandiriPelaksanaanKapalAPIController extends AppBaseController
         $perPage = $request->get('limit', 10);
 
         // Initialize the main query builder with constraints based on start_date and end_date
-        $mainQuery = DataMandiriPelaksanaanKapal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime]);
+        $mainQuery = DataMandiriPelaksanaanKapal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->whereNotNull('geofence_id');
 
         // Apply search filter if provided
         if ($request->has('search')) {
