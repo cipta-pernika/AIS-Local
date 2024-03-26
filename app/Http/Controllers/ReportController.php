@@ -44,7 +44,7 @@ class ReportController extends Controller
     SUM(CASE WHEN isPassing = 1 THEN 1 ELSE 0 END) AS passing_count,
     SUM(CASE WHEN isPandu = 1 THEN 1 ELSE 0 END) AS pandu_count,
     SUM(CASE WHEN isBongkarMuat = 1 THEN 1 ELSE 0 END) AS bongkar_muat_count
-')
+')->whereNotNull('geofence_id')
             ->groupBy(DB::raw('DATE(created_at)'))
             ->get();
 
@@ -222,7 +222,7 @@ class ReportController extends Controller
             SUM(CASE WHEN isPassing = 1 THEN 1 ELSE 0 END) AS passing_count,
             SUM(CASE WHEN isPandu = 1 THEN 1 ELSE 0 END) AS pandu_count,
             SUM(CASE WHEN isBongkarMuat = 1 THEN 1 ELSE 0 END) AS bongkar_muat_count
-        ')
+        ')->whereNotNull('geofence_id')
             ->first();
 
         $total_data_mandiri_ais = ReportGeofenceBongkarMuat::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->count();
