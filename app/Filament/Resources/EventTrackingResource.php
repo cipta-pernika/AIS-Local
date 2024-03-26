@@ -88,7 +88,7 @@ class EventTrackingResource extends Resource
                     ->relationship('geofence', 'geofence_name')
                     ->preload()
                     ->searchable(),
-                DateRangeFilter::make('created_at'),
+                DateRangeFilter::make('updated_at'),
             ])
             ->actions([
                 // Tables\Actions\EditAction::make(),

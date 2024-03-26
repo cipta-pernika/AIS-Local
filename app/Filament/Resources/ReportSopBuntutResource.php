@@ -80,7 +80,7 @@ class ReportSopBuntutResource extends Resource
                 DateRangeFilter::make('in')->label('Masuk Geofence'),
                 DateRangeFilter::make('out')->label('Keluar Geofence'),
                 DateRangeFilter::make('tgl_brangkat'),
-                DateRangeFilter::make('created_at')->startDate(Carbon::now()->subDays(7))->endDate(Carbon::now()),
+                DateRangeFilter::make('updated_at')->startDate(Carbon::now()->subDays(7))->endDate(Carbon::now()),
             ])->filtersFormColumns(2)->filtersTriggerAction(
                 fn (Action $action) => $action
                     ->button()

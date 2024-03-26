@@ -167,7 +167,7 @@ class InaportnetPergerakanKapalResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                DateRangeFilter::make('created_at')->startDate(Carbon::now())->endDate(Carbon::now()),
+                DateRangeFilter::make('updated_at')->startDate(Carbon::now())->endDate(Carbon::now()),
                 Tables\Filters\SelectFilter::make('tipe_kapal')
                     ->options([
                         'TONGKANG / BARGE' => 'TONGKANG / BARGE',

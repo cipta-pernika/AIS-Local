@@ -103,7 +103,7 @@ class ReportGeofenceResource extends Resource
                     ->relationship('geofence', 'geofence_name')
                     ->preload()
                     ->searchable(),
-                DateRangeFilter::make('created_at')->startDate(Carbon::now()->subDays(7))->endDate(Carbon::now()),
+                DateRangeFilter::make('updated_at')->startDate(Carbon::now()->subDays(7))->endDate(Carbon::now()),
             ])
             ->actions([
                 // Tables\Actions\EditAction::make(),

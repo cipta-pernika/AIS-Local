@@ -122,7 +122,7 @@ class AisDataPositionResource extends Resource
                 Tables\Filters\SelectFilter::make('vessel_id')
                     ->searchable()
                     ->options(AisDataVessel::whereNotNull('vessel_name')->get()->pluck('vessel_name', 'id')),
-                DateRangeFilter::make('created_at')->startDate(Carbon::now()->subDays(7))->endDate(Carbon::now()),
+                DateRangeFilter::make('updated_at')->startDate(Carbon::now()->subDays(7))->endDate(Carbon::now()),
                 QueryBuilder::make()
                     ->constraints([
                         TextConstraint::make('vessel.mmsi'),

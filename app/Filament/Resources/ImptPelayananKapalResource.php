@@ -104,7 +104,7 @@ class ImptPelayananKapalResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                DateRangeFilter::make('created_at')->startDate(Carbon::now())->endDate(Carbon::now()),
+                DateRangeFilter::make('updated_at')->startDate(Carbon::now())->endDate(Carbon::now()),
             ])
             ->actions([
                 Action::make('checkPosisi')

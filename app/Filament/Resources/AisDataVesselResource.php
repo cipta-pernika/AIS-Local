@@ -108,7 +108,7 @@ class AisDataVesselResource extends Resource implements HasShieldPermissions
                         'Tug' => 'Tug',
                         'Cargo' => 'Cargo',
                     ]),
-                DateRangeFilter::make('created_at'),
+                DateRangeFilter::make('updated_at'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
