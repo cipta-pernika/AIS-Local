@@ -62,7 +62,7 @@ class ReportController extends Controller
 
         // Calculate other totals from grouped data
         foreach ($summaryData as $summary) {
-            $total_data_mandiri_ais += $summary->passing_count;
+            $total_data_mandiri_ais += $summary['passing_count'];
             $total_data_inaportnet += $summary->pandu_count;
             $total_tidak_terjadwal_bongkar += $summary->bongkar_muat_count;
 
@@ -99,6 +99,8 @@ class ReportController extends Controller
                 ],
             ];
         }
+
+        dd($modifiedSummaryData);
 
         Konsolidasi::create([
             'passing' => $summaryData->passing_count ?? 0,
