@@ -40,11 +40,11 @@ class ReportController extends Controller
         // Calculate summary data grouped by day
         $summaryData = DataMandiriPelaksanaanKapal::whereBetween('created_at', [$startDateTime, $endDateTime])
             ->selectRaw('
-    DATE(created_at) as date,
-    SUM(CASE WHEN isPassing = 1 THEN 1 ELSE 0 END) AS passing_count,
-    SUM(CASE WHEN isPandu = 1 THEN 1 ELSE 0 END) AS pandu_count,
-    SUM(CASE WHEN isBongkarMuat = 1 THEN 1 ELSE 0 END) AS bongkar_muat_count
-')
+            DATE(created_at) as date,
+            SUM(CASE WHEN isPassing = 1 THEN 1 ELSE 0 END) AS passing_count,
+            SUM(CASE WHEN isPandu = 1 THEN 1 ELSE 0 END) AS pandu_count,
+            SUM(CASE WHEN isBongkarMuat = 1 THEN 1 ELSE 0 END) AS bongkar_muat_count
+        ')
             ->groupBy(DB::raw('DATE(created_at)'))
             ->get();
 
@@ -75,9 +75,9 @@ class ReportController extends Controller
         $total_kapal = $total_pandu + $total_muat;
 
         // Modify the structure of the summary data
-        $modifiedSummaryData = [];
+        $transformedData = [];
         foreach ($summaryData as $summary) {
-            $modifiedSummaryData[] = [
+            $transformedData[] = [
                 'date' => $summary->date,
                 'summary_data' => [
                     'pandu_count' => [
@@ -100,27 +100,33 @@ class ReportController extends Controller
             ];
         }
 
-        dd($modifiedSummaryData);
+        // Calculate the total valid pandu count
+        $sumValidPanduCount = array_sum(array_column($transformedData, 'summary_data.pandu_count.detail.valid'));
 
-        Konsolidasi::create([
-            'passing' => $summaryData->passing_count ?? 0,
-            'pandu_tervalidasi' => $summaryData->pandu_count['detail']['valid'] ?? 0,
-            'pandu_tidak_terjadwal' => $summaryData->pandu_count['detail']['tidak_terjadwal'] ?? 0,
-            'pandu_terlambat' => $summaryData->pandu_count['detail']['terlambat'] ?? 0,
-            'bongkar_muat_tervalidasi' => $summaryData->bongkar_muat_count['detail']['valid'] ?? 0,
-            'bongkar_muat_tidak_terjadwal' => $summaryData->bongkar_muat_count['detail']['tidak_terjadwal'] ?? 0,
-            'bongkar_muat_terlambat' => $summaryData->bongkar_muat_count['detail']['terlambat'] ?? 0,
-            'total_kapal' => $total_kapal ?? 0,
-        ]);
-
-
-        return response()->json([
+        // Construct the response data
+        $response = [
             'success' => true,
-            'summary_data' => $summaryData,
+            'summary_data' => $transformedData,
             'total_kapal' => $total_kapal,
-            'total_tidak_teridentifikasi' => $total_tidak_teridentifikasi - $total_kapal,
+            'pandu_tervalidasi' => $sumValidPanduCount,
+            'pandu_tidak_teridentifikasi' => $total_tidak_teridentifikasi - $total_kapal,
+        ];
+
+        // Save consolidated data to database (if needed)
+        Konsolidasi::create([
+            'passing' => null, // This value needs to be filled accordingly
+            'pandu_tervalidasi' => $sumValidPanduCount,
+            'pandu_tidak_terjadwal' => $total_pandu_tidak_tejadwal,
+            'pandu_terlambat' => $total_late_pandu,
+            'bongkar_muat_tervalidasi' => null, // This value needs to be filled accordingly
+            'bongkar_muat_tidak_terjadwal' => $total_tidak_terjadwal_bongkar,
+            'bongkar_muat_terlambat' => $total_late_bongkar,
+            'total_kapal' => $total_kapal,
         ]);
+
+        return response()->json($response);
     }
+
 
 
     public function summaryreport(Request $request)
