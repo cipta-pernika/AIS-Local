@@ -27,6 +27,7 @@ return new class extends Migration
             $table->unsignedBigInteger('ais_data_position_id')->nullable();
             $table->unsignedBigInteger('report_geofence_id')->nullable();
             $table->unsignedBigInteger('report_geofence_bongkar_muat_id')->nullable();
+            $table->unsignedBigInteger('report_geofence_pandu_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
