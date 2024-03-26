@@ -79,4 +79,9 @@ class PanduTidakTerjadwal extends Model
     {
         return $this->belongsTo(\App\Models\PbkmKegiatanPemanduan::class, 'pbkm_kegiatan_pemanduan_id');
     }
+
+    public function reportGeofenceBongkarMuat(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(\App\Models\ReportGeofenceBongkarMuat::class, 'report_geofence_bongkar_muat_id');
+    }
 }
