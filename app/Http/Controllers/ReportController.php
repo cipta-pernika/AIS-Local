@@ -190,7 +190,7 @@ class ReportController extends Controller
 
         return response()->json([
             'success' => true,
-            'summary_data' => $summaryData,
+            'summary_data' => json_decode($summaryData),
             'total_kapal' => $total_kapal,
             'total_tidak_teridentifikasi' => $total_tidak_teridentifikasi - $total_kapal,
         ]);
