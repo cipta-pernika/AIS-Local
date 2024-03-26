@@ -49,6 +49,8 @@ class ReportController extends Controller
             ->get();
 
         // Initialize totals
+        $total_passing = 0;
+        $total_bongkar_tervalidasi = 0;
         $total_data_mandiri_ais = 0;
         $total_data_inaportnet = 0;
         $total_tidak_terjadwal_bongkar = 0;
@@ -114,11 +116,11 @@ class ReportController extends Controller
 
         // Save consolidated data to database (if needed)
         Konsolidasi::create([
-            'passing' => null, // This value needs to be filled accordingly
+            'passing' => $total_passing, // This value needs to be filled accordingly
             'pandu_tervalidasi' => $sumValidPanduCount,
             'pandu_tidak_terjadwal' => $total_pandu_tidak_tejadwal,
             'pandu_terlambat' => $total_late_pandu,
-            'bongkar_muat_tervalidasi' => null, // This value needs to be filled accordingly
+            'bongkar_muat_tervalidasi' => $total_bongkar_tervalidasi, // This value needs to be filled accordingly
             'bongkar_muat_tidak_terjadwal' => $total_tidak_terjadwal_bongkar,
             'bongkar_muat_terlambat' => $total_late_bongkar,
             'total_kapal' => $total_kapal,
