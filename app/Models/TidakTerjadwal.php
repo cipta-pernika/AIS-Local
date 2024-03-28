@@ -81,4 +81,9 @@ class TidakTerjadwal extends Model
     {
         return $this->belongsTo(\App\Models\ReportGeofenceBongkarMuat::class, 'report_geofence_bongkar_muat_id');
     }
+
+    public function reportGeofencePandu(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(\App\Models\ReportGeofencePandu::class, 'report_geofence_pandu_id');
+    }
 }
