@@ -1404,6 +1404,7 @@ class HelperController extends Controller
 
     public function camzoomminus()
     {
+        //http://admin:Amtek2024@103.143.170.182:8080/Streaming/Channels/1/picture
         $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
             '<zoom>-10</zoom>' .
             '<Momentary>' .
