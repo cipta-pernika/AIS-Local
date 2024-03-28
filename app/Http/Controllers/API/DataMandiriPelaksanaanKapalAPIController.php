@@ -85,15 +85,50 @@ class DataMandiriPelaksanaanKapalAPIController extends AppBaseController
         } else {
             // Default to the main query if no specific condition is provided
             // $query = $mainQuery;
-            $query = DataMandiriPelaksanaanKapal::select('*') // Select the columns you need from DataMandiriPelaksanaanKapal
-             ->whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])
-             ->whereNotNull('geofence_id')
-             ->whereNotNull('pnbp_jasa_labuh_kapal')
-             ->union(
-                 PanduTerlambat::select('id', 'ais_data_vessel_id') // Select the same columns you selected from DataMandiriPelaksanaanKapal
-                     ->whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])
-             );
-
+            $query = DataMandiriPelaksanaanKapal::select(
+                'ais_data_vessel_id',
+                'inaportnet_bongkar_muat_id',
+                'inaportnet_pergerakan_kapal_id',
+                'impt_pelayanan_kapal_id',
+                'impt_penggunaan_alat_id',
+                'pbkm_kegiatan_pemanduan_id',
+                'isPassing',
+                'isPandu',
+                'isBongkarMuat',
+                'geofence_id',
+                'ais_data_position_id',
+                'report_geofence_id',
+                'report_geofence_bongkar_muat_id',
+                'report_geofence_pandu_id',
+                'pnbp_jasa_labuh_kapal',
+                'pnbp_jasa_vts_kapal_domestik',
+                'pnbp_jasa_vts_kapal_asing'
+            ) // Select the columns you need from DataMandiriPelaksanaanKapal
+                ->whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])
+                ->whereNotNull('geofence_id')
+                ->whereNotNull('pnbp_jasa_labuh_kapal')
+                ->union(
+                    PanduTerlambat::select(
+                        'ais_data_vessel_id',
+                        'inaportnet_bongkar_muat_id',
+                        'inaportnet_pergerakan_kapal_id',
+                        'impt_pelayanan_kapal_id',
+                        'impt_penggunaan_alat_id',
+                        'pbkm_kegiatan_pemanduan_id',
+                        'isPassing',
+                        'isPandu',
+                        'isBongkarMuat',
+                        'geofence_id',
+                        'ais_data_position_id',
+                        'report_geofence_id',
+                        'report_geofence_bongkar_muat_id',
+                        'report_geofence_pandu_id',
+                        'pnbp_jasa_labuh_kapal',
+                        'pnbp_jasa_vts_kapal_domestik',
+                        'pnbp_jasa_vts_kapal_asing'
+                    ) // Select the same columns you selected from DataMandiriPelaksanaanKapal
+                        ->whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])
+                );
         }
 
         // Retrieve filtered data based on the selected query
