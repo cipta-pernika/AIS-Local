@@ -99,8 +99,8 @@ class DataMandiriPelaksanaanKapalAPIController extends AppBaseController
         } elseif ($request->has('isPanduLate')) {
             $query = PanduTerlambat::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime]);
         } elseif ($request->has('isBongkarTidakTerjadwal')) {
-            // $query = TidakTerjadwal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->whereNotNull('geofence_id');
-            $query = TidakTerjadwal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime]);
+            $query = TidakTerjadwal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->whereNotNull('geofence_id');
+            // $query = TidakTerjadwal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime]);
         } elseif ($request->has('isBongkarLate')) {
             $query = BongkarMuatTerlambat::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime]);
         } else {
