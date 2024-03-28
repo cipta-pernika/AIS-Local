@@ -73,66 +73,25 @@ class DataMandiriPelaksanaanKapalAPIController extends AppBaseController
 
         // Check for specific conditions and apply corresponding queries
         if ($request->has('isPanduTidakTerjadwal')) {
-            // $query = PanduTidakTerjadwal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->whereNotNull('geofence_id');
-            $query = PanduTidakTerjadwal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime]);
+            $allAddons = PanduTidakTerjadwal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])
+                ->get();
         } elseif ($request->has('isPanduLate')) {
-            $query = PanduTerlambat::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime]);
+            $allAddons = PanduTerlambat::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])
+                ->get();
         } elseif ($request->has('isBongkarTidakTerjadwal')) {
-            // $query = TidakTerjadwal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->whereNotNull('geofence_id');
-            $query = TidakTerjadwal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime]);
+            $allAddons = TidakTerjadwal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])
+                ->get();
         } elseif ($request->has('isBongkarLate')) {
-            $query = BongkarMuatTerlambat::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime]);
+            $allAddons = BongkarMuatTerlambat::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])
+                ->get();
         } else {
-            // Default to the main query if no specific condition is provided
-            // $query = $mainQuery;
-            $query = DataMandiriPelaksanaanKapal::select(
-                'ais_data_vessel_id',
-                'inaportnet_bongkar_muat_id',
-                'inaportnet_pergerakan_kapal_id',
-                'impt_pelayanan_kapal_id',
-                'impt_penggunaan_alat_id',
-                'pbkm_kegiatan_pemanduan_id',
-                'isPassing',
-                'isPandu',
-                'isBongkarMuat',
-                'geofence_id',
-                'ais_data_position_id',
-                'report_geofence_id',
-                'report_geofence_bongkar_muat_id',
-                'report_geofence_pandu_id',
-                'pnbp_jasa_labuh_kapal',
-                'pnbp_jasa_vts_kapal_domestik',
-                'pnbp_jasa_vts_kapal_asing'
-            ) // Select the columns you need from DataMandiriPelaksanaanKapal
-                ->whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])
-                ->whereNotNull('geofence_id')
-                ->whereNotNull('pnbp_jasa_labuh_kapal')
-                ->union(
-                    PanduTerlambat::select(
-                        'ais_data_vessel_id',
-                        'inaportnet_bongkar_muat_id',
-                        'inaportnet_pergerakan_kapal_id',
-                        'impt_pelayanan_kapal_id',
-                        'impt_penggunaan_alat_id',
-                        'pbkm_kegiatan_pemanduan_id',
-                        'isPassing',
-                        'isPandu',
-                        'isBongkarMuat',
-                        'geofence_id',
-                        'ais_data_position_id',
-                        'report_geofence_id',
-                        'report_geofence_bongkar_muat_id',
-                        'report_geofence_pandu_id',
-                        'pnbp_jasa_labuh_kapal',
-                        'pnbp_jasa_vts_kapal_domestik',
-                        'pnbp_jasa_vts_kapal_asing'
-                    ) // Select the same columns you selected from DataMandiriPelaksanaanKapal
-                        ->whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])
-                );
-        }
+            // Retrieve data from PanduTerlambat
+            $panduTerlambats = PanduTerlambat::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])
+                ->get();
 
-        // Retrieve filtered data based on the selected query
-        $allAddons = $query->get();
+            // Merge the main query results with PanduTerlambat
+            $allAddons = $mainQuery->get()->merge($panduTerlambats);
+        }
 
         // Manually paginate the results
         $addons = $allAddons->slice(
