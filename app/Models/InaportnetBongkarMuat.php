@@ -51,6 +51,7 @@ class InaportnetBongkarMuat extends Model
         'actual_selesai_bongkar',
         'actual_selesai_muat',
         'mmsi',
+        'tanggal_acuan'
     ];
 
     protected $casts = [

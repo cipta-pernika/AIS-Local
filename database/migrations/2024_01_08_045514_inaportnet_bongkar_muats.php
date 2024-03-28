@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -21,6 +22,7 @@ return new class extends Migration
             $table->string('kade')->nullable();
             $table->date('rencana_bongkar')->nullable();
             $table->date('rencana_muat')->nullable();
+            $table->date('tanggal_acuan')->default(Carbon::now());
             $table->date('mulai_bongkar')->nullable();
             $table->date('mulai_muat')->nullable();
             $table->timestamp('actual_mulai_bongkar')->nullable();
