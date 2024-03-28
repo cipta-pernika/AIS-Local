@@ -84,7 +84,13 @@ class DataMandiriPelaksanaanKapalAPIController extends AppBaseController
             $query = BongkarMuatTerlambat::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime]);
         } else {
             // Default to the main query if no specific condition is provided
-            $query = $mainQuery;
+            // $query = $mainQuery;
+            $query = DataMandiriPelaksanaanKapal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])
+             ->whereNotNull('geofence_id')
+             ->whereNotNull('pnbp_jasa_labuh_kapal')
+             ->union(
+                 PanduTerlambat::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])
+             );
         }
 
         // Retrieve filtered data based on the selected query
