@@ -78,16 +78,16 @@ class ReportController extends Controller
         ];
 
 
-        Konsolidasi::create([
-            'passing' => $summaryData['passing_count'] ?? 0,
-            'pandu_tervalidasi' => $summaryData['pandu_count'] ?? 0,
-            'pandu_tidak_terjadwal' => $total_pandu_tidak_tejadwal ?? 0,
-            'pandu_terlambat' => $total_late_pandu ?? 0,
-            'bongkar_muat_tervalidasi' => $summaryData['bongkar_muat_count'] ?? 0,
-            'bongkar_muat_tidak_terjadwal' => $total_tidak_terjadwal_bongkar ?? 0,
-            'bongkar_muat_terlambat' => $total_late_bongkar ?? 0,
-            'total_kapal' => $total_kapal ?? 0,
-        ]);
+        // Konsolidasi::create([
+        //     'passing' => $summaryData['passing_count'] ?? 0,
+        //     'pandu_tervalidasi' => $summaryData['pandu_count'] ?? 0,
+        //     'pandu_tidak_terjadwal' => $total_pandu_tidak_tejadwal ?? 0,
+        //     'pandu_terlambat' => $total_late_pandu ?? 0,
+        //     'bongkar_muat_tervalidasi' => $summaryData['bongkar_muat_count'] ?? 0,
+        //     'bongkar_muat_tidak_terjadwal' => $total_tidak_terjadwal_bongkar ?? 0,
+        //     'bongkar_muat_terlambat' => $total_late_bongkar ?? 0,
+        //     'total_kapal' => $total_kapal ?? 0,
+        // ]);
 
 
         return response()->json([
