@@ -85,6 +85,7 @@ class MapController extends Controller
     {
         $date = Carbon::parse(request('dateFrom'));
         $date_until = Carbon::parse(request('dateTo'))->addDays(1);
+        $date_until_when = $date->copy()->addHours(3);
         $selectedSensors = request('sensor');
 
         $mmsi = request('mmsi');
@@ -138,8 +139,9 @@ class MapController extends Controller
                 ->when($geofenceId, function ($query) use ($geofenceId) {
                     $query->where('geofence_id', $geofenceId);
                 })
-                ->when($pelabuhanId, function ($query) use ($pelabuhanId) {
-                    $query->where('dataloggers.pelabuhan_id', $pelabuhanId)->limit(100);
+                ->when($pelabuhanId, function ($query) use ($pelabuhanId, $date, $date_until_when) {
+                    $query->where('dataloggers.pelabuhan_id', $pelabuhanId)
+                        ->whereBetween('ais_data_positions.created_at', [$date, $date_until_when]);
                 })
                 ->get();
 
