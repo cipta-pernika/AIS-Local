@@ -60,6 +60,8 @@ class ReportController extends Controller
             PanduTerlambat::whereIn('ais_data_vessel_id', $intersect_ids)->delete();
         }
 
+        $intersect_ids_count = count($intersect_ids);
+
         $summaryData = DataMandiriPelaksanaanKapal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])
             ->selectRaw('
             SUM(CASE WHEN isPassing = 1 THEN 1 ELSE 0 END) AS passing_count,
@@ -85,7 +87,7 @@ class ReportController extends Controller
         $summaryData['pandu_count'] = [
             'total' => $total_pandu,
             'detail' => [
-                'valid' => $summaryData['pandu_count'],
+                'valid' => $summaryData['pandu_count'] + $intersect_ids_count,
                 'tidak_terjadwal' => $total_pandu_tidak_tejadwal,
                 'terlambat' => $total_late_pandu
             ]
@@ -103,7 +105,7 @@ class ReportController extends Controller
 
         Konsolidasi::create([
             'passing' => (int) $summaryData['passing_count'] ?? 0,
-            'pandu_tervalidasi' => (int) $summaryData['pandu_count'] ?? 0,
+            'pandu_tervalidasi' => (int) $summaryData['pandu_count'] + $intersect_ids_count ?? 0,
             'pandu_tidak_terjadwal' => $total_pandu_tidak_tejadwal ?? 0,
             'pandu_terlambat' => $total_late_pandu ?? 0,
             'bongkar_muat_tervalidasi' => (int) $summaryData['bongkar_muat_count'] ?? 0,
@@ -118,6 +120,7 @@ class ReportController extends Controller
             'summary_data' => json_decode($summaryData),
             'total_kapal' => $total_kapal,
             'total_tidak_teridentifikasi' => $total_tidak_teridentifikasi - $total_kapal,
+            'intersect_ids_count' => $intersect_ids_count
         ]);
     }
 
