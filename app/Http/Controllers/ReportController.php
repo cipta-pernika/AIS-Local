@@ -37,6 +37,29 @@ class ReportController extends Controller
         $startDateTime = Carbon::parse($request->start_date)->startOfDay();
         $endDateTime = Carbon::parse($request->end_date)->endOfDay();
 
+        // Get ais_data_vessel_id from PanduTidakTerjadwal
+        $pandu_tidak_terjadwal_ids = PanduTidakTerjadwal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])
+            ->pluck('ais_data_vessel_id')
+            ->toArray();
+
+        // Get ais_data_vessel_id from PanduTerlambat
+        $pandu_terlambat_ids = PanduTerlambat::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])
+            ->pluck('ais_data_vessel_id')
+            ->toArray();
+
+
+        // Find intersection of ais_data_vessel_id between PanduTidakTerjadwal and PanduTerlambat
+        $intersect_ids = array_intersect($pandu_tidak_terjadwal_ids, $pandu_terlambat_ids);
+
+        // If there are intersected ids, remove them from PanduTidakTerjadwal
+        if (!empty($intersect_ids)) {
+            PanduTidakTerjadwal::whereIn('ais_data_vessel_id', $intersect_ids)->delete();
+        }
+
+        if (!empty($intersect_ids)) {
+            PanduTerlambat::whereIn('ais_data_vessel_id', $intersect_ids)->delete();
+        }
+
         $summaryData = DataMandiriPelaksanaanKapal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])
             ->selectRaw('
             SUM(CASE WHEN isPassing = 1 THEN 1 ELSE 0 END) AS passing_count,
