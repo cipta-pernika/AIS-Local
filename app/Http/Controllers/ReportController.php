@@ -37,162 +37,55 @@ class ReportController extends Controller
         $startDateTime = Carbon::parse($request->start_date)->startOfDay();
         $endDateTime = Carbon::parse($request->end_date)->endOfDay();
 
-        // Calculate summary data grouped by day
-        $summaryData = DataMandiriPelaksanaanKapal::whereBetween('created_at', [$startDateTime, $endDateTime])
+        $summaryData = DataMandiriPelaksanaanKapal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])
             ->selectRaw('
-    DATE(created_at) as date,
-    SUM(CASE WHEN isPassing = 1 THEN 1 ELSE 0 END) AS passing_count,
-    SUM(CASE WHEN isPandu = 1 THEN 1 ELSE 0 END) AS pandu_count,
-    SUM(CASE WHEN isBongkarMuat = 1 THEN 1 ELSE 0 END) AS bongkar_muat_count
-')->whereNotNull('geofence_id')->whereNotNull('pnbp_jasa_labuh_kapal')
-            ->groupBy(DB::raw('DATE(created_at)'))
-            ->get();
+            SUM(CASE WHEN isPassing = 1 THEN 1 ELSE 0 END) AS passing_count,
+            SUM(CASE WHEN isPandu = 1 THEN 1 ELSE 0 END) AS pandu_count,
+            SUM(CASE WHEN isBongkarMuat = 1 THEN 1 ELSE 0 END) AS bongkar_muat_count
+        ')->whereNotNull('geofence_id')->whereNotNull('pnbp_jasa_labuh_kapal')
+            ->first();
 
-        // Initialize totals
-        $total_data_mandiri_ais = 0;
-        $total_data_inaportnet = 0;
-        $total_tidak_terjadwal_bongkar = 0;
-        $total_pandu_tidak_tejadwal = 0;
-        $total_late_bongkar = 0;
-        $total_late_pandu = 0;
-        $total_tidak_teridentifikasi = 0;
-        $total_pandu = 0;
-        $total_muat = 0;
-        $total_kapal = 0;
-
+        $total_data_mandiri_ais = ReportGeofenceBongkarMuat::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->count();
+        $total_data_inaportnet = InaportnetBongkarMuat::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->count();
         $total_tidak_terjadwal_bongkar = TidakTerjadwal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->whereNotNull('geofence_id')->count();
         $total_pandu_tidak_tejadwal = PanduTidakTerjadwal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->whereNotNull('geofence_id')->count();
         $total_late_bongkar = BongkarMuatTerlambat::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->count();
         $total_late_pandu = PanduTerlambat::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->count();
         $total_tidak_teridentifikasi = DataMandiriPelaksanaanKapal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->whereNotNull('geofence_id')->whereNotNull('pnbp_jasa_labuh_kapal')->count();
-        // $total_pandu = $summaryData['pandu_count'] + $total_pandu_tidak_tejadwal + $total_late_pandu;
-        // $total_muat = $summaryData['bongkar_muat_count'] + $total_tidak_terjadwal_bongkar + $total_late_bongkar;
+        $total_pandu = $summaryData['pandu_count'] + $total_pandu_tidak_tejadwal + $total_late_pandu;
+        $total_muat = $summaryData['bongkar_muat_count'] + $total_tidak_terjadwal_bongkar + $total_late_bongkar;
 
-
-        // Calculate other totals from grouped data
-        foreach ($summaryData as $summary) {
-            $total_data_mandiri_ais += $summary['passing_count'];
-            $total_data_inaportnet += $summary->pandu_count;
-            $total_tidak_terjadwal_bongkar += $summary->bongkar_muat_count;
-
-            // You can add more calculations here if needed
-        }
-
-        // Calculate total pandu, muat, and kapal
-        $total_pandu = $total_data_inaportnet + $total_pandu_tidak_tejadwal + $total_late_pandu;
-        $total_muat = $total_tidak_terjadwal_bongkar + $total_late_bongkar;
-        $total_kapal = $total_pandu + $total_muat;
+        // Calculate total kapal
+        $total_kapal = $summaryData['passing_count'] + $total_pandu + $total_muat;
 
         // Modify the structure of the summary data
-        $modifiedSummaryData = [];
-        foreach ($summaryData as $summary) {
-            $modifiedSummaryData[] = [
-                'date' => $summary->date,
-                'summary_data' => [
-                    'pandu_count' => [
-                        'total' => $total_pandu,
-                        'detail' => [
-                            'valid' => $summary->pandu_count,
-                            'tidak_terjadwal' => $total_pandu_tidak_tejadwal,
-                            'terlambat' => $total_late_pandu
-                        ]
-                    ],
-                    'bongkar_muat_count' => [
-                        'total' => $total_muat,
-                        'detail' => [
-                            'valid' => $summary->bongkar_muat_count,
-                            'tidak_terjadwal' => $total_tidak_terjadwal_bongkar,
-                            'terlambat' => $total_late_bongkar
-                        ]
-                    ],
-                ],
-            ];
-        }
-
-        $validDates = [];
-
-        // Extract valid dates and initialize sumValidPanduCount
-        $sumValidPanduCount = 0;
-        foreach ($modifiedSummaryData as $report) {
-            // Extract the date and valid pandu count for each report
-            $date = $report["date"];
-            $validDates[] = $date; // Collect valid dates
-            $validPanduCount = (int)$report["summary_data"]["pandu_count"]["detail"]["valid"];
-
-            // Accumulate valid pandu count
-            $sumValidPanduCount += $validPanduCount;
-        }
-
-        // Remove duplicates from validDates
-        $validDates = array_unique($validDates);
-
-        dd($modifiedSummaryData);
-
-        $transformedData = [];
-
-        foreach ($modifiedSummaryData as $data) {
-            $transformedData[] = [
-                "passing_count" => null,
-                "pandu_count" => [
-                    "total" => $data["summary_data"]["pandu_count"]["total"],
-                    "detail" => [
-                        "valid" => null,
-                        "tidak_terjadwal" => $data["summary_data"]["pandu_count"]["detail"]["tidak_terjadwal"],
-                        "terlambat" => $data["summary_data"]["pandu_count"]["detail"]["terlambat"]
-                    ]
-                ],
-                "bongkar_muat_count" => [
-                    "total" => $data["summary_data"]["bongkar_muat_count"]["total"],
-                    "detail" => [
-                        "valid" => null,
-                        "tidak_terjadwal" => $data["summary_data"]["bongkar_muat_count"]["detail"]["tidak_terjadwal"],
-                        "terlambat" => $data["summary_data"]["bongkar_muat_count"]["detail"]["terlambat"]
-                    ]
-                ]
-            ];
-        }
-
-        $jsonData =  json_encode($transformedData, JSON_PRETTY_PRINT);
-
-        $decodedData = json_decode($jsonData, true);
-
-        $mergedData = [
-            "passing_count" => null,
-            "pandu_count" => [
-                "total" => 0,
-                "detail" => [
-                    "valid" => null,
-                    "tidak_terjadwal" => 0,
-                    "terlambat" => 0
-                ]
-            ],
-            "bongkar_muat_count" => [
-                "total" => 0,
-                "detail" => [
-                    "valid" => null,
-                    "tidak_terjadwal" => 0,
-                    "terlambat" => 0
-                ]
+        $summaryData['pandu_count'] = [
+            'total' => $total_pandu,
+            'detail' => [
+                'valid' => $summaryData['pandu_count'],
+                'tidak_terjadwal' => $total_pandu_tidak_tejadwal,
+                'terlambat' => $total_late_pandu
             ]
         ];
 
-        foreach ($decodedData as $item) {
-            $mergedData["pandu_count"]["total"] += $item["pandu_count"]["total"];
-            $mergedData["bongkar_muat_count"]["total"] += $item["bongkar_muat_count"]["total"];
-            $mergedData["bongkar_muat_count"]["detail"]["tidak_terjadwal"] += $item["bongkar_muat_count"]["detail"]["tidak_terjadwal"];
-        }
-
-        $summaryData = json_encode($mergedData, JSON_PRETTY_PRINT);
+        $summaryData['bongkar_muat_count'] = [
+            'total' => $total_muat,
+            'detail' => [
+                'valid' => $summaryData['bongkar_muat_count'],
+                'tidak_terjadwal' => $total_tidak_terjadwal_bongkar,
+                'terlambat' => $total_late_bongkar
+            ]
+        ];
 
 
         Konsolidasi::create([
-            'passing' => $summaryData->passing_count ?? 0,
-            'pandu_tervalidasi' => $sumValidPanduCount ?? 0,
-            'pandu_tidak_terjadwal' => $summaryData->pandu_count['detail']['tidak_terjadwal'] ?? 0,
-            'pandu_terlambat' => $summaryData->pandu_count['detail']['terlambat'] ?? 0,
-            'bongkar_muat_tervalidasi' => $summaryData->bongkar_muat_count['detail']['valid'] ?? 0,
-            'bongkar_muat_tidak_terjadwal' => $summaryData->bongkar_muat_count['detail']['tidak_terjadwal'] ?? 0,
-            'bongkar_muat_terlambat' => $summaryData->bongkar_muat_count['detail']['terlambat'] ?? 0,
+            'passing' => $summaryData['passing_count'] ?? 0,
+            'pandu_tervalidasi' => $summaryData['pandu_count'] ?? 0,
+            'pandu_tidak_terjadwal' => $total_pandu_tidak_tejadwal ?? 0,
+            'pandu_terlambat' => $total_late_pandu ?? 0,
+            'bongkar_muat_tervalidasi' => $summaryData['bongkar_muat_count'] ?? 0,
+            'bongkar_muat_tidak_terjadwal' => $total_tidak_terjadwal_bongkar ?? 0,
+            'bongkar_muat_terlambat' => $total_late_bongkar ?? 0,
             'total_kapal' => $total_kapal ?? 0,
         ]);
 
