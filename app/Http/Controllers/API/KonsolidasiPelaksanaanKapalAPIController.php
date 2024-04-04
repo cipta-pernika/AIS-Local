@@ -42,7 +42,7 @@ class KonsolidasiPelaksanaanKapalAPIController extends AppBaseController
         $perPage = $request->get('limit', 10);
 
         // Initialize the main query builder with constraints based on start_date and end_date
-        $mainQuery = DataMandiriPelaksanaanKapal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->whereNotNull('geofence_id')->whereNotNull('pnbp_jasa_labuh_kapal');
+        $mainQuery = DataMandiriPelaksanaanKapal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime]);
         // $mainQuery = DataMandiriPelaksanaanKapal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime]);
 
         // Apply search filter if provided
@@ -71,35 +71,14 @@ class KonsolidasiPelaksanaanKapalAPIController extends AppBaseController
             $mainQuery->where('isBongkarMuat', $isBongkarMuatValid);
         }
 
-        //  if ($request->has('isPanduTidakTerjadwal')) {
-        //     $allAddons = PanduTidakTerjadwal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])
-        //         ->get();
-        // } elseif ($request->has('isPanduLate')) {
-        //     $allAddons = PanduTerlambat::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])
-        //         ->get();
-        // } elseif ($request->has('isBongkarTidakTerjadwal')) {
-        //     $allAddons = TidakTerjadwal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])
-        //         ->get();
-        // } elseif ($request->has('isBongkarLate')) {
-        //     $allAddons = BongkarMuatTerlambat::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])
-        //         ->get();
-        // } else {
-        //     // Retrieve data from PanduTerlambat
-        //     $panduTerlambats = PanduTerlambat::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])
-        //         ->get();
-
-        //     // Merge the main query results with PanduTerlambat
-        //     $allAddons = $mainQuery->get()->merge($panduTerlambats);
-        // }
-
         // Check for specific conditions and apply corresponding queries
         if ($request->has('isPanduTidakTerjadwal')) {
-            $query = PanduTidakTerjadwal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->whereNotNull('geofence_id');
+            $query = PanduTidakTerjadwal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime]);
             // $query = PanduTidakTerjadwal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime]);
         } elseif ($request->has('isPanduLate')) {
             $query = PanduTerlambat::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime]);
         } elseif ($request->has('isBongkarTidakTerjadwal')) {
-            $query = TidakTerjadwal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->whereNotNull('geofence_id');
+            $query = TidakTerjadwal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime]);
             // $query = TidakTerjadwal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime]);
         } elseif ($request->has('isBongkarLate')) {
             $query = BongkarMuatTerlambat::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime]);
