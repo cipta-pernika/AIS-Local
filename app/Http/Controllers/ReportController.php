@@ -68,6 +68,8 @@ class ReportController extends Controller
                 'isPandu' => 1,
                 'geofence_id' => $data->geofence_id,
                 'report_geofence_id' => $data->report_geofence_id,
+                'created_at' => $data->created_at,
+                'updated_at' => $data->updated_at
             ]);
         }
 
@@ -79,6 +81,8 @@ class ReportController extends Controller
                 'isPandu' => 1,
                 'geofence_id' => $data->geofence_id,
                 'report_geofence_id' => $data->report_geofence_id,
+                'created_at' => $data->created_at,
+                'updated_at' => $data->updated_at
             ]);
         }
 
@@ -118,6 +122,8 @@ class ReportController extends Controller
                 'isBongkarMuat' => 1,
                 'geofence_id' => $data->geofence_id,
                 'report_geofence_id' => $data->report_geofence_id,
+                'created_at' => $data->created_at,
+                'updated_at' => $data->updated_at
             ]);
         }
 
@@ -128,6 +134,8 @@ class ReportController extends Controller
                 'isBongkarMuat' => 1,
                 'geofence_id' => $data->geofence_id,
                 'report_geofence_id' => $data->report_geofence_id,
+                'created_at' => $data->created_at,
+                'updated_at' => $data->updated_at
             ]);
         }
 
