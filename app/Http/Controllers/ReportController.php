@@ -47,7 +47,6 @@ class ReportController extends Controller
             ->pluck('ais_data_vessel_id')
             ->toArray();
 
-
         // Find intersection of ais_data_vessel_id between PanduTidakTerjadwal and PanduTerlambat
         $intersect_ids = array_intersect($pandu_tidak_terjadwal_ids, $pandu_terlambat_ids);
 
@@ -94,6 +93,54 @@ class ReportController extends Controller
 
         $intersect_ids_count = count($intersect_ids);
 
+        $bongkar_tidak_terjadwal_ids = TidakTerjadwal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])
+            ->pluck('ais_data_vessel_id')
+            ->toArray();
+
+        $bongkar_terlambat_ids = BongkarMuatTerlambat::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])
+            ->pluck('ais_data_vessel_id')
+            ->toArray();
+
+        $intersect_ids_bongkar = array_intersect($pandu_tidak_terjadwal_ids, $pandu_terlambat_ids);
+
+        $pandu_tidak_terjadwal_data = TidakTerjadwal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])
+            ->whereIn('ais_data_vessel_id', $intersect_ids_bongkar)
+            ->get();
+
+        $pandu_terlambat_data = BongkarMuatTerlambat::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])
+            ->whereIn('ais_data_vessel_id', $intersect_ids_bongkar)
+            ->get();
+
+        foreach ($bongkar_tidak_terjadwal_ids as $data) {
+            DataMandiriPelaksanaanKapal::create([
+                'ais_data_vessel_id' => $data->ais_data_vessel_id,
+                'inaportnet_bongkar_muat_id' => $data->pbkm_kegiatan_pemanduan_id,
+                'isBongkarMuat' => 1,
+                'geofence_id' => $data->geofence_id,
+                'report_geofence_id' => $data->report_geofence_id,
+            ]);
+        }
+
+        foreach ($bongkar_terlambat_ids as $data) {
+            DataMandiriPelaksanaanKapal::create([
+                'ais_data_vessel_id' => $data->ais_data_vessel_id,
+                'inaportnet_bongkar_muat_id' => $data->pbkm_kegiatan_pemanduan_id,
+                'isBongkarMuat' => 1,
+                'geofence_id' => $data->geofence_id,
+                'report_geofence_id' => $data->report_geofence_id,
+            ]);
+        }
+
+        if (!empty($intersect_ids_bongkar)) {
+            TidakTerjadwal::whereIn('ais_data_vessel_id', $intersect_ids_bongkar)->delete();
+        }
+
+        if (!empty($intersect_ids_bongkar)) {
+            BongkarMuatTerlambat::whereIn('ais_data_vessel_id', $intersect_ids_bongkar)->delete();
+        }
+
+        $intersect_ids_count_bongkar = count($intersect_ids_bongkar);
+
         $summaryData = DataMandiriPelaksanaanKapal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])
             ->selectRaw('
             SUM(CASE WHEN isPassing = 1 THEN 1 ELSE 0 END) AS passing_count,
@@ -128,7 +175,7 @@ class ReportController extends Controller
         $summaryData['bongkar_muat_count'] = [
             'total' => $total_muat,
             'detail' => [
-                'valid' => $summaryData['bongkar_muat_count'],
+                'valid' => (int) $summaryData['bongkar_muat_count'] + $intersect_ids_count,
                 'tidak_terjadwal' => $total_tidak_terjadwal_bongkar,
                 'terlambat' => $total_late_bongkar
             ]
@@ -152,7 +199,8 @@ class ReportController extends Controller
             'summary_data' => json_decode($summaryData),
             'total_kapal' => $total_kapal,
             'total_tidak_teridentifikasi' => $total_tidak_teridentifikasi - $total_kapal,
-            'intersect_ids_count' => $intersect_ids_count
+            'intersect_ids_count' => $intersect_ids_count,
+            'intersect_ids_count_bongkar' => $intersect_ids_count_bongkar
         ]);
     }
 
