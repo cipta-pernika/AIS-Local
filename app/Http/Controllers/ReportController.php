@@ -103,15 +103,15 @@ class ReportController extends Controller
 
         $intersect_ids_bongkar = array_intersect($pandu_tidak_terjadwal_ids, $pandu_terlambat_ids);
 
-        $pandu_tidak_terjadwal_data = TidakTerjadwal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])
+        $bongkar_tidak_terjadwal_data = TidakTerjadwal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])
             ->whereIn('ais_data_vessel_id', $intersect_ids_bongkar)
             ->get();
 
-        $pandu_terlambat_data = BongkarMuatTerlambat::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])
+        $bongkar_terlambat_data = BongkarMuatTerlambat::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])
             ->whereIn('ais_data_vessel_id', $intersect_ids_bongkar)
             ->get();
 
-        foreach ($bongkar_tidak_terjadwal_ids as $data) {
+        foreach ($bongkar_tidak_terjadwal_data as $data) {
             DataMandiriPelaksanaanKapal::create([
                 'ais_data_vessel_id' => $data->ais_data_vessel_id,
                 'inaportnet_bongkar_muat_id' => $data->pbkm_kegiatan_pemanduan_id,
@@ -121,7 +121,7 @@ class ReportController extends Controller
             ]);
         }
 
-        foreach ($bongkar_terlambat_ids as $data) {
+        foreach ($bongkar_terlambat_data as $data) {
             DataMandiriPelaksanaanKapal::create([
                 'ais_data_vessel_id' => $data->ais_data_vessel_id,
                 'inaportnet_bongkar_muat_id' => $data->pbkm_kegiatan_pemanduan_id,
