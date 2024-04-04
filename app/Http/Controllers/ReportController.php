@@ -51,6 +51,38 @@ class ReportController extends Controller
         // Find intersection of ais_data_vessel_id between PanduTidakTerjadwal and PanduTerlambat
         $intersect_ids = array_intersect($pandu_tidak_terjadwal_ids, $pandu_terlambat_ids);
 
+        // Retrieve data from PanduTidakTerjadwal where ais_data_vessel_id intersects with $intersect_ids
+        $pandu_tidak_terjadwal_data = PanduTidakTerjadwal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])
+            ->whereIn('ais_data_vessel_id', $intersect_ids)
+            ->get();
+
+        // Retrieve data from PanduTerlambat where ais_data_vessel_id intersects with $intersect_ids
+        $pandu_terlambat_data = PanduTerlambat::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])
+            ->whereIn('ais_data_vessel_id', $intersect_ids)
+            ->get();
+
+        // Now, create DataMandiriPelaksanaanKapal records using data from PanduTidakTerjadwal
+        foreach ($pandu_tidak_terjadwal_data as $data) {
+            DataMandiriPelaksanaanKapal::create([
+                'ais_data_vessel_id' => $data->ais_data_vessel_id,
+                'pbkm_kegiatan_pemanduan_id' => $data->pbkm_kegiatan_pemanduan_id,
+                'isPandu' => 1,
+                'geofence_id' => $data->geofence_id,
+                'report_geofence_id' => $data->report_geofence_id,
+            ]);
+        }
+
+        // Create DataMandiriPelaksanaanKapal records using data from PanduTerlambat
+        foreach ($pandu_terlambat_data as $data) {
+            DataMandiriPelaksanaanKapal::create([
+                'ais_data_vessel_id' => $data->ais_data_vessel_id,
+                'pbkm_kegiatan_pemanduan_id' => $data->pbkm_kegiatan_pemanduan_id,
+                'isPandu' => 1,
+                'geofence_id' => $data->geofence_id,
+                'report_geofence_id' => $data->report_geofence_id,
+            ]);
+        }
+
         // If there are intersected ids, remove them from PanduTidakTerjadwal
         if (!empty($intersect_ids)) {
             PanduTidakTerjadwal::whereIn('ais_data_vessel_id', $intersect_ids)->delete();
