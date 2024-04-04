@@ -77,7 +77,7 @@ class MapController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => $track,
+            'message' => $track->toArray(),
         ], 200);
     }
 
