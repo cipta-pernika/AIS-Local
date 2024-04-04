@@ -244,7 +244,7 @@ Route::resource('p-n-b-p-jasa-barangs', App\Http\Controllers\API\PNBPJasaBarangA
 // Route::resource('p-n-b-p-jasa-bongkar-muat-berbahayas', App\Http\Controllers\API\PNBPJasaBongkarMuatBerbahayaAPIController::class)
 //     ->except(['create', 'edit']);
 
-Route::post('konsolidasi', [ReportController::class, 'konsolidasi']);
+Route::get('konsolidasi', [ReportController::class, 'konsolidasi']);
 
 
 Route::resource('konsolidasis', App\Http\Controllers\API\KonsolidasiAPIController::class)
