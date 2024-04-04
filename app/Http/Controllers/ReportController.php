@@ -105,7 +105,7 @@ class ReportController extends Controller
             ->pluck('ais_data_vessel_id')
             ->toArray();
 
-        $intersect_ids_bongkar = array_intersect($pandu_tidak_terjadwal_ids, $pandu_terlambat_ids);
+        $intersect_ids_bongkar = array_intersect($bongkar_tidak_terjadwal_ids, $bongkar_terlambat_ids);
 
         $bongkar_tidak_terjadwal_data = TidakTerjadwal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])
             ->whereIn('ais_data_vessel_id', $intersect_ids_bongkar)
