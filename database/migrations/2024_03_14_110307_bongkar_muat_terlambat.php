@@ -28,6 +28,8 @@ return new class extends Migration
             $table->unsignedBigInteger('report_geofence_id')->nullable();
             $table->unsignedBigInteger('report_geofence_bongkar_muat_id')->nullable();
             $table->unsignedBigInteger('report_geofence_pandu_id')->nullable();
+            $table->string('vessel_name')->nullable();
+            $table->string('mmsi')->nullable();
             $table->timestamps();
             $table->softDeletes();
 

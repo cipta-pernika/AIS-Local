@@ -20,6 +20,8 @@ class PanduTidakTerjadwal extends Model
         'impt_pelayanan_kapal_id',
         'impt_penggunaan_alat_id',
         'pbkm_kegiatan_pemanduan_id',
+        'vessel_name',
+        'mmsi'
     ];
 
     protected $casts = [
