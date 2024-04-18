@@ -47,6 +47,8 @@ class AisDataVessel extends Model
         'nama_pandu',
         'nama_kapal_eks',
         'nama_kapal_pemilik',
+        'counting_hari',
+        'tgl_counting_hari',
     ];
 
     public function toSearchableArray()
