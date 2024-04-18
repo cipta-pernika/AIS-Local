@@ -233,12 +233,19 @@ class ReportController extends Controller
         $startDateTime = Carbon::parse($request->start_date)->startOfDay();
         $endDateTime = Carbon::parse($request->end_date)->endOfDay();
 
+        // $summaryData = DataMandiriPelaksanaanKapal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])
+        //     ->selectRaw('
+        //     SUM(CASE WHEN isPassing = 1 THEN 1 ELSE 0 END) AS passing_count,
+        //     SUM(CASE WHEN isPandu = 1 THEN 1 ELSE 0 END) AS pandu_count,
+        //     SUM(CASE WHEN isBongkarMuat = 1 THEN 1 ELSE 0 END) AS bongkar_muat_count
+        // ')->whereNotNull('geofence_id')->whereNotNull('pnbp_jasa_labuh_kapal')
+        //     ->first();
         $summaryData = DataMandiriPelaksanaanKapal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])
             ->selectRaw('
             SUM(CASE WHEN isPassing = 1 THEN 1 ELSE 0 END) AS passing_count,
             SUM(CASE WHEN isPandu = 1 THEN 1 ELSE 0 END) AS pandu_count,
             SUM(CASE WHEN isBongkarMuat = 1 THEN 1 ELSE 0 END) AS bongkar_muat_count
-        ')->whereNotNull('geofence_id')->whereNotNull('pnbp_jasa_labuh_kapal')
+        ')
             ->first();
 
         $total_data_mandiri_ais = ReportGeofenceBongkarMuat::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->count();
