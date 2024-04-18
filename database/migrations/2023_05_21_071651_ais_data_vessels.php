@@ -55,6 +55,9 @@ return new class extends Migration
             $table->string('nama_kapal_pemilik')->nullable();
             $table->string('loa')->nullable();
 
+            $table->integer('counting_hari')->nullable();
+            $table->date('tgl_counting_hari')->nullable();
+
             $table->tinyInteger('isAssign')->default(0);
 
             $table->timestamps();
