@@ -56,9 +56,10 @@ class DataMandiriPelaksanaanKapalAPIController extends AppBaseController
         // Apply filter by isPassing if provided
         if ($request->has('isPassing')) {
             $isPassing = (int)$request->input('isPassing');
-            $mainQuery->where('isPassing', $isPassing)->whereHas('aisDataVessel', function ($query) {
-                $query->whereNull('no_pkk');
-            });
+            $mainQuery->where('isPassing', $isPassing);
+            // $mainQuery->where('isPassing', $isPassing)->whereHas('aisDataVessel', function ($query) {
+            //     $query->whereNull('no_pkk');
+            // });
         }
 
         // Apply filter by isPanduValid if provided
