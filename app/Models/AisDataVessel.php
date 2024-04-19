@@ -49,6 +49,8 @@ class AisDataVessel extends Model
         'nama_kapal_pemilik',
         'counting_hari',
         'tgl_counting_hari',
+        'nama_kapal_inaportnet',
+        'isAssign'
     ];
 
     public function toSearchableArray()

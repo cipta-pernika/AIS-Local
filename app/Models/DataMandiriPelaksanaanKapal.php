@@ -30,6 +30,8 @@ class DataMandiriPelaksanaanKapal extends Model
         'pnbp_jasa_pemanduan_penundaan_marabahan',
         'pnbp_jasa_barang',
         'pnbp_jasa_pengawasan_bongkar_muat_1_percent',
+        'konsesi',
+        'tarif_terkonsolidasi',
         'pnbp_bongkar_muat_barang_berbahaya'
     ];
 
