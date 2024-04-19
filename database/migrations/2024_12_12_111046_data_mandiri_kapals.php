@@ -22,6 +22,7 @@ return new class extends Migration
             $table->tinyInteger('isPassing')->default(0);
             $table->tinyInteger('isPandu')->default(0);
             $table->tinyInteger('isBongkarMuat')->default(0);
+            $table->tinyInteger('isAnchor')->default(0);
             $table->unsignedBigInteger('geofence_id')->nullable();
             $table->unsignedBigInteger('ais_data_position_id')->nullable();
             $table->unsignedBigInteger('report_geofence_id')->nullable();

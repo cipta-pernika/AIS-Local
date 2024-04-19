@@ -19,6 +19,7 @@ class DataMandiriPelaksanaanKapal extends Model
         'isPandu',
         'isBongkarMuat',
         'geofence_id',
+        'isAnchor',
         'ais_data_position_id',
         'report_geofence_id',
         'report_geofence_bongkar_muat_id',

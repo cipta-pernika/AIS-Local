@@ -244,6 +244,7 @@ class ReportController extends Controller
             ->selectRaw('
             SUM(CASE WHEN isPassing = 1 THEN 1 ELSE 0 END) AS passing_count,
             SUM(CASE WHEN isPandu = 1 THEN 1 ELSE 0 END) AS pandu_count,
+            SUM(CASE WHEN isAnchor = 1 THEN 1 ELSE 0 END) AS anchor_count,
             SUM(CASE WHEN isBongkarMuat = 1 THEN 1 ELSE 0 END) AS bongkar_muat_count
         ')
             ->first();
