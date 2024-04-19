@@ -60,6 +60,8 @@ return new class extends Migration
 
             $table->tinyInteger('isAssign')->default(0);
 
+            $table->string('nama_kapal_inaportnet')->nullable();
+
             $table->timestamps();
 
             $table->index('id');

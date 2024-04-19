@@ -46,6 +46,10 @@ return new class extends Migration
             $table->decimal('pnbp_jasa_pengawasan_bongkar_muat_1_percent', 15, 2);
             $table->decimal('pnbp_bongkar_muat_barang_berbahaya', 15, 2);
 
+
+            $table->json('konsesi')->nullable();
+            $table->json('tarif_terkonsolidasi')->nullable();
+
             $table->timestamps();
             $table->softDeletes();
 
