@@ -31,6 +31,18 @@ return new class extends Migration
             $table->unsignedBigInteger('report_geofence_pandu_id')->nullable();
             $table->string('vessel_name')->nullable();
             $table->string('mmsi')->nullable();
+
+            $table->decimal('pnbp_jasa_labuh_kapal', 15, 2);
+            $table->decimal('pnbp_jasa_rambu_kapal', 15, 2);
+            $table->decimal('pnbp_jasa_vts_kapal_domestik', 15, 2);
+            $table->decimal('pnbp_jasa_vts_kapal_asing', 15, 2);
+            $table->decimal('pnbp_jasa_tambat_kapal', 15, 2);
+            $table->decimal('pnbp_jasa_pemanduan_penundaan_marabahan', 15, 2);
+            $table->decimal('pnbp_jasa_pemanduan_penundaan_trisakti', 15, 2);
+            $table->decimal('pnbp_jasa_barang', 15, 2);
+            $table->decimal('pnbp_jasa_pengawasan_bongkar_muat_1_percent', 15, 2);
+            $table->decimal('pnbp_bongkar_muat_barang_berbahaya', 15, 2);
+            
             $table->timestamps();
             $table->softDeletes();
 
