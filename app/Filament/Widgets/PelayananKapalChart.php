@@ -63,7 +63,7 @@ class PelayananKapalChart extends ChartWidget
                 ],
             ],
             'labels' => $array_bulan->map(function ($month) {
-                return Carbon::createFromFormat('m', $month)->format('F');
+                return Carbon::createFromFormat('m', $month)->format('M-y');
             })->toArray(),
         ];
     }
