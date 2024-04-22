@@ -30,6 +30,7 @@ return new class extends Migration
             $table->unsignedBigInteger('report_geofence_pandu_id')->nullable();
             $table->string('vessel_name')->nullable();
             $table->string('mmsi')->nullable();
+            $table->string('no_pkk')->nullable();
 
             
             $table->decimal('pnbp_jasa_labuh_kapal', 15, 2);
