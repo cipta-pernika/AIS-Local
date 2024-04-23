@@ -164,7 +164,7 @@ class GeofenceController extends Controller
 
         if (!$cachedData) {
             // If not cached, fetch the data from the database
-            $geo = Geofence::all();
+            $geo = Geofence::where('isMaster', 0)->get();
 
             // Store the retrieved data in the cache
             Cache::put($cacheKey, $geo, 60); // Cache for 60 minutes

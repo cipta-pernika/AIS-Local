@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('type_geo')->nullable();
             $table->string('radius')->nullable();
             $table->longText('geometry')->nullable();
+            $table->tinyInteger('isMaster')->default(0);
             $table->timestamps();
             $table->softDeletes();
 
