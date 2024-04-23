@@ -74,6 +74,10 @@ class DataMandiriPelaksanaanKapalAPIController extends AppBaseController
             $mainQuery->where('isBongkarMuat', $isBongkarMuatValid);
         }
 
+        if ($request->has('geofence_id')) {
+            $mainQuery->where('geofence_id', $request->input('geofence_id'));
+        }
+
         //  if ($request->has('isPanduTidakTerjadwal')) {
         //     $allAddons = PanduTidakTerjadwal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])
         //         ->get();
