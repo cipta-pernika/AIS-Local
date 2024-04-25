@@ -9,7 +9,7 @@ class SensorData extends Model
 {
     use HasFactory;
 
-    // protected $connection = 'mysql_second';
+    protected $connection = 'mysql_second';
 
     protected $table = 'sensor_datas';
 
