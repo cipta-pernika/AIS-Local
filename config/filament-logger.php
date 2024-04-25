@@ -14,6 +14,7 @@ return [
             App\Filament\Resources\AisDataPositionResource::class,
             App\Filament\Resources\AisDataVesselResource::class,
             App\Filament\Resources\SensorDataResource::class,
+            App\Filament\Resources\ReportGeofenceResource::class,
         ],
     ],
 
