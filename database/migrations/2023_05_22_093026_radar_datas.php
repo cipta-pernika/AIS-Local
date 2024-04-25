@@ -24,6 +24,7 @@ return new class extends Migration
             $table->float('range')->nullable();
             $table->float('bearing')->nullable();
             $table->float('distance_from_fak')->nullable();
+            $table->tinyInteger('is_inside_geofence')->default(0);
             $table->timestamp('timestamp');
             $table->timestamps();
 
