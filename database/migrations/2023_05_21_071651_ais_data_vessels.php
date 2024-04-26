@@ -57,6 +57,7 @@ return new class extends Migration
 
             $table->integer('counting_hari')->nullable();
             $table->date('tgl_counting_hari')->nullable();
+            $table->date('last_update_counting')->nullable();
 
             $table->tinyInteger('isAssign')->default(0);
 
