@@ -42,6 +42,9 @@ return new class extends Migration
             $table->decimal('pnbp_jasa_barang', 15, 2);
             $table->decimal('pnbp_jasa_pengawasan_bongkar_muat_1_percent', 15, 2);
             $table->decimal('pnbp_bongkar_muat_barang_berbahaya', 15, 2);
+
+            $table->decimal('tonase_bongkar', 15, 2);
+            $table->decimal('tonase_muat', 15, 2);
             
             $table->timestamps();
             $table->softDeletes();
