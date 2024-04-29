@@ -130,6 +130,13 @@ class DataMandiriPelaksanaanKapalAPIController extends AppBaseController
             'reportGeofencePandu', 'reportGeofencePandu.geofence'
         ]);
 
+        if ($request->has('search')) {
+            $searchTerm = $request->input('search');
+            $addons = $addons->filter(function ($addon) use ($searchTerm) {
+                return stripos($addon->aisDataVessel->vessel_name, $searchTerm) !== false;
+            })->values();
+        }
+
         // Return a JSON response containing the paginated data and pagination meta
         return $this->sendResponse([
             'data' => $addons->toArray(), // Paginated data
