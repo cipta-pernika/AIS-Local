@@ -50,6 +50,8 @@ return new class extends Migration
 
             $table->json('konsesi')->nullable();
             $table->json('tarif_terkonsolidasi')->nullable();
+            $table->decimal('tonase_bongkar', 15, 2);
+            $table->decimal('tonase_muat', 15, 2);
 
             $table->timestamps();
             $table->softDeletes();
