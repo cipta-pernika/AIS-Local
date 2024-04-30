@@ -52,7 +52,7 @@ class ReportController extends Controller
 
         // Retrieve data from PanduTidakTerjadwal where ais_data_vessel_id intersects with $intersect_ids
         $pandu_tidak_terjadwal_data = PanduTidakTerjadwal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])
-            ->whereIn('ais_data_vessel_id', $intersect_ids)
+            ->whereIn('ais_data_vessel_id', $intersect_ids)->where('isPassing', 0)
             ->get();
 
         // Retrieve data from PanduTerlambat where ais_data_vessel_id intersects with $intersect_ids
@@ -251,8 +251,8 @@ class ReportController extends Controller
 
         $total_data_mandiri_ais = ReportGeofenceBongkarMuat::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->count();
         $total_data_inaportnet = InaportnetBongkarMuat::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->count();
-        $total_tidak_terjadwal_bongkar = TidakTerjadwal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->whereNotNull('geofence_id')->count();
-        $total_pandu_tidak_tejadwal = PanduTidakTerjadwal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->whereNotNull('geofence_id')->count();
+        $total_tidak_terjadwal_bongkar = TidakTerjadwal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->where('isPassing', 0)->whereNotNull('geofence_id')->count();
+        $total_pandu_tidak_tejadwal = PanduTidakTerjadwal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->where('isPassing', 0)->whereNotNull('geofence_id')->count();
         $total_late_bongkar = BongkarMuatTerlambat::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->count();
         $total_late_pandu = PanduTerlambat::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->count();
         $total_tidak_teridentifikasi = DataMandiriPelaksanaanKapal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->whereNotNull('geofence_id')->whereNotNull('pnbp_jasa_labuh_kapal')->count();
