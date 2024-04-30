@@ -74,7 +74,7 @@ class DataMandiriPelaksanaanKapalAPIController extends AppBaseController
             $mainQuery->where('isBongkarMuat', $isBongkarMuatValid);
         }
 
-        if ($request->has('geofence_id')) {
+        if ($request->has('geofence_id') && !empty($request->input('geofence_id'))) {
             $mainQuery->where('geofence_id', $request->input('geofence_id'));
         }
 
