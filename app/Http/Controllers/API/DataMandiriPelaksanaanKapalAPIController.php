@@ -101,7 +101,7 @@ class DataMandiriPelaksanaanKapalAPIController extends AppBaseController
 
         // Check for specific conditions and apply corresponding queries
         if ($request->has('isPanduTidakTerjadwal')) {
-            $query = PanduTidakTerjadwal::whereBetween(DB::raw('DATE(updated_at)'), [$startDateTime, $endDateTime])->whereNotNull('geofence_id');
+            $query = PanduTidakTerjadwal::whereBetween(DB::raw('DATE(updated_at)'), [$startDateTime, $endDateTime])->where('isPassing', 0)->whereNotNull('geofence_id');
             // $query = PanduTidakTerjadwal::whereBetween(DB::raw('DATE(updated_at)'), [$startDateTime, $endDateTime]);
         } elseif ($request->has('isPanduLate')) {
             $query = PanduTerlambat::whereBetween(DB::raw('DATE(updated_at)'), [$startDateTime, $endDateTime]);
