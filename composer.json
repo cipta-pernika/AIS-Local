@@ -21,7 +21,7 @@
         "konnco/filament-import": "1.6.1",
         "laravel/fortify": "v1.21.0",
         "laravel/framework": "v10.46.0",
-        "laravel/octane": "v2.3.5",
+        "laravel/octane": "^2.3",
         "laravel/pulse": "*",
         "laravel/sanctum": "v3.3.3",
         "laravel/scout": "v10.8.3",
