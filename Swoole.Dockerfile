@@ -23,7 +23,7 @@ RUN if [ -f $ROOT/package-lock.json ]; \
   then \
     npm ci --loglevel=error --no-audit; \
   else \
-    npm install --loglevel=error --no-audit; \
+    npm install --force --loglevel=error --no-audit; \
   fi
 
 COPY . .
