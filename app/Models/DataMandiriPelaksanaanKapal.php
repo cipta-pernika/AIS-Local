@@ -104,6 +104,11 @@ class DataMandiriPelaksanaanKapal extends Model
         return $this->belongsTo(\App\Models\InaportnetBongkarMuat::class, 'inaportnet_bongkar_muat_id');
     }
 
+    public function inaportnetPergerakanKapal(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(\App\Models\InaportnetPergerakanKapal::class, 'inaportnet_pergerakan_kapal_id');
+    }
+
     public function pbkmKegiatanPemanduan(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(\App\Models\PbkmKegiatanPemanduan::class, 'pbkm_kegiatan_pemanduan_id');
