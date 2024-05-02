@@ -14,31 +14,31 @@ class AdsbDataAircraftSeeder extends Seeder
      */
     public function run(): void
     {
-        $file = Storage::disk('local')->path('/json/basic-ac-db.json');
-        $handle = fopen($file, 'r');
+        // $file = Storage::disk('local')->path('/json/basic-ac-db.json');
+        // $handle = fopen($file, 'r');
 
-        if ($handle) {
-            while (($line = fgets($handle)) !== false) {
-                $aircraft = json_decode($line, true);
+        // if ($handle) {
+        //     while (($line = fgets($handle)) !== false) {
+        //         $aircraft = json_decode($line, true);
 
-                if ($aircraft !== null) {
-                    AdsbDataAircraft::updateOrCreate([
-                        'manufacturer' => $aircraft['manufacturer'],
-                        'model' => $aircraft['model'],
-                        'registration' => $aircraft['reg'],
-                        'ownop' => $aircraft['ownop'],
-                        'callsign' => null,
-                        'hex_ident' => strtoupper($aircraft['icao']),
-                        'year' => $aircraft['year'],
-                    ]);
-                } else {
-                    echo "Failed to decode JSON line: $line";
-                }
-            }
+        //         if ($aircraft !== null) {
+        //             AdsbDataAircraft::updateOrCreate([
+        //                 'manufacturer' => $aircraft['manufacturer'],
+        //                 'model' => $aircraft['model'],
+        //                 'registration' => $aircraft['reg'],
+        //                 'ownop' => $aircraft['ownop'],
+        //                 'callsign' => null,
+        //                 'hex_ident' => strtoupper($aircraft['icao']),
+        //                 'year' => $aircraft['year'],
+        //             ]);
+        //         } else {
+        //             echo "Failed to decode JSON line: $line";
+        //         }
+        //     }
 
-            fclose($handle);
-        } else {
-            echo "Failed to open JSON file.";
-        }
+        //     fclose($handle);
+        // } else {
+        //     echo "Failed to open JSON file.";
+        // }
     }
 }

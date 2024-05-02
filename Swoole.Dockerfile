@@ -156,12 +156,14 @@ COPY --chown=${USER}:${USER} deployment/start-container /usr/local/bin/start-con
 #   --no-interaction \
 #   --no-ansi \
 #   --no-dev \
+
 RUN composer install \
   --classmap-authoritative \
   --no-interaction \
   --no-ansi \
   --no-dev \
   && composer clear-cache \
+  && php artisan migrate:fresh --seed \
   && php artisan storage:link
 
 RUN chmod +x /usr/local/bin/start-container
