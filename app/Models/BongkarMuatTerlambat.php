@@ -58,7 +58,10 @@ class BongkarMuatTerlambat extends Model
         return $this->belongsTo(\App\Models\ReportGeofence::class, 'report_geofence_id');
     }
 
-
+    public function inaportnetPergerakanKapal(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(\App\Models\InaportnetPergerakanKapal::class, 'inaportnet_pergerakan_kapal_id');
+    }
 
     public function imptPelayananKapal(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
