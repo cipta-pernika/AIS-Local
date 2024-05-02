@@ -127,7 +127,7 @@ class DataMandiriPelaksanaanKapalAPIController extends AppBaseController
         $addons->load([
             'aisDataVessel', 'aisDataPosition', 'geofence', 'imptPelayananKapal', 'imptPenggunaanAlat', 'reportGeofence', 'reportGeofence.geofence',
             'inaportnetBongkarMuat', 'pbkmKegiatanPemanduan', 'reportGeofenceBongkarMuat', 'reportGeofenceBongkarMuat.geofence',
-            'reportGeofencePandu', 'reportGeofencePandu.geofence'
+            'reportGeofencePandu', 'reportGeofencePandu.geofence', 'inaportnetPergerakanKapal'
         ]);
 
         if ($request->has('search')) {
