@@ -1,5 +1,5 @@
 # Accepted values: 8.3 - 8.2
-ARG PHP_VERSION=8.3
+ARG PHP_VERSION=8.2
 
 ARG COMPOSER_VERSION=latest
 
@@ -123,13 +123,20 @@ USER ${USER}
 COPY --chown=${USER}:${USER} --from=vendor /usr/bin/composer /usr/bin/composer
 COPY --chown=${USER}:${USER} composer.json composer.lock ./
 
+# RUN composer install \
+#   --no-dev \
+#   --no-interaction \
+#   --no-autoloader \
+#   --no-ansi \
+#   --no-scripts \
+#   --audit
+
 RUN composer install \
   --no-dev \
   --no-interaction \
   --no-autoloader \
   --no-ansi \
-  --no-scripts \
-  --audit
+  --no-scripts
 
 COPY --chown=${USER}:${USER} . .
 COPY --chown=${USER}:${USER} --from=build ${ROOT}/public public
@@ -144,6 +151,11 @@ COPY --chown=${USER}:${USER} deployment/supervisord.*.conf /etc/supervisor/conf.
 COPY --chown=${USER}:${USER} deployment/php.ini ${PHP_INI_DIR}/conf.d/99-octane.ini
 COPY --chown=${USER}:${USER} deployment/start-container /usr/local/bin/start-container
 
+# RUN composer install \
+#   --classmap-authoritative \
+#   --no-interaction \
+#   --no-ansi \
+#   --no-dev \
 RUN composer install \
   --classmap-authoritative \
   --no-interaction \
