@@ -88,3 +88,4 @@ Route::resource('p-n-b-p-jasa-pengawasan-bongkar-muats', App\Http\Controllers\PN
 Route::resource('p-n-b-p-jasa-bongkar-muat-berbahayas', App\Http\Controllers\PNBPJasaBongkarMuatBerbahayaController::class);
 Route::resource('konsolidasis', App\Http\Controllers\KonsolidasiController::class);
 Route::resource('data-b-u-ps', App\Http\Controllers\DataBUPController::class);
+Route::resource('impt-bongkar-muats', App\Http\Controllers\ImptBongkarMuatController::class);

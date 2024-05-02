@@ -252,3 +252,7 @@ Route::resource('konsolidasis', App\Http\Controllers\API\KonsolidasiAPIControlle
 
 Route::resource('data-b-u-ps', App\Http\Controllers\API\DataBUPAPIController::class)
     ->except(['create', 'edit']);
+
+
+Route::resource('impt-bongkar-muats', App\Http\Controllers\API\ImptBongkarMuatAPIController::class)
+    ->except(['create', 'edit']);

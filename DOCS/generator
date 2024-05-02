@@ -1,1 +1,1 @@
-php artisan infyom:api_scaffold DataBUP --skip=views,menu,tests --fromTable --table=data_bups
+php artisan infyom:api_scaffold ImptBongkarMuat --skip=views,menu,tests --fromTable --table=impt_bongkar_muats
