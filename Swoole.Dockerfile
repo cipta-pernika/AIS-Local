@@ -173,5 +173,6 @@ RUN cat deployment/utilities.sh >> ~/.bashrc
 EXPOSE 8000
 
 ENTRYPOINT ["start-container"]
+# CMD ["/usr/bin/supervisord","-c","/etc/supervisor/conf.d/supervisord.app.conf"]
 
 HEALTHCHECK --start-period=5s --interval=2s --timeout=5s --retries=8 CMD php artisan octane:status || exit 1
