@@ -135,7 +135,7 @@ class DataMandiriPelaksanaanKapalAPIController extends AppBaseController
             $searchTerm = $request->input('search');
             if ($request->has('isPanduLate')) {
                 $filteredAddons = $addons->filter(function ($addon) use ($searchTerm) {
-                    return $addon->pbkmKegiatanPemanduan && stripos($addon->pbkmKegiatanPemanduan->nama_kapal, $searchTerm) !== false;
+                    return $addon->pbkmKegiatanPemanduan && str_contains($addon->pbkmKegiatanPemanduan->nama_kapal, $searchTerm);
                 })->values();
             } elseif ($request->has('isBongkarLate')) {
                 $filteredAddons = $addons->filter(function ($addon) use ($searchTerm) {
