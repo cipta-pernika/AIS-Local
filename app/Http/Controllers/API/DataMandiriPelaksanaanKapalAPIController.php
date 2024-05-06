@@ -133,7 +133,7 @@ class DataMandiriPelaksanaanKapalAPIController extends AppBaseController
         if ($request->has('search')) {
             $searchTerm = $request->input('search');
             $addons = $addons->filter(function ($addon) use ($searchTerm) {
-                return stripos($addon->aisDataVessel->vessel_name, $searchTerm) !== false;
+                return $addon->aisDataVessel && stripos($addon->aisDataVessel->vessel_name, $searchTerm) !== false;
             })->values();
         }
 
