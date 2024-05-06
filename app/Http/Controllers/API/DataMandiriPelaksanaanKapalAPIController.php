@@ -133,9 +133,19 @@ class DataMandiriPelaksanaanKapalAPIController extends AppBaseController
 
         if ($request->has('search')) {
             $searchTerm = $request->input('search');
-            $filteredAddons = $addons->filter(function ($addon) use ($searchTerm) {
-                return $addon->aisDataVessel && stripos($addon->aisDataVessel->vessel_name, $searchTerm) !== false;
-            })->values();
+            if ($request->has('isPanduLate')) {
+                $filteredAddons = $addons->filter(function ($addon) use ($searchTerm) {
+                    return $addon->pbkmKegiatanPemanduan && stripos($addon->pbkmKegiatanPemanduan->nama_kapal, $searchTerm) !== false;
+                })->values();
+            } elseif ($request->has('isBongkarLate')) {
+                $filteredAddons = $addons->filter(function ($addon) use ($searchTerm) {
+                    return $addon->inaportnetBongkarMuat && stripos($addon->inaportnetBongkarMuat->nama_kapal, $searchTerm) !== false;
+                })->values();
+            } else {
+                $filteredAddons = $addons->filter(function ($addon) use ($searchTerm) {
+                    return $addon->aisDataVessel && stripos($addon->aisDataVessel->vessel_name, $searchTerm) !== false;
+                })->values();
+            }
             $totalRecords = $filteredAddons->count();
             $addons = $filteredAddons;
         }
