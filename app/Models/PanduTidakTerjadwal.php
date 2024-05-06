@@ -92,4 +92,9 @@ class PanduTidakTerjadwal extends Model
     {
         return $this->belongsTo(\App\Models\ReportGeofencePandu::class, 'report_geofence_pandu_id');
     }
+
+    public function inaportnetPergerakanKapal(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(\App\Models\InaportnetPergerakanKapal::class, 'inaportnet_pergerakan_kapal_id');
+    }
 }
