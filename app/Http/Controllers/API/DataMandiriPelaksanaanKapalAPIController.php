@@ -117,6 +117,7 @@ class DataMandiriPelaksanaanKapalAPIController extends AppBaseController
 
         // Retrieve filtered data based on the selected query
         $allAddons = $query->get();
+        $totalRecords = $allAddons->count();
 
         // Manually paginate the results
         $addons = $allAddons->slice(
@@ -132,19 +133,21 @@ class DataMandiriPelaksanaanKapalAPIController extends AppBaseController
 
         if ($request->has('search')) {
             $searchTerm = $request->input('search');
-            $addons = $addons->filter(function ($addon) use ($searchTerm) {
+            $filteredAddons = $addons->filter(function ($addon) use ($searchTerm) {
                 return $addon->aisDataVessel && stripos($addon->aisDataVessel->vessel_name, $searchTerm) !== false;
             })->values();
+            $totalRecords = $filteredAddons->count();
+            $addons = $filteredAddons;
         }
 
         // Return a JSON response containing the paginated data and pagination meta
         return $this->sendResponse([
             'data' => $addons->toArray(), // Paginated data
             'pagination' => [
-                'total' => $addons->count(), // Total number of records
+                'total' => $totalRecords, // Total number of records
                 'per_page' => $perPage, // Records per page
                 'current_page' => $request->get('skip', 0) / $perPage + 1, // Current page number
-                'last_page' => ceil($addons->count() / $perPage), // Last page number
+                'last_page' => ceil($totalRecords / $perPage), // Last page number
             ],
         ], 'Data Mandiri Pelaksanaan retrieved successfully');
     }
