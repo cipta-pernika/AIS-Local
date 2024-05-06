@@ -141,10 +141,10 @@ class DataMandiriPelaksanaanKapalAPIController extends AppBaseController
         return $this->sendResponse([
             'data' => $addons->toArray(), // Paginated data
             'pagination' => [
-                'total' => $allAddons->count(), // Total number of records
+                'total' => $addons->count(), // Total number of records
                 'per_page' => $perPage, // Records per page
                 'current_page' => $request->get('skip', 0) / $perPage + 1, // Current page number
-                'last_page' => ceil($allAddons->count() / $perPage), // Last page number
+                'last_page' => ceil($addons->count() / $perPage), // Last page number
             ],
         ], 'Data Mandiri Pelaksanaan retrieved successfully');
     }
