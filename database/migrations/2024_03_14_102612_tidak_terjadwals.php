@@ -46,6 +46,8 @@ return new class extends Migration
             $table->decimal('tonase_bongkar', 15, 2);
             $table->decimal('tonase_muat', 15, 2);
 
+            $table->json('history_geofences')->nullable();
+
             
             $table->timestamps();
             $table->softDeletes();
