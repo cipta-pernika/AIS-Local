@@ -23,6 +23,16 @@ class PanduTidakTerjadwal extends Model
         'vessel_name',
         'mmsi',
         'report_geofence_pandu_id',
+        'pnbp_jasa_labuh_kapal',
+        'pnbp_jasa_vts_kapal_domestik',
+        'pnbp_jasa_vts_kapal_asing',
+        'pnbp_jasa_pemanduan_penundaan_marabahan',
+        'pnbp_jasa_barang',
+        'pnbp_jasa_pengawasan_bongkar_muat_1_percent',
+        'pnbp_bongkar_muat_barang_berbahaya',
+        'tonase_bongkar',
+        'tonase_muat',
+        'pnbp_jasa_rambu_kapal'
     ];
 
     protected $casts = [

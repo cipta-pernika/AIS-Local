@@ -32,7 +32,10 @@ class DataMandiriPelaksanaanKapal extends Model
         'pnbp_jasa_pengawasan_bongkar_muat_1_percent',
         'konsesi',
         'tarif_terkonsolidasi',
-        'pnbp_bongkar_muat_barang_berbahaya'
+        'pnbp_bongkar_muat_barang_berbahaya',
+        'tonase_bongkar',
+        'tonase_muat',
+        'pnbp_jasa_rambu_kapal'
     ];
 
     protected $casts = [
