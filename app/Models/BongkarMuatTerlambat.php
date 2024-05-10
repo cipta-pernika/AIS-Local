@@ -11,6 +11,7 @@ class BongkarMuatTerlambat extends Model
     public $fillable = [
         'ais_data_vessel_id',
         'id_rkbm',
+        'no_pkk',
         'geofence_id',
         'ais_data_position_id',
         'report_geofence_id',
@@ -18,9 +19,20 @@ class BongkarMuatTerlambat extends Model
         'inaportnet_pergerakan_kapal_id',
         'impt_pelayanan_kapal_id',
         'impt_penggunaan_alat_id',
+        'impt_bongkar_muat_id',
         'pbkm_kegiatan_pemanduan_id',
         'vessel_name',
-        'mmsi'
+        'mmsi',
+        'pnbp_jasa_labuh_kapal',
+        'pnbp_jasa_vts_kapal_domestik',
+        'pnbp_jasa_vts_kapal_asing',
+        'pnbp_jasa_pemanduan_penundaan_marabahan',
+        'pnbp_jasa_barang',
+        'pnbp_jasa_pengawasan_bongkar_muat_1_percent',
+        'pnbp_bongkar_muat_barang_berbahaya',
+        'tonase_bongkar',
+        'tonase_muat',
+        'pnbp_jasa_rambu_kapal'
     ];
 
     protected $casts = [
@@ -51,6 +63,11 @@ class BongkarMuatTerlambat extends Model
     public function geofence(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(\App\Models\Geofence::class, 'geofence_id');
+    }
+
+    public function imptBongkarMuat(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(\App\Models\ImptBongkarMuat::class, 'impt_bongkar_muat_id');
     }
 
     public function reportGeofence(): \Illuminate\Database\Eloquent\Relations\BelongsTo

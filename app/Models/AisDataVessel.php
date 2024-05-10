@@ -54,6 +54,8 @@ class AisDataVessel extends Model
         'last_update_counting'
     ];
 
+    protected $dates = ['tgl_counting_hari'];
+
     public function toSearchableArray()
     {
         return [

@@ -1,1 +1,1 @@
-php artisan infyom:api_scaffold ImptBongkarMuat --skip=views,menu,tests --fromTable --table=impt_bongkar_muats
+php artisan infyom:api_scaffold PelindoBongkarMuat --skip=views,menu,tests --fromTable --table=pelindo_bongkar_muats
