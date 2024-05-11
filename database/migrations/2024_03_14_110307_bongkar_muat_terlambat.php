@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('impt_pelayanan_kapal_id')->nullable();
             $table->unsignedBigInteger('impt_penggunaan_alat_id')->nullable();
             $table->unsignedBigInteger('impt_bongkar_muat_id')->nullable();
+            $table->unsignedBigInteger('pelindo_bongkar_muat_id')->nullable();
             $table->unsignedBigInteger('pbkm_kegiatan_pemanduan_id')->nullable();
             $table->string('id_rkbm')->nullable();
             $table->tinyInteger('isPassing')->default(0);
