@@ -120,15 +120,31 @@ class ListBargePaired extends Component implements HasForms, HasTable
                     ->label('Assign')
                     ->labeledFrom('md')
                     ->form([
-                        Select::make('no_pkk_assign')
-                            ->label('No PKK')
-                            ->required()
+                        // Select::make('no_pkk_assign')
+                        //     ->label('No PKK')
+                        //     ->required()
                             // ->relationship(
                             //     name: 'assignId',
                             //     modifyQueryUsing: fn (Builder $query) => $query->orderBy('no_pkk')->orderBy('vessel_name'),
                             // )
                             // ->getOptionLabelFromRecordUsing(fn (Model $record) => "{$record->no_pkk} ~ {$record->vessel_name} ~ {$record->nama_perusahaan}")
+                            // ->searchable(['no_pkk', 'vessel_name', 'nama_perusahaan'])
+                            Select::make('no_pkk_assign')
+                            ->label('No PKK')
+                            ->native(false)
+                            // ->relationship(
+                            //     name: 'assignId',
+                            //     modifyQueryUsing: fn (Builder $query) => $query->orderBy('no_pkk')->orderBy('vessel_name')->where('isAssign', 0),
+                            // )
                             ->searchable(['no_pkk', 'vessel_name', 'nama_perusahaan'])
+                            ->options(AisDataVessel::query()->whereNotNull('no_pkk')->where('isAssign', 0)->get()
+                                ->map(function ($record) {
+                                    return [
+                                        'value' => $record->no_pkk,
+                                        'label' => "{$record->no_pkk} ~ {$record->vessel_name} ~ {$record->nama_perusahaan}"
+                                    ];
+                                })
+                                ->pluck('label', 'value'))
                     ])
                     ->action(function (array $data, InaportnetBongkarMuat $record): void {
                         $record->no_pkk_assign = $data['no_pkk_assign'];
