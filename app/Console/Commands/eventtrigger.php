@@ -33,7 +33,7 @@ class eventtrigger extends Command
     {
         // $aisdata = AisDataPosition::with('vessel')
         //     ->groupBy('vessel_id')
-        //     ->limit(10)
+        //     ->limit(1000)
         //     ->orderBy('created_at', 'DESC')
         //     ->get();
 

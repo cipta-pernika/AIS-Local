@@ -1224,7 +1224,7 @@ class HelperController extends Controller
             $aisData = RadarData::with('sensorData.sensor.datalogger')
                 ->groupBy('target_id')
                 ->whereBetween('created_at', [now()->subMinutes(3), now()])
-                ->limit(10)
+                ->limit(1000)
                 ->get();
 
             Cache::put($cacheKey, $aisData, 1);

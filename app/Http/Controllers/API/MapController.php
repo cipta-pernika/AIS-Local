@@ -56,7 +56,7 @@ class MapController extends Controller
                 ->where('vessel_id', request('vessel_id'))
                 // ->groupBy('vessel_id')
                 ->with('vessel', 'sensorData.sensor.datalogger')
-                ->limit(10);
+                ->limit(1000);
         }
 
         // if ($map_setting->breadcrumb === 'duration') {
