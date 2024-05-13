@@ -38,12 +38,13 @@ class DataMandiriPelaksanaanKapalAPIController extends AppBaseController
         // Set default values for start date and end date if they are not provided
         $startDateTime = Carbon::parse($request->start_date ?? now())->startOfDay();
         $endDateTime = Carbon::parse($request->end_date ?? now()->addDay())->endOfDay();
+        
 
         $perPage = $request->get('limit', 10);
 
         // Initialize the main query builder with constraints based on start_date and end_date
         // $mainQuery = DataMandiriPelaksanaanKapal::whereBetween(DB::raw('DATE(updated_at)'), [$startDateTime, $endDateTime])->whereNotNull('geofence_id')->whereNotNull('pnbp_jasa_labuh_kapal');
-        $mainQuery = DataMandiriPelaksanaanKapal::whereBetween(DB::raw('DATE(updated_at)'), [$startDateTime, $endDateTime]);
+        $mainQuery = DataMandiriPelaksanaanKapal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime]);
 
         // Apply search filter if provided
         if ($request->has('search')) {
@@ -106,15 +107,15 @@ class DataMandiriPelaksanaanKapalAPIController extends AppBaseController
 
         // Check for specific conditions and apply corresponding queries
         if ($request->has('isPanduTidakTerjadwal')) {
-            $query = PanduTidakTerjadwal::whereBetween(DB::raw('DATE(updated_at)'), [$startDateTime, $endDateTime])->where('isPassing', 0)->whereNotNull('geofence_id');
+            $query = PanduTidakTerjadwal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->where('isPassing', 0)->whereNotNull('geofence_id');
             // $query = PanduTidakTerjadwal::whereBetween(DB::raw('DATE(updated_at)'), [$startDateTime, $endDateTime]);
         } elseif ($request->has('isPanduLate')) {
-            $query = PanduTerlambat::whereBetween(DB::raw('DATE(updated_at)'), [$startDateTime, $endDateTime]);
+            $query = PanduTerlambat::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime]);
         } elseif ($request->has('isBongkarTidakTerjadwal')) {
-            $query = TidakTerjadwal::whereBetween(DB::raw('DATE(updated_at)'), [$startDateTime, $endDateTime])->where('isPassing', 0)->whereNotNull('geofence_id');
+            $query = TidakTerjadwal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->where('isPassing', 0)->whereNotNull('geofence_id');
             // $query = TidakTerjadwal::whereBetween(DB::raw('DATE(updated_at)'), [$startDateTime, $endDateTime]);
         } elseif ($request->has('isBongkarLate')) {
-            $query = BongkarMuatTerlambat::whereBetween(DB::raw('DATE(updated_at)'), [$startDateTime, $endDateTime]);
+            $query = BongkarMuatTerlambat::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime]);
         } else {
             // Default to the main query if no specific condition is provided
             $query = $mainQuery;
