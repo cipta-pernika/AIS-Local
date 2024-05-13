@@ -62,6 +62,11 @@ class DataMandiriPelaksanaanKapalAPIController extends AppBaseController
             // });
         }
 
+        if ($request->has('isAnchor')) {
+            $isAnchor = (int)$request->input('isAnchor');
+            $mainQuery->where('isAnchor', $isAnchor);
+        }
+
         // Apply filter by isPanduValid if provided
         if ($request->has('isPanduValid')) {
             $isPanduValid = (int)$request->input('isPanduValid');
