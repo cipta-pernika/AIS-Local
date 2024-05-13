@@ -117,7 +117,7 @@ class ListBargePaired extends Component implements HasForms, HasTable
                         return false;
                     })
                     ->badgeColor('success')
-                    ->label('Assign')
+                    ->label('Re Assign')
                     ->labeledFrom('md')
                     ->form([
                         // Select::make('no_pkk_assign')
