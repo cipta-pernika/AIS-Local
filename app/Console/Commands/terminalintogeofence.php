@@ -28,7 +28,7 @@ class terminalintogeofence extends Command
      */
     public function handle()
     {
-        $terminals = Terminal::limit(1000)->get();
+        $terminals = Terminal::limit(10)->get();
 
         foreach ($terminals as $terminal) {
             $loc = Location::where('name', $terminal->name)->first();

@@ -56,7 +56,7 @@ class MapController extends Controller
                 ->where('vessel_id', request('vessel_id'))
                 // ->groupBy('vessel_id')
                 ->with('vessel', 'sensorData.sensor.datalogger')
-                ->limit(1000);
+                ->limit(10);
         }
 
         // if ($map_setting->breadcrumb === 'duration') {
@@ -143,7 +143,7 @@ class MapController extends Controller
                     $query->where('dataloggers.pelabuhan_id', $pelabuhanId)
                         ->whereBetween('ais_data_positions.created_at', [$date, $date_until_when]);
                 })
-                ->limit(1000)
+                ->limit(10)
                 ->get();
 
             foreach ($aisTracks as $track) {
