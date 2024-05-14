@@ -457,7 +457,7 @@ class HelperController extends Controller
         </AbsoluteHigh>
         </PTZData>';
 
-        $url = 'http://admin:Amtek2024@103.143.170.182:8080/PTZCtrl/channels/1/absolute';
+        $url = 'http://admin:Amtek2024@cctv.cakrawala.id/PTZCtrl/channels/1/absolute';
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -1404,7 +1404,7 @@ class HelperController extends Controller
 
     public function camzoomminus()
     {
-        //http://admin:Amtek2024@103.143.170.182:8080/Streaming/Channels/1/picture
+        //http://admin:Amtek2024@cctv.cakrawala.id/Streaming/Channels/1/picture
         $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
             '<zoom>-10</zoom>' .
             '<Momentary>' .
@@ -1412,7 +1412,7 @@ class HelperController extends Controller
             '</Momentary>' .
             '</PTZData>';
 
-        $url = 'http://admin:Amtek2024@103.143.170.182:8080/PTZCtrl/channels/1/momentary';
+        $url = 'http://admin:Amtek2024@cctv.cakrawala.id/PTZCtrl/channels/1/momentary';
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -1432,7 +1432,7 @@ class HelperController extends Controller
             '<zoom>-10</zoom>' .
             '</PTZData>';
 
-        $url = 'http://admin:Amtek2024@103.143.170.182:8080/PTZCtrl/channels/1/continuous';
+        $url = 'http://admin:Amtek2024@cctv.cakrawala.id/PTZCtrl/channels/1/continuous';
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -1452,7 +1452,7 @@ class HelperController extends Controller
             '<zoom>0</zoom>' .
             '</PTZData>';
 
-        $url = 'http://admin:Amtek2024@103.143.170.182:8080/PTZCtrl/channels/1/momentary';
+        $url = 'http://admin:Amtek2024@cctv.cakrawala.id/PTZCtrl/channels/1/momentary';
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -1475,7 +1475,7 @@ class HelperController extends Controller
             '</Momentary>' .
             '</PTZData>';
 
-        $url = 'http://admin:Amtek2024@103.143.170.182:8080/PTZCtrl/channels/1/momentary';
+        $url = 'http://admin:Amtek2024@cctv.cakrawala.id/PTZCtrl/channels/1/momentary';
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -1495,7 +1495,7 @@ class HelperController extends Controller
             '<tilt> 20 </tilt>' .
             '</PTZData>';
 
-        $url = 'http://admin:Amtek2024@103.143.170.182:8080/PTZCtrl/channels/1/continuous';
+        $url = 'http://admin:Amtek2024@cctv.cakrawala.id/PTZCtrl/channels/1/continuous';
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -1518,7 +1518,7 @@ class HelperController extends Controller
             '</Momentary>' .
             '</PTZData>';
 
-        $url = 'http://admin:Amtek2024@103.143.170.182:8080/PTZCtrl/channels/1/momentary';
+        $url = 'http://admin:Amtek2024@cctv.cakrawala.id/PTZCtrl/channels/1/momentary';
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -1538,7 +1538,7 @@ class HelperController extends Controller
             '<zoom>10</zoom>' .
             '</PTZData>';
 
-        $url = 'http://admin:Amtek2024@103.143.170.182:8080/PTZCtrl/channels/1/continuous';
+        $url = 'http://admin:Amtek2024@cctv.cakrawala.id/PTZCtrl/channels/1/continuous';
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -1561,7 +1561,7 @@ class HelperController extends Controller
             '</Momentary>' .
             '</PTZData>';
 
-        $url = 'http://admin:Amtek2024@103.143.170.182:8080/PTZCtrl/channels/1/momentary';
+        $url = 'http://admin:Amtek2024@cctv.cakrawala.id/PTZCtrl/channels/1/momentary';
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -1580,7 +1580,7 @@ class HelperController extends Controller
             '<pan> -20 </pan>' .
             '</PTZData>';
 
-        $url = 'http://admin:Amtek2024@103.143.170.182:8080/PTZCtrl/channels/1/continuous';
+        $url = 'http://admin:Amtek2024@cctv.cakrawala.id/PTZCtrl/channels/1/continuous';
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -1600,7 +1600,7 @@ class HelperController extends Controller
             '<tilt>60</tilt>' .
             '</PTZData>';
 
-        $url = 'http://admin:Amtek2024@103.143.170.182:8080/PTZCtrl/channels/1/continuous';
+        $url = 'http://admin:Amtek2024@cctv.cakrawala.id/PTZCtrl/channels/1/continuous';
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -1620,7 +1620,7 @@ class HelperController extends Controller
             '<tilt>60</tilt>' .
             '</PTZData>';
 
-        $url = 'http://admin:Amtek2024@103.143.170.182:8080/PTZCtrl/channels/1/continuous';
+        $url = 'http://admin:Amtek2024@cctv.cakrawala.id/PTZCtrl/channels/1/continuous';
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -1640,7 +1640,7 @@ class HelperController extends Controller
             '<tilt> 0 </tilt>' .
             '</PTZData>';
 
-        $url = 'http://admin:Amtek2024@103.143.170.182:8080/PTZCtrl/channels/1/continuous';
+        $url = 'http://admin:Amtek2024@cctv.cakrawala.id/PTZCtrl/channels/1/continuous';
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -1662,7 +1662,7 @@ class HelperController extends Controller
             '</Momentary>' .
             '</PTZData>';
 
-        $url = 'http://admin:Amtek2024@103.143.170.182:8080/PTZCtrl/channels/1/momentary';
+        $url = 'http://admin:Amtek2024@cctv.cakrawala.id/PTZCtrl/channels/1/momentary';
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -1682,7 +1682,7 @@ class HelperController extends Controller
             '<tilt>60</tilt>' .
             '</PTZData>';
 
-        $url = 'http://admin:Amtek2024@103.143.170.182:8080/PTZCtrl/channels/1/continuous';
+        $url = 'http://admin:Amtek2024@cctv.cakrawala.id/PTZCtrl/channels/1/continuous';
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -1702,7 +1702,7 @@ class HelperController extends Controller
             '<tilt>-60</tilt>' .
             '</PTZData>';
 
-        $url = 'http://admin:Amtek2024@103.143.170.182:8080/PTZCtrl/channels/1/continuous';
+        $url = 'http://admin:Amtek2024@cctv.cakrawala.id/PTZCtrl/channels/1/continuous';
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -1724,7 +1724,7 @@ class HelperController extends Controller
             '</Momentary>' .
             '</PTZData>';
 
-        $url = 'http://admin:Amtek2024@103.143.170.182:8080/PTZCtrl/channels/1/momentary';
+        $url = 'http://admin:Amtek2024@cctv.cakrawala.id/PTZCtrl/channels/1/momentary';
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -1743,7 +1743,7 @@ class HelperController extends Controller
             '<autoPan>1</autoPan>' .
             '</autoPanData>';
 
-        $url = 'http://admin:Amtek2024@103.143.170.182:8080/ISAPI/PTZCtrl/channels/1/autoPan';
+        $url = 'http://admin:Amtek2024@cctv.cakrawala.id/ISAPI/PTZCtrl/channels/1/autoPan';
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -1762,7 +1762,7 @@ class HelperController extends Controller
             '<autoPan>0</autoPan>' .
             '</autoPanData>';
 
-        $url = 'http://admin:Amtek2024@103.143.170.182:8080/ISAPI/PTZCtrl/channels/1/autoPan';
+        $url = 'http://admin:Amtek2024@cctv.cakrawala.id/ISAPI/PTZCtrl/channels/1/autoPan';
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -1781,7 +1781,7 @@ class HelperController extends Controller
             '<focus>-60</focus>' .
             '</FocusData>';
 
-        $url = 'http://admin:Amtek2024@103.143.170.182:8080/ISAPI/System/Video/inputs/channels/1/focus';
+        $url = 'http://admin:Amtek2024@cctv.cakrawala.id/ISAPI/System/Video/inputs/channels/1/focus';
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -1800,7 +1800,7 @@ class HelperController extends Controller
             '<focus>60</focus>' .
             '</FocusData>';
 
-        $url = 'http://admin:Amtek2024@103.143.170.182:8080/ISAPI/System/Video/inputs/channels/1/focus';
+        $url = 'http://admin:Amtek2024@cctv.cakrawala.id/ISAPI/System/Video/inputs/channels/1/focus';
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -1819,7 +1819,7 @@ class HelperController extends Controller
             '<focus>0</focus>' .
             '</FocusData>';
 
-        $url = 'http://admin:Amtek2024@103.143.170.182:8080/ISAPI/System/Video/inputs/channels/1/focus';
+        $url = 'http://admin:Amtek2024@cctv.cakrawala.id/ISAPI/System/Video/inputs/channels/1/focus';
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -1839,7 +1839,7 @@ class HelperController extends Controller
             '<tilt>-60</tilt>' .
             '</PTZData>';
 
-        $url = 'http://admin:Amtek2024@103.143.170.182:8080/ISAPI/PTZCtrl/channels/1/continuous';
+        $url = 'http://admin:Amtek2024@cctv.cakrawala.id/ISAPI/PTZCtrl/channels/1/continuous';
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -1854,7 +1854,7 @@ class HelperController extends Controller
 
     public function camcall()
     {
-        $url = 'http://admin:Amtek2024@103.143.170.182:8080/ISAPI/PTZCtrl/channels/1/homePosition/goto';
+        $url = 'http://admin:Amtek2024@cctv.cakrawala.id/ISAPI/PTZCtrl/channels/1/homePosition/goto';
 
         // The request body is empty, as specified in the cURL command
         $xml_data = '';
@@ -1885,7 +1885,7 @@ class HelperController extends Controller
 
     public function camset()
     {
-        $url = 'http://admin:Amtek2024@103.143.170.182:8080/ISAPI/PTZCtrl/channels/1/homePosition';
+        $url = 'http://admin:Amtek2024@cctv.cakrawala.id/ISAPI/PTZCtrl/channels/1/homePosition';
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -1906,15 +1906,15 @@ class HelperController extends Controller
                 'Content-Length' => '0',
                 'Cookie' => '_wnd_size_mode=4; username=admin; language=en; WebSession_5e54a95ca3=ff4fafcf48d1d595b3ad2dbdbddc0986f85016dccecf0d63be477f5990fa7880; sdMarkTab_1_0=0%3AsettingBasic; sdMarkTab_2_0=0%3AbasicTcpIp; sdMarkTab_4=2%3AdisplayParamSwitch; sdMarkMenu=5%3AptzCfg; szLastPageName=ptzCfg; sdMarkTab_5=2%3AptzCfgHomePos',
                 'If-Modified-Since' => '0',
-                'Origin' => 'http://103.143.170.182:8080',
-                'Referer' => 'http://103.143.170.182:8080/doc/page/config.asp',
+                'Origin' => 'http://cctv.cakrawala.id',
+                'Referer' => 'http://cctv.cakrawala.id/doc/page/config.asp',
                 'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
                 'X-Requested-With' => 'XMLHttpRequest',
             ];
 
             // Make the PUT request
             $response = Http::withHeaders($headers)
-                ->put('http://admin:Amtek2024@103.143.170.182:8080/ISAPI/PTZCtrl/channels/1/homePosition');
+                ->put('http://admin:Amtek2024@cctv.cakrawala.id/ISAPI/PTZCtrl/channels/1/homePosition');
 
 
             return response()->json([
@@ -1934,7 +1934,7 @@ class HelperController extends Controller
             '<iris>-60</iris>' .
             '</IrisData>';
 
-        $url = 'http://admin:Amtek2024@103.143.170.182:8080/ISAPI/System/Video/inputs/channels/1/iris';
+        $url = 'http://admin:Amtek2024@cctv.cakrawala.id/ISAPI/System/Video/inputs/channels/1/iris';
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -1953,7 +1953,7 @@ class HelperController extends Controller
             '<iris>-60</iris>' .
             '</IrisData>';
 
-        $url = 'http://admin:Amtek2024@103.143.170.182:8080/ISAPI/System/Video/inputs/channels/1/iris';
+        $url = 'http://admin:Amtek2024@cctv.cakrawala.id/ISAPI/System/Video/inputs/channels/1/iris';
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -1972,7 +1972,7 @@ class HelperController extends Controller
             '<iris>0</iris>' .
             '</IrisData>';
 
-        $url = 'http://admin:Amtek2024@103.143.170.182:8080/ISAPI/System/Video/inputs/channels/1/iris';
+        $url = 'http://admin:Amtek2024@cctv.cakrawala.id/ISAPI/System/Video/inputs/channels/1/iris';
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -1993,7 +1993,7 @@ class HelperController extends Controller
             '<status>on</status>' .
             '</PTZAux>';
 
-        $url = 'http://admin:Amtek2024@103.143.170.182:8080/ISAPI/PTZCtrl/channels/1/auxcontrols/1';
+        $url = 'http://admin:Amtek2024@cctv.cakrawala.id/ISAPI/PTZCtrl/channels/1/auxcontrols/1';
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -2014,7 +2014,7 @@ class HelperController extends Controller
             '<status>off</status>' .
             '</PTZAux>';
 
-        $url = 'http://admin:Amtek2024@103.143.170.182:8080/ISAPI/PTZCtrl/channels/1/auxcontrols/1';
+        $url = 'http://admin:Amtek2024@cctv.cakrawala.id/ISAPI/PTZCtrl/channels/1/auxcontrols/1';
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -2029,7 +2029,7 @@ class HelperController extends Controller
 
     public function cammenu()
     {
-        $url = 'http://admin:Amtek2024@103.143.170.182:8080/ISAPI/PTZCtrl/channels/1/presets/95/goto';
+        $url = 'http://admin:Amtek2024@cctv.cakrawala.id/ISAPI/PTZCtrl/channels/1/presets/95/goto';
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
