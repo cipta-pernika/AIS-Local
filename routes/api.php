@@ -259,3 +259,6 @@ Route::resource('impt-bongkar-muats', App\Http\Controllers\API\ImptBongkarMuatAP
 
 Route::resource('pelindo-bongkar-muats', App\Http\Controllers\API\PelindoBongkarMuatAPIController::class)
     ->except(['create', 'edit']);
+
+Route::resource('bup-konsesis', App\Http\Controllers\API\BupKonsesiAPIController::class)
+    ->except(['create', 'edit']);

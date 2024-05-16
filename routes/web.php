@@ -90,3 +90,4 @@ Route::resource('konsolidasis', App\Http\Controllers\KonsolidasiController::clas
 Route::resource('data-b-u-ps', App\Http\Controllers\DataBUPController::class);
 Route::resource('impt-bongkar-muats', App\Http\Controllers\ImptBongkarMuatController::class);
 Route::resource('pelindo-bongkar-muats', App\Http\Controllers\PelindoBongkarMuatController::class);
+Route::resource('bup-konsesis', App\Http\Controllers\BupKonsesiController::class);
