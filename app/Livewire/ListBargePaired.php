@@ -14,6 +14,7 @@ use Filament\Tables\Enums\ActionsPosition;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Carbon\Carbon;
 use Filament\Tables\Actions\Action;
 use Filament\Forms\Components\Select;
 use Illuminate\Database\Eloquent\Model;
@@ -28,7 +29,7 @@ class ListBargePaired extends Component implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(InaportnetBongkarMuat::query()->where('tipe_kapal', 'TONGKANG / BARGE')->whereNotNull('no_pkk_assign'))
+            ->query(InaportnetBongkarMuat::query()->where('tipe_kapal', 'TONGKANG / BARGE')->whereNotNull('no_pkk_assign'))->whereDate('updated_at', Carbon::today())
             ->columns([
                 TextColumn::make('no_pkk'),
                 TextColumn::make('no_pkk_assign'),
