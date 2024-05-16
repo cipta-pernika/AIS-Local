@@ -6,7 +6,10 @@ use App\Filament\Resources\BupKonsesiResource\Pages;
 use App\Filament\Resources\BupKonsesiResource\RelationManagers;
 use App\Models\BupKonsesi;
 use Filament\Forms;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -43,7 +46,12 @@ class BupKonsesiResource extends Resource
                     '2.5' => '2,5%',
                     '4' => '4%',
                     '8' => '8%',
-                ])->native(false),
+                ])->native(false)->reactive()
+                    ->afterStateUpdated(function (Get $get, Set $set, Select $component) {
+                        if ($get('bruto')) {
+                            $set('pendapatan_konsesi', (int)$get('bruto') * (float)$get('besaran_konsesi'));
+                        }
+                    }),
                 Forms\Components\TextInput::make('pendapatan_konsesi')
                     ->required()
                     ->numeric(),

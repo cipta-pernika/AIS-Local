@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('bup');
             $table->integer('bruto');
-            $table->integer('besaran_konsesi');
-            $table->integer('pendapatan_konsesi');
+            $table->decimal('besaran_konsesi');
+            $table->decimal('pendapatan_konsesi');
             $table->integer('month');
             
             $table->timestamps();
