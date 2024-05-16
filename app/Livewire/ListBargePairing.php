@@ -41,22 +41,22 @@ class ListBargePairing extends Component implements HasForms, HasTable
                 TextColumn::make('jenis_layanan'),
                 TextColumn::make('nama_negara'),
                 TextColumn::make('tipe_kapal')->action(
-                        Action::make('assign')->icon('heroicon-m-pencil-square')
-                            ->button()
-                            ->badgeColor('success')
-                            ->label('Assign')
-                            ->labeledFrom('md')
-                            ->form([
-                                Select::make('no_pkk_assign')
-                                    ->label('No PKK')
-                                    ->options(AisDataVessel::query()->whereNotNull('no_pkk')->pluck('no_pkk', 'no_pkk'))
-                                    ->required(),
-                            ])
-                            ->action(function (array $data, InaportnetBongkarMuat $record): void {
-                                $record->no_pkk_assign = $data['no_pkk_assign'];
-                                $record->update();
-                            })
-                    ),
+                    Action::make('assign')->icon('heroicon-m-pencil-square')
+                        ->button()
+                        ->badgeColor('success')
+                        ->label('Assign')
+                        ->labeledFrom('md')
+                        ->form([
+                            Select::make('no_pkk_assign')
+                                ->label('No PKK')
+                                ->options(AisDataVessel::query()->whereNotNull('no_pkk')->pluck('no_pkk', 'no_pkk'))
+                                ->required(),
+                        ])
+                        ->action(function (array $data, InaportnetBongkarMuat $record): void {
+                            $record->no_pkk_assign = $data['no_pkk_assign'];
+                            $record->update();
+                        })
+                ),
                 TextColumn::make('nama_perusahaan'),
                 TextColumn::make('tgl_tiba'),
                 TextColumn::make('tgl_brangkat'),
@@ -97,7 +97,7 @@ class ListBargePairing extends Component implements HasForms, HasTable
                             return true; // Hide the action
                         }
 
-                        if ($record->tipe_kapal !== 'TONGKANG / BARGE') {
+                        if (!in_array($record->tipe_kapal, ['TONGKANG / BARGE', 'TONGKANG GELADAK (DECK BARGE)', 'TONGKANG MINYAK (OIL BARGE)', 'TONGKANG KERJA (WORK BARGE)', 'VEGETABLE OIL BARGE / TONGKANG MINYAK NABATI'])) {
                             return true; // Hide the action
                         }
 
