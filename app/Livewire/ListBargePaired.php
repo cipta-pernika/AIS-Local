@@ -25,16 +25,20 @@ class ListBargePaired extends Component implements HasForms, HasTable
 {
     use InteractsWithTable;
     use InteractsWithForms;
-    
+
     public function table(Table $table): Table
     {
         return $table
-            ->query(InaportnetBongkarMuat::query()->where('inaportnet_bongkar_muats.tipe_kapal', 'TONGKANG / BARGE')->join('ais_data_vessels', 'ais_data_vessels.no_pkk', '=', 'inaportnet_bongkar_muats.no_pkk_assign')->whereNotNull('no_pkk_assign')->whereDate('updated_at', Carbon::today()))
+            ->query(InaportnetBongkarMuat::query()->where('inaportnet_bongkar_muats.tipe_kapal', 'TONGKANG / BARGE')->whereNotNull('no_pkk_assign')->whereDate('updated_at', Carbon::today()))
             ->columns([
                 TextColumn::make('no_pkk'),
                 TextColumn::make('no_pkk_assign'),
                 TextColumn::make('aisDataVessel.mmsi')
                     ->label('MMSI')
+                    ->numeric()
+                    ->sortable(),
+                TextColumn::make('aisDataVessel.vessel_name')
+                    ->label('Tug Boat Name')
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('nama_kapal')
@@ -107,13 +111,13 @@ class ListBargePaired extends Component implements HasForms, HasTable
                         // Select::make('no_pkk_assign')
                         //     ->label('No PKK')
                         //     ->required()
-                            // ->relationship(
-                            //     name: 'assignId',
-                            //     modifyQueryUsing: fn (Builder $query) => $query->orderBy('no_pkk')->orderBy('vessel_name'),
-                            // )
-                            // ->getOptionLabelFromRecordUsing(fn (Model $record) => "{$record->no_pkk} ~ {$record->vessel_name} ~ {$record->nama_perusahaan}")
-                            // ->searchable(['no_pkk', 'vessel_name', 'nama_perusahaan'])
-                            Select::make('no_pkk_assign')
+                        // ->relationship(
+                        //     name: 'assignId',
+                        //     modifyQueryUsing: fn (Builder $query) => $query->orderBy('no_pkk')->orderBy('vessel_name'),
+                        // )
+                        // ->getOptionLabelFromRecordUsing(fn (Model $record) => "{$record->no_pkk} ~ {$record->vessel_name} ~ {$record->nama_perusahaan}")
+                        // ->searchable(['no_pkk', 'vessel_name', 'nama_perusahaan'])
+                        Select::make('no_pkk_assign')
                             ->label('No PKK')
                             ->native(false)
                             // ->relationship(
