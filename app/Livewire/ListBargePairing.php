@@ -29,7 +29,7 @@ class ListBargePairing extends Component implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(InaportnetBongkarMuat::query()->where('tipe_kapal', 'TONGKANG / BARGE')->whereNull('no_pkk_assign')->whereDate('updated_at', Carbon::today()))
+            ->query(InaportnetBongkarMuat::query()->whereIn('tipe_kapal',  ['TONGKANG / BARGE', 'TONGKANG GELADAK (DECK BARGE)', 'TONGKANG MINYAK (OIL BARGE)', 'TONGKANG KERJA (WORK BARGE)', 'VEGETABLE OIL BARGE / TONGKANG MINYAK NABATI'])->whereNull('no_pkk_assign')->whereDate('updated_at', Carbon::today()))
             ->columns([
                 TextColumn::make('no_pkk'),
                 TextColumn::make('aisDataVessel.mmsi')

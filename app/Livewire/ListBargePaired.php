@@ -38,8 +38,6 @@ class ListBargePaired extends Component implements HasForms, HasTable
                     ->sortable(),
                 TextColumn::make('nama_kapal')
                     ->searchable(),
-                TextColumn::make('jenis_layanan')
-                    ->searchable(),
                 TextColumn::make('nama_negara')
                     ->searchable(),
                 TextColumn::make('tipe_kapal')
