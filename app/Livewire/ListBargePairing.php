@@ -141,11 +141,14 @@ class ListBargePairing extends Component implements HasForms, HasTable
                     ])
                     ->action(function (array $data, InaportnetBongkarMuat $record): void {
                         $record->no_pkk_assign = $data['no_pkk_assign'];
-                        $record->update();
 
                         $aisDataVessel = AisDataVessel::whereNotNull('no_pkk')->where('isAssign', 0)->where('no_pkk', $data['no_pkk_assign'])->first();
                         $aisDataVessel->isAssign = 1;
                         $aisDataVessel->update();
+
+                        
+                        $record->ais_data_vessel_id = $aisDataVessel->id;
+                        $record->update();
                     })
                     ->fillForm(fn (InaportnetBongkarMuat $record): array => [
                         'no_pkk_assign' => $record->no_pkk_assign,
