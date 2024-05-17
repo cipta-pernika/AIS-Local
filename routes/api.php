@@ -265,3 +265,6 @@ Route::resource('bup-konsesis', App\Http\Controllers\API\BupKonsesiAPIController
 
 Route::resource('pkk-assign-histories', App\Http\Controllers\API\PkkAssignHistoryAPIController::class)
     ->except(['create', 'edit']);
+
+Route::resource('pkk-histories', App\Http\Controllers\API\PkkHistoryAPIController::class)
+    ->except(['create', 'edit']);

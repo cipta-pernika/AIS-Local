@@ -92,3 +92,4 @@ Route::resource('impt-bongkar-muats', App\Http\Controllers\ImptBongkarMuatContro
 Route::resource('pelindo-bongkar-muats', App\Http\Controllers\PelindoBongkarMuatController::class);
 Route::resource('bup-konsesis', App\Http\Controllers\BupKonsesiController::class);
 Route::resource('pkk-assign-histories', App\Http\Controllers\PkkAssignHistoryController::class);
+Route::resource('pkk-histories', App\Http\Controllers\PkkHistoryController::class);
