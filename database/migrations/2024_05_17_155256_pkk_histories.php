@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('ais_data_vessel_id')->nullable();
             $table->string('no_pkk')->nullable();
-            
+            $table->tinyInteger('isAssign')->default(0);
             $table->timestamps();
             $table->softDeletes();
 

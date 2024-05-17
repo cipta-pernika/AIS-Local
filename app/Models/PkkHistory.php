@@ -10,7 +10,8 @@ class PkkHistory extends Model
 
     public $fillable = [
         'ais_data_vessel_id',
-        'no_pkk'
+        'no_pkk',
+        'isAssign'
     ];
 
     protected $casts = [

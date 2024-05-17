@@ -6,6 +6,7 @@ use App\Models\AisDataVessel;
 use App\Models\InaportnetBongkarMuat;
 use App\Models\InaportnetPergerakanKapal;
 use App\Models\PkkAssignHistory;
+use App\Models\PkkHistory;
 use Carbon\Carbon;
 use Livewire\Component;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -127,11 +128,11 @@ class ListBargePairing extends Component implements HasForms, HasTable
                             //     modifyQueryUsing: fn (Builder $query) => $query->orderBy('no_pkk')->orderBy('vessel_name')->where('isAssign', 0),
                             // )
                             ->searchable(['no_pkk', 'vessel_name', 'nama_perusahaan'])
-                            ->options(AisDataVessel::query()->whereNotNull('no_pkk')->where('isAssign', 0)->get()
+                            ->options(PkkHistory::query()->with('aisDataVessel')->where('isAssign', 0)->get()
                                 ->map(function ($record) {
                                     return [
                                         'value' => $record->no_pkk,
-                                        'label' => "{$record->no_pkk} ~ {$record->vessel_name} ~ {$record->nama_perusahaan}"
+                                        'label' => "{$record->no_pkk} ~ {$record->aisDataVessel->vessel_name} ~ {$record->aisDataVessel->nama_perusahaan}"
                                     ];
                                 })
                                 ->pluck('label', 'value'))
@@ -160,6 +161,11 @@ class ListBargePairing extends Component implements HasForms, HasTable
                         $pkk_assign_history->tanggal_acuan = $record->tanggal_acuan;
                         $pkk_assign_history->no_pkk = $record->no_pkk;
                         $pkk_assign_history->save();
+
+                        $pkkhistory = PkkHistory::where('no_pkk', $data['no_pkk_assign'])->first();
+                        $pkkhistory->isAssign = 1;
+                        $pkkhistory->update();
+
                     })
                     ->fillForm(fn (InaportnetBongkarMuat $record): array => [
                         'no_pkk_assign' => $record->no_pkk_assign,
