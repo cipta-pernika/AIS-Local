@@ -14,6 +14,9 @@ return new class extends Migration
         Schema::create('pkk_assign_histories', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('ais_data_vessel_id')->nullable();
+            $table->string('no_pkk')->nullable();
+            $table->string('no_pkk_assign')->nullable();
+            $table->string('nama_perusahaan')->nullable();
             
             $table->timestamps();
             $table->softDeletes();
