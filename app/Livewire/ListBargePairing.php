@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\AisDataVessel;
 use App\Models\InaportnetBongkarMuat;
 use App\Models\InaportnetPergerakanKapal;
+use App\Models\PkkAssignHistory;
 use Carbon\Carbon;
 use Livewire\Component;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -151,6 +152,8 @@ class ListBargePairing extends Component implements HasForms, HasTable
 
                         $record->ais_data_vessel_id = $aisDataVessel->id;
                         $record->update();
+
+                        $pkk_assign_history = new PkkAssignHistory;
                     })
                     ->fillForm(fn (InaportnetBongkarMuat $record): array => [
                         'no_pkk_assign' => $record->no_pkk_assign,
