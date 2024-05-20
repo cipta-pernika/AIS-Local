@@ -144,7 +144,7 @@ class MapController extends Controller
                     $query->where('dataloggers.pelabuhan_id', $pelabuhanId)
                         ->whereBetween('ais_data_positions.created_at', [$date, $date_until_when]);
                 })
-                ->limit(5000)
+                ->limit(15000)
                 ->get();
 
             $aisTracks = $aisTracks->filter(function ($value, $key) {
