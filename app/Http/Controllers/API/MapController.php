@@ -114,6 +114,7 @@ class MapController extends Controller
                     'ais_data_positions.heading',
                     'ais_data_positions.created_at',
                     'ais_data_positions.speed',
+                    'ais_data_positions.id',
                     'ais_data_vessels.vessel_name',
                     'ais_data_vessels.imo',
                     'ais_data_vessels.callsign',
@@ -145,6 +146,10 @@ class MapController extends Controller
                 })
                 ->limit(1000)
                 ->get();
+
+            $aisTracks = $aisTracks->filter(function ($value, $key) {
+                return $key % 2 == 0;
+            });
 
             foreach ($aisTracks as $track) {
                 $mmsi = $track['mmsi'];
