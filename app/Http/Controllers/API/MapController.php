@@ -144,11 +144,21 @@ class MapController extends Controller
                     $query->where('dataloggers.pelabuhan_id', $pelabuhanId)
                         ->whereBetween('ais_data_positions.created_at', [$date, $date_until_when]);
                 })
-                ->limit(1000)
+                ->limit(5000)
                 ->get();
 
             $aisTracks = $aisTracks->filter(function ($value, $key) {
                 return $key % 2 == 0;
+            });
+
+            $aisTracks = $aisTracks->filter(function ($track, $key) use (&$lastTimestamp) {
+                $timestamp = Carbon::parse($track->created_at)->timestamp;
+    
+                if (!isset($lastTimestamp) || ($timestamp - $lastTimestamp) >= 180) {
+                    $lastTimestamp = $timestamp;
+                    return true;
+                }
+                return false;
             });
 
             foreach ($aisTracks as $track) {
