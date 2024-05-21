@@ -10,8 +10,10 @@ use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
+use App\Models\PkkAssignHistory;
 use Filament\Tables\Enums\ActionsPosition;
 use Filament\Tables\Contracts\HasTable;
+use App\Models\PkkHistory;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Carbon\Carbon;
@@ -126,7 +128,7 @@ class ListBargePaired extends Component implements HasForms, HasTable
                             //     modifyQueryUsing: fn (Builder $query) => $query->orderBy('no_pkk')->orderBy('vessel_name')->where('isAssign', 0),
                             // )
                             ->searchable(['no_pkk', 'vessel_name', 'nama_perusahaan'])
-                            ->options(AisDataVessel::query()->whereNotNull('no_pkk')->where('isAssign', 0)->get()
+                            ->options(PkkHistory::query()->with('aisDataVessel')->where('isAssign', 0)->whereDate('updated_at', Carbon::today())->get()
                                 ->map(function ($record) {
                                     return [
                                         'value' => $record->no_pkk,
@@ -137,7 +139,21 @@ class ListBargePaired extends Component implements HasForms, HasTable
                     ])
                     ->action(function (array $data, InaportnetBongkarMuat $record): void {
                         $record->no_pkk_assign = $data['no_pkk_assign'];
+                        $aisDataVessel = AisDataVessel::whereNotNull('no_pkk')->where('isAssign', 0)->where('no_pkk', $data['no_pkk_assign'])->first();
+                        $record->ais_data_vessel_id = $aisDataVessel->id;
                         $record->update();
+
+                        $pkk_assign_history = new PkkAssignHistory;
+                        $pkk_assign_history->ais_data_vessel_id = $aisDataVessel->id;
+                        $pkk_assign_history->no_pkk_assign = $record->no_pkk_assign;
+                        $pkk_assign_history->nama_perusahaan = $record->nama_perusahaan;
+                        $pkk_assign_history->tanggal_acuan = $record->tanggal_acuan;
+                        $pkk_assign_history->no_pkk = $record->no_pkk;
+                        $pkk_assign_history->save();
+
+                        $pkkhistory = PkkHistory::where('no_pkk', $data['no_pkk_assign'])->first();
+                        $pkkhistory->isAssign = 1;
+                        $pkkhistory->update();
                     })
                     ->fillForm(fn (InaportnetBongkarMuat $record): array => [
                         'no_pkk_assign' => $record->no_pkk_assign,
