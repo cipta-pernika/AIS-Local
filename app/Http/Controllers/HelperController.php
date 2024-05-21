@@ -2408,7 +2408,10 @@ class HelperController extends Controller
             $url = $defaultValue == 'local'
                 ? 'http://localhost:1880/sendgeofencealarmksop'
                 : 'https://nr.monitormyvessel.com/sendgeofencealarmksop';
-            $geofenceDatas = Geofence::all();
+            // $geofenceDatas = Geofence::all();
+            $geofenceDatas = Cache::remember('geofences', 3 * 60, function () {
+                return Geofence::where('isMaster', 0)->get();
+            });
             foreach ($geofenceDatas as $value) {
                 if ($value->geometry) {
                     $geoParse = json_decode($value->geometry);
