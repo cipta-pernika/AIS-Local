@@ -520,7 +520,6 @@ class HelperController extends Controller
         $url = app()->isLocal()
             ? 'http://localhost:8000/sendgeofencealarmksop'
             : 'https://nr.monitormyvessel.com/sendgeofencealarmksop';
-
         if (empty(request()->source)) {
             return response()->json([
                 'error' => 'No request payload provided.',
