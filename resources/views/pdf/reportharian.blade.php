@@ -16,7 +16,7 @@
 
 <body>
     <div class="container mt-4">
-        <div class="text-center" style="background-color: #f8f9fa;">
+        <div class="text-center" style="background-color: #1d404a;">
             <img class="mb-5 img-fluid" src="{{asset('images/logo_apl_bjm2.png')}}" />
         </div>
         <h1 class="mb-4 mt-1 text-center">Summary Report</h1>
@@ -32,7 +32,7 @@
                 <tr>
                     <td>Jumlah Kapal</td>
                     <td>{{ isset($total_kapal) ? $total_kapal : '0' }}</td>
-                    <td rowspan="8"><a href="https://sopbuntutksopbjm.com/reports">View Detail</a></td>
+                    <td rowspan="9"><a href="https://sopbuntutksopbjm.com/reports">View Detail</a></td>
                 </tr>
                 <tr>
                     <td>Kapal Passing</td>
