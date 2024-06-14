@@ -427,7 +427,7 @@
             </td>
         </tr>
         <!-- VALUE GAMBAR -->
-        <tr style="height: 14pt">
+        <!-- <tr style="height: 14pt">
             <td class="border10-td" colspan="3">
                 <img src="https://www.beritatrans.com/images/content/1/2021/2021-12-11/712bf1491d304f36a7011f12e0b3a1cf.jpg" alt="img1" width="150">  
                 <img src="https://www.beritatrans.com/images/content/1/2021/2021-12-11/712bf1491d304f36a7011f12e0b3a1cf.jpg" alt="img1" width="150">
@@ -441,7 +441,7 @@
                 <img src="https://www.beritatrans.com/images/content/1/2021/2021-12-11/712bf1491d304f36a7011f12e0b3a1cf.jpg" alt="img1" width="150">
                 <img src="https://www.beritatrans.com/images/content/1/2021/2021-12-11/712bf1491d304f36a7011f12e0b3a1cf.jpg" alt="img1" width="150">
             </td>
-        </tr>
+        </tr> -->
         <tr style="height: 14pt">
             <td class="border10-td" colspan="10">
                 <p class="s1" style="font-size: 16px; padding-top: 2pt; text-indent: 0pt; text-align: center" >

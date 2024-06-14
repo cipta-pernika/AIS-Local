@@ -190,6 +190,7 @@ Route::resource('data-mandiri-pelaksanaan-kapals', App\Http\Controllers\API\Data
 Route::resource('konsolidasi-pelaksanaan-kapals', App\Http\Controllers\API\KonsolidasiPelaksanaanKapalAPIController::class)
     ->except(['create', 'edit']);
 Route::post('datamandiripdf', [HelperController::class, 'datamandiripdf']);
+Route::get('reportharianpdf', [ReportController::class, 'reportharianpdf']);
 
 Route::resource('certificates', App\Http\Controllers\API\CertificateAPIController::class)
     ->except(['create', 'edit']);
