@@ -368,7 +368,13 @@ class ReportController extends Controller
             'total_tidak_teridentifikasi' => $total_tidak_teridentifikasi - $total_kapal,
         ])->setPaper('a3', 'landscape');
 
-        return $pdf->stream('report_harian.pdf');
+        // return $pdf->stream('report_harian.pdf');
+        return view('pdf.reportharian', compact([
+            'summaryData' => $summaryData,
+            'total_kapal' => $total_kapal,
+            'totalpaired' => $totalpaired,
+            'total_tidak_teridentifikasi' => $total_tidak_teridentifikasi - $total_kapal,
+        ]));
     }
 
     public function datamandiri(Request $request)
