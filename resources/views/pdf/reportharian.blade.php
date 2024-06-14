@@ -16,7 +16,7 @@
 
 <body>
     <div class="container mt-4">
-        <img class="mb-5 text-center" src="{{asset('images/logo_apl_bjm2.png')}}" />
+        <img class="mb-5 text-center img-fluid" src="{{asset('images/logo_apl_bjm2.png')}}" />
         <h1 class="mb-4 mt-1 text-center">Summary Report</h1>
         <table class="table table-bordered">
             <thead>
