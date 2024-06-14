@@ -83,47 +83,47 @@
             <tbody>
                 <tr>
                     <td>PNBP Jasa Labuh Kapal</td>
-                    <td>{{ number_format($summaryData->total_pnbp_jasa_labuh_kapal, 2, ',', '.') }}</td>
+                    <td>Rp. {{ number_format($summaryData->total_pnbp_jasa_labuh_kapal, 2, ',', '.') }}</td>
                 </tr>
                 <tr>
                     <td>PNBP Jasa Rambu Kapal</td>
-                    <td>{{ number_format($summaryData->total_pnbp_jasa_rambu_kapal, 2, ',', '.') }}</td>
+                    <td>Rp. {{ number_format($summaryData->total_pnbp_jasa_rambu_kapal, 2, ',', '.') }}</td>
                 </tr>
                 <tr>
                     <td>PNBP Jasa VTS Kapal Domestik</td>
-                    <td>{{ number_format($summaryData->total_pnbp_jasa_vts_kapal_domestik, 2, ',', '.') }}</td>
+                    <td>Rp. {{ number_format($summaryData->total_pnbp_jasa_vts_kapal_domestik, 2, ',', '.') }}</td>
                 </tr>
                 <tr>
                     <td>PNBP Jasa VTS Kapal Asing</td>
-                    <td>{{ number_format($summaryData->total_pnbp_jasa_vts_kapal_asing, 2, ',', '.') }}</td>
+                    <td>Rp. {{ number_format($summaryData->total_pnbp_jasa_vts_kapal_asing, 2, ',', '.') }}</td>
                 </tr>
                 <tr>
                     <td>PNBP Jasa Tambat Kapal</td>
-                    <td>{{ number_format($summaryData->total_pnbp_jasa_tambat_kapal, 2, ',', '.') }}</td>
+                    <td>Rp. {{ number_format($summaryData->total_pnbp_jasa_tambat_kapal, 2, ',', '.') }}</td>
                 </tr>
                 <tr>
                     <td>PNBP Jasa Pemanduan Penundaan Marabahan</td>
-                    <td>{{ number_format($summaryData->total_pnbp_jasa_pemanduan_penundaan_marabahan, 2, ',', '.') }}</td>
+                    <td>Rp. {{ number_format($summaryData->total_pnbp_jasa_pemanduan_penundaan_marabahan, 2, ',', '.') }}</td>
                 </tr>
                 <tr>
                     <td>PNBP Jasa Pemanduan Penundaan Trisakti</td>
-                    <td>{{ number_format($summaryData->total_pnbp_jasa_pemanduan_penundaan_trisakti, 2, ',', '.') }}</td>
+                    <td>Rp. {{ number_format($summaryData->total_pnbp_jasa_pemanduan_penundaan_trisakti, 2, ',', '.') }}</td>
                 </tr>
                 <tr>
                     <td>PNBP Jasa Barang</td>
-                    <td>{{ number_format($summaryData->total_pnbp_jasa_barang, 2, ',', '.') }}</td>
+                    <td>Rp. {{ number_format($summaryData->total_pnbp_jasa_barang, 2, ',', '.') }}</td>
                 </tr>
                 <tr>
                     <td>PNBP Jasa Pengawasan Bongkar Muat 1%</td>
-                    <td>{{ number_format($summaryData->total_pnbp_jasa_pengawasan_bongkar_muat_1_percent, 2, ',', '.') }}</td>
+                    <td>Rp. {{ number_format($summaryData->total_pnbp_jasa_pengawasan_bongkar_muat_1_percent, 2, ',', '.') }}</td>
                 </tr>
                 <tr>
                     <td>PNBP Bongkar Muat Barang Berbahaya</td>
-                    <td>{{ number_format($summaryData->total_pnbp_bongkar_muat_barang_berbahaya, 2, ',', '.') }}</td>
+                    <td>Rp. {{ number_format($summaryData->total_pnbp_bongkar_muat_barang_berbahaya, 2, ',', '.') }}</td>
                 </tr>
                 <tr>
                     <td>Total</td>
-                    <td>{{ number_format($summaryData->total_pnbp_jasa_labuh_kapal + $summaryData->total_pnbp_jasa_rambu_kapal + $summaryData->total_pnbp_jasa_vts_kapal_domestik + $summaryData->total_pnbp_jasa_vts_kapal_asing + $summaryData->total_pnbp_jasa_tambat_kapal + $summaryData->total_pnbp_jasa_pemanduan_penundaan_marabahan + $summaryData->total_pnbp_jasa_pemanduan_penundaan_trisakti + $summaryData->total_pnbp_jasa_barang + $summaryData->total_pnbp_jasa_pengawasan_bongkar_muat_1_percent + $summaryData->total_pnbp_bongkar_muat_barang_berbahaya, 2, ',', '.') }}</td>
+                    <td>Rp. {{ number_format($summaryData->total_pnbp_jasa_labuh_kapal + $summaryData->total_pnbp_jasa_rambu_kapal + $summaryData->total_pnbp_jasa_vts_kapal_domestik + $summaryData->total_pnbp_jasa_vts_kapal_asing + $summaryData->total_pnbp_jasa_tambat_kapal + $summaryData->total_pnbp_jasa_pemanduan_penundaan_marabahan + $summaryData->total_pnbp_jasa_pemanduan_penundaan_trisakti + $summaryData->total_pnbp_jasa_barang + $summaryData->total_pnbp_jasa_pengawasan_bongkar_muat_1_percent + $summaryData->total_pnbp_bongkar_muat_barang_berbahaya, 2, ',', '.') }}</td>
                 </tr>
             </tbody>
         </table>
