@@ -13,7 +13,8 @@ class BupKonsesi extends Model
         'bruto',
         'besaran_konsesi',
         'pendapatan_konsesi',
-        'month'
+        'month',
+        'year',
     ];
 
     protected $casts = [
@@ -26,6 +27,7 @@ class BupKonsesi extends Model
         'besaran_konsesi' => 'required',
         'pendapatan_konsesi' => 'required',
         'month' => 'required',
+        'year' => 'required',
         'created_at' => 'nullable',
         'updated_at' => 'nullable',
         'deleted_at' => 'nullable'

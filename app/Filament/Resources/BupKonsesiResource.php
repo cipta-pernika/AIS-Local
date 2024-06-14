@@ -23,14 +23,24 @@ class BupKonsesiResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-currency-dollar';
 
     protected static ?string $navigationLabel = 'BUP Konsesi';
+    
+    // public $months = [
+    //         1 => 'January', 2 => 'February', 3 => 'March', 4 => 'April',
+    //         5 => 'May', 6 => 'June', 7 => 'July', 8 => 'August',
+    //         9 => 'September', 10 => 'October', 11 => 'November', 12 => 'December'
+    //     ];
+        
+    // public $years = [2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024];
 
     public static function form(Form $form): Form
     {
         $months = [
-            1 => 'January', 2 => 'February', 3 => 'March', 4 => 'April',
-            5 => 'May', 6 => 'June', 7 => 'July', 8 => 'August',
-            9 => 'September', 10 => 'October', 11 => 'November', 12 => 'December'
+            1 => 'Januari', 2 => 'Februari', 3 => 'Maret', 4 => 'April',
+            5 => 'Mei', 6 => 'Juni', 7 => 'Juli', 8 => 'Agustus',
+            9 => 'September', 10 => 'Oktober', 11 => 'November', 12 => 'Desember'
         ];
+        
+        $years = [2014=>2014,2015=>2015,2016=>2016,2017=>2017,2018=>2018,2019=>2019,2020=>2020,2021=>2021,2022=>2022,2023=>2023,2024=>2024];
 
         return $form
             ->schema([
@@ -57,11 +67,19 @@ class BupKonsesiResource extends Resource
                     ->numeric(),
                 Forms\Components\Select::make('month')
                     ->options($months)->native(false)->searchable()->label('Data Bulan'),
+                Forms\Components\Select::make('year')
+                    ->options($years)->native(false)->searchable()->label('Data Tahun'),
             ]);
     }
 
     public static function table(Table $table): Table
     {
+        $months = [
+            1 => 'Januari', 2 => 'Februari', 3 => 'Maret', 4 => 'April',
+            5 => 'Mei', 6 => 'Juni', 7 => 'Juli', 8 => 'Agustus',
+            9 => 'September', 10 => 'Oktober', 11 => 'November', 12 => 'Desember'
+        ];
+        
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('bup')
@@ -70,14 +88,16 @@ class BupKonsesiResource extends Resource
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('besaran_konsesi')
-                    ->numeric()
+                    ->suffix('%')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('pendapatan_konsesi')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('month')
-                    ->date()
-                    ->sortable(),
+                    ->sortable()->label('Bulan')
+                    ->formatStateUsing(fn (string $state): string => __("$months[$state]")),
+                Tables\Columns\TextColumn::make('year')
+                    ->sortable()->label('Tahun'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
