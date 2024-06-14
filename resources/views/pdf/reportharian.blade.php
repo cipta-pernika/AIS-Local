@@ -30,7 +30,7 @@
                 <tr>
                     <td>Jumlah Kapal</td>
                     <td>{{ isset($total_kapal) ? $total_kapal : '0' }}</td>
-                    <td><a href="https://sopbuntutksopbjm.com/reports">View Report</a></td>
+                    <td colspan="8"><a href="https://sopbuntutksopbjm.com/reports">View Detail</a></td>
                 </tr>
                 <tr>
                     <td>Kapal Passing</td>
