@@ -22,17 +22,17 @@
             <tbody>
                 <tr>
                     <td>Jumlah Kapal</td>
-                    <td>{{ isset($total_kapal) ? $total_kapal : 'N/A' }}</td>
+                    <td>{{ isset($total_kapal) ? $total_kapal : '0' }}</td>
                     <td><a href="https://sopbuntutksopbjm.com/reports">View Report</a></td>
                 </tr>
                 <tr>
                     <td>Kapal Passing</td>
-                    <td>{{ isset($summaryData['passing_count']) ? $summaryData['passing_count'] : 'N/A' }}</td>
+                    <td>{{ isset($summaryData['passing_count']) ? $summaryData['passing_count'] : '0' }}</td>
                     <td></td>
                 </tr>
                 <tr>
                     <td>Kapal Anchor</td>
-                    <td>{{ isset($summaryData['anchor_count']) ? $summaryData['anchor_count'] : 'N/A' }}</td>
+                    <td>{{ isset($summaryData['anchor_count']) ? $summaryData['anchor_count'] : '0' }}</td>
                     <td></td>
                 </tr>
                 <tr>
@@ -67,7 +67,7 @@
                 </tr>
                 <tr>
                     <td>Tongkang dipasangkan dengan Tug Boat</td>
-                    <td>{{ isset($summaryData['totalpaired']) ? $summaryData['totalpaired'] : 'N/A' }}</td>
+                    <td>{{ isset($summaryData['totalpaired']) ? $summaryData['totalpaired'] : '0' }}</td>
                     <td><a href="https://backend.sopbuntutksopbjm.com/admin/barge-paired-with-tug-boat">Admin Link</a></td>
                 </tr>
             </tbody>
