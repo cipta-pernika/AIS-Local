@@ -79,7 +79,7 @@
                 </tr>
             </tbody>
         </table>
-        <h3 class="mt-5 text-center">PNBP</h3>
+        <h3 class="mt-5 text-center">PNBP {{\Carbon\Carbon::now()->format('d M Y')}}</h3>
         <table class="table table-bordered">
             <thead>
                 <tr>
