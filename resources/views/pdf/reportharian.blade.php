@@ -16,8 +16,8 @@
 
 <body>
     <div class="container mt-4">
-    <div class="d-flex justify-content-center align-items-center" style="background-color: #1d404a; height: 150px;">
-            <img class="img-fluid" src="{{asset('images/logo_apl_bjm2.png')}}" />
+        <div class="text-center" style="background-color: #1d404a;">
+            <img class="mb-5 img-fluid" src="{{asset('images/logo_apl_bjm2.png')}}" />
         </div>
         <h1 class="mb-4 mt-1 text-center">Summary Report</h1>
         <table class="table table-bordered">
