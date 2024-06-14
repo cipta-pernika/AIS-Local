@@ -6,11 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bootstrap demo</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        .table-bordered th,
+        .table-bordered td {
+            border: 1px solid #ddd !important
+        }
+    </style>
 </head>
 
 <body>
     <div class="container mt-4">
-        <h1 class="mb-4 text-center">Summary Report</h1>
+        <img class="mb-5 text-center" src="{{asset('images/logo_apl_bjm2.png')}}" />
+        <h1 class="mb-4 mt-1 text-center">Summary Report</h1>
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -22,17 +29,17 @@
             <tbody>
                 <tr>
                     <td>Jumlah Kapal</td>
-                    <td>{{ isset($total_kapal) ? $total_kapal : 'N/A' }}</td>
+                    <td>{{ isset($total_kapal) ? $total_kapal : '0' }}</td>
                     <td><a href="https://sopbuntutksopbjm.com/reports">View Report</a></td>
                 </tr>
                 <tr>
                     <td>Kapal Passing</td>
-                    <td>{{ isset($summaryData['passing_count']) ? $summaryData['passing_count'] : 'N/A' }}</td>
+                    <td>{{ isset($summaryData['passing_count']) ? $summaryData['passing_count'] : '0' }}</td>
                     <td></td>
                 </tr>
                 <tr>
                     <td>Kapal Anchor</td>
-                    <td>{{ isset($summaryData['anchor_count']) ? $summaryData['anchor_count'] : 'N/A' }}</td>
+                    <td>{{ isset($summaryData['anchor_count']) ? $summaryData['anchor_count'] : '0' }}</td>
                     <td></td>
                 </tr>
                 <tr>
@@ -67,7 +74,7 @@
                 </tr>
                 <tr>
                     <td>Tongkang dipasangkan dengan Tug Boat</td>
-                    <td>{{ isset($summaryData['totalpaired']) ? $summaryData['totalpaired'] : 'N/A' }}</td>
+                    <td>{{ isset($summaryData['totalpaired']) ? $summaryData['totalpaired'] : '0' }}</td>
                     <td><a href="https://backend.sopbuntutksopbjm.com/admin/barge-paired-with-tug-boat">Admin Link</a></td>
                 </tr>
             </tbody>
