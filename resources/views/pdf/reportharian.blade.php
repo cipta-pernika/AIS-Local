@@ -16,7 +16,7 @@
 
 <body>
     <div class="container mt-4">
-        <div class="text-center">
+        <div class="text-center" style="background-color: #f8f9fa;">
             <img class="mb-5 img-fluid" src="{{asset('images/logo_apl_bjm2.png')}}" />
         </div>
         <h1 class="mb-4 mt-1 text-center">Summary Report</h1>
