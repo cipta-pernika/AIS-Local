@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ReportController extends Controller
 {
@@ -288,6 +289,86 @@ class ReportController extends Controller
             'total_kapal' => $total_kapal,
             'total_tidak_teridentifikasi' => $total_tidak_teridentifikasi - $total_kapal,
         ]);
+    }
+
+    public function reportharianpdf(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        $startDateTime = Carbon::parse($request->start_date)->startOfDay();
+        $endDateTime = Carbon::parse($request->end_date)->endOfDay();
+
+        $summaryData = DataMandiriPelaksanaanKapal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])
+            ->selectRaw('
+            SUM(CASE WHEN isPassing = 1 THEN 1 ELSE 0 END) AS passing_count,
+            SUM(CASE WHEN isPandu = 1 THEN 1 ELSE 0 END) AS pandu_count,
+            SUM(CASE WHEN isAnchor = 1 THEN 1 ELSE 0 END) AS anchor_count,
+            SUM(CASE WHEN isBongkarMuat = 1 THEN 1 ELSE 0 END) AS bongkar_muat_count,
+            SUM(pnbp_jasa_labuh_kapal) AS total_pnbp_jasa_labuh_kapal,
+        SUM(pnbp_jasa_rambu_kapal) AS total_pnbp_jasa_rambu_kapal,
+        SUM(pnbp_jasa_vts_kapal_domestik) AS total_pnbp_jasa_vts_kapal_domestik,
+        SUM(pnbp_jasa_vts_kapal_asing) AS total_pnbp_jasa_vts_kapal_asing,
+        SUM(pnbp_jasa_tambat_kapal) AS total_pnbp_jasa_tambat_kapal,
+        SUM(pnbp_jasa_pemanduan_penundaan_marabahan) AS total_pnbp_jasa_pemanduan_penundaan_marabahan,
+        SUM(pnbp_jasa_pemanduan_penundaan_trisakti) AS total_pnbp_jasa_pemanduan_penundaan_trisakti,
+        SUM(pnbp_jasa_barang) AS total_pnbp_jasa_barang,
+        SUM(pnbp_jasa_pengawasan_bongkar_muat_1_percent) AS total_pnbp_jasa_pengawasan_bongkar_muat_1_percent,
+        SUM(pnbp_bongkar_muat_barang_berbahaya) AS total_pnbp_bongkar_muat_barang_berbahaya
+        ')
+            ->first();
+
+        $total_data_mandiri_ais = ReportGeofenceBongkarMuat::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->count();
+        $total_data_inaportnet = InaportnetBongkarMuat::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->count();
+        $total_tidak_terjadwal_bongkar = TidakTerjadwal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->where('isPassing', 0)->whereNotNull('geofence_id')->count();
+        $total_pandu_tidak_tejadwal = PanduTidakTerjadwal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->where('isPassing', 0)->whereNotNull('geofence_id')->count();
+        $total_late_bongkar = BongkarMuatTerlambat::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->count();
+        $total_late_pandu = PanduTerlambat::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->count();
+        $total_tidak_teridentifikasi = DataMandiriPelaksanaanKapal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->whereNotNull('geofence_id')->whereNotNull('pnbp_jasa_labuh_kapal')->count();
+        $total_pandu = $summaryData['pandu_count'] + $total_pandu_tidak_tejadwal + $total_late_pandu;
+        $total_muat = $summaryData['bongkar_muat_count'] + $total_tidak_terjadwal_bongkar + $total_late_bongkar;
+
+        $total_kapal = $summaryData['passing_count'] + $total_pandu + $total_muat;
+
+        $summaryData['pandu_count'] = [
+            'total' => $total_pandu,
+            'detail' => [
+                'valid' => $summaryData['pandu_count'],
+                'tidak_terjadwal' => $total_pandu_tidak_tejadwal,
+                'terlambat' => $total_late_pandu
+            ]
+        ];
+
+        $summaryData['bongkar_muat_count'] = [
+            'total' => $total_muat,
+            'detail' => [
+                'valid' => $summaryData['bongkar_muat_count'],
+                'tidak_terjadwal' => $total_tidak_terjadwal_bongkar,
+                'terlambat' => $total_late_bongkar
+            ]
+        ];
+
+        $totalpaired = InaportnetBongkarMuat::query()->whereIn('tipe_kapal',  ['TONGKANG / BARGE', 'TONGKANG GELADAK (DECK BARGE)', 'TONGKANG MINYAK (OIL BARGE)', 'TONGKANG KERJA (WORK BARGE)', 'VEGETABLE OIL BARGE / TONGKANG MINYAK NABATI'])
+            ->whereNotNull('no_pkk_assign')->whereDate('updated_at', Carbon::today())->count();
+
+        $pdf = Pdf::loadView('pdf.reportharian', [
+            'summaryData' => $summaryData,
+            'total_kapal' => $total_kapal,
+            'totalpaired' => $totalpaired,
+            'total_tidak_teridentifikasi' => $total_tidak_teridentifikasi - $total_kapal,
+        ])->setPaper('a3', 'landscape');
+
+        return $pdf->stream('report_harian.pdf');
     }
 
     public function datamandiri(Request $request)
