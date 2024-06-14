@@ -19,7 +19,7 @@
         <div class="text-center">
             <img class="mb-5 img-fluid" src="{{asset('images/logo_apl_bjm2.png')}}" />
         </div>
-        <h3 class="mb-4 mt-1 text-center">Summary Report {{\Carbon\Carbon::now()->parse('d M Y')}}</h3>
+        <h3 class="mb-4 mt-1 text-center">Summary Report {{\Carbon\Carbon::now()->format('d M Y')}}</h3>
         <table class="table table-bordered">
             <thead>
                 <tr>
