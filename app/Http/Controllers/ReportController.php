@@ -361,11 +361,99 @@ class ReportController extends Controller
         $totalpaired = InaportnetBongkarMuat::query()->whereIn('tipe_kapal',  ['TONGKANG / BARGE', 'TONGKANG GELADAK (DECK BARGE)', 'TONGKANG MINYAK (OIL BARGE)', 'TONGKANG KERJA (WORK BARGE)', 'VEGETABLE OIL BARGE / TONGKANG MINYAK NABATI'])
             ->whereNotNull('no_pkk_assign')->whereDate('updated_at', Carbon::today())->count();
 
+        $startDateTime = Carbon::parse($request->start_date ?? now())->startOfDay();
+        $endDateTime = Carbon::parse($request->end_date ?? now()->addDay())->endOfDay();
+        
+
+        $perPage = $request->get('limit', 10);
+
+        $mainQuery = DataMandiriPelaksanaanKapal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime]);
+
+        if ($request->has('search')) {
+            $searchTerm = $request->input('search');
+            $mainQuery->whereHas('aisDataVessel', function ($query) use ($searchTerm) {
+                $query->where('vessel_name', 'like', '%' . $searchTerm . '%');
+            });
+        }
+
+        if ($request->has('isPassing')) {
+            $isPassing = (int)$request->input('isPassing');
+            $mainQuery->where('isPassing', $isPassing);
+        }
+
+        if ($request->has('isAnchor')) {
+            $isAnchor = (int)$request->input('isAnchor');
+            $mainQuery->where('isAnchor', $isAnchor);
+        }
+
+        if ($request->has('isPanduValid')) {
+            $isPanduValid = (int)$request->input('isPanduValid');
+            $mainQuery->where('isPandu', $isPanduValid);
+        }
+
+        if ($request->has('isBongkarMuatValid')) {
+            $isBongkarMuatValid = (int)$request->input('isBongkarMuatValid');
+            $mainQuery->where('isBongkarMuat', $isBongkarMuatValid);
+        }
+
+        if ($request->has('geofence_id') && !empty($request->input('geofence_id'))) {
+            $mainQuery->where('geofence_id', $request->input('geofence_id'));
+        }
+
+        if ($request->has('isPanduTidakTerjadwal')) {
+            $query = PanduTidakTerjadwal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->where('isPassing', 0)->whereNotNull('geofence_id');
+
+        } elseif ($request->has('isPanduLate')) {
+            $query = PanduTerlambat::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime]);
+        } elseif ($request->has('isBongkarTidakTerjadwal')) {
+            $query = TidakTerjadwal::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime])->where('isPassing', 0)->whereNotNull('geofence_id');
+
+        } elseif ($request->has('isBongkarLate')) {
+            $query = BongkarMuatTerlambat::whereBetween(DB::raw('DATE(created_at)'), [$startDateTime, $endDateTime]);
+        } else {
+            $query = $mainQuery;
+        }
+
+        $allAddons = $query->get();
+        $totalRecords = $allAddons->count();
+
+        $addons = $allAddons->slice(
+            $request->get('skip', 0),
+            $perPage
+        )->values(); // Reset keys to start from 0
+
+        $addons->load([
+            'aisDataVessel', 'aisDataPosition', 'geofence', 'imptPelayananKapal', 'imptPenggunaanAlat', 'reportGeofence', 'reportGeofence.geofence',
+            'inaportnetBongkarMuat', 'pbkmKegiatanPemanduan', 'reportGeofenceBongkarMuat', 'reportGeofenceBongkarMuat.geofence',
+            'reportGeofencePandu', 'reportGeofencePandu.geofence', 'inaportnetPergerakanKapal'
+        ]);
+
+        if ($request->has('search')) {
+            $searchTerm = $request->input('search');
+            if ($request->has('isPanduLate')) {
+                $filteredAddons = $addons->filter(function ($addon) use ($searchTerm) {
+                    return $addon->pbkmKegiatanPemanduan && str_contains(strtolower($addon->pbkmKegiatanPemanduan->nama_kapal), strtolower($searchTerm));
+                })->values();
+            } elseif ($request->has('isBongkarLate')) {
+                $filteredAddons = $addons->filter(function ($addon) use ($searchTerm) {
+                    return $addon->inaportnetBongkarMuat && stripos($addon->inaportnetBongkarMuat->nama_kapal, $searchTerm) !== false;
+                })->values();
+            } else {
+                $filteredAddons = $addons->filter(function ($addon) use ($searchTerm) {
+                    return $addon->aisDataVessel && stripos($addon->aisDataVessel->vessel_name, $searchTerm) !== false;
+                })->values();
+            }
+            $totalRecords = $filteredAddons->count();
+            $addons = $filteredAddons;
+        }
+
         $pdf = Pdf::loadView('pdf.reportharian', [
             'summaryData' => $summaryData,
             'total_kapal' => $total_kapal,
             'totalpaired' => $totalpaired,
+            'startDateTime' => $startDateTime->format('d M Y'),
             'total_tidak_teridentifikasi' => $total_tidak_teridentifikasi - $total_kapal,
+            'addons' => $addons->toArray(),
         ])->setPaper('a4', 'portait');
 
         return $pdf->stream('report_harian.pdf');
