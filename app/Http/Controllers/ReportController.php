@@ -454,7 +454,7 @@ class ReportController extends Controller
             'startDateTime' => $startDateTime->format('d M Y'),
             'total_tidak_teridentifikasi' => $total_tidak_teridentifikasi - $total_kapal,
             'addons' => $addons->toArray(),
-        ])->setPaper('a4', 'portait');
+        ])->setPaper('a3', 'landscape');
 
         return $pdf->stream('report_harian.pdf');
         // return view('pdf.reportharian', compact('summaryData', 'total_kapal', 'totalpaired', 'total_tidak_teridentifikasi'));
