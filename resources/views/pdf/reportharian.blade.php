@@ -165,11 +165,11 @@
                     @foreach ($addons as $key => $addon)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $addon->aisDataVessel->vessel_name }}</td>
-                        <td>{{ $addon->aisDataVessel->vessel_type }}</td>
-                        <td>{{ $addon->aisDataVessel->mmsi }} </td>
-                        <td>{{ $addon->aisDataVessel->nama_perusahaan }}</td>
-                        <td>{{ $addon->aisDataVessel->no_pkk }}</td>
+                        <td>{{ $addon['aisDataVessel']['vessel_name'] }}</td>
+                        <td>{{ $addon['aisDataVessel']['vessel_type'] }}</td>
+                        <td>{{ $addon['aisDataVessel']['mmsi'] }} </td>
+                        <td>{{ $addon['aisDataVessel']['nama_perusahaan'] }}</td>
+                        <td>{{ $addon['aisDataVessel']['no_pkk'] }}</td>
                         <td></td>
                         <td></td>
                         <td></td>
