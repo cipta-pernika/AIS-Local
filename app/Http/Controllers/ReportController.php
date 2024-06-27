@@ -417,10 +417,7 @@ class ReportController extends Controller
         $allAddons = $query->get();
         $totalRecords = $allAddons->count();
 
-        $addons = $allAddons->slice(
-            $request->get('skip', 0),
-            $perPage
-        )->values(); // Reset keys to start from 0
+        $addons = $allAddons;
 
         $addons->load([
             'aisDataVessel', 'aisDataPosition', 'geofence', 'imptPelayananKapal', 'imptPenggunaanAlat', 'reportGeofence', 'reportGeofence.geofence',
