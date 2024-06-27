@@ -1,1 +1,0 @@
-php artisan infyom:api_scaffold PkkHistory --skip=views,menu,tests --fromTable --table=pkk_histories
