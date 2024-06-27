@@ -11,15 +11,19 @@
         .table-bordered td {
             border: 1px solid #ddd !important
         }
+
+        .page-break {
+            page-break-after: always;
+        }
     </style>
 </head>
 
 <body>
-    <div class="container mt-4">
-        <div class="text-center">
+    <div class="container">
+        <div class="text-center mt-4">
             <img class="mb-5 img-fluid" src="{{asset('images/logo_apl_bjm2.png')}}" />
         </div>
-        <h3 class="mb-4 mt-1 text-center">Summary Report {{\Carbon\Carbon::now()->format('d M Y')}}</h3>
+        <h3 class="mb-4 mt-1 text-center">Summary Report {{$startDateTime}}</h3>
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -79,7 +83,7 @@
                 </tr>
             </tbody>
         </table>
-        <h3 class="mt-5 text-center">PNBP {{\Carbon\Carbon::now()->format('d M Y')}}</h3>
+        <h3 class="mt-5 text-center">PNBP {{$startDateTime}}</h3>
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -134,6 +138,48 @@
                 </tr>
             </tbody>
         </table>
+        <div class="page-break"></div>
+        <div class="d-flex justify-content-center">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama Kapal</th>
+                        <th>Tipe Kapal</th>
+                        <th>MMSI</th>
+                        <th>Perusahaan</th>
+                        <th>No PKK</th>
+                        <th>PNBP Jasa Labuhan Kapal</th>
+                        <th>PNBP Jasa Rambu Kapal</th>
+                        <th>PNBP Jasa VTS Kapal Domestik</th>
+                        <th>PNBP Jasa VTS Kapal Asing</th>
+                        <th>PNBP Jasa Tambat Kapal</th>
+                        <th>PNBP Jasa Pemanduan Penundaan Marabahan</th>
+                        <th>PNBP Jasa Pemanduan Penundaan Trisakti</th>
+                        <th>PNBP Jasa Barang</th>
+                        <th>PNBP Jasa Pengawasan Bongkar Muat 1%</th>
+                        <th>PNBP Bongkar Muat Barang Berbahaya</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($addons as $key => $addon)
+                    <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $addon->aisDataVessel->vessel_name }}</td>
+                        <td>{{ $addon->aisDataVessel->vessel_type }}</td>
+                        <td>{{ $addon->aisDataVessel->mmsi }} </td>
+                        <td>{{ $addon->aisDataVessel->nama_perusahaan }}</td>
+                        <td>{{ $addon->aisDataVessel->no_pkk }}</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
 </body>
 
