@@ -149,16 +149,6 @@
                         <th>MMSI</th>
                         <th>Perusahaan</th>
                         <th>No PKK</th>
-                        <th>PNBP Jasa Labuhan Kapal</th>
-                        <th>PNBP Jasa Rambu Kapal</th>
-                        <th>PNBP Jasa VTS Kapal Domestik</th>
-                        <th>PNBP Jasa VTS Kapal Asing</th>
-                        <th>PNBP Jasa Tambat Kapal</th>
-                        <th>PNBP Jasa Pemanduan Penundaan Marabahan</th>
-                        <th>PNBP Jasa Pemanduan Penundaan Trisakti</th>
-                        <th>PNBP Jasa Barang</th>
-                        <th>PNBP Jasa Pengawasan Bongkar Muat 1%</th>
-                        <th>PNBP Bongkar Muat Barang Berbahaya</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -170,11 +160,6 @@
                         <td>{{ $addon['ais_data_vessel']['mmsi'] ?? '' }} </td>
                         <td>{{ $addon['ais_data_vessel']['nama_perusahaan'] ?? '' }}</td>
                         <td>{{ $addon['ais_data_vessel']['no_pkk'] ?? '' }}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
                     </tr>
                     @endforeach
                 </tbody>
