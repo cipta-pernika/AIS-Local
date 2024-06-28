@@ -8,6 +8,8 @@ class PbkmKegiatanPemanduan extends Model
 {
     public $table = 'pbkm_kegiatan_pemanduans';
 
+    protected $connection = 'mysql_second';
+
     public $fillable = [
         'nomor_spk_pandu',
         'no_pkk',

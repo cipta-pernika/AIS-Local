@@ -8,6 +8,8 @@ class ImptPenggunaanAlat extends Model
 {
     public $table = 'impt_penggunaan_alats';
 
+    protected $connection = 'mysql_second';
+
     public $fillable = [
         'impt_source_id',
         'ais_data_vessel_id',

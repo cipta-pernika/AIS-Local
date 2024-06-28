@@ -8,6 +8,8 @@ class InaportnetPergerakanKapal extends Model
 {
     public $table = 'inaportnet_pergerakan_kapals';
 
+    protected $connection = 'mysql_second';
+
     public $fillable = [
         'no_pkk',
         'ais_data_vessel_id',

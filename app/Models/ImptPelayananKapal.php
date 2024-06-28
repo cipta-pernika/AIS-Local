@@ -8,6 +8,8 @@ class ImptPelayananKapal extends Model
 {
     public $table = 'impt_pelayanan_kapals';
 
+    protected $connection = 'mysql_second';
+
     public $fillable = [
         'no_pkk',
         'ais_data_vessel_id',

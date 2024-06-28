@@ -8,6 +8,8 @@ class InaportnetBongkarMuat extends Model
 {
     public $table = 'inaportnet_bongkar_muats';
 
+    protected $connection = 'mysql_second';
+
     public $fillable = [
         'id_rkbm',
         'pbm_kode',
