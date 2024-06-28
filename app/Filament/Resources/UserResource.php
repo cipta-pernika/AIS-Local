@@ -157,7 +157,7 @@ class UserResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

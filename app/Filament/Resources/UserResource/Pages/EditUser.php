@@ -45,7 +45,7 @@ class EditUser extends EditRecord
                     ->modalCloseButton(false)
                     ->modalSubmitActionLabel('Submit')
                     ->modalCancelActionLabel('Cancel'),
-                Actions\DeleteAction::make(),
+                
             ])
             ->hiddenLabel()
             ->button()

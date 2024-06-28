@@ -19,7 +19,18 @@ class PbkmKegiatanPemanduanResource extends Resource
 {
     protected static ?string $model = PbkmKegiatanPemanduan::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-circle-stack';
+
+    protected static ?string $navigationGroup = 'Big Data';
+
+    protected static ?string $navigationLabel = 'PBKM Kegiatan Pemanduan';
+
+    protected static ?string $recordTitleAttribute = 'no_pkk';
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['no_pkk', 'nama_agent', 'nama_dermaga_awal'];
+    }
 
     public static function form(Form $form): Form
     {
