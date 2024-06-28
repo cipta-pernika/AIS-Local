@@ -8,6 +8,8 @@ class PelindoBongkarMuat extends Model
 {
     public $table = 'pelindo_bongkar_muats';
 
+    protected $connection = 'mysql_second';
+
     public $fillable = [
         'no_pkk',
         'ais_data_vessel_id',
