@@ -19,7 +19,13 @@ class ImptBongkarMuatResource extends Resource
 {
     protected static ?string $model = ImptBongkarMuat::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-circle-stack';
+
+    protected static ?string $navigationGroup = 'Big Data';
+
+    protected static ?string $navigationLabel = 'IMPT Bongkar Muat';
+
+    protected static ?string $recordTitleAttribute = 'no_pkk';
 
     public static function form(Form $form): Form
     {
