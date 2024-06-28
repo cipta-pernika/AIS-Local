@@ -56,7 +56,32 @@ class ImptBongkarMuatResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('no_pkk')->searchable(),
+                Tables\Columns\TextColumn::make('rkbm')->searchable(),
+                Tables\Columns\TextColumn::make('ais_data_vessel_id')->searchable(),
+                Tables\Columns\TextColumn::make('nomor_registrasi_cargo')->searchable(),
+                Tables\Columns\TextColumn::make('nama_kapal')->searchable(),
+                Tables\Columns\TextColumn::make('nama_perusahaan')->searchable(),
+                Tables\Columns\TextColumn::make('pemilik_barang')->searchable(),
+                Tables\Columns\TextColumn::make('jenis')->searchable(),
+                Tables\Columns\TextColumn::make('jumlah_tonase')->searchable(),
+                Tables\Columns\TextColumn::make('jumlah_biaya')->searchable(),
+                Tables\Columns\TextColumn::make('jumlah_pnbp')->searchable(),
+                Tables\Columns\TextColumn::make('kegiatan')->searchable(),
+                Tables\Columns\TextColumn::make('tanggal_mulai')->searchable(),
+                Tables\Columns\TextColumn::make('tanggal_selesai')->searchable(),
+                Tables\Columns\TextColumn::make('date')->searchable(),
+                Tables\Columns\TextColumn::make('image_mulai')->searchable(),
+                Tables\Columns\TextColumn::make('image_sedang')->searchable(),
+                Tables\Columns\TextColumn::make('image_selesai')->searchable(),
+                Tables\Columns\TextColumn::make('image_mulai_2')->searchable(),
+                Tables\Columns\TextColumn::make('image_sedang_2')->searchable(),
+                Tables\Columns\TextColumn::make('image_selesai_2')->searchable(),
+                Tables\Columns\TextColumn::make('image_mulai_3')->searchable(),
+                Tables\Columns\TextColumn::make('image_sedang_3')->searchable(),
+                Tables\Columns\TextColumn::make('image_selesai_3')->searchable(),
+                Tables\Columns\TextColumn::make('no_pkk_assign')->searchable(),
+                Tables\Columns\TextColumn::make('mmsi')->searchable(),
             ])
             ->filters([
                 //
