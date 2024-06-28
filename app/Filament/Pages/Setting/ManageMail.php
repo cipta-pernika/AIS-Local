@@ -24,6 +24,8 @@ class ManageMail extends SettingsPage
     protected static ?int $navigationSort = 99;
     protected static ?string $navigationIcon = 'fluentui-mail-settings-20';
 
+    protected static bool $shouldRegisterNavigation = false;
+
     /**
      * @var array<string, mixed> | null
      */

@@ -26,6 +26,8 @@ class PostResource extends Resource
 
     protected static ?string $navigationIcon = 'fluentui-news-20';
 
+    protected static bool $shouldRegisterNavigation = false;
+
     protected static ?int $navigationSort = 0;
 
     public static function form(Form $form): Form

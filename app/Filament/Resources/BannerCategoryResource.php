@@ -24,6 +24,8 @@ class BannerCategoryResource extends Resource
     protected static ?string $navigationLabel = 'Categories';
     protected static ?string $navigationGroup = 'Banner';
 
+    protected static bool $shouldRegisterNavigation = false;
+
     public static function form(Form $form): Form
     {
         return $form
