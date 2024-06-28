@@ -32,6 +32,42 @@ class UsersTableSeeder extends Seeder
         // Bind superadmin user to FilamentShield
         Artisan::call('shield:super-admin', ['--user' => $sid]);
 
+        $userId = Str::uuid();
+        DB::table('users')->insert([
+            'id' => $userId,
+            'username' => 'admin',
+            'firstname' => 'Admin',
+            'lastname' => $faker->lastName,
+            'email' => 'admin@database.com',
+            'email_verified_at' => now(),
+            'password' => Hash::make('123456'),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        DB::table('model_has_roles')->insert([
+            'role_id' => 2,
+            'model_type' => 'App\Models\User',
+            'model_id' => $userId,
+        ]);
+
+        $userId = Str::uuid();
+        DB::table('users')->insert([
+            'id' => $userId,
+            'username' => 'operator',
+            'firstname' => 'Operator',
+            'lastname' => $faker->lastName,
+            'email' => 'operator@database.com',
+            'email_verified_at' => now(),
+            'password' => Hash::make('123456'),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        DB::table('model_has_roles')->insert([
+            'role_id' => 3,
+            'model_type' => 'App\Models\User',
+            'model_id' => $userId,
+        ]);
+
         // $roles = DB::table('roles')->whereNot('name', 'super_admin')->get();
         // foreach ($roles as $role) {
         //     for ($i = 0; $i < 10; $i++) {
@@ -56,4 +92,3 @@ class UsersTableSeeder extends Seeder
         // }
     }
 }
-
