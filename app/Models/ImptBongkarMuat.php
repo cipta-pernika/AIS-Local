@@ -8,6 +8,8 @@ class ImptBongkarMuat extends Model
 {
     public $table = 'impt_bongkar_muats';
 
+    protected $connection = 'mysql_second';
+
     public $fillable = [
         'id_impt_bongkar_muat',
         'no_pkk',
