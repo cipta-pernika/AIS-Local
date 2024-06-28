@@ -68,6 +68,60 @@ class UsersTableSeeder extends Seeder
             'model_id' => $userId,
         ]);
 
+        $userId = Str::uuid();
+        DB::table('users')->insert([
+            'id' => $userId,
+            'username' => 'operatorimpt',
+            'firstname' => 'Operator IMPT',
+            'lastname' => $faker->lastName,
+            'email' => 'operatorimpt@database.com',
+            'email_verified_at' => now(),
+            'password' => Hash::make('123456'),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        DB::table('model_has_roles')->insert([
+            'role_id' => 4,
+            'model_type' => 'App\Models\User',
+            'model_id' => $userId,
+        ]);
+
+        $userId = Str::uuid();
+        DB::table('users')->insert([
+            'id' => $userId,
+            'username' => 'operatorpbkm',
+            'firstname' => 'Operator PBKM',
+            'lastname' => $faker->lastName,
+            'email' => 'operatorpbkm@database.com',
+            'email_verified_at' => now(),
+            'password' => Hash::make('123456'),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        DB::table('model_has_roles')->insert([
+            'role_id' => 5,
+            'model_type' => 'App\Models\User',
+            'model_id' => $userId,
+        ]);
+
+        $userId = Str::uuid();
+        DB::table('users')->insert([
+            'id' => $userId,
+            'username' => 'operatorpelindo',
+            'firstname' => 'Operator Pelindo',
+            'lastname' => $faker->lastName,
+            'email' => 'operatorpelindo@database.com',
+            'email_verified_at' => now(),
+            'password' => Hash::make('123456'),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        DB::table('model_has_roles')->insert([
+            'role_id' => 6,
+            'model_type' => 'App\Models\User',
+            'model_id' => $userId,
+        ]);
+
         // $roles = DB::table('roles')->whereNot('name', 'super_admin')->get();
         // foreach ($roles as $role) {
         //     for ($i = 0; $i < 10; $i++) {

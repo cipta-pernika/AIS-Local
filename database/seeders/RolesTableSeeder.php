@@ -15,7 +15,7 @@ class RolesTableSeeder extends Seeder
      */
     public function run(): void
     {
-        $roles = ["super_admin", "admin", "operator"];
+        $roles = ["super_admin", "admin", "operator", "operatorimpt", "operatorpbkm", "operatorpelindo"];
 
         foreach ($roles as $key => $role) {
             DB::table('roles')->insert(
@@ -35,6 +35,33 @@ class RolesTableSeeder extends Seeder
 
         $role = Role::find(3);
         $includedPermission = ['Impt', 'Inaportnet', 'Pbkm', 'Pelindo'];
+        $permissions = Permission::where(function ($query) use ($includedPermission) {
+            foreach ($includedPermission as $value) {
+                $query->orWhere('name', 'like', '%' . $value . '%');
+            }
+        })->pluck('name')->toArray();
+        $role->givePermissionTo($permissions);
+
+        $role = Role::find(4);
+        $includedPermission = ['Impt', 'Inaportnet'];
+        $permissions = Permission::where(function ($query) use ($includedPermission) {
+            foreach ($includedPermission as $value) {
+                $query->orWhere('name', 'like', '%' . $value . '%');
+            }
+        })->pluck('name')->toArray();
+        $role->givePermissionTo($permissions);
+
+        $role = Role::find(5);
+        $includedPermission = ['Pbkm', 'Inaportnet'];
+        $permissions = Permission::where(function ($query) use ($includedPermission) {
+            foreach ($includedPermission as $value) {
+                $query->orWhere('name', 'like', '%' . $value . '%');
+            }
+        })->pluck('name')->toArray();
+        $role->givePermissionTo($permissions);
+
+        $role = Role::find(6);
+        $includedPermission = ['Pelindo', 'Inaportnet'];
         $permissions = Permission::where(function ($query) use ($includedPermission) {
             foreach ($includedPermission as $value) {
                 $query->orWhere('name', 'like', '%' . $value . '%');
