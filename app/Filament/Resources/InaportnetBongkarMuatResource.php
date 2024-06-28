@@ -22,6 +22,7 @@ use Filament\Tables\Filters\QueryBuilder\Constraints\RelationshipConstraint\Oper
 use Filament\Tables\Filters\QueryBuilder\Constraints\SelectConstraint;
 use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
 use Carbon\Carbon;
+use Filament\Tables\Columns\ViewColumn;
 
 class InaportnetBongkarMuatResource extends Resource
 {
