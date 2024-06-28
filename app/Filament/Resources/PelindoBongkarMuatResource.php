@@ -61,7 +61,37 @@ class PelindoBongkarMuatResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('ais_data_vessel_id')->searchable(),
+                Tables\Columns\TextColumn::make('nama_kapal')->searchable(),
+                Tables\Columns\TextColumn::make('nama_agent')->searchable(),
+                Tables\Columns\TextColumn::make('ppk')->searchable(),
+                Tables\Columns\TextColumn::make('gt_kapal')->searchable(),
+                Tables\Columns\TextColumn::make('dwt')->searchable(),
+                Tables\Columns\TextColumn::make('loa')->searchable(),
+                Tables\Columns\TextColumn::make('nama_dermaga')->searchable(),
+                Tables\Columns\TextColumn::make('rea_mulai_bm')->searchable(),
+                Tables\Columns\TextColumn::make('rea_selesai_bm')->searchable(),
+                Tables\Columns\TextColumn::make('jumlah_biaya')->searchable(),
+                Tables\Columns\TextColumn::make('jumlah_pnbp')->searchable(),
+                Tables\Columns\TextColumn::make('id_rkbm')->searchable(),
+                Tables\Columns\TextColumn::make('pbm')->searchable(),
+                Tables\Columns\TextColumn::make('kegiatan_bongkar_muat')->searchable(),
+                Tables\Columns\TextColumn::make('jenis_barang')->searchable(),
+                Tables\Columns\TextColumn::make('jumlah_barang')->searchable(),
+                Tables\Columns\TextColumn::make('rea_mulai_tambat')->searchable(),
+                Tables\Columns\TextColumn::make('rea_selesai_tambat')->searchable(),
+                Tables\Columns\TextColumn::make('created_at_pelindo')->searchable(),
+                Tables\Columns\TextColumn::make('image_mulai')->searchable(),
+                Tables\Columns\TextColumn::make('image_sedang')->searchable(),
+                Tables\Columns\TextColumn::make('image_selesai')->searchable(),
+                Tables\Columns\TextColumn::make('image_mulai_2')->searchable(),
+                Tables\Columns\TextColumn::make('image_sedang_2')->searchable(),
+                Tables\Columns\TextColumn::make('image_selesai_2')->searchable(),
+                Tables\Columns\TextColumn::make('image_mulai_3')->searchable(),
+                Tables\Columns\TextColumn::make('image_sedang_3')->searchable(),
+                Tables\Columns\TextColumn::make('image_selesai_3')->searchable(),
+                Tables\Columns\TextColumn::make('no_pkk_assign')->searchable(),
+                Tables\Columns\TextColumn::make('mmsi')->searchable(),
             ])
             ->filters([
                 //
