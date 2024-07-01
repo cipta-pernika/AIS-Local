@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Malzariey\FilamentDaterangepickerFilter\Filters\DateRangeFilter;
 use Carbon\Carbon;
 use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\ViewColumn;
 
 class PbkmKegiatanPemanduanResource extends Resource
 {
@@ -146,6 +147,15 @@ class PbkmKegiatanPemanduanResource extends Resource
                 Tables\Columns\TextColumn::make('jumlah_pnbp')
                     ->numeric()
                     ->sortable(),
+                ViewColumn::make('image_mulai')
+                    ->view('filament.tables.columns.image-column')
+                    ->label('Mulai Bongkar/Muat'),
+                ViewColumn::make('image_sedang')
+                    ->view('filament.tables.columns.image-column-sedang')
+                    ->label('Sedang Bongkar/Muat'),
+                ViewColumn::make('image_selesai')
+                    ->view('filament.tables.columns.image-column-akhir')
+                    ->label('Selesai Bongkar/Muat'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

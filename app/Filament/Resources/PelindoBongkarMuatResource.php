@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Malzariey\FilamentDaterangepickerFilter\Filters\DateRangeFilter;
 use Carbon\Carbon;
+use Filament\Tables\Columns\ViewColumn;
 
 class PelindoBongkarMuatResource extends Resource
 {
@@ -81,15 +82,15 @@ class PelindoBongkarMuatResource extends Resource
                 Tables\Columns\TextColumn::make('rea_mulai_tambat')->searchable(),
                 Tables\Columns\TextColumn::make('rea_selesai_tambat')->searchable(),
                 Tables\Columns\TextColumn::make('created_at_pelindo')->searchable(),
-                Tables\Columns\TextColumn::make('image_mulai')->searchable(),
-                Tables\Columns\TextColumn::make('image_sedang')->searchable(),
-                Tables\Columns\TextColumn::make('image_selesai')->searchable(),
-                Tables\Columns\TextColumn::make('image_mulai_2')->searchable(),
-                Tables\Columns\TextColumn::make('image_sedang_2')->searchable(),
-                Tables\Columns\TextColumn::make('image_selesai_2')->searchable(),
-                Tables\Columns\TextColumn::make('image_mulai_3')->searchable(),
-                Tables\Columns\TextColumn::make('image_sedang_3')->searchable(),
-                Tables\Columns\TextColumn::make('image_selesai_3')->searchable(),
+                ViewColumn::make('image_mulai')
+                    ->view('filament.tables.columns.image-column')
+                    ->label('Mulai Bongkar/Muat'),
+                ViewColumn::make('image_sedang')
+                    ->view('filament.tables.columns.image-column-sedang')
+                    ->label('Sedang Bongkar/Muat'),
+                ViewColumn::make('image_selesai')
+                    ->view('filament.tables.columns.image-column-akhir')
+                    ->label('Selesai Bongkar/Muat'),
                 Tables\Columns\TextColumn::make('no_pkk_assign')->searchable(),
                 Tables\Columns\TextColumn::make('mmsi')->searchable(),
             ])
