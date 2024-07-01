@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Malzariey\FilamentDaterangepickerFilter\Filters\DateRangeFilter;
 use Carbon\Carbon;
+use Filament\Tables\Columns\ViewColumn;
 
 class ImptBongkarMuatResource extends Resource
 {
@@ -31,23 +32,23 @@ class ImptBongkarMuatResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\FileUpload::make('image_mulai')->image()->disk('minio')
+                Forms\Components\FileUpload::make('image_mulai')->image()->disk('public')
                     ->imageEditor(),
-                Forms\Components\FileUpload::make('image_sedang')->image()->disk('minio')
+                Forms\Components\FileUpload::make('image_sedang')->image()->disk('public')
                     ->imageEditor(),
-                Forms\Components\FileUpload::make('image_selesai')->image()->disk('minio')
+                Forms\Components\FileUpload::make('image_selesai')->image()->disk('public')
                     ->imageEditor(),
-                Forms\Components\FileUpload::make('image_mulai_2')->image()->disk('minio')
+                Forms\Components\FileUpload::make('image_mulai_2')->image()->disk('public')
                     ->imageEditor(),
-                Forms\Components\FileUpload::make('image_sedang_2')->image()->disk('minio')
+                Forms\Components\FileUpload::make('image_sedang_2')->image()->disk('public')
                     ->imageEditor(),
-                Forms\Components\FileUpload::make('image_selesai_2')->image()->disk('minio')
+                Forms\Components\FileUpload::make('image_selesai_2')->image()->disk('public')
                     ->imageEditor(),
-                Forms\Components\FileUpload::make('image_mulai_3')->image()->disk('minio')
+                Forms\Components\FileUpload::make('image_mulai_3')->image()->disk('public')
                     ->imageEditor(),
-                Forms\Components\FileUpload::make('image_sedang_3')->image()->disk('minio')
+                Forms\Components\FileUpload::make('image_sedang_3')->image()->disk('public')
                     ->imageEditor(),
-                Forms\Components\FileUpload::make('image_selesai_3')->image()->disk('minio')
+                Forms\Components\FileUpload::make('image_selesai_3')->image()->disk('public')
                     ->imageEditor(),
             ]);
     }
@@ -56,13 +57,19 @@ class ImptBongkarMuatResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('no_pkk')->searchable(),
-                Tables\Columns\TextColumn::make('rkbm')->searchable(),
-                Tables\Columns\TextColumn::make('ais_data_vessel_id')->searchable(),
+                Tables\Columns\TextColumn::make('mmsi')->searchable(),
+                // Tables\Columns\TextColumn::make('rkbm')->searchable(),
+                ViewColumn::make('id_rkbm')
+                    ->view('filament.tables.columns.no-rkbm')
+                    ->label('Nomor PKK'),
+                // Tables\Columns\TextColumn::make('ais_data_vessel_id')->searchable(),
                 Tables\Columns\TextColumn::make('nomor_registrasi_cargo')->searchable(),
-                Tables\Columns\TextColumn::make('nama_kapal')->searchable(),
-                Tables\Columns\TextColumn::make('nama_perusahaan')->searchable(),
-                Tables\Columns\TextColumn::make('pemilik_barang')->searchable(),
+                ViewColumn::make('nama_perusahaan')
+                    ->view('filament.tables.columns.nama-perusahaan')
+                    ->label('Nama Perusahaan'),
+                ViewColumn::make('pemilik_barang')
+                    ->view('filament.tables.columns.pemilik-barang')
+                    ->label('Pemilik Barang'),
                 Tables\Columns\TextColumn::make('jenis')->searchable(),
                 Tables\Columns\TextColumn::make('jumlah_tonase')->searchable(),
                 Tables\Columns\TextColumn::make('jumlah_biaya')->searchable(),
@@ -80,8 +87,21 @@ class ImptBongkarMuatResource extends Resource
                 Tables\Columns\TextColumn::make('image_mulai_3')->searchable(),
                 Tables\Columns\TextColumn::make('image_sedang_3')->searchable(),
                 Tables\Columns\TextColumn::make('image_selesai_3')->searchable(),
+                
+                ViewColumn::make('image_mulai')
+                    ->view('filament.tables.columns.cctv')
+                    ->label('Mulai Bongkar/Muat'),
+                ViewColumn::make('image_sedang')
+                    ->view('filament.tables.columns.cctvsedang')
+                    ->label('Sedang Bongkar/Muat'),
+                ViewColumn::make('image_selesai')
+                    ->view('filament.tables.columns.cctvakhir')
+                    ->label('Selesai Bongkar/Muat'),
                 Tables\Columns\TextColumn::make('no_pkk_assign')->searchable(),
-                Tables\Columns\TextColumn::make('mmsi')->searchable(),
+                Tables\Columns\TextColumn::make('no_pkk')->searchable(),
+                ViewColumn::make('nama_kapal')
+                    ->view('filament.tables.columns.nama-kapal')
+                    ->label('Nama Kapal'),
             ])
             ->filters([
                 //
