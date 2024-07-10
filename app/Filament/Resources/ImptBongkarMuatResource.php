@@ -86,23 +86,15 @@ class ImptBongkarMuatResource extends Resource
                 Tables\Columns\TextColumn::make('tanggal_mulai')->searchable(),
                 Tables\Columns\TextColumn::make('tanggal_selesai')->searchable(),
                 Tables\Columns\TextColumn::make('date')->searchable(),
-                Tables\Columns\TextColumn::make('image_sedang')->searchable(),
-                Tables\Columns\TextColumn::make('image_selesai')->searchable(),
-                Tables\Columns\TextColumn::make('image_mulai_2')->searchable(),
-                Tables\Columns\TextColumn::make('image_sedang_2')->searchable(),
-                Tables\Columns\TextColumn::make('image_selesai_2')->searchable(),
-                Tables\Columns\TextColumn::make('image_mulai_3')->searchable(),
-                Tables\Columns\TextColumn::make('image_sedang_3')->searchable(),
-                Tables\Columns\TextColumn::make('image_selesai_3')->searchable(),
                 
                 ViewColumn::make('image_mulai')
-                    ->view('filament.tables.columns.cctv')
+                    ->view('filament.tables.columns.image-column')
                     ->label('Mulai Bongkar/Muat'),
                 ViewColumn::make('image_sedang')
-                    ->view('filament.tables.columns.cctvsedang')
+                    ->view('filament.tables.columns.image-column-sedang')
                     ->label('Sedang Bongkar/Muat'),
                 ViewColumn::make('image_selesai')
-                    ->view('filament.tables.columns.cctvakhir')
+                    ->view('filament.tables.columns.image-column-akhir')
                     ->label('Selesai Bongkar/Muat'),
                 Tables\Columns\TextColumn::make('no_pkk_assign')->searchable(),
                 Tables\Columns\TextColumn::make('no_pkk')->searchable(),

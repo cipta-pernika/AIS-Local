@@ -14,6 +14,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Malzariey\FilamentDaterangepickerFilter\Filters\DateRangeFilter;
+use Filament\Tables\Columns\ViewColumn;
 
 class ImptPelayananKapalResource extends Resource
 {
@@ -98,6 +99,15 @@ class ImptPelayananKapalResource extends Resource
                 Tables\Columns\TextColumn::make('date')
                     ->dateTime()
                     ->sortable(),
+                ViewColumn::make('image_mulai')
+                    ->view('filament.tables.columns.image-column')
+                    ->label('Mulai Bongkar/Muat'),
+                ViewColumn::make('image_sedang')
+                    ->view('filament.tables.columns.image-column-sedang')
+                    ->label('Sedang Bongkar/Muat'),
+                ViewColumn::make('image_selesai')
+                    ->view('filament.tables.columns.image-column-akhir')
+                    ->label('Selesai Bongkar/Muat'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
