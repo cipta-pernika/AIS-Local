@@ -34,6 +34,8 @@ class AisDataPositionResource extends Resource
 
     protected static ?string $navigationGroup = 'AIS';
 
+    
+
     public static function form(Form $form): Form
     {
         return $form
