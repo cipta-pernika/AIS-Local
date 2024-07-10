@@ -97,5 +97,14 @@ class ImptBongkarMuat extends Model
         'updated_at' => 'nullable'
     ];
 
+    public function setImageMulaiAttribute($value)
+    {
+        if ($value) {
+            $prefix = env('APP_URL');
+            $filename = $prefix . time() . '.' . $value->getClientOriginalExtension();
+            $path = $value->storeAs('images', $filename, 'public');
+            $this->attributes['image_mulai'] = $filename;
+        }
+    }
     
 }

@@ -27,6 +27,14 @@ class ImptPelayananKapalResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'no_pkk';
 
+    /**
+     * Get the navigation badge for the resource.
+     */
+    public static function getNavigationBadge(): ?string
+    {
+        return number_format(static::getModel()::count());
+    }
+
     public static function getGloballySearchableAttributes(): array
     {
         return ['no_pkk', 'nama_kapal', 'nama_agen_pelayaran'];

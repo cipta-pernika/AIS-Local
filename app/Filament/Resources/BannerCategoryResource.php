@@ -24,6 +24,14 @@ class BannerCategoryResource extends Resource
     protected static ?string $navigationLabel = 'Categories';
     protected static ?string $navigationGroup = 'Banner';
 
+    /**
+     * Get the navigation badge for the resource.
+     */
+    public static function getNavigationBadge(): ?string
+    {
+        return number_format(static::getModel()::count());
+    }
+
     protected static bool $shouldRegisterNavigation = false;
 
     public static function form(Form $form): Form

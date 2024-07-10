@@ -28,6 +28,14 @@ class ImptBongkarMuatResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'no_pkk';
 
+    /**
+     * Get the navigation badge for the resource.
+     */
+    public static function getNavigationBadge(): ?string
+    {
+        return number_format(static::getModel()::count());
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -78,7 +86,6 @@ class ImptBongkarMuatResource extends Resource
                 Tables\Columns\TextColumn::make('tanggal_mulai')->searchable(),
                 Tables\Columns\TextColumn::make('tanggal_selesai')->searchable(),
                 Tables\Columns\TextColumn::make('date')->searchable(),
-                Tables\Columns\TextColumn::make('image_mulai')->searchable(),
                 Tables\Columns\TextColumn::make('image_sedang')->searchable(),
                 Tables\Columns\TextColumn::make('image_selesai')->searchable(),
                 Tables\Columns\TextColumn::make('image_mulai_2')->searchable(),
