@@ -94,6 +94,15 @@ class ImptPelayananKapalResource extends Resource
                 Tables\Columns\TextColumn::make('date')
                     ->dateTime()
                     ->sortable(),
+                Tables\Columns\ViewColumn::make('image_mulai')
+                    ->view('filament.tables.columns.image-column')
+                    ->label('Mulai Bongkar/Muat'),
+                Tables\Columns\ViewColumn::make('image_sedang')
+                    ->view('filament.tables.columns.image-column-sedang')
+                    ->label('Sedang Bongkar/Muat'),
+                Tables\Columns\ViewColumn::make('image_selesai')
+                    ->view('filament.tables.columns.image-column-akhir')
+                    ->label('Selesai Bongkar/Muat'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
