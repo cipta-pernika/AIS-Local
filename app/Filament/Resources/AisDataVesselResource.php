@@ -26,6 +26,14 @@ class AisDataVesselResource extends Resource implements HasShieldPermissions
 
     protected static ?string $recordTitleAttribute = 'vessel_name';
 
+    /**
+     * Get the navigation badge for the resource.
+     */
+    public static function getNavigationBadge(): ?string
+    {
+        return number_format(static::getModel()::count());
+    }
+
     public static function getGloballySearchableAttributes(): array
     {
         return ['vessel_name', 'mmsi', 'imo', 'callsign', 'no_pkk'];
