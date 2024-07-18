@@ -95,4 +95,5 @@ Route::resource('bup-konsesis', App\Http\Controllers\BupKonsesiController::class
 Route::resource('pkk-assign-histories', App\Http\Controllers\PkkAssignHistoryController::class);
 Route::resource('pkk-histories', App\Http\Controllers\PkkHistoryController::class);
 
-// Route::get('loginviasso', [OauthController::class, 'loginviasso']);
+Route::get('loginviasso', [OauthController::class, 'loginviasso']);
+Route::get('authorization', [OauthController::class, 'authorization']);

@@ -12,7 +12,7 @@ class OauthController extends Controller
         $provider = new \League\OAuth2\Client\Provider\GenericProvider([
             'clientId'                => env('CLIENT_ID_SSO'),    // The client ID assigned to you by the provider
             'clientSecret'            => env('CLIENT_SECRET_SSO'),    // The client password assigned to you by the provider
-            'redirectUri'             => 'https://sso-portal.hubla.dephub.go.id/your-redirect-url/',
+            'redirectUri'             => 'https://backend.sopbuntutksopbjm.com/api/ssocallback/besopbuntut',
             'urlAuthorize'            => 'https://sso.hubla.dephub.go.id/realms/djpl/protocol/openid-connect/auth',
             'urlAccessToken'          => 'https://sso.hubla.dephub.go.id/realms/djpl/protocol/openid-connect/token',
             'urlResourceOwnerDetails' => 'https://sso.hubla.dephub.go.id/realms/djpl/protocol/openid-connect/userinfo'
@@ -21,6 +21,12 @@ class OauthController extends Controller
         $authorizationUrl = $provider->getAuthorizationUrl();
 
         return redirect($authorizationUrl);
+
+        https://sso.hubla.dephub.go.id/
+        realms/djpl/protocol/openid-connect/
+        auth?state=b41bd5628a2e3895bad456b9c0945a3e
+        &response_type=code&approval_prompt=auto&
+        redirect_uri=https%3A%2F%2Fbackend.sopbuntutksopbjm.com%2Fapi%2Fssocallback%2Fbesopbuntut&client_id=sop-buntut-api
     }
 
     public function handleCallback()
