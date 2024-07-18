@@ -278,3 +278,6 @@ Route::get('/callback/fesopbuntut', [OauthController::class, 'handleCallback'])
 
 Route::post('/callback/besopbuntut', [OauthController::class, 'handleCallbackBackend'])
     ->name('callback.backend');
+
+Route::get('/callback/besopbuntut', [OauthController::class, 'handleCallbackBackend'])
+    ->name('callback.backend');
