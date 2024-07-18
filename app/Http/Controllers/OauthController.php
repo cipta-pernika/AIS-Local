@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Laravel\Socialite\Facades\Socialite;
 
 class OauthController extends Controller
@@ -20,50 +21,36 @@ class OauthController extends Controller
 
         $authorizationUrl = $provider->getAuthorizationUrl();
 
-        return redirect($authorizationUrl);
-
-        // https://sso.hubla.dephub.go.id/
-        // realms/djpl/protocol/openid-connect/
-        // auth?state=b41bd5628a2e3895bad456b9c0945a3e
-        // &response_type=code&approval_prompt=auto&
-        // redirect_uri=https%3A%2F%2Fbackend.sopbuntutksopbjm.com%2Fapi%2Fssocallback%2Fbesopbuntut&client_id=sop-buntut-api
-
-        // https://sso-dev.hubla.dephub.go.id/realms/djpl/protocol/openid-connect/
-        // auth?state=77ad08c0282e54ec7bc7683695ca94f9&response_type=code&approval_prompt=
-        // auto&redirect_uri=https%3A%2F%2Fbackend.sopbuntutksopbjm.com%2Fapi%2Fssocallback%2Fbesopbuntut&client_id=sop-buntut-api
-
-        // {
-        //     "id": "8e1c905aa5724c71a3724ae6bd908c67",
-        //     "created": 1721298078,
-        //     "request_type": "si:r",
-        //     "code_verifier": "be08becacb604eef8b1f31cbef861a8a0984b42607974d8a9588377f5db9d24f651939dfb33240b3b0cc7f9e62bc8a16",
-        //     "authority": "https://sso-dev.hubla.dephub.go.id/realms/djpl",
-        //     "client_id": "sop-buntut-api",
-        //     "redirect_uri": "https://backend.sopbuntutksopbjm.com/api/ssocallback/besopbuntut",
-        //     "scope": "openid email profile",
-        //     "client_secret": "rMBqlBpl3hjDljsjmO2qjE308CTXJdT5",
-        //     "extraTokenParams": {}
-        //   }
+        return response()->json([
+            'success' => true,
+            'message' => $authorizationUrl
+        ]);
     }
 
-    public function handleCallback()
+    public function handleCallback(Request $request)
     {
         // Handle the frontend callback logic here
-        // Example: return response or process data
+        $data = $request->all();
+        $response = Http::post('http://nr.monitormyvessel.com/sso-test', $data);
+
         return redirect('https://sopbuntutksopbjm.com');
     }
 
-    public function handleCallbackBackend()
+    public function handleCallbackBackend(Request $request)
     {
         // Handle the backend callback logic here
-        // Example: return response or process data
+        $data = $request->all();
+        $response = Http::post('http://nr.monitormyvessel.com/sso-test', $data);
+
         return response()->json(['message' => 'Backend callback received']);
     }
 
-    public function handleCallbackBackendGet()
+    public function handleCallbackBackendGet(Request $request)
     {
         // Handle the backend callback logic here
-        // Example: return response or process data
+        $data = $request->all();
+        $response = Http::post('http://nr.monitormyvessel.com/sso-test', $data);
+
         return redirect('https://sopbuntutksopbjm.com');
     }
 
