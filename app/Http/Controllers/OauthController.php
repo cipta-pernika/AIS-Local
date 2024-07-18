@@ -142,8 +142,10 @@ class OauthController extends Controller
 
 
             \DB::table('oauth_sessions')->updateOrInsert(
-                ['state' => $data['state'], 'code' => $data['code']],
+                ['session_state' => $data['session_state']],
                 [
+                    'state' => $data['state'],
+                    'code' => $data['code'],
                     'session_state' => $data['session_state'],
                     'iss' => $data['iss'],
                     'access_token' => $accessToken->getToken(),
