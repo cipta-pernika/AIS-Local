@@ -35,7 +35,7 @@ class OauthController extends Controller
             $_SESSION['oauth2pkceCode'] = $provider->getPkceCode();
 
             // Redirect the user to the authorization URL.
-            return response()->json(['success' => true, 'message' => $authorizationUrl]);
+            return response()->json(['success' => true, 'message' => $authorizationUrl.'&scope=openid%20profile%20email%20offline_access']);
         } elseif (empty($_GET['state']) || empty($_SESSION['oauth2state']) || $_GET['state'] !== $_SESSION['oauth2state']) {
 
             if (isset($_SESSION['oauth2state'])) {
@@ -152,6 +152,7 @@ class OauthController extends Controller
                     'iss' => $data['iss'],
                     'access_token' => $accessToken->getToken(),
                     'refresh_token' => $accessToken->getRefreshToken(),
+                    'id_token' => $accessToken->getValues()['id_token'] ?? null,
                     'expires_in' => $accessToken->getExpires(),
                     // 'resource_owner' => json_encode($resourceOwner->toArray()),
                     'resource_owner' => '[]',
