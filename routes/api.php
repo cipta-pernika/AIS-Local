@@ -273,11 +273,11 @@ Route::resource('pkk-histories', App\Http\Controllers\API\PkkHistoryAPIControlle
 
 Route::get('authorization', [OauthController::class, 'authorization']);
 
-Route::get('/callback/fesopbuntut', [OauthController::class, 'handleCallback'])
+Route::get('/ssocallback/fesopbuntut', [OauthController::class, 'handleCallback'])
     ->name('callback.frontend');
 
-Route::post('/callback/besopbuntut', [OauthController::class, 'handleCallbackBackend'])
+Route::post('/ssocallback/besopbuntut', [OauthController::class, 'handleCallbackBackend'])
     ->name('callback.backend');
 
-Route::get('/callback/besopbuntut', [OauthController::class, 'handleCallbackBackendGet'])
+Route::get('/ssocallback/besopbuntut', [OauthController::class, 'handleCallbackBackendGet'])
     ->name('callback.backend');
