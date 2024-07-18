@@ -31,7 +31,7 @@ class OauthController extends Controller
     {
         // Handle the frontend callback logic here
         $data = $request->all();
-        $response = Http::post('http://nr.monitormyvessel.com/sso-test', $data);
+        $response = Http::post('https://nr.monitormyvessel.com/sso-test', $data);
 
         return redirect('https://sopbuntutksopbjm.com');
     }
@@ -40,7 +40,7 @@ class OauthController extends Controller
     {
         // Handle the backend callback logic here
         $data = $request->all();
-        $response = Http::post('http://nr.monitormyvessel.com/sso-test', $data);
+        $response = Http::post('https://nr.monitormyvessel.com/sso-test', $data);
 
         return response()->json(['message' => 'Backend callback received']);
     }
@@ -49,7 +49,7 @@ class OauthController extends Controller
     {
         // Handle the backend callback logic here
         $data = $request->all();
-        $response = Http::post('http://nr.monitormyvessel.com/sso-test', $data);
+        $response = Http::post('https://nr.monitormyvessel.com/sso-test', $data);
 
         return redirect('https://sopbuntutksopbjm.com');
     }
