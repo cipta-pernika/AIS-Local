@@ -51,7 +51,30 @@ class OauthController extends Controller
         $data = $request->all();
         $response = Http::post('https://nr.monitormyvessel.com/sso-test', $data);
 
+        session(['oauth_data' => $data]);
+
+        // Save data into database
+        \DB::table('oauth_sessions')->insert([
+            'state' => $data['state'],
+            'session_state' => $data['session_state'],
+            'iss' => $data['iss'],
+            'code' => $data['code'],
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+
         return redirect('https://sopbuntutksopbjm.com');
+    }
+
+    public function logout()
+    {
+        // Clear session data
+        session()->forget('oauth_data');
+
+        // Redirect to SSO logout URL
+        $logoutUrl = 'https://sso-dev.hubla.dephub.go.id/realms/djpl/protocol/openid-connect/logout?redirect_uri=https://sopbuntutksopbjm.com';
+
+        return redirect($logoutUrl);
     }
 
     public function loginviasso()
