@@ -114,14 +114,16 @@ class OauthController extends Controller
         ]);
 
         // Save data into database
-        \DB::table('oauth_sessions')->insert([
-            'state' => $data['state'],
-            'session_state' => $data['session_state'],
-            'iss' => $data['iss'],
-            'code' => $data['code'],
-            'created_at' => now(),
-            'updated_at' => now()
-        ]);
+        \DB::table('oauth_sessions')->updateOrInsert(
+            ['session_state' => $data['session_state']],
+            [
+                'state' => $data['state'],
+                'iss' => $data['iss'],
+                'code' => $data['code'],
+                'created_at' => now(),
+                'updated_at' => now()
+            ]
+        );
 
         try {
 
@@ -153,7 +155,6 @@ class OauthController extends Controller
                     'expires_in' => $accessToken->getExpires(),
                     // 'resource_owner' => json_encode($resourceOwner->toArray()),
                     'resource_owner' => '[]',
-                    'created_at' => now(),
                     'updated_at' => now()
                 ]
             );
