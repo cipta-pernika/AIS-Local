@@ -35,4 +35,11 @@ class OauthController extends Controller
         // Example: return response or process data
         return response()->json(['message' => 'Backend callback received']);
     }
+
+    public function handleCallbackBackendGet()
+    {
+        // Handle the backend callback logic here
+        // Example: return response or process data
+        return redirect('https://sopbuntutksopbjm.com');
+    }
 }
