@@ -31,6 +31,7 @@ class OauthController extends Controller
     {
         // Handle the frontend callback logic here
         $data = $request->all();
+        $data['handle_fe_get'] = true; 
         $response = Http::post('https://nr.monitormyvessel.com/sso-test', $data);
 
         return redirect('https://sopbuntutksopbjm.com');
@@ -40,6 +41,7 @@ class OauthController extends Controller
     {
         // Handle the backend callback logic here
         $data = $request->all();
+        $data['handle_backend_post'] = true; 
         $response = Http::post('https://nr.monitormyvessel.com/sso-test', $data);
 
         return response()->json(['message' => 'Backend callback received']);
@@ -49,6 +51,7 @@ class OauthController extends Controller
     {
         // Handle the backend callback logic here
         $data = $request->all();
+        $data['handle_backend_get'] = true; 
         $response = Http::post('https://nr.monitormyvessel.com/sso-test', $data);
 
         session(['oauth_data' => $data]);
