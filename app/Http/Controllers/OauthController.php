@@ -154,7 +154,7 @@ class OauthController extends Controller
         } catch (\League\OAuth2\Client\Provider\Exception\IdentityProviderException $e) {
         }
 
-        return redirect('https://sopbuntutksopbjm.com');
+        return redirect('https://sopbuntutksopbjm.com/auth-pages/login?id=ZW1haWw6YWRtaW5AZGF0YWJhc2UuY29tLHBhc3N3b3JkOjEyMzQ1Ng==');
     }
 
     public function logout()
