@@ -9,8 +9,8 @@ class OauthController extends Controller
     public function authorization()
     {
         $provider = new \League\OAuth2\Client\Provider\GenericProvider([
-            'clientId'                => 'xxxxxxxx',    // The client ID assigned to you by the provider
-            'clientSecret'            => 'xxxxxxxx',    // The client password assigned to you by the provider
+            'clientId'                => env('CLIENT_ID_SSO'),    // The client ID assigned to you by the provider
+            'clientSecret'            => env('CLIENT_SECRET_SSO'),    // The client password assigned to you by the provider
             'redirectUri'             => 'https://sso-portal.hubla.dephub.go.id/your-redirect-url/',
             'urlAuthorize'            => 'https://sso.hubla.dephub.go.id/realms/djpl/protocol/openid-connect/auth',
             'urlAccessToken'          => 'https://sso.hubla.dephub.go.id/realms/djpl/protocol/openid-connect/token',

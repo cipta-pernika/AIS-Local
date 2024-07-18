@@ -25,6 +25,7 @@
         "laravel/pulse": "*",
         "laravel/sanctum": "v3.3.3",
         "laravel/scout": "v10.8.3",
+        "laravel/socialite": "^5.15",
         "laravel/tinker": "v2.9.0",
         "league/flysystem-aws-s3-v3": "^3.24",
         "league/oauth2-client": "*",
