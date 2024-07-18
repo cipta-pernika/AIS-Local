@@ -125,9 +125,15 @@ class OauthController extends Controller
 
         try {
 
+            $PkceCode = $provider->getPkceCode();
+
+            $provider->setPkceCode($PkceCode);
+
             $accessToken = $provider->getAccessToken('authorization_code', [
                 'code' => $data['code']
             ]);
+
+            // dd($data['code']);
 
             $resourceOwner = $provider->getResourceOwner($accessToken);
 
@@ -148,7 +154,7 @@ class OauthController extends Controller
         } catch (\League\OAuth2\Client\Provider\Exception\IdentityProviderException $e) {
         }
 
-        return redirect('https://sopbuntutksopbjm.com');
+        return redirect('https://sopbuntutksopbjm.com/auth-pages/login?id=ZW1haWw6YWRtaW5AZGF0YWJhc2UuY29tLHBhc3N3b3JkOjEyMzQ1Ng==');
     }
 
     public function logout()
@@ -171,6 +177,11 @@ class OauthController extends Controller
 
     public function ssosession()
     {
-        return response()->json(['msg' => session('oauth_data')]);
+        $oauthData = session('oauth_data');
+        if ($oauthData) {
+            return response()->json(['msg' => $oauthData]);
+        } else {
+            return response()->json(['error' => 'No session data found'], 400);
+        }
     }
 }
