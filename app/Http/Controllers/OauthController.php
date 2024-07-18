@@ -177,6 +177,11 @@ class OauthController extends Controller
 
     public function ssosession()
     {
-        return response()->json(['msg' => session('oauth_data')]);
+        $oauthData = session('oauth_data');
+        if ($oauthData) {
+            return response()->json(['msg' => $oauthData]);
+        } else {
+            return response()->json(['error' => 'No session data found'], 400);
+        }
     }
 }
