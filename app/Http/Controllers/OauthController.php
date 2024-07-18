@@ -134,8 +134,11 @@ class OauthController extends Controller
             ]);
 
             // dd($data['code']);
-
-            $resourceOwner = $provider->getResourceOwner($accessToken);
+            try {
+                $resourceOwner = $provider->getResourceOwner($accessToken);
+            } catch (\League\OAuth2\Client\Provider\Exception\IdentityProviderException $e) {
+                $resourceOwner = '{}';
+            }
 
 
             \DB::table('oauth_sessions')->updateOrInsert(
