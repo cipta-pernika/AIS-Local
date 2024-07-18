@@ -22,11 +22,11 @@ class OauthController extends Controller
 
         return redirect($authorizationUrl);
 
-        https://sso.hubla.dephub.go.id/
-        realms/djpl/protocol/openid-connect/
-        auth?state=b41bd5628a2e3895bad456b9c0945a3e
-        &response_type=code&approval_prompt=auto&
-        redirect_uri=https%3A%2F%2Fbackend.sopbuntutksopbjm.com%2Fapi%2Fssocallback%2Fbesopbuntut&client_id=sop-buntut-api
+        // https://sso.hubla.dephub.go.id/
+        // realms/djpl/protocol/openid-connect/
+        // auth?state=b41bd5628a2e3895bad456b9c0945a3e
+        // &response_type=code&approval_prompt=auto&
+        // redirect_uri=https%3A%2F%2Fbackend.sopbuntutksopbjm.com%2Fapi%2Fssocallback%2Fbesopbuntut&client_id=sop-buntut-api
     }
 
     public function handleCallback()
