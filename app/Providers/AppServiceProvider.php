@@ -10,6 +10,9 @@ use Filament\Support\Assets\Css;
 use Filament\Support\Assets\Js;
 use Filament\Support\Facades\FilamentAsset;
 use Illuminate\Support\ServiceProvider;
+use App\Services\KeycloakProviderService;
+use App\Providers\KeycloakProvider;
+use Laravel\Socialite\Contracts\Factory as Socialite;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -18,14 +21,23 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        // $this->app->singleton(KeycloakProviderService::class, function ($app) {
+        //     return new KeycloakProviderService(
+        //         $app['request'],
+        //         $app['config']['services.keycloak']
+        //     );
+        // });
     }
 
     /**
      * Bootstrap any application services.
      */
-    public function boot(): void
+    public function boot(Socialite $socialite): void
     {
+        $socialite->extend('keycloak', function ($app) use ($socialite) {
+            $config = $app['config']['services.keycloak'];
+            return $socialite->buildProvider(KeycloakProvider::class, $config);
+        });
         Model::unguard();
         Filament::serving(function () {
             Filament::registerNavigationItems([

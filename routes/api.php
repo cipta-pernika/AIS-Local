@@ -281,3 +281,5 @@ Route::post('/ssocallback/besopbuntut', [OauthController::class, 'handleCallback
 
 Route::get('/ssocallback/besopbuntut', [OauthController::class, 'handleCallbackBackendGet'])
     ->name('callback.backend');
+
+Route::get('loginviasso', [OauthController::class, 'loginviasso']);
