@@ -163,7 +163,7 @@ class OauthController extends Controller
         session()->forget('oauth_data');
 
         // Redirect to SSO logout URL
-        $logoutUrl = 'https://sso-dev.hubla.dephub.go.id/realms/djpl/protocol/openid-connect/logout?redirect_uri=https://sopbuntutksopbjm.com';
+        $logoutUrl = 'https://sso-dev.hubla.dephub.go.id/realms/djpl/protocol/openid-connect/logout?redirect_url=https://sopbuntutksopbjm.com';
 
         return redirect($logoutUrl);
     }
