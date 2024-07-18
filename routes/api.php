@@ -8,6 +8,7 @@ use App\Http\Controllers\ExportController;
 use App\Http\Controllers\GeofenceController;
 use App\Http\Controllers\HelperController;
 use App\Http\Controllers\LocationController;
+use App\Http\Controllers\OauthController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SensorController;
 use App\Http\Controllers\SyncController;
@@ -269,3 +270,11 @@ Route::resource('pkk-assign-histories', App\Http\Controllers\API\PkkAssignHistor
 
 Route::resource('pkk-histories', App\Http\Controllers\API\PkkHistoryAPIController::class)
     ->except(['create', 'edit']);
+
+Route::get('authorization', [OauthController::class, 'authorization']);
+
+Route::get('/callback/fesopbuntut', [OauthController::class, 'handleCallback'])
+    ->name('callback.frontend');
+
+Route::post('/callback/besopbuntut', [OauthController::class, 'handleCallbackBackend'])
+    ->name('callback.backend');
