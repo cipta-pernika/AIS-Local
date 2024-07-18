@@ -34,9 +34,11 @@
         "mjaschen/phpgeo": "^5.0.0",
         "orangehill/iseed": "^v3.0.3",
         "pxlrbt/filament-excel": "v2.3.1",
+        "robsontenorio/laravel-keycloak-guard": "^1.6",
         "socialiteproviders/keycloak": "^5.3",
         "socialiteproviders/manager": "^4.6",
         "tightenco/ziggy": "v2.0.4",
+        "vizir/laravel-keycloak-web-guard": "^4.0",
         "z3d0x/filament-logger": "v0.7.0"
     },
     "require-dev": {

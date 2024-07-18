@@ -125,9 +125,15 @@ class OauthController extends Controller
 
         try {
 
+            $PkceCode = $provider->getPkceCode();
+
+            $provider->setPkceCode($PkceCode);
+
             $accessToken = $provider->getAccessToken('authorization_code', [
                 'code' => $data['code']
             ]);
+
+            // dd($data['code']);
 
             $resourceOwner = $provider->getResourceOwner($accessToken);
 
