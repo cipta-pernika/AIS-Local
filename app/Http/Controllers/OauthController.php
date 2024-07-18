@@ -13,9 +13,9 @@ class OauthController extends Controller
             'clientId'                => env('CLIENT_ID_SSO'),    // The client ID assigned to you by the provider
             'clientSecret'            => env('CLIENT_SECRET_SSO'),    // The client password assigned to you by the provider
             'redirectUri'             => 'https://backend.sopbuntutksopbjm.com/api/ssocallback/besopbuntut',
-            'urlAuthorize'            => 'https://sso.hubla.dephub.go.id/realms/djpl/protocol/openid-connect/auth',
-            'urlAccessToken'          => 'https://sso.hubla.dephub.go.id/realms/djpl/protocol/openid-connect/token',
-            'urlResourceOwnerDetails' => 'https://sso.hubla.dephub.go.id/realms/djpl/protocol/openid-connect/userinfo'
+            'urlAuthorize'            => 'https://sso-dev.hubla.dephub.go.id/realms/djpl/protocol/openid-connect/auth',
+            'urlAccessToken'          => 'https://sso-dev.hubla.dephub.go.id/realms/djpl/protocol/openid-connect/token',
+            'urlResourceOwnerDetails' => 'https://sso-dev.hubla.dephub.go.id/realms/djpl/protocol/openid-connect/userinfo'
         ]);
 
         $authorizationUrl = $provider->getAuthorizationUrl();
@@ -28,7 +28,7 @@ class OauthController extends Controller
         // &response_type=code&approval_prompt=auto&
         // redirect_uri=https%3A%2F%2Fbackend.sopbuntutksopbjm.com%2Fapi%2Fssocallback%2Fbesopbuntut&client_id=sop-buntut-api
 
-        // https://sso.hubla.dephub.go.id/realms/djpl/protocol/openid-connect/
+        // https://sso-dev.hubla.dephub.go.id/realms/djpl/protocol/openid-connect/
         // auth?state=77ad08c0282e54ec7bc7683695ca94f9&response_type=code&approval_prompt=
         // auto&redirect_uri=https%3A%2F%2Fbackend.sopbuntutksopbjm.com%2Fapi%2Fssocallback%2Fbesopbuntut&client_id=sop-buntut-api
 
