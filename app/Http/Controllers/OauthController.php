@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -35,7 +36,7 @@ class OauthController extends Controller
             $_SESSION['oauth2pkceCode'] = $provider->getPkceCode();
 
             // Redirect the user to the authorization URL.
-            return response()->json(['success' => true, 'message' => $authorizationUrl.'&scope=openid%20profile%20email%20offline_access']);
+            return response()->json(['success' => true, 'message' => $authorizationUrl . '&scope=openid%20profile%20email%20offline_access']);
         } elseif (empty($_GET['state']) || empty($_SESSION['oauth2state']) || $_GET['state'] !== $_SESSION['oauth2state']) {
 
             if (isset($_SESSION['oauth2state'])) {
@@ -171,7 +172,7 @@ class OauthController extends Controller
         session()->forget('oauth_data');
 
         $idToken = \DB::table('oauth_sessions')->where('session_state', session('oauth_data')['session_state'])->first()->id_token;
-        $logoutSSo = Http::get('https://sso-dev.hubla.dephub.go.id/realms/djpl/protocol/openid-connect/logout?id_token_hint='.$idToken);
+        $logoutSSo = Http::get('https://sso-dev.hubla.dephub.go.id/realms/djpl/protocol/openid-connect/logout?id_token_hint=' . $idToken);
         // Redirect to SSO logout URL
         // if($logoutSSo->getStatusCode() == 200){
         //     $logoutUrl = 'https://sso-dev.hubla.dephub.go.id/realms/djpl/protocol/openid-connect/logout?redirect_url=https://sopbuntutksopbjm.com';
@@ -187,16 +188,16 @@ class OauthController extends Controller
         // Clear session data
         $oauthData = session('oauth_data');
 
-        if($oauthData){
+        if ($oauthData) {
             $sessionState = $oauthData['session_state'];
-        }else{
-            $sessionState = \DB::table('oauth_sessions')->orderBy('id','desc')->first()->session_state;
+        } else {
+            $sessionState = \DB::table('oauth_sessions')->orderBy('id', 'desc')->first()->session_state;
         }
 
         session()->forget('oauth_data');
 
         $idToken = \DB::table('oauth_sessions')->where('session_state', $sessionState)->first()->id_token;
-        $logoutSSo = Http::get('https://sso-dev.hubla.dephub.go.id/realms/djpl/protocol/openid-connect/logout?id_token_hint='.$idToken);
+        $logoutSSo = Http::get('https://sso-dev.hubla.dephub.go.id/realms/djpl/protocol/openid-connect/logout?id_token_hint=' . $idToken);
         // Redirect to SSO logout URL
         // if($logoutSSo->getStatusCode() == 200){
         //     $logoutUrl = 'https://sso-dev.hubla.dephub.go.id/realms/djpl/protocol/openid-connect/logout?redirect_url=https://sopbuntutksopbjm.com';
@@ -237,10 +238,10 @@ class OauthController extends Controller
 
         $oauthData = session('oauth_data');
 
-        if($oauthData){
+        if ($oauthData) {
             $sessionState = $oauthData['session_state'];
-        }else{
-            $sessionState = \DB::table('oauth_sessions')->orderBy('id','desc')->first()->session_state;
+        } else {
+            $sessionState = \DB::table('oauth_sessions')->orderBy('id', 'desc')->first()->session_state;
         }
 
         $accessToken = $provider->getAccessToken('refresh_token', [
@@ -250,13 +251,14 @@ class OauthController extends Controller
         return response()->json(['access_token' => $accessToken->getToken()]);
     }
 
-    public function checkIsTokenValid(){
+    public function checkIsTokenValid()
+    {
         $oauthData = session('oauth_data');
 
-        if($oauthData){
+        if ($oauthData) {
             $sessionState = $oauthData['session_state'];
-        }else{
-            $sessionState = \DB::table('oauth_sessions')->orderBy('id','desc')->first()->session_state;
+        } else {
+            $sessionState = \DB::table('oauth_sessions')->orderBy('id', 'desc')->first()->session_state;
         }
         $accessToken = \DB::table('oauth_sessions')->where('session_state', $sessionState)->first()->access_token;
 
@@ -264,10 +266,15 @@ class OauthController extends Controller
             'Authorization' => 'Bearer ' . $accessToken
         ])->get('https://sso-dev.hubla.dephub.go.id/realms/djpl/protocol/openid-connect/userinfo');
 
-        if(!$response->json()){
-            return response()->json(['message' => 'unauthorized'],401);
+        if (!$response->json()) {
+            return response()->json(['message' => 'unauthorized'], 401);
         }
 
-        return response()->json(['message' => 'Token is valid', 'data' => $response->json()],200);
+        // Check Sanctum token
+        if (!Auth::guard('sanctum')->check()) {
+            return response()->json(['message' => 'Sanctum token invalid'], 401);
+        }
+
+        return response()->json(['message' => 'Token is valid', 'data' => $response->json()], 200);
     }
 }
