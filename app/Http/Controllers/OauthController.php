@@ -234,15 +234,15 @@ class OauthController extends Controller
             $sessionState = \DB::table('oauth_sessions')->orderBy('id','desc')->first()->session_state;
         }
         $accessToken = \DB::table('oauth_sessions')->where('session_state', $sessionState)->first()->access_token;
-        
+
         $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . $accessToken
         ])->get('https://sso-dev.hubla.dephub.go.id/realms/djpl/protocol/openid-connect/userinfo');
-        
+
         if(!$response->json()){
             return response()->json(['message' => 'unauthorized'],401);
         }
-        
-        return response()->json(['message' => 'token still valid'],200);
+
+        return response()->json(['message' => 'Token is valid', 'data' => $response->json()],200);
     }
 }
