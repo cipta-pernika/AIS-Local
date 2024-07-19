@@ -194,4 +194,22 @@ class OauthController extends Controller
             return response()->json(['error' => 'No session data found'], 400);
         }
     }
+
+    public function renewToken()
+    {
+        $provider = new \League\OAuth2\Client\Provider\GenericProvider([
+            'clientId'                => env('CLIENT_ID_SSO'),
+            'clientSecret'            => env('CLIENT_SECRET_SSO'),
+            'redirectUri'             => 'https://backend.sopbuntutksopbjm.com/api/ssocallback/besopbuntut',
+            'urlAuthorize'            => 'https://sso-dev.hubla.dephub.go.id/realms/djpl/protocol/openid-connect/auth',
+            'urlAccessToken'          => 'https://sso-dev.hubla.dephub.go.id/realms/djpl/protocol/openid-connect/token',
+            'urlResourceOwnerDetails' => 'https://sso-dev.hubla.dephub.go.id/realms/djpl/protocol/openid-connect/userinfo'
+        ]);
+
+        $accessToken = $provider->getAccessToken('refresh_token', [
+            'refresh_token' => \DB::table('oauth_sessions')->where('session_state', session('oauth_data')['session_state'])->first()->refresh_token
+        ]);
+
+        return response()->json(['access_token' => $accessToken->getToken()]);
+    }
 }
