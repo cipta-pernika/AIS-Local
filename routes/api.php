@@ -292,3 +292,5 @@ Route::get('renew-token', [OauthController::class, 'renewToken']);
 
 Route::get('check-token', [OauthController::class, 'checkIsTokenValid']);
 
+Route::get('logout-sso', [OauthController::class, 'logoutsso']);
+

@@ -182,6 +182,23 @@ class OauthController extends Controller
         return response()->json(['message' => 'Logout successful']);
     }
 
+    public function logoutsso()
+    {
+        // Clear session data
+        session()->forget('oauth_data');
+
+        $idToken = \DB::table('oauth_sessions')->where('session_state', session('oauth_data')['session_state'])->first()->id_token;
+        $logoutSSo = Http::get('https://sso-dev.hubla.dephub.go.id/realms/djpl/protocol/openid-connect/logout?id_token_hint='.$idToken);
+        // Redirect to SSO logout URL
+        // if($logoutSSo->getStatusCode() == 200){
+        //     $logoutUrl = 'https://sso-dev.hubla.dephub.go.id/realms/djpl/protocol/openid-connect/logout?redirect_url=https://sopbuntutksopbjm.com';
+        // }else{
+        //     $logoutUrl = 'https://sso-dev.hubla.dephub.go.id/realms/djpl/protocol/openid-connect/logout?redirect_url=https://sopbuntutksopbjm.com';
+        // }
+
+        return response()->json(['message' => 'Logout successful']);
+    }
+
     public function loginviasso()
     {
         return response()->json(['msg' => Socialite::driver('keycloak')->redirect()]);
