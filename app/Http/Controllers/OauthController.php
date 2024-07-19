@@ -271,9 +271,9 @@ class OauthController extends Controller
         }
 
         // Check Sanctum token
-        if (!Auth::guard('sanctum')->check()) {
-            return response()->json(['message' => 'Sanctum token invalid'], 401);
-        }
+        // if (!Auth::guard('sanctum')->check()) {
+        //     return response()->json(['message' => 'Sanctum token invalid'], 401);
+        // }
 
         return response()->json(['message' => 'Token is valid', 'data' => $response->json()], 200);
     }
