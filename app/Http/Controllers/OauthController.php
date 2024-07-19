@@ -171,11 +171,15 @@ class OauthController extends Controller
         session()->forget('oauth_data');
 
         $idToken = \DB::table('oauth_sessions')->where('session_state', session('oauth_data')['session_state'])->first()->id_token;
-        Http::get('https://sso-dev.hubla.dephub.go.id/realms/djpl/protocol/openid-connect/logout?id_token_hint='.$idToken);
+        $logoutSSo = Http::get('https://sso-dev.hubla.dephub.go.id/realms/djpl/protocol/openid-connect/logout?id_token_hint='.$idToken);
         // Redirect to SSO logout URL
-        $logoutUrl = 'https://sso-dev.hubla.dephub.go.id/realms/djpl/protocol/openid-connect/logout?redirect_url=https://sopbuntutksopbjm.com';
+        // if($logoutSSo->getStatusCode() == 200){
+        //     $logoutUrl = 'https://sso-dev.hubla.dephub.go.id/realms/djpl/protocol/openid-connect/logout?redirect_url=https://sopbuntutksopbjm.com';
+        // }else{
+        //     $logoutUrl = 'https://sso-dev.hubla.dephub.go.id/realms/djpl/protocol/openid-connect/logout?redirect_url=https://sopbuntutksopbjm.com';
+        // }
 
-        return redirect($logoutUrl);
+        return response()->json(['message' => 'Logout successful']);
     }
 
     public function loginviasso()
@@ -206,10 +210,31 @@ class OauthController extends Controller
             'urlResourceOwnerDetails' => 'https://sso-dev.hubla.dephub.go.id/realms/djpl/protocol/openid-connect/userinfo'
         ]);
 
+        $oauthData = session('oauth_data');
+
+        if($oauthData){
+            $sessionState = $oauthData['session_state'];
+        }else{
+            $sessionState = \DB::table('oauth_sessions')->orderBy('id','desc')->first()->session_state;
+        }
+
         $accessToken = $provider->getAccessToken('refresh_token', [
-            'refresh_token' => \DB::table('oauth_sessions')->where('session_state', session('oauth_data')['session_state'])->first()->refresh_token
+            'refresh_token' => \DB::table('oauth_sessions')->where('session_state', $sessionState)->first()->refresh_token
         ]);
 
         return response()->json(['access_token' => $accessToken->getToken()]);
+    }
+
+    public function checkIsTokenValid(){
+        $oauthData = session('oauth_data');
+
+        if($oauthData){
+            $sessionState = $oauthData['session_state'];
+        }else{
+            $sessionState = \DB::table('oauth_sessions')->orderBy('id','desc')->first()->session_state;
+        }
+        $accessToken = \DB::table('oauth_sessions')->where('session_state', $sessionState)->first()->access_token;
+        $response = Http::get('https://sso-dev.hubla.dephub.go.id/realms/djpl/protocol/openid-connect/userinfo?access_token='.$accessToken);
+        return response()->json(['message' => json_encode((String) $response->getBody())]);
     }
 }

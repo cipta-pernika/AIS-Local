@@ -290,3 +290,5 @@ Route::get('sso-session', [OauthController::class, 'ssosession']);
 
 Route::get('renew-token', [OauthController::class, 'renewToken']);
 
+Route::get('check-token', [OauthController::class, 'checkIsTokenValid']);
+
