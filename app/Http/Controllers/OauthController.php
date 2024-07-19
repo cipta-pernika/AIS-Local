@@ -136,11 +136,11 @@ class OauthController extends Controller
             ]);
 
             // dd($data['code']);
-            // try {
-            //     $resourceOwner = $provider->getResourceOwner($accessToken);
-            // } catch (\League\OAuth2\Client\Provider\Exception\IdentityProviderException $e) {
-            //     $resourceOwner = '{}';
-            // }
+            try {
+                $resourceOwner = $provider->getResourceOwner($accessToken);
+            } catch (\League\OAuth2\Client\Provider\Exception\IdentityProviderException $e) {
+                $resourceOwner = '{}';
+            }
 
 
             \DB::table('oauth_sessions')->updateOrInsert(
@@ -154,7 +154,7 @@ class OauthController extends Controller
                     'refresh_token' => $accessToken->getRefreshToken(),
                     'id_token' => $accessToken->getValues()['id_token'] ?? null,
                     'expires_in' => $accessToken->getExpires(),
-                    // 'resource_owner' => json_encode($resourceOwner->toArray()),
+                    'resource_owner' => json_encode($resourceOwner->toArray()),
                     'resource_owner' => '[]',
                     'updated_at' => now()
                 ]
