@@ -185,9 +185,17 @@ class OauthController extends Controller
     public function logoutsso()
     {
         // Clear session data
+        $oauthData = session('oauth_data');
+
+        if($oauthData){
+            $sessionState = $oauthData['session_state'];
+        }else{
+            $sessionState = \DB::table('oauth_sessions')->orderBy('id','desc')->first()->session_state;
+        }
+
         session()->forget('oauth_data');
 
-        $idToken = \DB::table('oauth_sessions')->where('session_state', session('oauth_data')['session_state'])->first()->id_token;
+        $idToken = \DB::table('oauth_sessions')->where('session_state', $sessionState)->first()->id_token;
         $logoutSSo = Http::get('https://sso-dev.hubla.dephub.go.id/realms/djpl/protocol/openid-connect/logout?id_token_hint='.$idToken);
         // Redirect to SSO logout URL
         // if($logoutSSo->getStatusCode() == 200){
