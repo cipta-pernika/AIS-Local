@@ -139,7 +139,7 @@ class OauthController extends Controller
             try {
                 $resourceOwner = $provider->getResourceOwner($accessToken);
             } catch (\League\OAuth2\Client\Provider\Exception\IdentityProviderException $e) {
-                $resourceOwner = '{}';
+                $resourceOwner = '[]';
             }
 
 
@@ -155,7 +155,7 @@ class OauthController extends Controller
                     'id_token' => $accessToken->getValues()['id_token'] ?? null,
                     'expires_in' => $accessToken->getExpires(),
                     'resource_owner' => json_encode($resourceOwner->toArray()),
-                    'resource_owner' => '[]',
+                    // 'resource_owner' => '[]',
                     'updated_at' => now()
                 ]
             );
