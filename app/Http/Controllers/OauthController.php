@@ -221,22 +221,22 @@ class OauthController extends Controller
         return Socialite::driver('keycloak')->scopes(['openid','profile','email','offline_access'])->redirect();
         // return redirect('https://sso-dev.hubla.dephub.go.id/realms/djpl/protocol/openid-connect/auth?client_id=sop-buntut-api&response_type=code&scope=openid&redirect_uri=https://sopbuntutksopbjm.com/ssocallback/fesopbuntut');
     }
-    
+
     public function loginviasso2()
     {
         // return response()->json(['msg' => Socialite::driver('keycloak')->redirect()]);
         return  response()->json(['success'=>true,'message' => str_replace('client_id=sop-buntut-api&','',Socialite::driver('keycloak')->scopes(['openid','profile','email','offline_access'])->redirect()->getTargetUrl())]);
         // return redirect('https://sso-dev.hubla.dephub.go.id/realms/djpl/protocol/openid-connect/auth?client_id=sop-buntut-api&response_type=code&scope=openid&redirect_uri=https://sopbuntutksopbjm.com/ssocallback/fesopbuntut');
     }
-    
+
     public function ssocallbackhandler(Request $request){
         $user = Socialite::driver('keycloak')->user();
-        
+
         // dd($user);
         session(['oauth_data' => $user]);
-        
+
         $tokenResponse = $user->accessTokenResponseBody;
-        
+
         \DB::table('oauth_sessions')->updateOrInsert(
                 ['session_state' => $tokenResponse['session_state']],
                 [
@@ -253,11 +253,11 @@ class OauthController extends Controller
                     'updated_at' => now()
                 ]
         );
-        
+
         return redirect('https://sopbuntutksopbjm.com/auth-pages/login?id=ZW1haWw6YWRtaW5AZGF0YWJhc2UuY29tLHBhc3N3b3JkOjEyMzQ1Ng==');
-        
+
     }
-    
+
     public function checkSSO(){
         $oauthData = session('oauth_data');
         // if ($oauthData) {
@@ -270,18 +270,16 @@ class OauthController extends Controller
         }
         $user = Socialite::driver('keycloak')->userFromToken($oauthData->token);
         $url = Socialite::driver('keycloak')->scopes(['openid','profile','email','offline_access'])->redirect()->getTargetUrl();
-        
-        
+
+
         $response = Http::withHeaders(['Authorization'=>'Bearer '.$oauthData->token])->post(env('KEYCLOAK_BASE_URL') . '/realms/' . env('KEYCLOAK_REALM') . '/protocol/openid-connect/token/introspect', [
-            'form_params' => [
-                'token' => $oauthData->token,
-                'client_id' => env('KEYCLOAK_CLIENT_ID'),
-                'client_secret' => env('KEYCLOAK_CLIENT_SECRET'),
-            ],
+            'token' => $oauthData->token,
+            'client_id' => env('KEYCLOAK_CLIENT_ID'),
+            'client_secret' => env('KEYCLOAK_CLIENT_SECRET'),
         ]);
 
         return json_decode($response->getBody(), true);
-        
+
         // return response()->json(['message'=>'', 'data'=> Http::withHeaders(['Accept'=>'application/json'])->get($url)->json(), 'user'=>$user]);
     }
 
