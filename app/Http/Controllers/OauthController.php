@@ -277,7 +277,8 @@ class OauthController extends Controller
         $oauthData = session('oauth_data');
         // dd($oauthData);
         if(!$oauthData){
-            return response()->json(['message'=>'unauthorized'],401);
+            // return response()->json(['message'=>'unauthorized'],401);
+            return redirect('https://sopbuntutksopbjm.com');
         }
         
         $sessionState = $oauthData->accessTokenResponseBody['session_state'];
