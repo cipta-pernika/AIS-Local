@@ -277,7 +277,7 @@ class OauthController extends Controller
         //     'client_id' => env('KEYCLOAK_CLIENT_ID'),
         //     'client_secret' => env('KEYCLOAK_CLIENT_SECRET'),
         // ]);
-        $response = Http::withHeaders(['Authorization'=>'Bearer '.$oauthData->token])->get('https://sso-dev.hubla.dephub.go.id/realms/djpl/protocol/openid-connect/userinfo');
+        $response = Http::withHeaders(['Authorization'=>'Bearer '.$oauthData->token])->get('https://sso-dev.hubla.dephub.go.id/realms/djpl/protocol/openid-connect/token');
 
         return json_decode($response->getBody(), true);
 
