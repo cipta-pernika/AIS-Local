@@ -230,66 +230,96 @@ class OauthController extends Controller
     }
 
     public function ssocallbackhandler(Request $request){
-        $user = Socialite::driver('keycloak')->user();
+        if(!$request->has('error')){
+            $user = Socialite::driver('keycloak')->user();
 
-        // dd($user);
-        session(['oauth_data' => $user]);
-
-        $tokenResponse = $user->accessTokenResponseBody;
-
-        \DB::table('oauth_sessions')->updateOrInsert(
-                ['session_state' => $tokenResponse['session_state']],
-                [
-                    'state' => $request->get('state'),
-                    'code' => $request->get('code'),
-                    'session_state' => $tokenResponse['session_state'],
-                    'iss' => $request->get('iss'),
-                    'access_token' => $tokenResponse['access_token'],
-                    'refresh_token' => $tokenResponse['refresh_token'],
-                    'id_token' => $tokenResponse['id_token'] ?? null,
-                    'expires_in' => $tokenResponse['expires_in'],
-                    'resource_owner' => json_encode($user->user),
-                    'created_at' => now(),
-                    'updated_at' => now()
-                ]
-        );
-
-        return redirect('https://sopbuntutksopbjm.com/auth-pages/login?id=ZW1haWw6YWRtaW5AZGF0YWJhc2UuY29tLHBhc3N3b3JkOjEyMzQ1Ng==');
+            // dd($user);
+            session(['oauth_data' => $user]);
+    
+            $tokenResponse = $user->accessTokenResponseBody;
+    
+            \DB::table('oauth_sessions')->updateOrInsert(
+                    ['session_state' => $tokenResponse['session_state']],
+                    [
+                        'state' => $request->get('state'),
+                        'code' => $request->get('code'),
+                        'session_state' => $tokenResponse['session_state'],
+                        'iss' => $request->get('iss'),
+                        'access_token' => $tokenResponse['access_token'],
+                        'refresh_token' => $tokenResponse['refresh_token'],
+                        'id_token' => $tokenResponse['id_token'] ?? null,
+                        'expires_in' => $tokenResponse['expires_in'],
+                        'resource_owner' => json_encode($user->user),
+                        'created_at' => now(),
+                        'updated_at' => now()
+                    ]
+            );
+    
+            return redirect('https://sopbuntutksopbjm.com/auth-pages/login?id=ZW1haWw6YWRtaW5AZGF0YWJhc2UuY29tLHBhc3N3b3JkOjEyMzQ1Ng==');
+        }else{
+            $oauthData = session('oauth_data');
+            if($oauthData){
+                \DB::table('oauth_sessions')->update(
+                    ['session_state'=>$oauthData->accessTokenResponseBody['session_state']],
+                    [
+                        'is_login'=>0,
+                        'updated_at'=>now()
+                    ]
+                );
+            }
+            
+            return redirect('https://sopbuntutksopbjm.com');
+        }
 
     }
 
     public function checkSSO(){
         $oauthData = session('oauth_data');
-        // if ($oauthData) {
-        //     $sessionState = $oauthData->accessTokenResponseBody['session_state'];
-        // } else {
-        //     $sessionState = \DB::table('oauth_sessions')->orderBy('id', 'desc')->first()->session_state;
-        // }
+        // dd($oauthData);
         if(!$oauthData){
             return response()->json(['message'=>'unauthorized'],401);
         }
-        $user = Socialite::driver('keycloak')->userFromToken($oauthData->token);
-        $url = Socialite::driver('keycloak')->scopes(['openid','profile','email','offline_access'])->redirect()->getTargetUrl();
+        
+        $sessionState = $oauthData->accessTokenResponseBody['session_state'];
+        $code = \DB::table('oauth_sessions')->where('session_state',$sessionState)->first()->code;
+        $url = Socialite::driver('keycloak')->scopes(['openid','profile','email','offline_access'])->redirect()->getTargetUrl()."&code=".$code."&prompt=none";
 
 
-        $accessToken = $oauthData->token;
+        // $accessToken = $oauthData->token;
 
-        $response = Http::asForm()->post(env('KEYCLOAK_BASE_URL') . '/realms/' . env('KEYCLOAK_REALM') . '/protocol/openid-connect/token/introspect', [
-            'token' => $accessToken,
-            'client_id' => env('KEYCLOAK_CLIENT_ID'),
-            'client_secret' => env('KEYCLOAK_CLIENT_SECRET'),
-        ]);
+        // $response = Http::withHeaders(['Accept'=>'application/json'])->asForm()->post(env('KEYCLOAK_BASE_URL') . '/realms/' . env('KEYCLOAK_REALM') . '/protocol/openid-connect/token/introspect', [
+        //     'token' => $accessToken,
+        //     'client_id' => env('KEYCLOAK_CLIENT_ID'),
+        //     'client_secret' => env('KEYCLOAK_CLIENT_SECRET'),
+        // ]);
 
-        $introspection = $response->json();
+        // $introspection = $response->json();
+        
+        
+        // if (isset($introspection['active']) && $introspection['active']) {
+        //     return response()->json(['message' => 'Token is valid', 'data' => $introspection], 200);
+        // } else {
+        //     return response()->json(['message' => 'Token is invalid or expired'], 401);
+        // }
+        
+        // return (response()->json( $this->getFinalUrl($url)));
 
-        if (isset($introspection['active']) && $introspection['active']) {
-            return response()->json(['message' => 'Token is valid', 'data' => $introspection], 200);
-        } else {
-            return response()->json(['message' => 'Token is invalid or expired'], 401);
-        }
-
-        // return response()->json(['message'=>'', 'data'=> Http::withHeaders(['Accept'=>'application/json'])->get($url)->json(), 'user'=>$user]);
+        return redirect($url);
     }
+    
+    public function getFinalUrl($url)
+    {
+        $client = new \GuzzleHttp\Client(['allow_redirects' => ['track_redirects' => true]]);
+        $redirs = [];
+        
+        $response = $client->get($url,[
+            'on_stats'=>function (\GuzzleHttp\TransferStats $stats) use (&$redirs){
+        		array_push($redirs, $stats->getEffectiveUri());
+        	},
+        ]);
+        return $redirs;
+    }
+
 
     public function ssosession()
     {
@@ -337,7 +367,13 @@ class OauthController extends Controller
         } else {
             $sessionState = \DB::table('oauth_sessions')->orderBy('id', 'desc')->first()->session_state;
         }
-        $accessToken = \DB::table('oauth_sessions')->where('session_state', $sessionState)->first()->access_token;
+        $oauthFromDB = \DB::table('oauth_sessions')->where('session_state', $sessionState)->first();
+        $accessToken = $oauthFromDB->access_token;
+        
+        // $code = $oauthData->code;
+        // $authUrl = Socialite::driver('keycloak')->scopes(['openid','profile','email','offline_access'])->redirect()->getTargetUrl()."&code=".$code."&prompt=none";
+        
+        // $finalUrl = $this->getFinalUrl($authUrl);
 
         $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . $accessToken

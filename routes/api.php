@@ -287,7 +287,8 @@ Route::get('/ssocallback/besopbuntut', [OauthController::class, 'ssocallbackhand
 
 Route::get('loginviasso', [OauthController::class, 'loginviasso']);
 
-Route::middleware(['validate.keycloak.token'])->get('checksso', [OauthController::class, 'checkSSO']);
+// Route::middleware(['validate.keycloak.token'])->get('checksso', [OauthController::class, 'checkSSO']);
+Route::get('checksso', [OauthController::class, 'checkSSO']);
 
 Route::post('logout', [OauthController::class, 'logout']);
 
