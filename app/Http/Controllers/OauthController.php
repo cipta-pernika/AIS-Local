@@ -235,9 +235,9 @@ class OauthController extends Controller
 
             // dd($user);
             session(['oauth_data' => $user]);
-    
+
             $tokenResponse = $user->accessTokenResponseBody;
-    
+
             \DB::table('oauth_sessions')->updateOrInsert(
                     ['session_state' => $tokenResponse['session_state']],
                     [
@@ -254,7 +254,7 @@ class OauthController extends Controller
                         'updated_at' => now()
                     ]
             );
-    
+
             return redirect('https://sopbuntutksopbjm.com/auth-pages/login?id=ZW1haWw6YWRtaW5AZGF0YWJhc2UuY29tLHBhc3N3b3JkOjEyMzQ1Ng==');
         }else{
             $oauthData = session('oauth_data');
@@ -267,7 +267,9 @@ class OauthController extends Controller
                     ]
                 );
             }
-            
+
+            session()->forget('oauth_data');
+
             return redirect('https://sopbuntutksopbjm.com');
         }
 
@@ -280,7 +282,7 @@ class OauthController extends Controller
             // return response()->json(['message'=>'unauthorized'],401);
             return redirect('https://sopbuntutksopbjm.com');
         }
-        
+
         $sessionState = $oauthData->accessTokenResponseBody['session_state'];
         $code = \DB::table('oauth_sessions')->where('session_state',$sessionState)->first()->code;
         $url = Socialite::driver('keycloak')->scopes(['openid','profile','email','offline_access'])->redirect()->getTargetUrl()."&code=".$code."&prompt=none";
@@ -295,24 +297,24 @@ class OauthController extends Controller
         // ]);
 
         // $introspection = $response->json();
-        
-        
+
+
         // if (isset($introspection['active']) && $introspection['active']) {
         //     return response()->json(['message' => 'Token is valid', 'data' => $introspection], 200);
         // } else {
         //     return response()->json(['message' => 'Token is invalid or expired'], 401);
         // }
-        
+
         // return (response()->json( $this->getFinalUrl($url)));
 
         return redirect($url);
     }
-    
+
     public function getFinalUrl($url)
     {
         $client = new \GuzzleHttp\Client(['allow_redirects' => ['track_redirects' => true]]);
         $redirs = [];
-        
+
         $response = $client->get($url,[
             'on_stats'=>function (\GuzzleHttp\TransferStats $stats) use (&$redirs){
         		array_push($redirs, $stats->getEffectiveUri());
@@ -370,10 +372,10 @@ class OauthController extends Controller
         }
         $oauthFromDB = \DB::table('oauth_sessions')->where('session_state', $sessionState)->first();
         $accessToken = $oauthFromDB->access_token;
-        
+
         // $code = $oauthData->code;
         // $authUrl = Socialite::driver('keycloak')->scopes(['openid','profile','email','offline_access'])->redirect()->getTargetUrl()."&code=".$code."&prompt=none";
-        
+
         // $finalUrl = $this->getFinalUrl($authUrl);
 
         $response = Http::withHeaders([
