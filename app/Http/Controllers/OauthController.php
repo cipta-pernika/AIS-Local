@@ -272,11 +272,12 @@ class OauthController extends Controller
         $url = Socialite::driver('keycloak')->scopes(['openid','profile','email','offline_access'])->redirect()->getTargetUrl();
 
 
-        $response = Http::withHeaders(['Authorization'=>'Bearer '.$oauthData->token])->post(env('KEYCLOAK_BASE_URL') . '/realms/' . env('KEYCLOAK_REALM') . '/protocol/openid-connect/token/introspect', [
-            'token' => $oauthData->token,
-            'client_id' => env('KEYCLOAK_CLIENT_ID'),
-            'client_secret' => env('KEYCLOAK_CLIENT_SECRET'),
-        ]);
+        // $response = Http::withHeaders(['Authorization'=>'Bearer '.$oauthData->token])->post(env('KEYCLOAK_BASE_URL') . '/realms/' . env('KEYCLOAK_REALM') . '/protocol/openid-connect/token/introspect', [
+        //     'token' => $oauthData->token,
+        //     'client_id' => env('KEYCLOAK_CLIENT_ID'),
+        //     'client_secret' => env('KEYCLOAK_CLIENT_SECRET'),
+        // ]);
+        $response = Http::withHeaders(['Authorization'=>'Bearer '.$oauthData->token])->get(Socialite::driver('keycloak')->getTokenUrl());
 
         return json_decode($response->getBody(), true);
 
