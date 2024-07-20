@@ -325,7 +325,8 @@ class OauthController extends Controller
         $oauthData = session('oauth_data');
 
         if ($oauthData) {
-            $sessionState = $oauthData['session_state'];
+            // $sessionState = $oauthData['session_state'];
+            $sessionState = $oauthData->accessTokenResponseBody['session_state'];
         } else {
             $sessionState = \DB::table('oauth_sessions')->orderBy('id', 'desc')->first()->session_state;
         }
