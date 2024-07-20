@@ -272,14 +272,21 @@ class OauthController extends Controller
         $url = Socialite::driver('keycloak')->scopes(['openid','profile','email','offline_access'])->redirect()->getTargetUrl();
 
 
-        // $response = Http::withHeaders(['Authorization'=>'Bearer '.$oauthData->token])->post(env('KEYCLOAK_BASE_URL') . '/realms/' . env('KEYCLOAK_REALM') . '/protocol/openid-connect/token/introspect', [
-        //     'token' => $oauthData->token,
-        //     'client_id' => env('KEYCLOAK_CLIENT_ID'),
-        //     'client_secret' => env('KEYCLOAK_CLIENT_SECRET'),
-        // ]);
-        $response = Http::withHeaders(['Authorization'=>'Bearer '.$oauthData->token])->get('https://sso-dev.hubla.dephub.go.id/realms/djpl/protocol/openid-connect/token');
+        $accessToken = $oauthData->token;
 
-        return json_decode($response->getBody(), true);
+        $response = Http::asForm()->post(env('KEYCLOAK_BASE_URL') . '/realms/' . env('KEYCLOAK_REALM') . '/protocol/openid-connect/token/introspect', [
+            'token' => $accessToken,
+            'client_id' => env('KEYCLOAK_CLIENT_ID'),
+            'client_secret' => env('KEYCLOAK_CLIENT_SECRET'),
+        ]);
+
+        $introspection = $response->json();
+
+        if (isset($introspection['active']) && $introspection['active']) {
+            return response()->json(['message' => 'Token is valid', 'data' => $introspection], 200);
+        } else {
+            return response()->json(['message' => 'Token is invalid or expired'], 401);
+        }
 
         // return response()->json(['message'=>'', 'data'=> Http::withHeaders(['Accept'=>'application/json'])->get($url)->json(), 'user'=>$user]);
     }
