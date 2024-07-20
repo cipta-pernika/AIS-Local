@@ -17,7 +17,7 @@ class ValidateKeycloakToken
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $token = Session::get('keycloak_user.token');
+        $token = Session::get('oauth_data')->token;
 
         if (!$token || !$this->isTokenValid($token)) {
             return redirect('/logout');

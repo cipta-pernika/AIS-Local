@@ -170,6 +170,7 @@ return [
         App\Providers\Filament\AdminPanelProvider::class,
         App\Providers\RouteServiceProvider::class,
         // App\Providers\KeycloakProvider::class,
+        \SocialiteProviders\Manager\ServiceProvider::class,
     ])->toArray(),
 
     /*

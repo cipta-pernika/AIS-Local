@@ -217,9 +217,72 @@ class OauthController extends Controller
 
     public function loginviasso()
     {
-        return response()->json(['msg' => Socialite::driver('keycloak')->redirect()]);
-
+        // return response()->json(['msg' => Socialite::driver('keycloak')->redirect()]);
+        return Socialite::driver('keycloak')->scopes(['openid','profile','email','offline_access'])->redirect();
         // return redirect('https://sso-dev.hubla.dephub.go.id/realms/djpl/protocol/openid-connect/auth?client_id=sop-buntut-api&response_type=code&scope=openid&redirect_uri=https://sopbuntutksopbjm.com/ssocallback/fesopbuntut');
+    }
+    
+    public function loginviasso2()
+    {
+        // return response()->json(['msg' => Socialite::driver('keycloak')->redirect()]);
+        return  response()->json(['success'=>true,'message' => str_replace('client_id=sop-buntut-api&','',Socialite::driver('keycloak')->scopes(['openid','profile','email','offline_access'])->redirect()->getTargetUrl())]);
+        // return redirect('https://sso-dev.hubla.dephub.go.id/realms/djpl/protocol/openid-connect/auth?client_id=sop-buntut-api&response_type=code&scope=openid&redirect_uri=https://sopbuntutksopbjm.com/ssocallback/fesopbuntut');
+    }
+    
+    public function ssocallbackhandler(Request $request){
+        $user = Socialite::driver('keycloak')->user();
+        
+        // dd($user);
+        session(['oauth_data' => $user]);
+        
+        $tokenResponse = $user->accessTokenResponseBody;
+        
+        \DB::table('oauth_sessions')->updateOrInsert(
+                ['session_state' => $tokenResponse['session_state']],
+                [
+                    'state' => $request->get('state'),
+                    'code' => $request->get('code'),
+                    'session_state' => $tokenResponse['session_state'],
+                    'iss' => $request->get('iss'),
+                    'access_token' => $tokenResponse['access_token'],
+                    'refresh_token' => $tokenResponse['refresh_token'],
+                    'id_token' => $tokenResponse['id_token'] ?? null,
+                    'expires_in' => $tokenResponse['expires_in'],
+                    'resource_owner' => json_encode($user->user),
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ]
+        );
+        
+        return redirect('https://sopbuntutksopbjm.com/auth-pages/login?id=ZW1haWw6YWRtaW5AZGF0YWJhc2UuY29tLHBhc3N3b3JkOjEyMzQ1Ng==');
+        
+    }
+    
+    public function checkSSO(){
+        $oauthData = session('oauth_data');
+        // if ($oauthData) {
+        //     $sessionState = $oauthData->accessTokenResponseBody['session_state'];
+        // } else {
+        //     $sessionState = \DB::table('oauth_sessions')->orderBy('id', 'desc')->first()->session_state;
+        // }
+        if(!$oauthData){
+            return response()->json(['message'=>'unauthorized'],401);
+        }
+        $user = Socialite::driver('keycloak')->userFromToken($oauthData->token);
+        $url = Socialite::driver('keycloak')->scopes(['openid','profile','email','offline_access'])->redirect()->getTargetUrl();
+        
+        
+        $response = Http::withHeaders(['Authorization'=>'Bearer '.$oauthData->token])->post(env('KEYCLOAK_BASE_URL') . '/realms/' . env('KEYCLOAK_REALM') . '/protocol/openid-connect/token/introspect', [
+            'form_params' => [
+                'token' => $oauthData->token,
+                'client_id' => env('KEYCLOAK_CLIENT_ID'),
+                'client_secret' => env('KEYCLOAK_CLIENT_SECRET'),
+            ],
+        ]);
+
+        return json_decode($response->getBody(), true);
+        
+        // return response()->json(['message'=>'', 'data'=> Http::withHeaders(['Accept'=>'application/json'])->get($url)->json(), 'user'=>$user]);
     }
 
     public function ssosession()

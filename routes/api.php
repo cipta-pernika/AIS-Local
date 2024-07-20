@@ -271,7 +271,8 @@ Route::resource('pkk-assign-histories', App\Http\Controllers\API\PkkAssignHistor
 Route::resource('pkk-histories', App\Http\Controllers\API\PkkHistoryAPIController::class)
     ->except(['create', 'edit']);
 
-Route::get('authorization', [OauthController::class, 'authorization']);
+// Route::get('authorization', [OauthController::class, 'authorization']);
+Route::get('authorization', [OauthController::class, 'loginviasso2']);
 
 Route::get('/ssocallback/fesopbuntut', [OauthController::class, 'handleCallback'])
     ->name('callback.frontend');
@@ -279,10 +280,14 @@ Route::get('/ssocallback/fesopbuntut', [OauthController::class, 'handleCallback'
 Route::post('/ssocallback/besopbuntut', [OauthController::class, 'handleCallbackBackend'])
     ->name('callback.backend');
 
-Route::get('/ssocallback/besopbuntut', [OauthController::class, 'handleCallbackBackendGet'])
+// Route::get('/ssocallback/besopbuntut', [OauthController::class, 'handleCallbackBackendGet'])
+//     ->name('callback.backend');
+Route::get('/ssocallback/besopbuntut', [OauthController::class, 'ssocallbackhandler'])
     ->name('callback.backend');
 
 Route::get('loginviasso', [OauthController::class, 'loginviasso']);
+
+Route::middleware(['validate.keycloak.token'])->get('checksso', [OauthController::class, 'checkSSO']);
 
 Route::post('logout', [OauthController::class, 'logout']);
 
