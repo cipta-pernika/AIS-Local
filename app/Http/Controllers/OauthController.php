@@ -368,7 +368,8 @@ class OauthController extends Controller
             // $sessionState = $oauthData['session_state'];
             $sessionState = $oauthData->accessTokenResponseBody['session_state'];
         } else {
-            $sessionState = \DB::table('oauth_sessions')->orderBy('id', 'desc')->first()->session_state;
+            // $sessionState = \DB::table('oauth_sessions')->orderBy('id', 'desc')->first()->session_state;
+            return response()->json(['message' => 'unauthorized'], 401);
         }
         $oauthFromDB = \DB::table('oauth_sessions')->where('session_state', $sessionState)->first();
         $accessToken = $oauthFromDB->access_token;
