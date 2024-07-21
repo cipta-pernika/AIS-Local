@@ -256,7 +256,7 @@ class OauthController extends Controller
                     ]
             );
 
-            return redirect('https://sopbuntutksopbjm.com/auth-pages/login?id=ZW1haWw6YWRtaW5AZGF0YWJhc2UuY29tLHBhc3N3b3JkOjEyMzQ1Ng==');
+            return redirect('https://sopbuntutksopbjm.com/auth-pages/login?id=ZW1haWw6YWRtaW5AZGF0YWJhc2UuY29tLHBhc3N3b3JkOjEyMzQ1Ng==&session_state='.$tokenResponse['session_state'].'&code='.$tokenResponse['code']);
         }else{
             $oauthData = session('oauth_data');
             if($oauthData){
@@ -315,7 +315,7 @@ class OauthController extends Controller
         }else{
             $oauthData = session('oauth_data');
         }
-        
+
         if ($oauthData) {
             return response()->json(['error'=>false, 'message' => $oauthData]);
         } else {
