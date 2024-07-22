@@ -56,11 +56,11 @@
                     <td>{{ isset($summaryData['pandu_count']) && isset($summaryData['pandu_count']['detail']['tidak_terjadwal']) ? $summaryData['pandu_count']['detail']['tidak_terjadwal'] : '' }}</td>
 
                 </tr>
-                <tr>
+                <!-- <tr>
                     <td>Pandu Tervalidasi</td>
                     <td>{{ isset($summaryData['pandu_count']) && isset($summaryData['pandu_count']['detail']['valid']) ? $summaryData['pandu_count']['detail']['valid'] : '' }}</td>
 
-                </tr>
+                </tr> -->
                 <tr>
                     <td>Rencana Bongkar Muat</td>
                     <td>{{ isset($summaryData['bongkar_muat_count']) && isset($summaryData['bongkar_muat_count']['detail']['terlambat']) ? $summaryData['bongkar_muat_count']['detail']['terlambat'] : '' }}</td>
@@ -71,11 +71,11 @@
                     <td>{{ isset($summaryData['bongkar_muat_count']) && isset($summaryData['bongkar_muat_count']['detail']['tidak_terjadwal']) ? $summaryData['bongkar_muat_count']['detail']['tidak_terjadwal'] : '' }}</td>
 
                 </tr>
-                <tr>
+                <!-- <tr>
                     <td>Bongkar Muat Tervalidasi</td>
                     <td>{{ isset($summaryData['bongkar_muat_count']) && isset($summaryData['bongkar_muat_count']['detail']['valid']) ? $summaryData['bongkar_muat_count']['detail']['valid'] : '' }}</td>
 
-                </tr>
+                </tr> -->
                 <tr>
                     <td>Tongkang dipasangkan dengan Tug Boat</td>
                     <td>{{ isset($summaryData['totalpaired']) ? $summaryData['totalpaired'] : '0' }}</td>
