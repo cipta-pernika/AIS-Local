@@ -9,7 +9,7 @@ use App\Models\KeycloakUser as User;
 
 class KeycloakProvider extends AbstractProvider
 {
-    protected $scopes = ['openid', 'profile', 'email'];
+    protected $scopes = ['openid', 'profile', 'email', 'offline_access'];
     protected $scopeSeparator = ' ';
 
     protected $usesPKCE = true;
