@@ -41,18 +41,18 @@ class Login extends SimplePage
 
     public function mount(): void
     {
-        if (Filament::auth()->check()) {
-            redirect()->intended(Filament::getUrl());
-        }
-        // Optional: If you want to automatically log in a specific user, you can use their email.
-        $userToAutoLogin = 'admin@database.com';
-        $user = Filament::auth()->getProvider()->retrieveByCredentials(['email' => $userToAutoLogin]);
+        // if (Filament::auth()->check()) {
+        //     redirect()->intended(Filament::getUrl());
+        // }
+        // // Optional: If you want to automatically log in a specific user, you can use their email.
+        // $userToAutoLogin = 'admin@database.com';
+        // $user = Filament::auth()->getProvider()->retrieveByCredentials(['email' => $userToAutoLogin]);
 
-        if ($user) {
-            Filament::auth()->login($user);
-            redirect()->intended(Filament::getUrl());
-        }
-        $this->form->fill();
+        // if ($user) {
+        //     Filament::auth()->login($user);
+        //     redirect()->intended(Filament::getUrl());
+        // }
+        // $this->form->fill();
     }
 
     public function authenticate(): ?LoginResponse

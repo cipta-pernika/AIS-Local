@@ -3,6 +3,8 @@
 namespace App\Providers\Filament;
 
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
+use DutchCodingCompany\FilamentSocialite\FilamentSocialitePlugin;
+use DutchCodingCompany\FilamentSocialite\Provider;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -22,6 +24,8 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Filament\Support\Enums\MaxWidth;
 use Jeffgreco13\FilamentBreezy\BreezyCore;
+use Laravel\Socialite\Contracts\User as SocialiteUserContract;
+use Illuminate\Contracts\Auth\Authenticatable;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -75,8 +79,37 @@ class AdminPanelProvider extends PanelProvider
                         'sm' => 2,
                     ]),
                 BreezyCore::make(),
+                FilamentSocialitePlugin::make()
+                    // (required) Add providers corresponding with providers in `config/services.php`. 
+                    ->providers([
+                        // Create a provider 'gitlab' corresponding to the Socialite driver with the same name.
+                        Provider::make('keycloak')
+                            ->label('HUBLA')
+                            ->icon('fab-usps')
+                            ->color(Color::hex('#2f2a6b'))
+                            ->outlined(false)
+                            ->stateless(false)
+                            ->scopes(['...'])
+                            ->with(['...']),
+                    ])
+                    // (optional) Override the panel slug to be used in the oauth routes. Defaults to the panel ID.
+                    ->slug('admin')
+                    // (optional) Change the associated model class.
+                    ->userModelClass(\App\Models\User::class)
             ])
             ->databaseNotifications()
+            // ->providers([
+            //     // Create a provider 'gitlab' corresponding to the Socialite driver with the same name.
+            //     Provider::make('gitlab')
+            //         ->label('GitLab')
+            //         ->icon('fab-gitlab')
+            //         ->color(Color::hex('#2f2a6b'))
+            //         ->outlined(false)
+            //         ->stateless(false)
+            //         ->scopes(['...'])
+            //         ->with(['...']),
+            // ])
+            ->spa()
             ->plugin(
                 BreezyCore::make(),
                 \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make()
