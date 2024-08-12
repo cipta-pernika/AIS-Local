@@ -23,10 +23,16 @@ class AisDataChart extends ChartWidget
         $endDate = now();
 
         $data = DB::table('ais_data_positions')
-            ->select(DB::raw('DATE_FORMAT(created_at, "%Y-%m") as date'), DB::raw('COUNT(*) as aggregate'))
+            ->select(DB::raw('DATE_FORMAT(created_at, "%Y-%m") as date'))
             ->whereBetween('created_at', [$startDate, $endDate])
             ->groupBy('date')
-            ->get();
+            ->get()
+            ->map(function ($item) {
+                $item->aggregate = DB::table('ais_data_positions')
+                    ->where(DB::raw('DATE_FORMAT(created_at, "%Y-%m")'), $item->date)
+                    ->count();
+                return $item;
+            });
 
         $aggregates = $data->pluck('aggregate');
         $dates = $data->pluck('date');
