@@ -13,26 +13,26 @@ use Filament\Pages\Dashboard as BaseDashboard;
 
 class Dashboard extends BaseDashboard
 {
-    use BaseDashboard\Concerns\HasFiltersForm;
+    // use BaseDashboard\Concerns\HasFiltersForm;
 
-    public function filtersForm(Form $form): Form
-    {
-        return $form
-            ->schema([
-                Section::make()
-                    ->schema([
-                        Select::make('pelabuhan_id')
-                            ->native(false)
-                            ->label('Pelabuhan')
-                            ->multiple(false)->options(Pelabuhan::all()->pluck('name', 'id'))
-                            ->searchable(),
-                        DatePicker::make('startDate')
-                            ->maxDate(fn (Get $get) => $get('endDate') ?: now()),
-                        DatePicker::make('endDate')
-                            ->minDate(fn (Get $get) => $get('startDate') ?: now())
-                            ->maxDate(now()),
-                    ])
-                    ->columns(3),
-            ]);
-    }
+    // public function filtersForm(Form $form): Form
+    // {
+    //     return $form
+    //         ->schema([
+    //             Section::make()
+    //                 ->schema([
+    //                     Select::make('pelabuhan_id')
+    //                         ->native(false)
+    //                         ->label('Pelabuhan')
+    //                         ->multiple(false)->options(Pelabuhan::all()->pluck('name', 'id'))
+    //                         ->searchable(),
+    //                     DatePicker::make('startDate')
+    //                         ->maxDate(fn (Get $get) => $get('endDate') ?: now()),
+    //                     DatePicker::make('endDate')
+    //                         ->minDate(fn (Get $get) => $get('startDate') ?: now())
+    //                         ->maxDate(now()),
+    //                 ])
+    //                 ->columns(3),
+    //         ]);
+    // }
 }

@@ -12,7 +12,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Tables\Columns\ViewColumn;
+use Filament\Tables\Columns\ViewColumn;
 
 class ImptBongkarMuatResource extends Resource
 {

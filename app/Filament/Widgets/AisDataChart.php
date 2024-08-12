@@ -30,22 +30,6 @@ class AisDataChart extends ChartWidget
             \Illuminate\Support\Carbon::parse($this->filters['endDate']) :
             now();
 
-        // $pelabuhanId = $this->filters['pelabuhan_id'] ?? null;
-
-        // $query = AisDataPosition::query()
-        //     ->when($pelabuhanId, function ($query) use ($pelabuhanId) {
-        //         $query->whereHas('sensorData.sensor', function ($subquery) use ($pelabuhanId) {
-        //             $subquery->where('datalogger_id', $pelabuhanId);
-        //         });
-        //     })
-        //     ->whereBetween('created_at', [$startDate, $endDate]);
-
-        // $data = $query->selectRaw('COUNT(*) as aggregate, DATE_FORMAT(created_at, "%Y-%m") as date')
-        //     ->groupBy('date')
-        //     ->get();
-
-        // $data = collect($data);
-
         $data = Trend::model(AisDataPosition::class)
             ->between(
                 start: $startDate,
@@ -54,14 +38,17 @@ class AisDataChart extends ChartWidget
             ->perMonth()
             ->count();
 
+        $aggregates = $data->pluck('aggregate');
+        $dates = $data->pluck('date');
+
         return [
             'datasets' => [
                 [
                     'label' => 'Ais Data',
-                    'data' => $data->map(fn (TrendValue $value) => $value->aggregate),
+                    'data' => $aggregates,
                 ],
             ],
-            'labels' => $data->map(fn (TrendValue $value) => $value->date),
+            'labels' => $dates,
         ];
     }
 
