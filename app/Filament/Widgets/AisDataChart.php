@@ -6,13 +6,11 @@ use App\Models\AisData;
 use App\Models\AisDataPosition;
 use Carbon\Carbon;
 use Filament\Widgets\ChartWidget;
-use Filament\Widgets\Concerns\InteractsWithPageFilters;
 use Flowframe\Trend\Trend;
 use Flowframe\Trend\TrendValue;
 
 class AisDataChart extends ChartWidget
 {
-    use InteractsWithPageFilters;
     protected static ?string $heading = 'AIS DATA';
 
     public function getDescription(): ?string
@@ -22,13 +20,8 @@ class AisDataChart extends ChartWidget
 
     protected function getData(): array
     {
-        $startDate = filled($this->filters['startDate'] ?? null) ?
-            \Illuminate\Support\Carbon::parse($this->filters['startDate']) :
-            now()->subYear();
-
-        $endDate = filled($this->filters['endDate'] ?? null) ?
-            \Illuminate\Support\Carbon::parse($this->filters['endDate']) :
-            now();
+        $startDate = now()->subYear();
+        $endDate = now();
 
         $data = Trend::model(AisDataPosition::class)
             ->between(
