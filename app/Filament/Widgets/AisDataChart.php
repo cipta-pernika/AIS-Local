@@ -6,8 +6,7 @@ use App\Models\AisData;
 use App\Models\AisDataPosition;
 use Carbon\Carbon;
 use Filament\Widgets\ChartWidget;
-use Flowframe\Trend\Trend;
-use Flowframe\Trend\TrendValue;
+use Illuminate\Support\Facades\DB;
 
 class AisDataChart extends ChartWidget
 {
@@ -23,13 +22,11 @@ class AisDataChart extends ChartWidget
         $startDate = now()->subYear();
         $endDate = now();
 
-        $data = Trend::model(AisDataPosition::class)
-            ->between(
-                start: $startDate,
-                end: $endDate,
-            )
-            ->perMonth()
-            ->count();
+        $data = DB::table('ais_data_positions')
+            ->select(DB::raw('DATE_FORMAT(created_at, "%Y-%m") as date'), DB::raw('COUNT(*) as aggregate'))
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->groupBy('date')
+            ->get();
 
         $aggregates = $data->pluck('aggregate');
         $dates = $data->pluck('date');
