@@ -19,12 +19,8 @@ class AisDataChart extends ChartWidget
 
     protected function getData(): array
     {
-        $startDate = now()->subYear();
-        $endDate = now();
-
         $data = DB::table('ais_data_positions')
             ->select(DB::raw('DATE_FORMAT(created_at, "%Y-%m") as date'))
-            ->whereBetween('created_at', [$startDate, $endDate])
             ->groupBy('date')
             ->get()
             ->map(function ($item) {
