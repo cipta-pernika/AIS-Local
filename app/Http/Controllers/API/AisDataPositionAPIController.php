@@ -28,38 +28,10 @@ class AisDataPositionAPIController extends AppBaseController
      */
     public function index(Request $request): JsonResponse
     {
-        $perPage = $request->get('limit', 15); // Default to 15 if limit is not provided
+        $perPage = $request->get('per_page', 15);
+        $aisDataPositions = $this->aisDataPositionRepository->paginate($perPage);
 
-        if ($request->has('search')) {
-            $searchTerm = $request->input('search');
-
-            // Load the results directly from the model
-            $allAisDataPositions = AisDataPosition::where('name', 'like', '%' . $searchTerm . '%')->get();
-        } else {
-            // Retrieve all AisDataPositions using the repository's "all" method
-            $allAisDataPositions = $this->aisDataPositionRepository->all(
-                $request->except(['skip', 'limit'])
-            );
-        }
-
-        // Manually paginate the results
-        $aisDataPositions = $allAisDataPositions->slice(
-            $request->get('skip', 0),
-            $perPage
-        )->values(); // Reset keys to start from 0
-
-        $aisDataPositions->load('vessel');
-
-        // Return a JSON response containing the paginated data and pagination meta
-        return $this->sendResponse([
-            'data' => $aisDataPositions->toArray(), // Paginated data
-            'pagination' => [
-                'total' => $allAisDataPositions->count(), // Total number of records
-                'per_page' => $perPage, // Records per page
-                'current_page' => $request->get('skip', 0) / $perPage + 1, // Current page number
-                'last_page' => ceil($allAisDataPositions->count() / $perPage), // Last page number
-            ],
-        ], 'Ais Data Positions retrieved successfully');
+        return $this->sendResponse($aisDataPositions->toArray(), 'Ais Data Positions retrieved successfully');
     }
 
     /**
