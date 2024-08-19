@@ -300,3 +300,7 @@ Route::get('check-token', [OauthController::class, 'checkIsTokenValid']);
 
 Route::get('logout-sso', [OauthController::class, 'logoutsso']);
 
+
+
+Route::resource('ais-data-positions', App\Http\Controllers\API\AisDataPositionAPIController::class)
+    ->except(['create', 'edit']);

@@ -97,3 +97,4 @@ Route::resource('pkk-histories', App\Http\Controllers\PkkHistoryController::clas
 
 Route::get('loginviasso', [OauthController::class, 'loginviasso']);
 Route::get('authorization', [OauthController::class, 'authorization']);
+Route::resource('ais-data-positions', App\Http\Controllers\AisDataPositionController::class);
