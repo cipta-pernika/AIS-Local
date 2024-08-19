@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use AisDataPosition;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\AisDataPositionExport;
+use App\Models\AisDataPosition;
 use Carbon\Carbon;
 
 class ExportController extends Controller
@@ -14,7 +14,7 @@ class ExportController extends Controller
         
     }
 
-    public function exportaisdatapositions(){
+    public function aisdatapositionsexport(){
 
         $dateRange = request('dateRange', []);
 
