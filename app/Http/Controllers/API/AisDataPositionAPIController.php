@@ -29,7 +29,9 @@ class AisDataPositionAPIController extends AppBaseController
     public function index(Request $request): JsonResponse
     {
         $perPage = $request->get('per_page', 15);
-        $aisDataPositions = $this->aisDataPositionRepository->paginate($perPage);
+        $limit = $request->get('limit', $perPage);
+        $page = $request->get('page', 1);
+        $aisDataPositions = $this->aisDataPositionRepository->paginate($limit, ['*'], 'page', $page);
 
         return $this->sendResponse($aisDataPositions->toArray(), 'Ais Data Positions retrieved successfully');
     }
