@@ -8,3 +8,5 @@ ip
 do
 ipwhois
 image-tool
+serial
+function-npm
