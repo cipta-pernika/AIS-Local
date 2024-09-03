@@ -98,3 +98,4 @@ Route::get('playback', [HelperController::class, 'playback'])->name('playback');
 Route::get('loginviasso', [OauthController::class, 'loginviasso']);
 Route::get('authorization', [OauthController::class, 'authorization']);
 // Route::resource('ais-data-positions', App\Http\Controllers\AisDataPositionController::class);
+Route::resource('anomaly-variables', App\Http\Controllers\AnomalyVariableController::class);

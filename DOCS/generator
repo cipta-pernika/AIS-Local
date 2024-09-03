@@ -1,1 +1,1 @@
-php artisan infyom:api_scaffold AisDataPosition --skip=views,menu,tests --fromTable --table=ais_data_positions
+php artisan infyom:api_scaffold AnomalyVariable --skip=views,menu,tests --fromTable --table=anomaly_variables
