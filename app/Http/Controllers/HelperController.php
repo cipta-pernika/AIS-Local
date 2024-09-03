@@ -16,6 +16,7 @@ use App\Models\DataMandiriPelaksanaanKapal;
 use App\Models\EventTracking;
 use App\Models\Geofence;
 use App\Models\GeofenceBinding;
+use App\Models\GeofenceType;
 use App\Models\ImptPelayananKapal;
 use App\Models\ImptPenggunaanAlat;
 use App\Models\InaportnetBongkarMuat;
@@ -49,6 +50,11 @@ use Illuminate\Support\Facades\Validator;
 
 class HelperController extends Controller
 {
+    public function geofencetypescreate(Request $request)
+    {
+        $geofenceType = GeofenceType::create($request->all());
+        return response()->json($geofenceType, 201);
+    }
     public function playback()
     {
         $source = request('source');
