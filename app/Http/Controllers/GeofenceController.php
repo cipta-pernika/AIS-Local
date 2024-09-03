@@ -131,24 +131,24 @@ class GeofenceController extends Controller
             }
         }
 
-        $geod = Geofence::join('geofence_bindings', 'geofences.id', 'geofence_bindings.geofence_id')
-            ->join('assets', 'geofence_bindings.asset_id', 'assets.id')
-            ->where('geofences.id', $geo->id)
-            ->select(
-                DB::raw('GROUP_CONCAT(DISTINCT assets.asset_name ORDER BY assets.id) AS assets_name'),
-                'geofences.type_geo',
-                'geofences.id',
-                'geometry',
-                'radius',
-                'type',
-                'asset_id',
-                'geofence_name'
-            )
-            ->first();
+        // $geod = Geofence::join('geofence_bindings', 'geofences.id', 'geofence_bindings.geofence_id')
+        //     ->join('assets', 'geofence_bindings.asset_id', 'assets.id')
+        //     ->where('geofences.id', $geo->id)
+        //     ->select(
+        //         DB::raw('GROUP_CONCAT(DISTINCT assets.asset_name ORDER BY assets.id) AS assets_name'),
+        //         'geofences.type_geo',
+        //         'geofences.id',
+        //         'geometry',
+        //         'radius',
+        //         'type',
+        //         'asset_id',
+        //         'geofence_name'
+        //     )
+        //     ->first();
 
         return response()->json([
             'success' => true,
-            'message' => $geod,
+            'message' => $geo,
         ], 200);
     }
 
