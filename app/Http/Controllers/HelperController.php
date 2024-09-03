@@ -44,7 +44,6 @@ use Location\Coordinate;
 use Location\Distance\Haversine;
 use Location\Distance\Vincenty;
 use Location\Polygon;
-use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
@@ -672,9 +671,6 @@ class HelperController extends Controller
                                 try {
                                     $recipient = User::first();
 
-                                    Notification::make()
-                                        ->title($aisData->vessel->vessel_name . ' Inside ' . $value['geofence_name'] . ' Geofence')
-                                        ->sendToDatabase($recipient);
                                 } catch (\Exception $e) {
                                 }
                             }
@@ -716,9 +712,6 @@ class HelperController extends Controller
                                     try {
                                         $recipient = User::first();
 
-                                        Notification::make()
-                                            ->title($aisData->vessel->vessel_name . ' Outside ' . $value['geofence_name'] . ' Geofence')
-                                            ->sendToDatabase($recipient);
                                     } catch (\Exception $e) {
                                     }
                                 }
@@ -767,9 +760,6 @@ class HelperController extends Controller
                                 try {
                                     $recipient = User::first();
 
-                                    Notification::make()
-                                        ->title($aisData->vessel->vessel_name . ' Inside ' . $value['geofence_name'] . ' Geofence')
-                                        ->sendToDatabase($recipient);
                                 } catch (\Exception $e) {
                                 }
                             }
@@ -824,9 +814,6 @@ class HelperController extends Controller
                                     try {
                                         $recipient = User::first();
 
-                                        Notification::make()
-                                            ->title($aisData->vessel->vessel_name . ' Outside ' . $value['geofence_name'] . ' Geofence')
-                                            ->sendToDatabase($recipient);
                                     } catch (\Exception $e) {
                                     }
                                 }
@@ -2199,9 +2186,6 @@ class HelperController extends Controller
                                         try {
                                             $recipient = User::first();
 
-                                            Notification::make()
-                                                ->title($radarData->target_id . ' Inside ' . $value['geofence_name'] . ' Geofence ~ Speed  ' . $radarData->speed)
-                                                ->sendToDatabase($recipient);
                                         } catch (\Exception $e) {
                                         }
                                     }
@@ -2251,9 +2235,6 @@ class HelperController extends Controller
                                         try {
                                             $recipient = User::first();
 
-                                            Notification::make()
-                                                ->title($message)
-                                                ->sendToDatabase($recipient);
                                         } catch (\Exception $e) {
                                         }
                                     }
@@ -2291,9 +2272,6 @@ class HelperController extends Controller
                                         try {
                                             $recipient = User::first();
 
-                                            Notification::make()
-                                                ->title($radarData->target_id . ' Inside ' . $value['geofence_name'] . ' Geofence ~ Speed  ' . $radarData->speed)
-                                                ->sendToDatabase($recipient);
                                         } catch (\Exception $e) {
                                         }
                                     }
@@ -2344,9 +2322,6 @@ class HelperController extends Controller
                                         try {
                                             $recipient = User::first();
 
-                                            Notification::make()
-                                                ->title($radarData->target_id . ' Outside ' . $value['geofence_name'] . ' Geofence ~ Speed  ' . $radarData->speed)
-                                                ->sendToDatabase($recipient);
                                         } catch (\Exception $e) {
                                         }
                                     }
@@ -2452,9 +2427,6 @@ class HelperController extends Controller
                                     try {
                                         $recipient = User::first();
 
-                                        Notification::make()
-                                            ->title($radarData->target_id . ' Inside ' . $value['geofence_name'] . ' Geofence ~ Speed  ' . $radarData->speed)
-                                            ->sendToDatabase($recipient);
                                     } catch (\Exception $e) {
                                     }
                                 }
@@ -2504,9 +2476,6 @@ class HelperController extends Controller
                                     try {
                                         $recipient = User::first();
 
-                                        Notification::make()
-                                            ->title($message)
-                                            ->sendToDatabase($recipient);
                                     } catch (\Exception $e) {
                                     }
                                 }
@@ -2544,9 +2513,6 @@ class HelperController extends Controller
                                     try {
                                         $recipient = User::first();
 
-                                        Notification::make()
-                                            ->title($radarData->target_id . ' Inside ' . $value['geofence_name'] . ' Geofence ~ Speed  ' . $radarData->speed)
-                                            ->sendToDatabase($recipient);
                                     } catch (\Exception $e) {
                                     }
                                 }
@@ -2597,9 +2563,6 @@ class HelperController extends Controller
                                     try {
                                         $recipient = User::first();
 
-                                        Notification::make()
-                                            ->title($radarData->target_id . ' Outside ' . $value['geofence_name'] . ' Geofence ~ Speed  ' . $radarData->speed)
-                                            ->sendToDatabase($recipient);
                                     } catch (\Exception $e) {
                                     }
                                 }
