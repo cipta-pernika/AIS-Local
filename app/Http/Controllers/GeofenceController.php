@@ -132,7 +132,7 @@ class GeofenceController extends Controller
         }
 
         $geod = Geofence::join('geofence_bindings', 'geofences.id', 'geofence_bindings.geofence_id')
-            ->join('asset', 'geofence_bindings.asset_id', 'assets.id')
+            ->join('assets', 'geofence_bindings.asset_id', 'assets.id')
             ->where('geofences.id', $geo->id)
             ->select(
                 DB::raw('GROUP_CONCAT(DISTINCT assets.asset_name ORDER BY assets.id) AS assets_name'),
