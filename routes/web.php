@@ -28,7 +28,8 @@ use Inertia\Inertia;
 // });
 
 Route::get('/', function () {
-    return Redirect::to('/admin');
+    // return Redirect::to('/admin');
+    return view('welcome');
 });
 
 Route::get('dailyreport', [HelperController::class, 'dailyreportprint']);
