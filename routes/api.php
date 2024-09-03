@@ -277,13 +277,13 @@ Route::get('authorization', [OauthController::class, 'loginviasso2']);
 Route::get('/ssocallback/fesopbuntut', [OauthController::class, 'handleCallback'])
     ->name('callback.frontend');
 
-Route::post('/ssocallback/besopbuntut', [OauthController::class, 'handleCallbackBackend'])
-    ->name('callback.backend');
+// Route::post('/ssocallback/besopbuntut', [OauthController::class, 'handleCallbackBackend'])
+//     ->name('callback.backend');
 
 // Route::get('/ssocallback/besopbuntut', [OauthController::class, 'handleCallbackBackendGet'])
 //     ->name('callback.backend');
-Route::get('/ssocallback/besopbuntut', [OauthController::class, 'ssocallbackhandler'])
-    ->name('callback.backend');
+// Route::get('/ssocallback/besopbuntut', [OauthController::class, 'ssocallbackhandler'])
+//     ->name('callback.backend');
 
 Route::get('loginviasso', [OauthController::class, 'loginviasso']);
 
