@@ -48,9 +48,9 @@ class Pelabuhan extends Model
 
     public static array $rules = [
         'name' => 'required|string|max:255',
-        'un_locode' => 'required|string|max:255',
-        'latitude' => 'required|numeric',
-        'longitude' => 'required|numeric',
+        'un_locode' => 'nullable|string|max:255',
+        'latitude' => 'nullable|numeric',
+        'longitude' => 'nullable|numeric',
         'radius' => 'nullable|string|max:255',
         'address' => 'nullable|string|max:255',
         // 'penanggung_jawab' => 'nullable|string|max:255',
@@ -67,6 +67,4 @@ class Pelabuhan extends Model
         'created_at' => 'nullable',
         'updated_at' => 'nullable'
     ];
-
-    
 }
