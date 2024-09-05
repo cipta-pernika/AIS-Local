@@ -56,7 +56,7 @@ class InaportnetPergerakanKapal extends Model
     ];
 
     public static array $rules = [
-        'no_pkk' => 'required|string|max:255',
+        'no_pkk' => 'nullable|string|max:255',
         'ais_data_vessel_id' => 'nullable',
         'nama_kapal' => 'nullable|string|max:255',
         'jenis_layanan' => 'nullable|string|max:255',

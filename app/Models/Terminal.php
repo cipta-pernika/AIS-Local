@@ -47,9 +47,9 @@ class Terminal extends Model
 
     public static array $rules = [
         'pelabuhan_id' => 'nullable',
-        'name' => 'required|string|max:255',
-        'latitude' => 'required|numeric',
-        'longitude' => 'required|numeric',
+        'name' => 'nullable|string|max:255',
+        'latitude' => 'nullable|numeric',
+        'longitude' => 'nullable|numeric',
         'radius' => 'nullable|string|max:255',
         'address' => 'nullable|string|max:255',
         'penanggung_jawab' => 'nullable|string|max:255',

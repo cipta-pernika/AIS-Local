@@ -25,8 +25,8 @@ class PNBPJasaLabuhKapal extends Model
         'ais_data_vessel_id' => 'nullable',
         'gt' => 'required',
         'kunjungan' => 'required',
-        'tarif_domestik' => 'required|numeric',
-        'tarif_asing' => 'required|numeric',
+        'tarif_domestik' => 'nullable|numeric',
+        'tarif_asing' => 'nullable|numeric',
         'created_at' => 'nullable',
         'updated_at' => 'nullable'
     ];

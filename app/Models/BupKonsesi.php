@@ -22,7 +22,7 @@ class BupKonsesi extends Model
     ];
 
     public static array $rules = [
-        'bup' => 'required|string|max:255',
+        'bup' => 'nullable|string|max:255',
         'bruto' => 'required',
         'besaran_konsesi' => 'required',
         'pendapatan_konsesi' => 'required',

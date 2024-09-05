@@ -21,9 +21,9 @@ class PNBPJasaBarang extends Model
     ];
 
     public static array $rules = [
-        'rumus' => 'required|string|max:255',
-        'tarif_domestik' => 'required|numeric',
-        'tarif_asing' => 'required|numeric',
+        'rumus' => 'nullable|string|max:255',
+        'tarif_domestik' => 'nullable|numeric',
+        'tarif_asing' => 'nullable|numeric',
         'created_at' => 'nullable',
         'updated_at' => 'nullable'
     ];

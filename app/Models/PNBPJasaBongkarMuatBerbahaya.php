@@ -19,8 +19,8 @@ class PNBPJasaBongkarMuatBerbahaya extends Model
     ];
 
     public static array $rules = [
-        'klasifikasi_barang' => 'required|string|max:255',
-        'tarif' => 'required|numeric',
+        'klasifikasi_barang' => 'nullable|string|max:255',
+        'tarif' => 'nullable|numeric',
         'created_at' => 'nullable',
         'updated_at' => 'nullable'
     ];

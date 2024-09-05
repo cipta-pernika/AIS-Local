@@ -37,7 +37,7 @@ class MissionPlan extends Model
 
     public static array $rules = [
         'asset_id' => 'required',
-        'name' => 'required|string|max:255',
+        'name' => 'nullable|string|max:255',
         'ETD' => 'nullable',
         'ATD' => 'nullable',
         'ETA' => 'nullable',
@@ -46,7 +46,7 @@ class MissionPlan extends Model
         'captain' => 'nullable|string|max:255',
         'muatan' => 'nullable|string|max:255',
         'note' => 'nullable|string|max:65535',
-        'status' => 'required|boolean',
+        'status' => 'nullable|boolean',
         'created_at' => 'nullable',
         'updated_at' => 'nullable'
     ];

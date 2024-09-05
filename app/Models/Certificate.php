@@ -23,7 +23,7 @@ class Certificate extends Model
 
     public static array $rules = [
         'ais_data_vessel_id' => 'required',
-        'sertifikat' => 'required|string|max:255',
+        'sertifikat' => 'nullable|string|max:255',
         'tgl_terbit' => 'required',
         'tgl_expired' => 'required',
         'created_at' => 'nullable',

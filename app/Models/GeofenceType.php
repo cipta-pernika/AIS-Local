@@ -23,9 +23,9 @@ class GeofenceType extends Model
     ];
 
     public static array $rules = [
-        'name' => 'required|string|max:255',
-        'base_price' => 'required|numeric',
-        'uom' => 'required|string|max:255',
+        'name' => 'nullable|string|max:255',
+        'base_price' => 'nullable|numeric',
+        'uom' => 'nullable|string|max:255',
         'created_at' => 'nullable',
         'updated_at' => 'nullable'
     ];

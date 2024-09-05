@@ -44,7 +44,7 @@ class ImptPenggunaanAlat extends Model
     public static array $rules = [
         'impt_source_id' => 'required',
         'ais_data_vessel_id' => 'nullable',
-        'no_pkk' => 'required|string|max:255',
+        'no_pkk' => 'nullable|string|max:255',
         'nama_kapal' => 'nullable|string|max:255',
         'nomor_te' => 'nullable|string|max:255',
         'spog' => 'nullable|string|max:255',

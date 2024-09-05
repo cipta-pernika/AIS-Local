@@ -27,11 +27,11 @@ class PNBPJasaVTSKapalAsing extends Model
     ];
 
     public static array $rules = [
-        'klasifikasi_besaran' => 'required|string|max:255',
+        'klasifikasi_besaran' => 'nullable|string|max:255',
         'gt_kapal_from' => 'nullable',
         'gt_kapal_to' => 'nullable',
-        'rumus' => 'required|string|max:255',
-        'variabel' => 'required|string|max:255',
+        'rumus' => 'nullable|string|max:255',
+        'variabel' => 'nullable|string|max:255',
         'tarif_domestik' => 'nullable|numeric',
         'tarif_asing' => 'nullable|numeric',
         'created_at' => 'nullable',

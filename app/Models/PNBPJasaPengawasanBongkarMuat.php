@@ -19,8 +19,8 @@ class PNBPJasaPengawasanBongkarMuat extends Model
     ];
 
     public static array $rules = [
-        'jenis_komoditi' => 'required|string|max:255',
-        'tarif' => 'required|numeric',
+        'jenis_komoditi' => 'nullable|string|max:255',
+        'tarif' => 'nullable|numeric',
         'created_at' => 'nullable',
         'updated_at' => 'nullable'
     ];

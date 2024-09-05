@@ -62,8 +62,8 @@ class PbkmKegiatanPemanduan extends Model
     ];
 
     public static array $rules = [
-        'nomor_spk_pandu' => 'required|string|max:255',
-        'no_pkk' => 'required|string|max:255',
+        'nomor_spk_pandu' => 'nullable|string|max:255',
+        'no_pkk' => 'nullable|string|max:255',
         'ais_data_vessel_id' => 'nullable',
         'tanggal_spk_pandu' => 'nullable',
         'nomor_imo' => 'nullable|string|max:255',

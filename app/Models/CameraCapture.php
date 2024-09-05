@@ -21,7 +21,7 @@ class CameraCapture extends Model
     public static array $rules = [
         'pelabuhan_id' => 'nullable|integer',
         'geofence_id' => 'nullable|integer',
-        'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         'created_at' => 'nullable',
         'updated_at' => 'nullable'
     ];

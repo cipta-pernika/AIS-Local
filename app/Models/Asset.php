@@ -74,9 +74,9 @@ class Asset extends Model
     ];
 
     public static array $rules = [
-        'asset_name' => 'required|string|max:255',
-        'asset_author' => 'required|string|max:255',
-        'asset_type' => 'required|string|max:255',
+        'asset_name' => 'nullable|string|max:255',
+        'asset_author' => 'nullable|string|max:255',
+        'asset_type' => 'nullable|string|max:255',
         'asset_owner' => 'nullable|string|max:255',
         'mmsi' => 'nullable|string|max:255',
         'callsign' => 'nullable|string|max:255',

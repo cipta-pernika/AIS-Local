@@ -39,7 +39,7 @@ class TidakTerjadwal extends Model
 
     public static array $rules = [
         'ais_data_vessel_id' => 'nullable',
-        'isPassing' => 'required|boolean',
+        'isPassing' => 'nullable|boolean',
         'geofence_id' => 'nullable',
         'ais_data_position_id' => 'nullable',
         'report_geofence_id' => 'nullable',

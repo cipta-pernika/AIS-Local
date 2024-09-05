@@ -42,7 +42,7 @@ class PanduTidakTerjadwal extends Model
 
     public static array $rules = [
         'ais_data_vessel_id' => 'nullable',
-        'isPassing' => 'required|boolean',
+        'isPassing' => 'nullable|boolean',
         'geofence_id' => 'nullable',
         'nomor_spk_pandu' => 'nullable|string|max:255',
         'ais_data_position_id' => 'nullable',

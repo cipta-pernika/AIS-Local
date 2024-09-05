@@ -21,9 +21,9 @@ class PNBPJasaPemanduanKapalMarabahan extends Model
     ];
 
     public static array $rules = [
-        'rumus' => 'required|string|max:255',
-        'variabel' => 'required|string|max:255',
-        'tarif_tetap' => 'required|numeric',
+        'rumus' => 'nullable|string|max:255',
+        'variabel' => 'nullable|string|max:255',
+        'tarif_tetap' => 'nullable|numeric',
         'created_at' => 'nullable',
         'updated_at' => 'nullable'
     ];

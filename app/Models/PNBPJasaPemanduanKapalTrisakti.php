@@ -23,10 +23,10 @@ class PNBPJasaPemanduanKapalTrisakti extends Model
     ];
 
     public static array $rules = [
-        'jenis' => 'required|string|max:255',
-        'rumus' => 'required|string|max:255',
-        'variabel' => 'required|string|max:255',
-        'tarif_tetap' => 'required|numeric',
+        'jenis' => 'nullable|string|max:255',
+        'rumus' => 'nullable|string|max:255',
+        'variabel' => 'nullable|string|max:255',
+        'tarif_tetap' => 'nullable|numeric',
         'created_at' => 'nullable',
         'updated_at' => 'nullable'
     ];

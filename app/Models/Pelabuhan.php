@@ -47,7 +47,7 @@ class Pelabuhan extends Model
     ];
 
     public static array $rules = [
-        'name' => 'required|string|max:255',
+        'name' => 'nullable|string|max:255',
         'un_locode' => 'nullable|string|max:255',
         'latitude' => 'nullable|numeric',
         'longitude' => 'nullable|numeric',

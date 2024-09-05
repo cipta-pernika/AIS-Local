@@ -27,8 +27,8 @@ class PNBPJasaRambuKapal extends Model
     ];
 
     public static array $rules = [
-        'trayek' => 'required|string|max:255',
-        'jenis_kapal' => 'required|string|max:255',
+        'trayek' => 'nullable|string|max:255',
+        'jenis_kapal' => 'nullable|string|max:255',
         'gt' => 'nullable|numeric',
         'tarif_domestik' => 'nullable|numeric',
         'tarif_asing' => 'nullable|numeric',
