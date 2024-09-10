@@ -1,0 +1,12 @@
+CREATE VIEW recent_vessels_positions AS
+SELECT 
+    v.*,
+    p.* 
+FROM 
+    ais_data_vessels v
+JOIN 
+    ais_data_position p 
+ON 
+    v.mmsi = p.mmsi
+WHERE 
+    p.created_at >= NOW() - INTERVAL 5 MINUTE;
