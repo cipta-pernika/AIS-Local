@@ -310,3 +310,6 @@ Route::get('ais-data-position/export', [ExportController::class, 'aisdatapositio
 
 Route::resource('anomaly-variables', App\Http\Controllers\API\AnomalyVariableAPIController::class)
     ->except(['create']);
+
+Route::resource('ais-data-anomalies', App\Http\Controllers\API\AisDataAnomalyAPIController::class)
+    ->except(['create', 'edit']);
