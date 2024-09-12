@@ -1,12 +1,18 @@
-CREATE VIEW recent_vessels_positions AS
+CREATE OR REPLACE VIEW recent_vessels_positions AS
 SELECT 
-    v.*,
-    p.* 
+    v.id AS vessel_id,   
+    v.vessel_name,      
+    v.mmsi,             
+    p.id AS position_id, 
+    p.latitude,
+    p.longitude,
+    p.created_at
 FROM 
-    ais_data_vessels v
+    ais_data_positions p
 JOIN 
-    ais_data_position p 
+    ais_data_vessels v 
 ON 
-    v.mmsi = p.mmsi
-WHERE 
-    p.created_at >= NOW() - INTERVAL 5 MINUTE;
+    v.id = p.vessel_id
+WHERE
+    CONVERT_TZ(p.created_at, 'UTC', 'Asia/Jakarta') >= NOW() - INTERVAL 5 MINUTE
+LIMIT 10;
