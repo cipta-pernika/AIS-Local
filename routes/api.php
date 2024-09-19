@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\DataloggerController;
 use App\Http\Controllers\Api\LocationController;
 use App\Http\Controllers\Api\LocationTypeController;
 use Illuminate\Http\Request;
@@ -11,3 +12,4 @@ Route::get('/user', function (Request $request) {
 
 Route::apiResource('locations', LocationController::class);
 Route::apiResource('location_types', LocationTypeController::class);
+Route::apiResource('dataloggers', DataloggerController::class);
