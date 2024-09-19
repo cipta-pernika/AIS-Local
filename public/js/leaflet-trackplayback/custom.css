@@ -1,8 +1,0 @@
-.leaflet-bottom {
-    justify-content: center !important;
-    display: flex !important;
-    width: -webkit-fill-available !important;
-  }
-  .leaflet-control-playback {
-    display: flex !important;
-  }

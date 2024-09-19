@@ -1,1 +1,0 @@
-php artisan infyom:api_scaffold AisDataAnomaly --skip=views,menu,tests --fromTable --table=ais_data_anomalies
