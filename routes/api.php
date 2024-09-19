@@ -1,8 +1,12 @@
 <?php
 
 use App\Http\Controllers\Api\DataloggerController;
+use App\Http\Controllers\Api\GeofenceController;
 use App\Http\Controllers\Api\LocationController;
 use App\Http\Controllers\Api\LocationTypeController;
+use App\Http\Controllers\Api\GeofenceTypeController;
+use App\Http\Controllers\Api\PelabuhanController;
+use App\Http\Controllers\Api\SensorController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -13,3 +17,9 @@ Route::get('/user', function (Request $request) {
 Route::apiResource('locations', LocationController::class);
 Route::apiResource('location_types', LocationTypeController::class);
 Route::apiResource('dataloggers', DataloggerController::class);
+Route::apiResource('geofences', GeofenceController::class);
+Route::apiResource('geofence_types', GeofenceTypeController::class);
+Route::apiResource('pelabuhans', PelabuhanController::class);
+Route::apiResource('sensors', SensorController::class);
+
+
