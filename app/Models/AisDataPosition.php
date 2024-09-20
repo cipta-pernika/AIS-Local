@@ -67,4 +67,9 @@ class AisDataPosition extends Model
         // If the difference is greater than 5 minutes, AIS is considered off
         return $minutesDiff <= 5;
     }
+
+    public function anomalies()
+    {
+        return $this->hasMany(AisDataAnomaly::class, 'ais_data_position_id');
+    }
 }

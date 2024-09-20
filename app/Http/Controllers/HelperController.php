@@ -975,7 +975,7 @@ class HelperController extends Controller
             $aisData = Cache::get($cacheKey);
         } else {
             // If not cached, perform the query and store the result in the cache
-            $query = AisDataPosition::with('vessel', 'sensorData.sensor.datalogger')
+            $query = AisDataPosition::with('vessel', 'sensorData.sensor.datalogger', 'anomalies')
                 ->orderBy('created_at', 'DESC')
                 ->groupBy('vessel_id')
                 ->whereBetween('created_at', [now()->subMinutes(60), now()]);
