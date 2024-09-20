@@ -4,6 +4,7 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\MapController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\DataloggerController;
+use App\Http\Controllers\DiagnosticController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\GeofenceController;
 use App\Http\Controllers\HelperController;
@@ -313,3 +314,5 @@ Route::resource('anomaly-variables', App\Http\Controllers\API\AnomalyVariableAPI
 
 Route::resource('ais-data-anomalies', App\Http\Controllers\API\AisDataAnomalyAPIController::class)
     ->except(['create', 'edit']);
+
+Route::get('diagnostics', [DiagnosticController::class, 'runDiagnostics']);
