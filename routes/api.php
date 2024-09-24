@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AisDataController;
 use App\Http\Controllers\Api\DataloggerController;
 use App\Http\Controllers\Api\GeofenceController;
 use App\Http\Controllers\Api\LocationController;
@@ -21,5 +22,6 @@ Route::apiResource('geofences', GeofenceController::class);
 Route::apiResource('geofence_types', GeofenceTypeController::class);
 Route::apiResource('pelabuhans', PelabuhanController::class);
 Route::apiResource('sensors', SensorController::class);
+Route::get('aisdataunique', [AisDataController::class, 'unique']);
 
 
