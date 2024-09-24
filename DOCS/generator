@@ -1,1 +1,1 @@
-php artisan make:crud ais_data_vessels api
+php artisan make:crud vessel_list_20240621 api
