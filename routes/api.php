@@ -1,5 +1,6 @@
 <?php
-=
+
+use App\Http\Controllers\AisDataController;
 use App\Http\Controllers\Api\DataloggerController;
 use App\Http\Controllers\Api\GeofenceController;
 use App\Http\Controllers\Api\LocationController;
