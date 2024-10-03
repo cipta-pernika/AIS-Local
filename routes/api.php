@@ -9,6 +9,8 @@ use App\Http\Controllers\Api\GeofenceTypeController;
 use App\Http\Controllers\Api\PelabuhanController;
 use App\Http\Controllers\Api\SensorController;
 use App\Http\Controllers\Api\AisDataVesselController;
+use App\Http\Controllers\Api\TerminalController;
+use App\Http\Controllers\Api\CctvController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,6 +26,12 @@ Route::apiResource('geofence_types', GeofenceTypeController::class);
 Route::apiResource('pelabuhans', PelabuhanController::class);
 Route::apiResource('sensors', SensorController::class);
 Route::apiResource('ais_data_vessels', AisDataVesselController::class);
+Route::apiResource('tersus', TerminalController::class);
+Route::apiResource('cctvs', CctvController::class);
+
+
 Route::get('aisdataunique', [AisDataController::class, 'unique']);
+
+
 
 
