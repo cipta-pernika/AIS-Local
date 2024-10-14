@@ -33,6 +33,7 @@ class AisDataPositionAPIController extends AppBaseController
         $page = $request->get('page', 1);
         $vessels = $request->get('vessels', []);
         $vessel_name = $request->get('vessel_name');
+        $mmsi = $request->get('mmsi');
         
         if (count($vessels) > 1) {
             $aisDataPositions = $this->aisDataPositionRepository->paginate($limit, ['*'], 'page', $page)
@@ -44,6 +45,12 @@ class AisDataPositionAPIController extends AppBaseController
         if ($vessel_name) {
             $aisDataPositions = $aisDataPositions->filter(function ($aisDataPosition) use ($vessel_name) {
                 return stripos($aisDataPosition->vessel->vessel_name, $vessel_name) !== false;
+            });
+        }
+
+        if ($mmsi) {
+            $aisDataPositions = $aisDataPositions->filter(function ($aisDataPosition) use ($mmsi) {
+                return $aisDataPosition->vessel->mmsi == $mmsi;
             });
         }
 
