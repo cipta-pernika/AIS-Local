@@ -16,7 +16,31 @@ class AisDataPositionController extends Controller
      */
     public function index(Request $request)
     {
-        $aisDataPositions = AisDataPosition::paginate();
+        $vessels = request()->vessels;
+        $vessel_name = request()->vessel_name;
+        $mmsi = request()->mmsi;
+        $limit = request()->limit;
+        $page = request()->page;
+
+        $query = AisDataPosition::with('aisDataVessel');
+
+        if (!empty($vessels)) {
+            $query->whereIn('vessel_id', $vessels);
+        }
+
+        if ($vessel_name) {
+            $query->whereHas('aisDataVessel', function ($q) use ($vessel_name) {
+                $q->where('vessel_name', $vessel_name);
+            });
+        }
+
+        if ($mmsi) {
+            $query->whereHas('aisDataVessel', function ($q) use ($mmsi) {
+                $q->where('mmsi', $mmsi);
+            });
+        }
+
+        $aisDataPositions = $query->paginate($limit, ['*'], 'page', $page);
 
         return AisDataPositionResource::collection($aisDataPositions);
     }
