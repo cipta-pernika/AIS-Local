@@ -32,4 +32,4 @@ Route::apiResource('cctvs', CctvController::class);
 
 
 Route::get('aisdataunique', [AisDataController::class, 'unique']);
-Route::apiResource('ais-data-position', [AisDataPositionController::class]);
+Route::apiResource('ais-data-position', AisDataPositionController::class);
