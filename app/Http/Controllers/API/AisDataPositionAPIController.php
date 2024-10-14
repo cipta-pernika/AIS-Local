@@ -32,12 +32,19 @@ class AisDataPositionAPIController extends AppBaseController
         $limit = $request->get('limit', $perPage);
         $page = $request->get('page', 1);
         $vessels = $request->get('vessels', []);
+        $vessel_name = $request->get('vessel_name');
         
         if (count($vessels) > 1) {
             $aisDataPositions = $this->aisDataPositionRepository->paginate($limit, ['*'], 'page', $page)
                 ->whereIn('vessel_id', $vessels);
         } else {
             $aisDataPositions = $this->aisDataPositionRepository->paginate($limit, ['*'], 'page', $page);
+        }
+
+        if ($vessel_name) {
+            $aisDataPositions = $aisDataPositions->filter(function ($aisDataPosition) use ($vessel_name) {
+                return stripos($aisDataPosition->vessel->vessel_name, $vessel_name) !== false;
+            });
         }
 
         // Load vessel relationship for each item
