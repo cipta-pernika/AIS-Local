@@ -212,8 +212,8 @@ class CameraController extends Controller
     {
         $username = 'admin';
         $password = 'Amtek2024';
-        $realm = 'your_realm'; // Dapatkan dari respons server
-        $nonce = 'your_nonce'; // Dapatkan dari respons server
+        $realm = ''; // Dapatkan dari respons server
+        $nonce = ''; // Dapatkan dari respons server
         $uri = '/ISAPI/PTZCtrl/channels/1/continuous';
         $method = 'PUT';
 
