@@ -991,9 +991,9 @@ class HelperController extends Controller
             
             $aisData = $query->get();
             // Tambahkan hardcode status AIS ke setiap item dalam koleksi
-            // $aisData->each(function ($item) {
-            //     $item->ais_status = 'On';
-            // });
+            $aisData->each(function ($item) {
+                $item->ais_status = 'On';
+            });
 
             Cache::put($cacheKey, $aisData, 10);
         }
@@ -1001,7 +1001,7 @@ class HelperController extends Controller
         return response()->json([
             'success' => true,
             'message' => $aisData,
-            'ais_status' => 'On',
+            // 'ais_status' => 'On',
         ], 201);
     }
 
@@ -1014,13 +1014,13 @@ class HelperController extends Controller
             ->get();
 
         // Tambahkan hardcode status AIS ke setiap item dalam koleksi
-        // $aisData->each(function ($item) {
-        //     $item->ais_status = 'On';
-        // });
+        $aisData->each(function ($item) {
+            $item->ais_status = 'On';
+        });
         return response()->json([
             'success' => true,
             'message' => $aisData,
-            'ais_status' => 'On',
+            // 'ais_status' => 'On',
         ], 201);
     }
 
