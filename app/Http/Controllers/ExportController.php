@@ -42,7 +42,7 @@ class ExportController extends Controller
         ->get();
 
         if ($format === 'pdf') {
-            $pdf = Pdf::loadView('exports.aisdataposition', ['data' => $exportData]);
+            $pdf = Pdf::loadView('pdf.historyreport', ['data' => $exportData]);
             return $pdf->download('TRACKING-' . Carbon::now() . '.pdf');
         }
 
