@@ -21,10 +21,47 @@
 <body>
     <div class="container">
         <div class="text-center mt-4">
-            <img class="mb-5 img-fluid" src="{{asset('images/logo_apl_bjm2.png')}}" />
+        <h3 class="mb-4 mt-1 text-center">History Report</h3>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Sensor Data</th>
+                    <th>Vessel ID</th>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                    <th>Speed</th>
+                    <th>Course</th>
+                    <th>Heading</th>
+                    <th>Nav Status</th>
+                    <th>Turn Rate</th>
+                    <th>Turn Direction</th>
+                    <th>Timestamp</th>
+                    <th>Distance</th>
+                    <th>Inside Geofence</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($data as $item)
+                    <tr>
+                        <td>{{ $item->sensor_data }}</td>
+                        <td>{{ $item->vessel_id }}</td>
+                        <td>{{ $item->latitude }}</td>
+                        <td>{{ $item->longitude }}</td>
+                        <td>{{ $item->speed }}</td>
+                        <td>{{ $item->course }}</td>
+                        <td>{{ $item->heading }}</td>
+                        <td>{{ $item->nav_status }}</td>
+                        <td>{{ $item->turn_rate }}</td>
+                        <td>{{ $item->turn_direction }}</td>
+                        <td>{{ $item->timestamp }}</td>
+                        <td>{{ $item->distance }}</td>
+                        <td>{{ $item->inside_geofence }}</td>
+                    </tr>
+                @endforeach
+                <tr>
+            </tbody>
+        </table>
         </div>
-        <h3 class="mb-4 mt-1 text-center">data</h3>
-        {{$data}}
     </div>
 </body>
 
