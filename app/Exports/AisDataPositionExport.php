@@ -39,7 +39,7 @@ class AisDataPositionExport implements FromCollection, WithHeadings, WithMapping
             $tracking->turning_rate,
             $tracking->turning_direction,
             $tracking->distance,
-            $tracking->is_inside_geofence,
+            // $tracking->is_inside_geofence,
         ];
     }
 
@@ -59,7 +59,7 @@ class AisDataPositionExport implements FromCollection, WithHeadings, WithMapping
             "Turning Rate",
             "Turning Direction",
             "Distance",
-            "Is Inside Geofence",
+            // "Is Inside Geofence",
         ];
     }
 }
