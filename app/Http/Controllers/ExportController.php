@@ -18,7 +18,7 @@ class ExportController extends Controller
     public function aisdatapositionsexport(){
 
         $dateRange = request('dateRange', []);
-        $vessels = request('vessels', '');
+        $vessels = request('vessels', []);
         $format = request('format', 'xlsx');
 
         if (!empty($dateRange) && is_array($dateRange)) {
@@ -30,15 +30,12 @@ class ExportController extends Controller
             $startDate = $endDate = null;
         }
 
-        // Ubah string vessels menjadi array
-        $vesselArray = array_filter(explode(',', $vessels));
-
-        $exportData = AisDataPosition::where(function ($query) use ($startDate, $endDate, $vesselArray) {
+        $exportData = AisDataPosition::where(function ($query) use ($startDate, $endDate, $vessels) {
             if (!empty($startDate) && !empty($endDate)) {
                 $query->whereBetween('timestamp', [$startDate, $endDate]);
             }
-            if (!empty($vesselArray)) {
-                $query->whereIn('vessel_id', $vesselArray);
+            if (!empty($vessels)) {
+                $query->whereIn('vessel_id', $vessels);
             }
         })
         ->take(10000) // Batasi hingga 100 baris
