@@ -38,7 +38,7 @@ class ExportController extends Controller
                 $query->whereIn('vessel_id', $vessels);
             }
         })
-        ->take(100) // Batasi hingga 100 baris
+        ->take(1000) // Batasi hingga 100 baris
         ->get();
 
         if ($format === 'pdf') {
