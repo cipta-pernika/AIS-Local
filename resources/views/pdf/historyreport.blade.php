@@ -15,6 +15,10 @@
         .page-break {
             page-break-after: always;
         }
+        
+        @page {
+            size: landscape;
+        }
     </style>
 </head>
 
