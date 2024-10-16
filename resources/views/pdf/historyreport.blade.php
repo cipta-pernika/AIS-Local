@@ -47,19 +47,19 @@
             <tbody>
                 @foreach ($data as $item)
                     <tr>
-                        <td>{{ $item->sensor_data }}</td>
+                        <td>{{ $item->sensor_data_id }}</td>
                         <td>{{ $item->vessel_id }}</td>
                         <td>{{ $item->latitude }}</td>
                         <td>{{ $item->longitude }}</td>
                         <td>{{ $item->speed }}</td>
                         <td>{{ $item->course }}</td>
                         <td>{{ $item->heading }}</td>
-                        <td>{{ $item->nav_status }}</td>
-                        <td>{{ $item->turn_rate }}</td>
-                        <td>{{ $item->turn_direction }}</td>
+                        <td>{{ $item->navigation_status }}</td>
+                        <td>{{ $item->turning_rate }}</td>
+                        <td>{{ $item->turning_direction }}</td>
                         <td>{{ $item->timestamp }}</td>
                         <td>{{ $item->distance }}</td>
-                        <td>{{ $item->inside_geofence }}</td>
+                        <td>{{ $item->is_inside_geofence }}</td>
                     </tr>
                 @endforeach
                 <tr>
