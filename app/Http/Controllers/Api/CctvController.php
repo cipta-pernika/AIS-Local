@@ -15,23 +15,30 @@ class CctvController extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request)
-    {
-        // Retrieve terminal_ids from the request
-        $terminalIds = $request->query('terminal_id', []);
-    
-        // Filter by terminal_id if provided
-        $query = Cctv::query();
-    
-        if (!empty($terminalIds)) {
-            // If multiple terminal_ids are provided, filter accordingly
-            $query->whereIn('terminal_id', $terminalIds);
-        }
-    
-        // Paginate the results
-        $cctvs = $query->paginate();
-    
-        return CctvResource::collection($cctvs);
+{
+    // Get terminal_id from the request, making sure it's an array
+    $terminalIds = $request->query('terminal_id', []);
+
+    // Convert terminalIds to an array, if not already
+    if (!is_array($terminalIds)) {
+        $terminalIds = [$terminalIds];
     }
+
+    // Start building the query
+    $query = Cctv::query();
+
+    // Apply filter if terminal_id is provided
+    if (!empty($terminalIds)) {
+        $query->whereIn('terminal_id', $terminalIds);
+    }
+
+    // Paginate the results
+    $cctvs = $query->paginate(20);
+
+    // Return the paginated result with the resource collection
+    return CctvResource::collection($cctvs);
+}
+
     
     /**
      * Store a newly created resource in storage.
