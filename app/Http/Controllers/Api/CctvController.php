@@ -15,31 +15,31 @@ class CctvController extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request)
-{
-    // Get terminal_id from the request, making sure it's an array
-    $terminalIds = $request->query('terminal_id', []);
+    {
+        // Get terminal_id from the request
+        $terminalIds = $request->query('terminal_id', []);
 
-    // Convert terminalIds to an array, if not already
-    if (!is_array($terminalIds)) {
-        $terminalIds = [$terminalIds];
+        // Convert terminalIds to an array, even if it's a single value or empty
+        if (!is_array($terminalIds)) {
+            $terminalIds = [$terminalIds];
+        }
+
+        // Filter only if terminal_id is provided and not empty
+        $query = Cctv::query();
+
+        if (!empty($terminalIds)) {
+            // Ensure filtering only occurs if terminal_id is not empty
+            $query->whereIn('terminal_id', $terminalIds);
+        }
+
+        // Paginate the results
+        $cctvs = $query->paginate(20);
+
+        // Return the paginated collection
+        return CctvResource::collection($cctvs);
     }
 
-    // Start building the query
-    $query = Cctv::query();
 
-    // Apply filter if terminal_id is provided
-    if (!empty($terminalIds)) {
-        $query->whereIn('terminal_id', $terminalIds);
-    }
-
-    // Paginate the results
-    $cctvs = $query->paginate(20);
-
-    // Return the paginated result with the resource collection
-    return CctvResource::collection($cctvs);
-}
-
-    
     /**
      * Store a newly created resource in storage.
      */
