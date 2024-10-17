@@ -16,14 +16,7 @@ class TerminalController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Terminal::query();
-
-        if ($request->has('keyword')) {
-            $keyword = $request->input('keyword');
-            $query->where('name', 'like', '%' . $keyword . '%');
-        }
-
-        $terminals = $query->paginate();
+        $terminals = Terminal::paginate();
 
         return TerminalResource::collection($terminals);
     }
@@ -59,5 +52,19 @@ class TerminalController extends Controller
         $terminal->delete();
 
         return response()->noContent();
+    }
+    
+    public function search(Request $request)
+    {
+        $query = Terminal::query();
+
+        if ($request->has('keyword')) {
+            $keyword = $request->input('keyword');
+            $query->where('name', 'like', '%' . $keyword . '%');
+        }
+
+        $terminals = $query->paginate();
+
+        return TerminalResource::collection($terminals);
     }
 }

@@ -30,6 +30,6 @@ Route::apiResource('ais_data_vessels', AisDataVesselController::class);
 Route::apiResource('tersus', TerminalController::class);
 Route::apiResource('cctvs', CctvController::class);
 
-
+Route::get('tersus/search', [TerminalController::class, 'search']);
 Route::get('aisdataunique', [AisDataController::class, 'unique']);
 Route::apiResource('ais-data-positions', AisDataPositionController::class);
