@@ -69,7 +69,10 @@ class TerminalController extends Controller
     {
         $terminals = Terminal::where('name', 'LIKE', "%{$keyword}%")->get();
 
-        return TerminalResource::collection($terminals);
+        if ($terminals->isEmpty()) {
+            return response()->json(['message' => 'No terminals found'], 404);
+        } else {
+            return TerminalResource::collection($terminals);
+        }
     }
-
 }
