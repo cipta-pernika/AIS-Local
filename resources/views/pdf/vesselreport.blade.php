@@ -66,7 +66,6 @@
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th></th>
                         <th>Vessel Name</th>
                         <th>Vessel Type</th>
                         <th>MMSI</th>
@@ -79,12 +78,7 @@
                         <th>Jenis Layanan</th>
                         <th>Dwt</th>
                         <th>Nakhoda</th>
-                        <th>Jenis Trayek</th>
-                        <th>Pelabuhan Asal</th>
-                        <th>Pelabuhan Tujuan</th>
-                        <th>Tgl Tiba</th>
-                        <th>Tgl Brangkat</th>
-                        <th>Distance</th>
+                        
                     </tr>
                 </thead>
                 <tbody>
@@ -102,12 +96,7 @@
                         <td>{{ $item->jenis_layanan }}</td>
                         <td>{{ $item->dwt }}</td>
                         <td>{{ $item->nakhoda }}</td>
-                        <td>{{ $item->jenis_trayek }}</td>
-                        <td>{{ $item->pelabuhan_asal }}</td>
-                        <td>{{ $item->pelabuhan_tujuan }}</td>
-                        <td>{{ $item->tgl_tiba }}</td>
-                        <td>{{ $item->tgl_brangkat }}</td>
-                        <td>{{ $item->distance }}</td>
+                        
                     </tr>
 
                     @endforeach
