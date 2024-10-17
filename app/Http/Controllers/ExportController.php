@@ -75,6 +75,7 @@ class ExportController extends Controller
                 }
             })
             ->select('ais_data_vessels.*', 'ais_data_positions.timestamp') // Pilih kolom yang diperlukan
+            ->groupBy('ais_data_vessels.id') // Kelompokkan berdasarkan ID kapal untuk menghindari duplikasi
             ->take(100) // Batasi hingga 100 baris
             ->get();
 

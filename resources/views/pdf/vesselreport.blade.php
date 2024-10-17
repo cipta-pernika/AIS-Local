@@ -62,7 +62,7 @@
 <body>
     <div class="container">
         <div class="text-center mt-4">
-            <h3 class="mb-4 mt-1 text-center">History Report</h3>
+            <h3 class="mb-4 mt-1 text-center">Vessel Report</h3>
             <table class="table table-bordered">
                 <thead>
                     <tr>
