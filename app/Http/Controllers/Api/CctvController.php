@@ -14,12 +14,24 @@ class CctvController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
-    {
-        $cctvs = Cctv::paginate();
+public function index(Request $request)
+{
+    // Retrieve terminal_ids from the request
+    $terminalIds = $request->query('terminal_id', []);
+    dd($terminalIds);
+    // Filter by terminal_id if provided
+    $query = Cctv::query();
 
-        return CctvResource::collection($cctvs);
+    if (!empty($terminalIds)) {
+        // If multiple terminal_ids are provided, filter accordingly
+        $query->whereIn('terminal_id', $terminalIds);
     }
+
+    // Paginate the results
+    $cctvs = $query->paginate();
+
+    return CctvResource::collection($cctvs);
+}
 
     /**
      * Store a newly created resource in storage.
