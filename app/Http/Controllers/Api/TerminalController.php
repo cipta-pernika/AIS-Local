@@ -54,27 +54,21 @@ class TerminalController extends Controller
         return response()->noContent();
     }
 
+    /**
+     * Search for terminals by keyword.
+     */
     public function search(Request $request)
     {
-        // Initialize the query for the Terminal model
         $query = Terminal::query();
-    
-        // Check if the request contains a 'keyword'
-        if ($request->filled('keyword')) {
+
+        if ($request->has('keyword')) {
             $keyword = $request->input('keyword');
-    
-            // Log the keyword for debugging purposes
-            \Illuminate\Support\Facades\Log::info('Searching for keyword: ' . $keyword);
-    
-            // Adjust the query to search for the keyword in the 'name' column
             $query->where('name', 'like', '%' . $keyword . '%');
         }
-    
-        // Execute the query and paginate the results
+
         $terminals = $query->paginate();
-    
-        // Return the paginated results as a collection of TerminalResource
-        return TerminalResource::collection($terminals);
+
+        // return TerminalResource::collection($terminals);
+        return response()->json($terminals);
     }
-    
 }
