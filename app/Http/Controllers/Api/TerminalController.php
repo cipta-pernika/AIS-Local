@@ -65,8 +65,9 @@ class TerminalController extends Controller
     //     // return TerminalResource::collection($terminals);
     //     return response()->json($terminals);
     // }
-    public function search($keyword)
+    public function search()
     {
+        $keyword = request('keyword');
         $terminals = Terminal::where('name', 'LIKE', "%{$keyword}%")->get();
 
         if ($terminals->isEmpty()) {
