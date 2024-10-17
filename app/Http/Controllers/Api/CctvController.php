@@ -18,7 +18,7 @@ public function index(Request $request)
 {
     // Retrieve terminal_ids from the request
     $terminalIds = $request->query('terminal_id', []);
-    dd($terminalIds);
+    // dd($terminalIds);
     // Filter by terminal_id if provided
     $query = Cctv::query();
 
