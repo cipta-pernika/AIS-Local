@@ -16,35 +16,10 @@ class CctvController extends Controller
      */
     public function index(Request $request)
     {
-        // Get terminal_id from the query string
-        $terminalIds = $request->query('terminal_id', []);
-    
-        // Ensure terminalIds is always an array
-        if (!is_array($terminalIds)) {
-            $terminalIds = [$terminalIds];
-        }
-    
-        // Start building the query
-        $query = Cctv::query();
-    
-        // Apply the terminal_id filter only if terminalIds are provided
-        if (!empty($terminalIds)) {
-            // Filter based on the terminal_id
-            $query->whereIn('terminal_id', $terminalIds);
-        }
-        dd($query->toSql(), $terminalIds);
-        // Paginate the filtered results
-        $cctvs = $query->paginate(20);
-    
-        // Debugging: Log the SQL query and the terminalIds being used
-        \Illuminate\Support\Facades\Log::info('Terminal IDs: ', $terminalIds);
-        \Illuminate\Support\Facades\Log::info('SQL Query: ', [$query->toSql()]);
-    
-        // Return the filtered collection
+        $cctvs = Cctv::paginate();
+
         return CctvResource::collection($cctvs);
     }
-    
-
 
     /**
      * Store a newly created resource in storage.
