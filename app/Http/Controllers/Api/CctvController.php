@@ -32,7 +32,7 @@ class CctvController extends Controller
             // Filter based on the terminal_id
             $query->whereIn('terminal_id', $terminalIds);
         }
-    
+        dd($query->toSql(), $terminalIds);
         // Paginate the filtered results
         $cctvs = $query->paginate(20);
     
