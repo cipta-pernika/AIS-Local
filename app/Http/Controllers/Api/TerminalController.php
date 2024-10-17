@@ -57,13 +57,19 @@ class TerminalController extends Controller
     /**
      * Search for terminals by keyword.
      */
-    public function search(Request $request)
+    // public function search(Request $request)
+    // {
+    //     $keyword = $request->input('keyword');
+    //     $terminals = Terminal::where('name', 'LIKE', "%{$keyword}%")->get();
+
+    //     // return TerminalResource::collection($terminals);
+    //     return response()->json($terminals);
+    // }
+    public function search($keyword)
     {
-        $keyword = $request->input('keyword');
         $terminals = Terminal::where('name', 'LIKE', "%{$keyword}%")->get();
 
-        // return TerminalResource::collection($terminals);
-        return response()->json($terminals);
+        return TerminalResource::collection($terminals);
     }
 
 }
