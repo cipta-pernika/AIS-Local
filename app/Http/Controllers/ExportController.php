@@ -75,7 +75,7 @@ class ExportController extends Controller
                 }
             })
             ->select('ais_data_vessels.*', 'ais_data_positions.timestamp') // Pilih kolom yang diperlukan
-            // ->take(10000) // Batasi hingga 100 baris
+            ->take(10) // Batasi hingga 100 baris
             ->get();
 
         if ($format === 'pdf') {
