@@ -62,7 +62,8 @@ class TerminalController extends Controller
         $keyword = $request->input('keyword');
         $terminals = Terminal::where('name', 'LIKE', "%{$keyword}%")->get();
 
-        return TerminalResource::collection($terminals);
+        // return TerminalResource::collection($terminals);
+        return response()->json($terminals);
     }
 
 }
