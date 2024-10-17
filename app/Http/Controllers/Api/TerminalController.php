@@ -53,13 +53,14 @@ class TerminalController extends Controller
 
         return response()->noContent();
     }
-    
+
     public function search(Request $request)
     {
         $query = Terminal::query();
 
         if ($request->has('keyword')) {
             $keyword = $request->input('keyword');
+            dd($keyword);
             $query->where('name', 'like', '%' . $keyword . '%');
         }
 
