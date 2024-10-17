@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\MapController;
+use App\Http\Controllers\API\TersusController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\DataloggerController;
 use App\Http\Controllers\DiagnosticController;
@@ -317,3 +318,5 @@ Route::resource('ais-data-anomalies', App\Http\Controllers\API\AisDataAnomalyAPI
     ->except(['create', 'edit']);
 
 Route::get('diagnostics', [DiagnosticController::class, 'runDiagnostics']);
+
+Route::get('tersus/search', [TersusController::class, 'search']);
