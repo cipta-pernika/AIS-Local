@@ -65,16 +65,18 @@ class ExportController extends Controller
             $startDate = $endDate = null;
         }
 
-        $exportData = AisDataVessel::where(function ($query) use ($startDate, $endDate, $vessels) {
-            if (!empty($startDate) && !empty($endDate)) {
-                $query->whereBetween('timestamp', [$startDate, $endDate]);
-            }
-            if (!empty($vessels)) {
-                $query->whereIn('vessel_id', $vessels);
-            }
-        })
-        // ->take(10000) // Batasi hingga 100 baris
-        ->get();
+        $exportData = AisDataVessel::join('ais_data_positions', 'ais_data_vessels.id', '=', 'ais_data_positions.vessel_id')
+            ->where(function ($query) use ($startDate, $endDate, $vessels) {
+                if (!empty($startDate) && !empty($endDate)) {
+                    $query->whereBetween('ais_data_positions.timestamp', [$startDate, $endDate]);
+                }
+                if (!empty($vessels)) {
+                    $query->whereIn('ais_data_vessels.id', $vessels);
+                }
+            })
+            ->select('ais_data_vessels.*', 'ais_data_positions.timestamp') // Pilih kolom yang diperlukan
+            // ->take(10000) // Batasi hingga 100 baris
+            ->get();
 
         if ($format === 'pdf') {
             $pdf = Pdf::loadView('pdf.vesselreport', ['data' => $exportData]);
