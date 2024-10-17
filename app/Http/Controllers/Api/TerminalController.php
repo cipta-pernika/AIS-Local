@@ -57,6 +57,7 @@ class TerminalController extends Controller
     public function search(Request $request)
     {
         $query = Terminal::query();
+        dd($request);
 
         if ($request->has('keyword')) {
             $keyword = $request->input('keyword');
