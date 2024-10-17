@@ -13,7 +13,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('partitioned_ais_data_positions', function (Blueprint $table) {
-            $table->id();
+            $table->bigInteger('id');
+            $table->primary(['id', 'timestamp']);
             $table->unsignedBigInteger('sensor_data_id');
             $table->unsignedBigInteger('vessel_id');
             $table->decimal('latitude', 10, 7);
@@ -25,10 +26,10 @@ return new class extends Migration
             $table->integer('turning_rate')->nullable();
             $table->integer('turning_direction')->nullable();
             $table->timestamp('timestamp');
-            $table->decimal('distance', 8, 2)->nullable(); 
+            $table->decimal('distance', 8, 2)->nullable();
             $table->tinyInteger('is_inside_geofence')->default(0);
             $table->tinyInteger('is_geofence')->default(0);
-            
+
             $table->foreign('sensor_data_id')->references('id')->on('sensor_datas')->onDelete('cascade');
             $table->foreign('vessel_id')->references('id')->on('ais_data_vessels')->onDelete('cascade');
 
