@@ -30,9 +30,6 @@ return new class extends Migration
             $table->tinyInteger('is_inside_geofence')->default(0);
             $table->tinyInteger('is_geofence')->default(0);
 
-            $table->foreign('sensor_data_id')->references('id')->on('sensor_datas')->onDelete('cascade');
-            $table->foreign('vessel_id')->references('id')->on('ais_data_vessels')->onDelete('cascade');
-
             $table->timestamps();
 
             $table->index('sensor_data_id');
@@ -41,8 +38,14 @@ return new class extends Migration
             $table->index('created_at');
         });
 
-        // Add partitioning by years and months
-        Schema::partitionByYearsAndMonths('partitioned_ais_data_positions', 'timestamp', 2024);
+        // Updated partitioning code
+        $currentYear = date('Y');
+        $partitions = [];
+        for ($year = $currentYear; $year <= $currentYear + 5; $year++) {
+            $partitions[] = new Partition('year' . $year, Partition::RANGE_TYPE, strtotime(($year + 1) . '-01-01'));
+        }
+
+        Schema::partitionByRange('partitioned_ais_data_positions', 'UNIX_TIMESTAMP(timestamp)', $partitions, true);
     }
 
     /**
