@@ -19,7 +19,7 @@ class TerminalController extends Controller
         $query = Terminal::query();
 
         if ($request->has('name')) {
-            $query->where('name', 'LIKE', '%' . $request->input('name') . '%');
+            $query->where('terminals.name', 'LIKE', '%' . $request->input('name') . '%');
         }
 
         // Join dengan tabel dataloggers dan sensors, dan pilih kolom status dari sensors
