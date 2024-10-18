@@ -14,9 +14,21 @@ class TerminalController extends Controller
     /**
      * Display a listing of the resource.
      */
+    // public function index(Request $request)
+    // {
+    //     $terminals = Terminal::paginate();
+
+    //     return TerminalResource::collection($terminals);
+    // }
     public function index(Request $request)
     {
-        $terminals = Terminal::paginate();
+        $query = Terminal::query();
+
+        if ($request->has('name')) {
+            $query->where('name', 'LIKE', '%' . $request->input('name') . '%');
+        }
+
+        $terminals = $query->paginate();
 
         return TerminalResource::collection($terminals);
     }
