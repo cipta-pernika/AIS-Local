@@ -22,10 +22,6 @@ class TerminalController extends Controller
             $query->where('name', 'LIKE', '%' . $request->input('name') . '%');
         }
 
-        // Join dengan tabel dataloggers dan sensors
-        $query->join('dataloggers', 'terminals.pelabuhan_id', '=', 'dataloggers.pelabuhan_id')
-              ->join('sensors', 'dataloggers.pelabuhan_id', '=', 'sensors.datalogger_id');
-
         $terminals = $query->paginate();
 
         return TerminalResource::collection($terminals);
