@@ -14,12 +14,6 @@ class TerminalController extends Controller
     /**
      * Display a listing of the resource.
      */
-    // public function index(Request $request)
-    // {
-    //     $terminals = Terminal::paginate();
-
-    //     return TerminalResource::collection($terminals);
-    // }
     public function index(Request $request)
     {
         $query = Terminal::query();
@@ -27,6 +21,10 @@ class TerminalController extends Controller
         if ($request->has('name')) {
             $query->where('name', 'LIKE', '%' . $request->input('name') . '%');
         }
+
+        // Join dengan tabel dataloggers dan sensors
+        $query->join('dataloggers', 'terminals.pelabuhan_id', '=', 'dataloggers.pelabuhan_id')
+              ->join('sensors', 'dataloggers.pelabuhan_id', '=', 'sensors.datalogger_id');
 
         $terminals = $query->paginate();
 
