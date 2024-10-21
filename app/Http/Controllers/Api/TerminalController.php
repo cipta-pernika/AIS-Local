@@ -35,7 +35,6 @@ class TerminalController extends Controller
 
         return TerminalResource::collection($terminals);
     }
-
     /**
      * Store a newly created resource in storage.
      */

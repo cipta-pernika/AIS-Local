@@ -16,6 +16,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property $jumlah_data
  * @property $created_at
  * @property $updated_at
+ * @property $latitude
+ * @property $longitude
+ * @property $altitude
+ * @property $kompas
  *
  * @property Datalogger $datalogger
  * @property SensorData[] $sensorDatas
@@ -32,7 +36,7 @@ class Sensor extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = ['datalogger_id', 'name', 'status', 'interval', 'jarak', 'jumlah_data'];
+    protected $fillable = ['datalogger_id', 'name', 'status', 'interval', 'jarak', 'jumlah_data', 'latitude', 'longitude', 'altitude', 'kompas'];
 
 
     /**
@@ -46,9 +50,9 @@ class Sensor extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function sensorDatas()
-    {
-        return $this->hasMany(\App\Models\SensorData::class, 'id', 'sensor_id');
-    }
+    // public function sensorDatas()
+    // {
+    //     return $this->hasMany(\App\Models\SensorData::class, 'id', 'sensor_id');
+    // }
     
 }

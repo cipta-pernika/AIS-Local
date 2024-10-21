@@ -28,6 +28,10 @@ class SensorRequest extends FormRequest
 			'interval' => 'required',
 			'jarak' => 'required',
 			'jumlah_data' => 'required',
+			'latitude' => 'required|string',
+			'longitude' => 'required|string',
+			'altitude' => 'required|string',
+			'kompas' => 'required|string',
         ];
     }
 }

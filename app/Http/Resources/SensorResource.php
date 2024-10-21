@@ -16,4 +16,5 @@ class SensorResource extends JsonResource
     {
         return parent::toArray($request);
     }
+    
 }
