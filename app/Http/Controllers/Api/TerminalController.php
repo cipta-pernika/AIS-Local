@@ -16,11 +16,25 @@ class TerminalController extends Controller
      */
     public function index(Request $request)
     {
-        $terminals = Terminal::paginate();
+        $query = Terminal::query();
+
+        if ($request->has('name')) {
+            $query->where('terminals.name', 'LIKE', '%' . $request->input('name') . '%');
+        }
+
+        // Join dengan tabel dataloggers dan sensors, dan pilih kolom status dari sensors
+        $query->join('dataloggers', 'terminals.pelabuhan_id', '=', 'dataloggers.pelabuhan_id')
+            ->join('sensors', 'dataloggers.pelabuhan_id', '=', 'sensors.datalogger_id')
+            ->select('terminals.*', 'sensors.status')
+            ->distinct();
+        if ($request->has('status')) {
+            $query->where('sensors.status', $request->input('status'));
+        }
+
+        $terminals = $query->paginate();
 
         return TerminalResource::collection($terminals);
     }
-
     /**
      * Store a newly created resource in storage.
      */
@@ -52,5 +66,28 @@ class TerminalController extends Controller
         $terminal->delete();
 
         return response()->noContent();
+    }
+
+    /**
+     * Search for terminals by keyword.
+     */
+    // public function search(Request $request)
+    // {
+    //     $keyword = $request->input('keyword');
+    //     $terminals = Terminal::where('name', 'LIKE', "%{$keyword}%")->get();
+
+    //     // return TerminalResource::collection($terminals);
+    //     return response()->json($terminals);
+    // }
+    public function search()
+    {
+        $keyword = request('keyword');
+        $terminals = Terminal::where('name', 'LIKE', "%{$keyword}%")->get();
+
+        if ($terminals->isEmpty()) {
+            return response()->json(['message' => 'No terminals found'], 404);
+        } else {
+            return TerminalResource::collection($terminals);
+        }
     }
 }

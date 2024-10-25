@@ -16,7 +16,22 @@ class CctvController extends Controller
      */
     public function index(Request $request)
     {
-        $cctvs = Cctv::paginate();
+        // Retrieve terminal_ids from the request
+        $terminalIds = $request->query('terminal_id', []);
+        // dd($terminalIds);
+        // Filter by terminal_id if provided
+        $query = Cctv::query();
+
+        if (!empty($terminalIds)) {
+            // If multiple terminal_ids are provided, filter accordingly
+            $query->whereIn('terminal_id', $terminalIds);
+        }
+        // Join with the terminal table to get the terminal name
+        $query->join('terminals', 'cctvs.terminal_id', '=', 'terminals.id')
+            ->select('cctvs.*', 'terminals.name as terminal_name');
+
+        // Paginate the results
+        $cctvs = $query->paginate();
 
         return CctvResource::collection($cctvs);
     }
