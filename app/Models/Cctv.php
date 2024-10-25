@@ -27,7 +27,7 @@ class Cctv extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = ['url', 'terminal_id'];
+    protected $fillable = ['url', 'terminal_id', 'type'];
 
 
     /**

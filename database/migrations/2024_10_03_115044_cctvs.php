@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('url');
             $table->foreignId('terminal_id')->constrained('terminals');
 
+            $table->enum('type', ['static', 'ptz'])->default('static');
             $table->timestamps();
         });
     }
