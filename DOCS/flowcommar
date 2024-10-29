@@ -1,0 +1,98 @@
+[
+    {
+        "id": "a880410224636f4b",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "05d6102dccbc8a44",
+        "type": "serial-port",
+        "name": "AIS",
+        "serialport": "/dev/ttyS0",
+        "serialbaud": "38400",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": "10000"
+    },
+    {
+        "id": "49bb28ac5a964ff3",
+        "type": "serial in",
+        "z": "a880410224636f4b",
+        "name": "",
+        "serial": "05d6102dccbc8a44",
+        "x": 210,
+        "y": 60,
+        "wires": [
+            [
+                "ed6018c9edaa046a"
+            ]
+        ]
+    },
+    {
+        "id": "845d5f94aeb87f2a",
+        "type": "tcp in",
+        "z": "a880410224636f4b",
+        "name": "",
+        "server": "client",
+        "host": "localhost",
+        "port": "5005",
+        "datamode": "stream",
+        "datatype": "utf8",
+        "newline": "",
+        "topic": "",
+        "trim": false,
+        "base64": false,
+        "tls": "",
+        "x": 150,
+        "y": 140,
+        "wires": [
+            [
+                "4e9e17c8d4dbd19c"
+            ]
+        ]
+    },
+    {
+        "id": "ed6018c9edaa046a",
+        "type": "tcp out",
+        "z": "a880410224636f4b",
+        "name": "",
+        "host": "",
+        "port": "5005",
+        "beserver": "server",
+        "base64": false,
+        "end": false,
+        "tls": "",
+        "x": 460,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "4e9e17c8d4dbd19c",
+        "type": "debug",
+        "z": "a880410224636f4b",
+        "name": "debug 1",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 340,
+        "y": 180,
+        "wires": []
+    }
+]
