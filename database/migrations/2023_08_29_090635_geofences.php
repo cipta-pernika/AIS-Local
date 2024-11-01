@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('radius')->nullable();
             $table->longText('geometry')->nullable();
             $table->tinyInteger('isMaster')->default(0);
+            $table->tinyInteger('isHidden')->default(0);
             $table->timestamps();
             $table->softDeletes();
 
