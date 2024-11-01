@@ -2421,7 +2421,7 @@ class HelperController extends Controller
                 : 'https://nr.monitormyvessel.com/sendgeofencealarmksop';
             // $geofenceDatas = Geofence::all();
             $geofenceDatas = Cache::remember('geofences', 3 * 60, function () {
-                return Geofence::where('isMaster', 0)->where('isHidden', 0)->get();
+                return Geofence::where('isMaster', 0)->get();
             });
             foreach ($geofenceDatas as $value) {
                 if ($value->geometry) {
