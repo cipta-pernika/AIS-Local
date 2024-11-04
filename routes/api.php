@@ -12,6 +12,8 @@ use App\Http\Controllers\Api\AisDataVesselController;
 use App\Http\Controllers\Api\TerminalController;
 use App\Http\Controllers\Api\CctvController;
 use App\Http\Controllers\Api\AisDataPositionController;
+use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\RoleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -34,17 +36,17 @@ Route::get('tersus/search', [TerminalController::class, 'search']);
 Route::get('aisdataunique', [AisDataController::class, 'unique']);
 Route::apiResource('ais-data-positions', AisDataPositionController::class);
 
-Route::get('roles', \App\Http\Controllers\RoleController::class)->name('roles.index');
-Route::get('permissions', \App\Http\Controllers\PermissionController::class)->name('permissions.index');
+Route::get('roles', RoleController::class)->name('roles.index');
+Route::get('permissions', PermissionController::class)->name('permissions.index');
 
-Route::name('users.')->prefix('users')->group(function () {
-    Route::get('/', [\App\Http\Controllers\UserController::class, 'index'])->name('index');
-    Route::post('/', [\App\Http\Controllers\UserController::class, 'store'])->name('store');
-    Route::get('/{id}', [\App\Http\Controllers\UserController::class, 'show'])->name('show');
-    Route::put('/{id}', [\App\Http\Controllers\UserController::class, 'update'])->name('update');
-    Route::patch('/{id}', [\App\Http\Controllers\UserController::class, 'update'])->name('update');
-    Route::delete('/{id}', [\App\Http\Controllers\UserController::class, 'destroy'])->name('destroy');
-    Route::put('{id}/restore', [\App\Http\Controllers\UserController::class, 'restore'])->name('restore');
-    Route::put('{id}/sync-roles', [\App\Http\Controllers\UserController::class, 'syncRoles'])->name('syncRoles');
-    Route::put('{id}/sync-permissions', [\App\Http\Controllers\UserController::class, 'syncPermissions'])->name('syncPermissions');
-});
+Route::post('roles', [RoleController::class, 'store'])
+    ->name('roles.store');
+
+Route::get('roles/{role}', [RoleController::class, 'show'])
+    ->name('roles.show');
+
+Route::match(['put', 'patch'], 'roles/{role}', [RoleController::class, 'update'])
+    ->name('roles.update');
+
+Route::delete('roles/{role}', [RoleController::class, 'destroy'])
+    ->name('roles.destroy');
