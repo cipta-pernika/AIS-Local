@@ -33,3 +33,6 @@ Route::apiResource('cctvs', CctvController::class);
 Route::get('tersus/search', [TerminalController::class, 'search']);
 Route::get('aisdataunique', [AisDataController::class, 'unique']);
 Route::apiResource('ais-data-positions', AisDataPositionController::class);
+
+Route::get('roles', \App\Http\Controllers\RoleController::class)->name('roles.index');
+Route::get('permissions', \App\Http\Controllers\PermissionController::class)->name('permissions.index');
