@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\AisDataVesselController;
 use App\Http\Controllers\Api\TerminalController;
 use App\Http\Controllers\Api\CctvController;
 use App\Http\Controllers\Api\AisDataPositionController;
+use App\Http\Controllers\MapController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use Illuminate\Http\Request;
@@ -50,3 +51,7 @@ Route::match(['put', 'patch'], 'roles/{role}', [RoleController::class, 'update']
 
 Route::delete('roles/{role}', [RoleController::class, 'destroy'])
     ->name('roles.destroy');
+
+
+Route::post('playback', [MapController::class, 'playback']);
+Route::post('checkplayback', [MapController::class, 'checkplayback']);
