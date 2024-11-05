@@ -320,3 +320,6 @@ Route::resource('ais-data-anomalies', App\Http\Controllers\API\AisDataAnomalyAPI
 Route::get('diagnostics', [DiagnosticController::class, 'runDiagnostics']);
 
 Route::get('tersus/search', [TersusController::class, 'search']);
+
+Route::resource('geofence-images', App\Http\Controllers\API\GeofenceImageAPIController::class)
+    ->except(['create', 'edit']);
