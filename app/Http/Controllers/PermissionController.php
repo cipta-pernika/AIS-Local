@@ -10,7 +10,8 @@ class PermissionController extends Controller
 {
     public function __invoke(Request $request)
     {
-        $permissions = Permission::paginate();
+        $limit = $request->input('limit', 15); // Default to 15 items per page
+        $permissions = Permission::paginate($limit);
 
         return PermissionResource::collection($permissions);
     }
