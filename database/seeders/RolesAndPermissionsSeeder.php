@@ -49,17 +49,17 @@ class RolesAndPermissionsSeeder extends Seeder
         ];
 
         foreach ($permissions as $permission) {
-            Permission::create(['name' => $permission]);
+            Permission::firstOrCreate(['name' => $permission]);
         }
 
         // Reset cached roles and permissions
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
         // Create roles and assign permissions
-        Role::create(['name' => 'user'])
-            ->givePermissionTo(['show_cctv', 'show_legend', 'show_poi']);
+        $userRole = Role::firstOrCreate(['name' => 'user']);
+        $userRole->syncPermissions(['show_cctv', 'show_legend', 'show_poi']);
 
-        Role::create(['name' => 'admin'])
-            ->givePermissionTo(Permission::all());
+        $adminRole = Role::firstOrCreate(['name' => 'admin']);
+        $adminRole->syncPermissions(Permission::all());
     }
 }
