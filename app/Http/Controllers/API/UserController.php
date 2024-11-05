@@ -5,9 +5,13 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Spatie\Permission\Models\Permission;
+
+// use Spatie\Permission\Models\Permission;
 
 class UserController extends Controller
 {
@@ -17,21 +21,57 @@ class UserController extends Controller
         return response()->json($dataloggers);
     }
 
+    // public function store(Request $request)
+    // {
+    //     $validator = Validator::make($request->all(), [
+    //         'name' => 'required|string',
+    //         'email' => 'required|email|unique:users',
+    //         'password' => 'required|string',
+    //     ]);
+
+    //     if ($validator->fails()) {
+    //         return response()->json(['error' => $validator->errors()], 422);
+    //     }
+    //     $data = $request->all();
+    //     $data['password'] = Hash::make($request->input('password'));
+    //     $datalogger = User::create($data);
+    //     return response()->json($datalogger, 201);
+    // }
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
             'email' => 'required|email|unique:users',
             'password' => 'required|string',
+            'permission' => 'required|array',
+            'permission.*.value' => 'required|string',
+            'permission.*.checked' => 'required|boolean',
         ]);
 
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 422);
         }
-        $data = $request->all();
+
+        $data = $request->only(['name', 'email', 'password']);
         $data['password'] = Hash::make($request->input('password'));
-        $datalogger = User::create($data);
-        return response()->json($datalogger, 201);
+        $user = User::create($data);
+
+        // Simpan permission ke tabel model_has_permissions
+        foreach ($request->input('permission') as $perm) {
+            if ($perm['checked']) {
+                $permission = Permission::where('name', $perm['value'])->first();
+                // dd($permission);
+                if ($permission) {
+                    DB::table('model_has_permissions')->insert([
+                        'permission_id' => $permission->id,
+                        'model_type' => User::class,
+                        'model_id' => $user->id,
+                    ]);
+                }
+            }
+        }
+
+        return response()->json($user, 201);
     }
 
     public function show($id)
@@ -69,16 +109,16 @@ class UserController extends Controller
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 422);
         }
-    
+
         $userData = $request->all();
-    
+
         // Hash the password if it's provided in the request
         if (isset($userData['password'])) {
             $userData['password'] = bcrypt($userData['password']);
         }
-    
+
         $user->update($userData);
-        
+
         return response()->json([
             'message' => 'User updated successfully',
             'data' => $user
