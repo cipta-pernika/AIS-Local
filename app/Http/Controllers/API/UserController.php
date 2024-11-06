@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\ModelHasPermission;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -102,44 +103,66 @@ class UserController extends Controller
     }
 
     public function update(Request $request, User $user)
-    {
-        if (!$user) {
-            return response()->json(['error' => 'Data not found'], 404);
-        }
-
-        $validator = Validator::make($request->all(), [
-            'name' => 'string',
-            'email' => [
-                'string',
-                'email',
-                Rule::unique('users')->ignore($user->id),
-            ],
-            'password' => 'string',
-            'latitude' => 'numeric',
-            'longitude' => 'numeric',
-            'status' => 'string',
-            'installation_date' => 'date',
-            'last_online' => 'date',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 422);
-        }
-
-        $userData = $request->all();
-
-        // Hash the password if it's provided in the request
-        if (isset($userData['password'])) {
-            $userData['password'] = bcrypt($userData['password']);
-        }
-
-        $user->update($userData);
-
-        return response()->json([
-            'message' => 'User updated successfully',
-            'data' => $user
-        ]);
+{
+    if (!$user) {
+        return response()->json(['error' => 'Data not found'], 404);
     }
+
+    $validator = Validator::make($request->all(), [
+        'name' => 'string',
+        'password' => 'string',
+        'latitude' => 'numeric',
+        'longitude' => 'numeric',
+        'status' => 'string',
+        'installation_date' => 'date',
+        'last_online' => 'date',
+        'permission' => 'array',
+        'permission.*.value' => 'string',
+        'permission.*.checked' => 'boolean',
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json(['error' => $validator->errors()], 422);
+    }
+
+    $userData = $request->except('permission'); // Exclude permissions from user data
+
+    
+
+    // Hash the password if it's provided in the request
+    if (isset($userData['password'])) {
+        $userData['password'] = bcrypt($userData['password']);
+    }
+
+    $user->update($userData);
+
+       // Update permissions
+       if ($request->has('permission')) {
+        $permissions = $request->input('permission');
+        $permissionNames = collect($permissions)
+            ->filter(fn($perm) => $perm['checked'])
+            ->pluck('value')
+            ->toArray();
+
+        // Ensure permissions exist in the database
+        $existingPermissions = Permission::whereIn('name', $permissionNames)->pluck('name')->toArray();
+
+        // Use syncPermissions to avoid duplicate entries
+        $user->syncPermissions($existingPermissions);
+
+        foreach ($request->input('permission') as $perm) {
+            if ($perm['checked']) {
+                $permission = ModelHasPermission::where('model_id', $user->id)->update(['model_type' => 'App\Models\User']);
+            }
+        }
+    }
+
+
+    return response()->json([
+        'message' => 'User updated successfully',
+        'data' => $user
+    ]);
+}
 
     public function destroy(User $datalogger)
     {
