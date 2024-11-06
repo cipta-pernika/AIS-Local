@@ -15,10 +15,26 @@ use Spatie\Permission\Models\Permission;
 
 class UserController extends Controller
 {
+    // public function index()
+    // {
+    //     $dataloggers = User::all();
+    //     return response()->json($dataloggers);
+    // }
+    
     public function index()
     {
-        $dataloggers = User::all();
-        return response()->json($dataloggers);
+        $dataloggers = User::with('permissions')->get();
+        $dataWithPermissions = $dataloggers->map(function ($user) {
+            return [
+                'user' => $user,
+                // 'permissions' => $user->getPermissionNames(), // Menggunakan Spatie untuk mendapatkan nama permission
+    
+            ];
+        });
+    
+        return response()->json([
+            'data' => $dataWithPermissions,
+        ]);
     }
 
     // public function store(Request $request)
