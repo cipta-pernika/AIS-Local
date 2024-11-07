@@ -101,3 +101,4 @@ Route::get('authorization', [OauthController::class, 'authorization']);
 Route::resource('anomaly-variables', App\Http\Controllers\AnomalyVariableController::class);
 Route::resource('ais-data-anomalies', App\Http\Controllers\AisDataAnomalyController::class);
 Route::resource('geofence-images', App\Http\Controllers\GeofenceImageController::class);
+Route::resource('activity-logs', App\Http\Controllers\ActivityLogController::class);
