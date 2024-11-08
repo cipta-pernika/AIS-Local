@@ -183,7 +183,8 @@ class HelperController extends Controller
                     'event',
                     'aisDataPosition.reportGeofences' => function($query) {
                         $query->whereNotNull('in'); // Only include records where 'in' is not null
-                    }
+                    },
+                    'aisDataPosition.reportGeofences.geofence.geofenceImages'
                 ])
                 ->whereNotNull('mmsi')
                 ->whereNotNull('ais_data_position_id')

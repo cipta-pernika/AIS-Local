@@ -47,4 +47,9 @@ class Geofence extends Model
     {
         return $this->belongsTo(GeofenceType::class);
     }
+
+    public function geofenceImages()
+    {
+        return $this->hasMany(GeofenceImage::class);
+    }
 }
