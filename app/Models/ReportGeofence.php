@@ -60,4 +60,9 @@ class ReportGeofence extends Model
     {
         return $this->belongsTo(\App\Models\Geofence::class, 'geofence_id');
     }
+
+    public function geofenceImages(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(\App\Models\GeofenceImage::class, 'report_geofence_id');
+    }
 }
