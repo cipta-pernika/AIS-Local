@@ -86,6 +86,12 @@ Route::post('camzoomplus', [CameraController::class, 'camzoomplus']);
 Route::post('camzoompluscon', [CameraController::class, 'camzoompluscon']);
 Route::post('camleft', [CameraController::class, 'camleft']);
 Route::post('camleftcon', [CameraController::class, 'camleftcon']);
+// Tiandy
+Route::post('camleftTiandy', [CameraController::class, 'camleftTiandy']);
+Route::post('camleftstopTiandy', [CameraController::class, 'camleftstopTiandy']);
+Route::post('camrightTiandy', [CameraController::class, 'camrightTiandy']);
+Route::post('camrightstopTiandy', [CameraController::class, 'camrightstopTiandy']);
+// End Tiandy
 Route::post('camleftup', [CameraController::class, 'camleftup']);
 Route::post('camleftupcon', [CameraController::class, 'camleftupcon']);
 Route::post('camright', [CameraController::class, 'camright']);

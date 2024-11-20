@@ -30,22 +30,99 @@ class CameraController extends Controller
             'success' => true,
         ], 200);
     }
-    
+
 
     public function camzoomminuscon()
     {
-        $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
-            '<zoom>-10</zoom>' .
-            '</PTZData>';
+        // $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
+        //     '<zoom>-10</zoom>' .
+        //     '</PTZData>';
 
-        $url = 'http://admin:Amtek2024@192.168.18.83/PTZCtrl/channels/1/continuous';
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
-        curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
-        curl_exec($ch);
-        curl_close($ch);
+        // $url = 'http://admin:Amtek2024@192.168.18.83/PTZCtrl/channels/1/continuous';
+        // $ch = curl_init($url);
+        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        // curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        // curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+        // curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+        // curl_exec($ch);
+        // curl_close($ch);
+
+        // return response()->json([
+        //     'success' => true,
+        // ], 200);
+
+        $merekCamera = env('MEREK_CAMERA');
+        $urlCamera = env('URL_CAMERA');
+        $xml_data = '';
+
+        if ($merekCamera === 'hikvision') {
+            $url = $urlCamera . '/PTZCtrl/channels/1/continuous';
+            $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
+                '<zoom>-10</zoom>' .
+                '</PTZData>';
+        } elseif ($merekCamera === 'tiandy') {
+            $xml_data = '<PTZData>' .
+                '<pan/>' .
+                '<tilt/>' .
+                '<zoom>-10</zoom>' .
+                '</PTZData>';
+
+            // Coba URL ISAPI terlebih dahulu
+            $url = $urlCamera . '/ISAPI/PTZCtrl/channels/1/continuous';
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+            curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+            $response = curl_exec($ch);
+            $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            curl_close($ch);
+
+            // Jika respons bukan 200, coba URL CGI
+            if ($http_code !== 200) {
+                $url = $urlCamera . '/CGI/PTZCtrl/channels/1/continuous';
+                $ch = curl_init($url);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+                curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+                $response = curl_exec($ch);
+                $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                curl_close($ch);
+            }
+
+            // Jika kedua URL gagal, kembalikan respons kesalahan
+            if ($http_code !== 200) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Request failed with status code: ' . $http_code,
+                ], $http_code);
+            }
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Kamera tidak ditemukan atau tidak didukung.'
+            ], 400);
+        }
+
+        // Eksekusi permintaan untuk hikvision
+        if ($merekCamera === 'hikvision') {
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+            curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+            $response = curl_exec($ch);
+            $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            curl_close($ch);
+
+            if ($http_code !== 200) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Request failed with status code: ' . $http_code,
+                ], $http_code);
+            }
+        }
 
         return response()->json([
             'success' => true,
@@ -54,18 +131,95 @@ class CameraController extends Controller
 
     public function camstopzoom()
     {
-        $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
-            '<zoom>0</zoom>' .
-            '</PTZData>';
+        // $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
+        //     '<zoom>0</zoom>' .
+        //     '</PTZData>';
 
-        $url = 'http://admin:Amtek2024@192.168.18.83/PTZCtrl/channels/1/momentary';
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
-        curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
-        curl_exec($ch);
-        curl_close($ch);
+        // $url = 'http://admin:Amtek2024@192.168.18.83/PTZCtrl/channels/1/momentary';
+        // $ch = curl_init($url);
+        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        // curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        // curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+        // curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+        // curl_exec($ch);
+        // curl_close($ch);
+
+        // return response()->json([
+        //     'success' => true,
+        // ], 200);
+
+        $merekCamera = env('MEREK_CAMERA');
+        $urlCamera = env('URL_CAMERA');
+        $xml_data = '';
+
+        if ($merekCamera === 'hikvision') {
+            $url = $urlCamera . '/PTZCtrl/channels/1/continuous';
+            $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
+                '<zoom>0</zoom>' .
+                '</PTZData>';
+        } elseif ($merekCamera === 'tiandy') {
+            $xml_data = '<PTZData>' .
+                '<pan/>' .
+                '<tilt/>' .
+                '<zoom>0</zoom>' .
+                '</PTZData>';
+
+            // Coba URL ISAPI terlebih dahulu
+            $url = $urlCamera . '/ISAPI/PTZCtrl/channels/1/continuous';
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+            curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+            $response = curl_exec($ch);
+            $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            curl_close($ch);
+
+            // Jika respons bukan 200, coba URL CGI
+            if ($http_code !== 200) {
+                $url = $urlCamera . '/CGI/PTZCtrl/channels/1/continuous';
+                $ch = curl_init($url);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+                curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+                $response = curl_exec($ch);
+                $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                curl_close($ch);
+            }
+
+            // Jika kedua URL gagal, kembalikan respons kesalahan
+            if ($http_code !== 200) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Request failed with status code: ' . $http_code,
+                ], $http_code);
+            }
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Kamera tidak ditemukan atau tidak didukung.'
+            ], 400);
+        }
+
+        // Eksekusi permintaan untuk hikvision
+        if ($merekCamera === 'hikvision') {
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+            curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+            $response = curl_exec($ch);
+            $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            curl_close($ch);
+
+            if ($http_code !== 200) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Request failed with status code: ' . $http_code,
+                ], $http_code);
+            }
+        }
 
         return response()->json([
             'success' => true,
@@ -97,18 +251,95 @@ class CameraController extends Controller
 
     public function camupcon()
     {
-        $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
-            '<tilt> 20 </tilt>' .
-            '</PTZData>';
+        // $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
+        //     '<tilt> 20 </tilt>' .
+        //     '</PTZData>';
 
-        $url = 'http://admin:Amtek2024@192.168.18.83/ISAPI/PTZCtrl/channels/1/continuous';
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
-        curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
-        curl_exec($ch);
-        curl_close($ch);
+        // $url = 'http://admin:Amtek2024@192.168.18.83/ISAPI/PTZCtrl/channels/1/continuous';
+        // $ch = curl_init($url);
+        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        // curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        // curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+        // curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+        // curl_exec($ch);
+        // curl_close($ch);
+
+        // return response()->json([
+        //     'success' => true,
+        // ], 200);
+
+        $merekCamera = env('MEREK_CAMERA');
+        $urlCamera = env('URL_CAMERA');
+        $xml_data = '';
+
+        if ($merekCamera === 'hikvision') {
+            $url = $urlCamera . '/ISAPI/PTZCtrl/channels/1/continuous';
+            $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
+                '<tilt> 20 </tilt>' .
+                '</PTZData>';
+        } elseif ($merekCamera === 'tiandy') {
+            $xml_data = '<PTZData>' .
+                '<pan/>' .
+                '<tilt>20</tilt>' .
+                '<zoom/>' .
+                '</PTZData>';
+
+            // Coba URL ISAPI terlebih dahulu
+            $url = $urlCamera . '/ISAPI/PTZCtrl/channels/1/continuous';
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+            curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+            $response = curl_exec($ch);
+            $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            curl_close($ch);
+
+            // Jika respons bukan 200, coba URL CGI
+            if ($http_code !== 200) {
+                $url = $urlCamera . '/CGI/PTZCtrl/channels/1/continuous';
+                $ch = curl_init($url);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+                curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+                $response = curl_exec($ch);
+                $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                curl_close($ch);
+            }
+
+            // Jika kedua URL gagal, kembalikan respons kesalahan
+            if ($http_code !== 200) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Request failed with status code: ' . $http_code,
+                ], $http_code);
+            }
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Kamera tidak ditemukan atau tidak didukung.'
+            ], 400);
+        }
+
+        // Eksekusi permintaan untuk hikvision
+        if ($merekCamera === 'hikvision') {
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+            curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+            $response = curl_exec($ch);
+            $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            curl_close($ch);
+
+            if ($http_code !== 200) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Request failed with status code: ' . $http_code,
+                ], $http_code);
+            }
+        }
 
         return response()->json([
             'success' => true,
@@ -140,18 +371,94 @@ class CameraController extends Controller
 
     public function camzoompluscon()
     {
-        $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
-            '<zoom>10</zoom>' .
-            '</PTZData>';
+        // $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
+        //     '<zoom>10</zoom>' .
+        //     '</PTZData>';
 
-        $url = 'http://admin:Amtek2024@192.168.18.83/PTZCtrl/channels/1/continuous';
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
-        curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
-        curl_exec($ch);
-        curl_close($ch);
+        // $url = 'http://admin:Amtek2024@192.168.18.83/PTZCtrl/channels/1/continuous';
+        // $ch = curl_init($url);
+        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        // curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        // curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+        // curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+        // curl_exec($ch);
+        // curl_close($ch);
+
+        // return response()->json([
+        //     'success' => true,
+        // ], 200);
+        $merekCamera = env('MEREK_CAMERA');
+        $urlCamera = env('URL_CAMERA');
+        $xml_data = '';
+
+        if ($merekCamera === 'hikvision') {
+            $url = $urlCamera . '/PTZCtrl/channels/1/continuous';
+            $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
+                '<zoom> 10 </zoom>' .
+                '</PTZData>';
+        } elseif ($merekCamera === 'tiandy') {
+            $xml_data = '<PTZData>' .
+                '<pan/>' .
+                '<tilt/>' .
+                '<zoom>10</zoom>' .
+                '</PTZData>';
+
+            // Coba URL ISAPI terlebih dahulu
+            $url = $urlCamera . '/ISAPI/PTZCtrl/channels/1/continuous';
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+            curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+            $response = curl_exec($ch);
+            $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            curl_close($ch);
+
+            // Jika respons bukan 200, coba URL CGI
+            if ($http_code !== 200) {
+                $url = $urlCamera . '/CGI/PTZCtrl/channels/1/continuous';
+                $ch = curl_init($url);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+                curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+                $response = curl_exec($ch);
+                $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                curl_close($ch);
+            }
+
+            // Jika kedua URL gagal, kembalikan respons kesalahan
+            if ($http_code !== 200) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Request failed with status code: ' . $http_code,
+                ], $http_code);
+            }
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Kamera tidak ditemukan atau tidak didukung.'
+            ], 400);
+        }
+
+        // Eksekusi permintaan untuk hikvision
+        if ($merekCamera === 'hikvision') {
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+            curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+            $response = curl_exec($ch);
+            $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            curl_close($ch);
+
+            if ($http_code !== 200) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Request failed with status code: ' . $http_code,
+                ], $http_code);
+            }
+        }
 
         return response()->json([
             'success' => true,
@@ -207,7 +514,195 @@ class CameraController extends Controller
             'success' => true,
         ], 200);
     }
+    public function camleftTiandy()
+    {
+        $merekCamera = env('MEREK_CAMERA');
+        $urlCamera = env('URL_CAMERA');
+        if ($merekCamera === 'tiandy') {
+            $xml_data = '<PTZData>' .
+                '<pan>-50</pan>' .
+                '<tilt/>' .
+                '<zoom/>' .
+                '</PTZData>';
 
+            // Coba URL ISAPI terlebih dahulu
+            $url = $urlCamera . '/ISAPI/PTZCtrl/channels/1/continuous';
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+            curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+            $response = curl_exec($ch);
+            $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            curl_close($ch);
+
+            // Jika respons bukan 200, coba URL CGI
+            if ($http_code !== 200) {
+                $url = $urlCamera . '/CGI/PTZCtrl/channels/1/continuous';
+                $ch = curl_init($url);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+                curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+                $response = curl_exec($ch);
+                $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                curl_close($ch);
+            }
+
+            // Jika kedua URL gagal, kembalikan respons kesalahan
+            if ($http_code !== 200) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Request failed with status code: ' . $http_code,
+                ], $http_code);
+            }
+        }
+        return response()->json([
+            'success' => true,
+        ], 200);
+    }
+    public function camleftstopTiandy()
+    {
+        $merekCamera = env('MEREK_CAMERA');
+        $urlCamera = env('URL_CAMERA');
+        if ($merekCamera === 'tiandy') {
+            $xml_data = '<PTZData>' .
+                '<pan>0</pan>' .
+                '<tilt/>' .
+                '<zoom/>' .
+                '</PTZData>';
+
+            // Coba URL ISAPI terlebih dahulu
+            $url = $urlCamera . '/ISAPI/PTZCtrl/channels/1/continuous';
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+            curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+            $response = curl_exec($ch);
+            $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            curl_close($ch);
+
+            // Jika respons bukan 200, coba URL CGI
+            if ($http_code !== 200) {
+                $url = $urlCamera . '/CGI/PTZCtrl/channels/1/continuous';
+                $ch = curl_init($url);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+                curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+                $response = curl_exec($ch);
+                $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                curl_close($ch);
+            }
+
+            // Jika kedua URL gagal, kembalikan respons kesalahan
+            if ($http_code !== 200) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Request failed with status code: ' . $http_code,
+                ], $http_code);
+            }
+        }
+        return response()->json([
+            'success' => true,
+        ], 200);
+    }
+
+    public function camrightTiandy()
+    {
+        $merekCamera = env('MEREK_CAMERA');
+        $urlCamera = env('URL_CAMERA');
+        if ($merekCamera === 'tiandy') {
+            $xml_data = '<PTZData>' .
+                '<pan>50</pan>' .
+                '<tilt/>' .
+                '<zoom/>' .
+                '</PTZData>';
+
+            // Coba URL ISAPI terlebih dahulu
+            $url = $urlCamera . '/ISAPI/PTZCtrl/channels/1/continuous';
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+            curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+            $response = curl_exec($ch);
+            $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            curl_close($ch);
+
+            // Jika respons bukan 200, coba URL CGI
+            if ($http_code !== 200) {
+                $url = $urlCamera . '/CGI/PTZCtrl/channels/1/continuous';
+                $ch = curl_init($url);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+                curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+                $response = curl_exec($ch);
+                $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                curl_close($ch);
+            }
+
+            // Jika kedua URL gagal, kembalikan respons kesalahan
+            if ($http_code !== 200) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Request failed with status code: ' . $http_code,
+                ], $http_code);
+            }
+        }
+        return response()->json([
+            'success' => true,
+        ], 200);
+    }
+    public function camrightstopTiandy()
+    {
+        $merekCamera = env('MEREK_CAMERA');
+        $urlCamera = env('URL_CAMERA');
+        if ($merekCamera === 'tiandy') {
+            $xml_data = '<PTZData>' .
+                '<pan>0</pan>' .
+                '<tilt/>' .
+                '<zoom/>' .
+                '</PTZData>';
+
+            // Coba URL ISAPI terlebih dahulu
+            $url = $urlCamera . '/ISAPI/PTZCtrl/channels/1/continuous';
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+            curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+            $response = curl_exec($ch);
+            $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            curl_close($ch);
+
+            // Jika respons bukan 200, coba URL CGI
+            if ($http_code !== 200) {
+                $url = $urlCamera . '/CGI/PTZCtrl/channels/1/continuous';
+                $ch = curl_init($url);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+                curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+                $response = curl_exec($ch);
+                $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                curl_close($ch);
+            }
+
+            // Jika kedua URL gagal, kembalikan respons kesalahan
+            if ($http_code !== 200) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Request failed with status code: ' . $http_code,
+                ], $http_code);
+            }
+        }
+        return response()->json([
+            'success' => true,
+        ], 200);
+    }
     public function camleftcon()
     {
         $username = 'admin';
@@ -448,11 +943,43 @@ class CameraController extends Controller
 
     public function camfocusmin()
     {
-        $xml_data = '<FocusData>' .
-            '<focus>-60</focus>' .
-            '</FocusData>';
+        // $xml_data = '<FocusData>' .
+        //     '<focus>-60</focus>' .
+        //     '</FocusData>';
 
-        $url = 'http://admin:Amtek2024@192.168.18.83/ISAPI/System/Video/inputs/channels/1/focus';
+        // $url = 'http://admin:Amtek2024@192.168.18.83/ISAPI/System/Video/inputs/channels/1/focus';
+        // $ch = curl_init($url);
+        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        // curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        // curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+        // curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+        // curl_exec($ch);
+        // curl_close($ch);
+        // return response()->json([
+        //     'success' => true,
+        // ], 200);
+        $merekCamera = env('MEREK_CAMERA');
+        $urlCamera = env('URL_CAMERA');
+        $xml_data = '';
+
+        if ($merekCamera === 'hikvision') {
+            $xml_data = '<FocusData>' .
+                '<focus>-60</focus>' .
+                '</FocusData>';
+
+            $url = $urlCamera . 'ISAPI/System/Video/inputs/channels/1/focus';
+        } elseif ($merekCamera === 'tiandy') {
+            $xml_data = '<FocusData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
+                '<focus>-100</focus>' .
+                '</FocusData>';
+            $url = $urlCamera . '/ISAPI/System/Video/inputs/channels/1/focus';
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Kamera tidak ditemukan atau tidak didukung.'
+            ], 400);
+        }
+
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -460,6 +987,7 @@ class CameraController extends Controller
         curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
         curl_exec($ch);
         curl_close($ch);
+
         return response()->json([
             'success' => true,
         ], 200);
@@ -467,11 +995,43 @@ class CameraController extends Controller
 
     public function camfocusplus()
     {
-        $xml_data = '<FocusData>' .
-            '<focus>60</focus>' .
-            '</FocusData>';
+        // $xml_data = '<FocusData>' .
+        //     '<focus>60</focus>' .
+        //     '</FocusData>';
 
-        $url = 'http://admin:Amtek2024@192.168.18.83/ISAPI/System/Video/inputs/channels/1/focus';
+        // $url = 'http://admin:Amtek2024@192.168.18.83/ISAPI/System/Video/inputs/channels/1/focus';
+        // $ch = curl_init($url);
+        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        // curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        // curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+        // curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+        // curl_exec($ch);
+        // curl_close($ch);
+        // return response()->json([
+        //     'success' => true,
+        // ], 200);
+        $merekCamera = env('MEREK_CAMERA');
+        $urlCamera = env('URL_CAMERA');
+        $xml_data = '';
+
+        if ($merekCamera === 'hikvision') {
+            $xml_data = '<FocusData>' .
+                '<focus>60</focus>' .
+                '</FocusData>';
+
+            $url = $urlCamera . 'ISAPI/System/Video/inputs/channels/1/focus';
+        } elseif ($merekCamera === 'tiandy') {
+            $xml_data = '<FocusData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
+                '<focus>100</focus>' .
+                '</FocusData>';
+            $url = $urlCamera . '/ISAPI/System/Video/inputs/channels/1/focus';
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Kamera tidak ditemukan atau tidak didukung.'
+            ], 400);
+        }
+
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -479,6 +1039,7 @@ class CameraController extends Controller
         curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
         curl_exec($ch);
         curl_close($ch);
+
         return response()->json([
             'success' => true,
         ], 200);
@@ -486,11 +1047,43 @@ class CameraController extends Controller
 
     public function camfocusstop()
     {
-        $xml_data = '<FocusData>' .
-            '<focus>0</focus>' .
-            '</FocusData>';
+        // $xml_data = '<FocusData>' .
+        //     '<focus>0</focus>' .
+        //     '</FocusData>';
 
-        $url = 'http://admin:Amtek2024@192.168.18.83/ISAPI/System/Video/inputs/channels/1/focus';
+        // $url = 'http://admin:Amtek2024@192.168.18.83/ISAPI/System/Video/inputs/channels/1/focus';
+        // $ch = curl_init($url);
+        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        // curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        // curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+        // curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+        // curl_exec($ch);
+        // curl_close($ch);
+        // return response()->json([
+        //     'success' => true,
+        // ], 200);
+        $merekCamera = env('MEREK_CAMERA');
+        $urlCamera = env('URL_CAMERA');
+        $xml_data = '';
+
+        if ($merekCamera === 'hikvision') {
+            $xml_data = '<FocusData>' .
+                '<focus>0</focus>' .
+                '</FocusData>';
+
+            $url = $urlCamera . 'ISAPI/System/Video/inputs/channels/1/focus';
+        } elseif ($merekCamera === 'tiandy') {
+            $xml_data = '<FocusData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
+                '<focus>0</focus>' .
+                '</FocusData>';
+            $url = $urlCamera . '/ISAPI/System/Video/inputs/channels/1/focus';
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Kamera tidak ditemukan atau tidak didukung.'
+            ], 400);
+        }
+
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -498,6 +1091,7 @@ class CameraController extends Controller
         curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
         curl_exec($ch);
         curl_close($ch);
+
         return response()->json([
             'success' => true,
         ], 200);
@@ -711,5 +1305,4 @@ class CameraController extends Controller
             'success' => true,
         ], 200);
     }
-
 }
