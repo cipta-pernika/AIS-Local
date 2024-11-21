@@ -8,6 +8,7 @@ use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\DataloggerController;
 use App\Http\Controllers\DiagnosticController;
 use App\Http\Controllers\ExportController;
+use App\Http\Controllers\FrigateObjectTrackingEventController;
 use App\Http\Controllers\GeofenceController;
 use App\Http\Controllers\HelperController;
 use App\Http\Controllers\LocationController;
@@ -328,3 +329,5 @@ Route::resource('geofence-images', App\Http\Controllers\API\GeofenceImageAPICont
 
 Route::resource('activity-logs', App\Http\Controllers\API\ActivityLogAPIController::class)
     ->except(['create', 'edit']);
+
+Route::post('frigate-tracking-events', [FrigateObjectTrackingEventController::class, 'store']);
