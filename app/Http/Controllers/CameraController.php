@@ -484,31 +484,115 @@ class CameraController extends Controller
     // }
     public function camleft()
     {
-        $xml_data = '<?xml version="1.0" encoding="UTF-8"?><PTZData><pan>-60</pan><tilt>0</tilt></PTZData>';
+        $merekCamera = env('MEREK_CAMERA');
+        $urlCamera = env('CAMERA_URL');
+        $xml_data = '';
 
-        $url = 'http://192.168.18.83/ISAPI/PTZCtrl/channels/1/continuous';
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
-        curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            'Accept: */*',
-            'Accept-Language: en-US,en;q=0.9',
-            'Cache-Control: no-cache',
-            'Connection: keep-alive',
-            'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
-            'Cookie: language=en; WebSession_20eae56b53=9d6883b1d90c9858dd33a601e079aa144d124ab7727dcb4d9458eb60867ce532; _wnd_size_mode=4; sdMarkMenu=1_0%3Asystem; szLastPageName=system%3Csetting; sdMarkTab_1_0=0%3AsettingBasic',
-            'If-Modified-Since: 0',
-            'Origin: http://192.168.18.83',
-            'Pragma: no-cache',
-            'Referer: http://192.168.18.83/doc/page/preview.asp',
-            'SessionTag: 8b744a46d49377fe9a64419a54718ab138cc683c28e7c462d869bf0fac03ef34',
-            'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36',
-            'X-Requested-With: XMLHttpRequest'
-        ]);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $xml_data);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // Untuk --insecure
-        curl_exec($ch);
-        curl_close($ch);
+        if ($merekCamera === 'hikvision') {
+            $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
+                '<pan> -20 </pan>' .
+                '<Momentary>' .
+                '<duration> 1000 </duration>' .
+                '</Momentary>' .
+                '</PTZData>';
+            $url = $urlCamera . '/ISAPI/PTZCtrl/channels/1/momentary';
+        } elseif ($merekCamera === 'tiandy') {
+            $xml_data = '<PTZData>' .
+                '<pan>-100</pan>' .
+                '<tilt>0</tilt>' .
+                '<zoom/>' .
+                '</PTZData>';
+
+            // Try ISAPI URL first
+            $url = $urlCamera . '/ISAPI/PTZCtrl/channels/1/continuous';
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                'Accept: application/xml, text/xml, */*; q=0.01',
+                'Accept-Language: en-US,en;q=0.9,id-ID;q=0.8,id;q=0.7',
+                'Cache-Control: max-age=0',
+                'Connection: keep-alive',
+                'Content-Type: application/xml; charset=UTF-8',
+                'Cookie: live_port=3002; V2_Session_331a1bf7=04kzRhM0aeyEroFsCb2MDI7o3P6r46y8; user=admin',
+                'HttpSession: 04kzRhM0aeyEroFsCb2MDI7o3P6r46y8',
+                'If-Modified-Since: 0',
+                'Origin: ' . $urlCamera,
+                'Referer: ' . $urlCamera . '/?t=1248605613',
+                'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+                'X-Requested-With: XMLHttpRequest'
+            ));
+            curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+            $response = curl_exec($ch);
+            $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            curl_close($ch);
+
+            // If response is not 200, try CGI URL
+            if ($http_code !== 200) {
+                $url = $urlCamera . '/CGI/PTZCtrl/channels/1/continuous';
+                $ch = curl_init($url);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                    'Accept: application/xml, text/xml, */*; q=0.01',
+                    'Accept-Language: en-US,en;q=0.9,id-ID;q=0.8,id;q=0.7',
+                    'Cache-Control: max-age=0',
+                    'Connection: keep-alive',
+                    'Content-Type: application/xml; charset=UTF-8',
+                    'Cookie: live_port=3002; V2_Session_331a1bf7=04kzRhM0aeyEroFsCb2MDI7o3P6r46y8; user=admin',
+                    'HttpSession: 04kzRhM0aeyEroFsCb2MDI7o3P6r46y8',
+                    'If-Modified-Since: 0',
+                    'Origin: ' . $urlCamera,
+                    'Referer: ' . $urlCamera . '/?t=1248605613',
+                    'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+                    'X-Requested-With: XMLHttpRequest'
+                ));
+                curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+                $response = curl_exec($ch);
+                $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                curl_close($ch);
+            }
+
+            // If both URLs fail, return error response
+            if ($http_code !== 200) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Request failed with status code: ' . $http_code,
+                ], $http_code);
+            }
+
+            // Stop the continuous movement
+            $stopXmlData = '<PTZData>' .
+                '<pan>0</pan>' .
+                '<tilt>0</tilt>' .
+                '<zoom/>' .
+                '</PTZData>';
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                'Accept: application/xml, text/xml, */*; q=0.01',
+                'Accept-Language: en-US,en;q=0.9,id-ID;q=0.8,id;q=0.7',
+                'Cache-Control: max-age=0',
+                'Connection: keep-alive',
+                'Content-Type: application/xml; charset=UTF-8',
+                'Cookie: live_port=3002; V2_Session_331a1bf7=04kzRhM0aeyEroFsCb2MDI7o3P6r46y8; user=admin',
+                'HttpSession: 04kzRhM0aeyEroFsCb2MDI7o3P6r46y8',
+                'If-Modified-Since: 0',
+                'Origin: ' . $urlCamera,
+                'Referer: ' . $urlCamera . '/?t=1248605613',
+                'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+                'X-Requested-With: XMLHttpRequest'
+            ));
+            curl_setopt($ch, CURLOPT_POSTFIELDS, "$stopXmlData");
+            curl_exec($ch);
+            curl_close($ch);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Kamera tidak ditemukan atau tidak didukung.'
+            ], 400);
+        }
 
         return response()->json([
             'success' => true,
