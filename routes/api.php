@@ -1,11 +1,14 @@
 <?php
 
+use App\Http\Controllers\ActivityLogController;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\MapController;
+use App\Http\Controllers\API\TersusController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\DataloggerController;
 use App\Http\Controllers\DiagnosticController;
 use App\Http\Controllers\ExportController;
+use App\Http\Controllers\FrigateObjectTrackingEventController;
 use App\Http\Controllers\GeofenceController;
 use App\Http\Controllers\HelperController;
 use App\Http\Controllers\LocationController;
@@ -297,6 +300,7 @@ Route::get('loginviasso', [OauthController::class, 'loginviasso']);
 
 // Route::middleware(['validate.keycloak.token'])->get('checksso', [OauthController::class, 'checkSSO']);
 Route::get('checksso', [OauthController::class, 'checkSSO']);
+Route::resource('activity-logs', App\Http\Controllers\API\ActivityLogAPIController::class);
 
 Route::post('logout', [OauthController::class, 'logout']);
 
@@ -313,7 +317,8 @@ Route::get('logout-sso', [OauthController::class, 'logoutsso']);
 Route::resource('ais-data-positions', App\Http\Controllers\API\AisDataPositionAPIController::class)
     ->except(['create', 'edit']);
 
-Route::get('ais-data-position/export', [ExportController::class, 'aisdatapositionsexport']);
+    Route::get('ais-data-position/history-export', [ExportController::class, 'aisdatapositionsexport']);
+    Route::get('ais-data-position/vessel-export', [ExportController::class, 'aisdatapositionsexportvessel']);
 
 
 Route::resource('anomaly-variables', App\Http\Controllers\API\AnomalyVariableAPIController::class)
@@ -323,3 +328,13 @@ Route::resource('ais-data-anomalies', App\Http\Controllers\API\AisDataAnomalyAPI
     ->except(['create', 'edit']);
 
 Route::get('diagnostics', [DiagnosticController::class, 'runDiagnostics']);
+
+Route::get('tersus/search', [TersusController::class, 'search']);
+
+Route::resource('geofence-images', App\Http\Controllers\API\GeofenceImageAPIController::class)
+    ->except(['create', 'edit']);
+
+Route::resource('activity-logs', App\Http\Controllers\API\ActivityLogAPIController::class)
+    ->except(['create', 'edit']);
+
+Route::post('frigate-tracking-events', [FrigateObjectTrackingEventController::class, 'store']);

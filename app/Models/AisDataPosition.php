@@ -9,6 +9,8 @@ class AisDataPosition extends Model
 {
     use HasFactory;
 
+    // protected $table = 'partitioned_ais_data_positions';
+
     protected $fillable = [
         'sensor_data_id',
         'vessel_id',

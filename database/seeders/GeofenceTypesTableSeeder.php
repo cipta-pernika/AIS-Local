@@ -18,14 +18,17 @@ class GeofenceTypesTableSeeder extends Seeder
 
         \DB::table('geofence_types')->delete();
         
+        $isPgsql = config('database.default') === 'pgsql';
+        $emptyValue = $isPgsql ? null : '';
+        
         \DB::table('geofence_types')->insert(array (
             0 => 
             array (
                 'id' => 1,
                 'name' => 'Kabel Laut',
-                'base_price' => '',
-                'uom' => '',
-                'vessel_type' => '',
+                'base_price' => $emptyValue,
+                'uom' => $emptyValue,
+                'vessel_type' => $emptyValue,
                 'created_at' => '2023-11-30 06:27:34',
                 'updated_at' => '2023-11-30 06:28:24',
             ),

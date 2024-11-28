@@ -176,9 +176,19 @@ class HelperController extends Controller
             // If not cached, perform the query and store the result in the cache
             $event = EventTracking::where('event_id', 9)
                 ->orderBy('created_at', 'DESC')
-                ->with('aisDataPosition', 'aisDataPosition.vessel', 'geofence', 'event', 'aisDataPosition.reportGeofences')
+                ->with([
+                    'aisDataPosition', 
+                    'aisDataPosition.vessel', 
+                    'geofence', 
+                    'event',
+                    'aisDataPosition.reportGeofences' => function($query) {
+                        $query->whereNotNull('in'); // Only include records where 'in' is not null
+                    },
+                    'aisDataPosition.reportGeofences.geofenceImages'
+                ])
                 ->whereNotNull('mmsi')
                 ->whereNotNull('ais_data_position_id')
+                ->whereHas('aisDataPosition.reportGeofences') // Only include records that have related reportGeofences
                 ->limit(50)
                 ->get();
 
@@ -191,6 +201,7 @@ class HelperController extends Controller
             'message' => $event,
         ], 200);
     }
+    
     public function search(Request $request)
     {
         $query = $request->input('query');
@@ -987,7 +998,13 @@ class HelperController extends Controller
                 });
             }
 
+            // $aisData = $query->get();
+            
             $aisData = $query->get();
+            // Tambahkan hardcode status AIS ke setiap item dalam koleksi
+            // $aisData->each(function ($item) {
+            //     $item->ais_status = 'On';
+            // });
 
             Cache::put($cacheKey, $aisData, 10);
         }
@@ -995,6 +1012,7 @@ class HelperController extends Controller
         return response()->json([
             'success' => true,
             'message' => $aisData,
+            // 'ais_status' => 'On',
         ], 201);
     }
 
@@ -1006,9 +1024,14 @@ class HelperController extends Controller
             ->whereBetween('created_at', [now()->subHours(1), now()])
             ->get();
 
+        // Tambahkan hardcode status AIS ke setiap item dalam koleksi
+        // $aisData->each(function ($item) {
+        //     $item->ais_status = 'On';
+        // });
         return response()->json([
             'success' => true,
             'message' => $aisData,
+            // 'ais_status' => 'On',
         ], 201);
     }
 

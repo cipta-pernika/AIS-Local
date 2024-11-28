@@ -22,22 +22,22 @@ class SensorSeeder extends Seeder
             'jumlah_data' => 200,
         ]);
 
-        Sensor::create([
-            'datalogger_id' => 1,
-            'name' => 'RADAR',
-            'status' => 'Active',
-            'interval' => 5,
-            'jarak' => 20,
-            'jumlah_data' => 200,
-        ]);
+        // Sensor::create([
+        //     'datalogger_id' => 1,
+        //     'name' => 'RADAR',
+        //     'status' => 'Active',
+        //     'interval' => 5,
+        //     'jarak' => 20,
+        //     'jumlah_data' => 200,
+        // ]);
 
-        Sensor::create([
-            'datalogger_id' => 1,
-            'name' => 'ADS-B',
-            'status' => 'Active',
-            'interval' => 5,
-            'jarak' => 20,
-            'jumlah_data' => 200,
-        ]);
+        // Sensor::create([
+        //     'datalogger_id' => 1,
+        //     'name' => 'ADS-B',
+        //     'status' => 'Active',
+        //     'interval' => 5,
+        //     'jarak' => 20,
+        //     'jumlah_data' => 200,
+        // ]);
     }
 }

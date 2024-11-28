@@ -9,6 +9,7 @@
         "alperenersoy/filament-export": "^3.0@beta",
         "barryvdh/laravel-dompdf": "v2.1.1",
         "bezhansalleh/filament-shield": "^3.2.3",
+        "brokenice/laravel-mysql-partition": "*",
         "doctrine/dbal": "~3.7.3",
         "dutchcodingcompany/filament-socialite": "^2.1",
         "eightynine/filament-excel-import": "^v3.0.2",
