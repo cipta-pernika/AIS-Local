@@ -1053,17 +1053,17 @@ class HelperController extends Controller
     public function aisdatalist()
     {
         // Create a descriptive cache key
-        $cacheKey = 'aisdatalist_grouped_vessels';
+        $cacheKey = 'aisdatalist_grouped_vessels_' . request('page', 1);
 
         // Attempt to retrieve data from the cache
         $cachedData = Cache::get($cacheKey);
 
         if (!$cachedData) {
-            // If not cached, fetch and process the data
+            // If not cached, fetch and process the data with pagination
             $aisData = AisDataPosition::with(['vessel', 'sensorData.sensor.datalogger'])
                 ->orderBy('created_at', 'DESC')
                 ->select('vessel_id', 'latitude', 'longitude', 'speed', 'course', 'heading', 'navigation_status', 'timestamp', 'id')
-                ->get()
+                ->paginate(10) // Fetch 10 records per page
                 ->groupBy('vessel_id')
                 ->map(function ($groupedData) {
                     $firstData = $groupedData->first();
@@ -1086,6 +1086,12 @@ class HelperController extends Controller
         return response()->json([
             'success' => true,
             'message' => $aisData,
+            'pagination' => [
+                'current_page' => $aisData->currentPage(),
+                'last_page' => $aisData->lastPage(),
+                'per_page' => $aisData->perPage(),
+                'total' => $aisData->total(),
+            ],
         ], 201);
     }
 
