@@ -6,12 +6,16 @@ use App\Models\Datalogger;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Cache;
 
 class DataloggerController extends Controller
 {
     public function index()
     {
-        $dataloggers = Datalogger::all();
+        $dataloggers = Cache::remember('dataloggers', 86400, function () {
+            return Datalogger::all();
+        });
+
         return response()->json($dataloggers);
     }
 
