@@ -19,19 +19,26 @@ class CctvController extends Controller
         // Retrieve terminal_ids from the request
         $terminalIds = $request->query('terminal_id', []);
         // dd($terminalIds);
-        // Filter by terminal_id if provided
-        $query = Cctv::query();
 
-        if (!empty($terminalIds)) {
-            // If multiple terminal_ids are provided, filter accordingly
-            $query->whereIn('terminal_id', $terminalIds);
-        }
-        // Join with the terminal table to get the terminal name
-        $query->join('terminals', 'cctvs.terminal_id', '=', 'terminals.id')
-            ->select('cctvs.*', 'terminals.name as terminal_name');
+        // Generate a unique cache key based on the terminal IDs
+        $cacheKey = 'cctvs_' . implode('_', $terminalIds);
 
-        // Paginate the results
-        $cctvs = $query->paginate();
+        // Attempt to retrieve cached data
+        $cctvs = cache()->remember($cacheKey, now()->addDays(7), function () use ($terminalIds) {
+            // Filter by terminal_id if provided
+            $query = Cctv::query();
+
+            if (!empty($terminalIds)) {
+                // If multiple terminal_ids are provided, filter accordingly
+                $query->whereIn('terminal_id', $terminalIds);
+            }
+            // Join with the terminal table to get the terminal name
+            $query->join('terminals', 'cctvs.terminal_id', '=', 'terminals.id')
+                ->select('cctvs.*', 'terminals.name as terminal_name');
+
+            // Paginate the results
+            return $query->paginate();
+        });
 
         return CctvResource::collection($cctvs);
     }
