@@ -1060,10 +1060,12 @@ class HelperController extends Controller
 
         if (!$cachedData) {
             // If not cached, fetch and process the data with pagination
-            $aisData = AisDataPosition::with(['vessel', 'sensorData.sensor.datalogger'])
+            $paginator = AisDataPosition::with(['vessel', 'sensorData.sensor.datalogger'])
                 ->orderBy('created_at', 'DESC')
                 ->select('vessel_id', 'latitude', 'longitude', 'speed', 'course', 'heading', 'navigation_status', 'timestamp', 'id')
-                ->paginate(10) // Fetch 10 records per page
+                ->paginate(10); // Fetch 10 records per page
+
+            $aisData = $paginator->getCollection()
                 ->groupBy('vessel_id')
                 ->map(function ($groupedData) {
                     $firstData = $groupedData->first();
@@ -1077,20 +1079,23 @@ class HelperController extends Controller
                 ->values()
                 ->toArray();
 
-            Cache::put($cacheKey, $aisData, 5);
+            // Replace the collection in the paginator with the transformed data
+            $paginator->setCollection(collect($aisData));
+
+            Cache::put($cacheKey, $paginator, 5);
         } else {
             // Data is already cached
-            $aisData = $cachedData;
+            $paginator = $cachedData;
         }
 
         return response()->json([
             'success' => true,
-            'message' => $aisData,
+            'message' => $paginator->items(),
             'pagination' => [
-                'current_page' => $aisData->currentPage(),
-                'last_page' => $aisData->lastPage(),
-                'per_page' => $aisData->perPage(),
-                'total' => $aisData->total(),
+                'current_page' => $paginator->currentPage(),
+                'last_page' => $paginator->lastPage(),
+                'per_page' => $paginator->perPage(),
+                'total' => $paginator->total(),
             ],
         ], 201);
     }
