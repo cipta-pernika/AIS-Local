@@ -37,7 +37,7 @@ class CctvController extends Controller
             }
 
             // Return only the first result
-            return $query->first();
+            return $query->get();
         });
 
         return new CctvResource($cctv);
