@@ -36,6 +36,9 @@ class CctvController extends Controller
             $query->join('terminals', 'cctvs.terminal_id', '=', 'terminals.id')
                 ->select('cctvs.*', 'terminals.name as terminal_name');
 
+            // Limit the results to one record
+            $query->take(1);
+
             // Paginate the results
             return $query->paginate();
         });
