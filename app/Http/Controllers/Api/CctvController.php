@@ -23,10 +23,13 @@ class CctvController extends Controller
         // Generate a unique cache key based on the terminal IDs
         $cacheKey = 'cctvs_' . implode('_', $terminalIds);
 
+        // Clear the cache for debugging purposes (remove this in production)
+        cache()->forget($cacheKey);
+
         // Attempt to retrieve cached data
         $cctv = cache()->remember($cacheKey, now()->addDays(7), function () use ($terminalIds) {
             // Filter by terminal_id if provided
-            $query = Cctv::query();
+            $query = Cctv::with('terminal'); // Eager load the terminal relationship
 
             if (!empty($terminalIds)) {
                 // If multiple terminal_ids are provided, filter accordingly
@@ -36,12 +39,6 @@ class CctvController extends Controller
             // Return only the first result
             return $query->first();
         });
-
-        if ($cctv) {
-            // Manually fetch the terminal name
-            $terminal = $cctv->terminal; // Assuming a relationship is defined
-            $cctv->terminal_name = $terminal ? $terminal->name : null;
-        }
 
         return new CctvResource($cctv);
     }
