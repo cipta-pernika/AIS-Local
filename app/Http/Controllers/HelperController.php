@@ -177,11 +177,11 @@ class HelperController extends Controller
             $event = EventTracking::where('event_id', 9)
                 ->orderBy('created_at', 'DESC')
                 ->with([
-                    'aisDataPosition', 
-                    'aisDataPosition.vessel', 
-                    'geofence', 
+                    'aisDataPosition',
+                    'aisDataPosition.vessel',
+                    'geofence',
                     'event',
-                    'aisDataPosition.reportGeofences' => function($query) {
+                    'aisDataPosition.reportGeofences' => function ($query) {
                         $query->whereNotNull('in'); // Only include records where 'in' is not null
                     },
                     'aisDataPosition.reportGeofences.geofenceImages'
@@ -201,13 +201,13 @@ class HelperController extends Controller
             'message' => $event,
         ], 200);
     }
-    
+
     public function search(Request $request)
     {
         $query = $request->input('query');
 
         // Use the search method provided by Laravel Scout
-        $results = AisDataVessel::search($query)->query(fn (Builder $query) => $query->with('positions'))->get();
+        $results = AisDataVessel::search($query)->query(fn(Builder $query) => $query->with('positions'))->get();
 
         return response()->json($results);
     }
@@ -374,8 +374,14 @@ class HelperController extends Controller
         )->values(); // Reset keys to start from 0
 
         $addons->load([
-            'aisDataVessel', 'aisDataPosition', 'geofence', 'imptPelayananKapal', 'imptPenggunaanAlat', 'reportGeofence',
-            'inaportnetBongkarMuat', 'pbkmKegiatanPemanduan'
+            'aisDataVessel',
+            'aisDataPosition',
+            'geofence',
+            'imptPelayananKapal',
+            'imptPenggunaanAlat',
+            'reportGeofence',
+            'inaportnetBongkarMuat',
+            'pbkmKegiatanPemanduan'
         ]);
 
         // dd($addons);
@@ -678,7 +684,8 @@ class HelperController extends Controller
                                 $aisData->update();
 
                                 Http::post($url, [
-                                    'msg' => $aisData->vessel->vessel_name . ' Inside ' . $value['geofence_name'] . ' Geofence', 'type' => 'notif'
+                                    'msg' => $aisData->vessel->vessel_name . ' Inside ' . $value['geofence_name'] . ' Geofence',
+                                    'type' => 'notif'
                                 ]);
                                 try {
                                     $recipient = User::first();
@@ -722,7 +729,8 @@ class HelperController extends Controller
                                         'geofence_id' => $value['id']
                                     ]);
                                     Http::post($url, [
-                                        'msg' => $aisData->vessel->vessel_name . ' Outside ' . $value['geofence_name'] . ' Geofence', 'type' => 'notif'
+                                        'msg' => $aisData->vessel->vessel_name . ' Outside ' . $value['geofence_name'] . ' Geofence',
+                                        'type' => 'notif'
                                     ]);
                                     try {
                                         $recipient = User::first();
@@ -773,7 +781,8 @@ class HelperController extends Controller
                                 $aisData->is_inside_geofence = 1;
                                 $aisData->update();
                                 Http::post($url, [
-                                    'msg' => $aisData->vessel->vessel_name . ' Inside ' . $value['geofence_name'] . ' Geofence', 'type' => 'notif'
+                                    'msg' => $aisData->vessel->vessel_name . ' Inside ' . $value['geofence_name'] . ' Geofence',
+                                    'type' => 'notif'
                                 ]);
                                 try {
                                     $recipient = User::first();
@@ -830,7 +839,8 @@ class HelperController extends Controller
                                         'geofence_id' => $value['id']
                                     ]);
                                     Http::post($url, [
-                                        'msg' => $aisData->vessel->vessel_name . ' Outside ' . $value['geofence_name'] . ' Geofence', 'type' => 'notif'
+                                        'msg' => $aisData->vessel->vessel_name . ' Outside ' . $value['geofence_name'] . ' Geofence',
+                                        'type' => 'notif'
                                     ]);
                                     try {
                                         $recipient = User::first();
@@ -999,7 +1009,7 @@ class HelperController extends Controller
             }
 
             // $aisData = $query->get();
-            
+
             $aisData = $query->get();
             // Tambahkan hardcode status AIS ke setiap item dalam koleksi
             // $aisData->each(function ($item) {
@@ -1695,7 +1705,7 @@ class HelperController extends Controller
             '</Momentary>' .
             '</PTZData>';
 
-        $url = 'http://admin:Amtek2024@10.7.0.8:8080/PTZCtrl/channels/1/momentary';
+        $url = env('CAMERA_URL') . '/PTZCtrl/channels/1/momentary';
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -2223,7 +2233,8 @@ class HelperController extends Controller
 
                                         try {
                                             Http::post($url, [
-                                                'msg' => $radarData->target_id . ' Inside ' . $value['geofence_name'] . ' Geofence ~ Speed  ' . $radarData->speed, 'type' => 'notif'
+                                                'msg' => $radarData->target_id . ' Inside ' . $value['geofence_name'] . ' Geofence ~ Speed  ' . $radarData->speed,
+                                                'type' => 'notif'
                                             ]);
                                         } catch (\Exception $e) {
                                             // Handle the exception here, you can log it or take appropriate action
@@ -2318,7 +2329,8 @@ class HelperController extends Controller
                                         $radarData->update();
                                         try {
                                             Http::post($url, [
-                                                'msg' => $radarData->target_id . ' Inside ' . $value['geofence_name'] . ' Geofence ~ Speed  ' . $radarData->speed, 'type' => 'notif'
+                                                'msg' => $radarData->target_id . ' Inside ' . $value['geofence_name'] . ' Geofence ~ Speed  ' . $radarData->speed,
+                                                'type' => 'notif'
                                             ]);
                                         } catch (\Exception $e) {
                                         }
@@ -2371,7 +2383,8 @@ class HelperController extends Controller
                                         ]);
                                         try {
                                             Http::post($url, [
-                                                'msg' => $radarData->target_id . ' Outside ' . $value['geofence_name'] . ' Geofence ~ Speed  ' . $radarData->speed, 'type' => 'notif'
+                                                'msg' => $radarData->target_id . ' Outside ' . $value['geofence_name'] . ' Geofence ~ Speed  ' . $radarData->speed,
+                                                'type' => 'notif'
                                             ]);
                                         } catch (\Exception $e) {
                                         }
