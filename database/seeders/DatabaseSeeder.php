@@ -32,6 +32,7 @@ class DatabaseSeeder extends Seeder
             PelabuhanSeeder::class,
             IndentificationSeeder::class,
             //paling akhir
+            RolePermissionSeeder::class,
             AdsbDataAircraftSeeder::class
         ]);
     }
