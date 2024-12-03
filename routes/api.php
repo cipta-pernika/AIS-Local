@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\AisDataVesselController;
 use App\Http\Controllers\Api\TerminalController;
 use App\Http\Controllers\Api\CctvController;
 use App\Http\Controllers\Api\AisDataPositionController;
+use App\Http\Controllers\HelperController;
 use App\Http\Controllers\MapController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
@@ -55,3 +56,38 @@ Route::delete('roles/{role}', [RoleController::class, 'destroy'])
 
 Route::post('playback', [MapController::class, 'playback']);
 Route::post('checkplayback', [MapController::class, 'checkplayback']);
+
+
+//camera
+Route::post('camzoomminus', [HelperController::class, 'camzoomminus']);
+Route::post('camzoomminuscon', [HelperController::class, 'camzoomminuscon']);
+Route::post('camup', [HelperController::class, 'camup']);
+Route::post('camupcon', [HelperController::class, 'camupcon']);
+Route::post('camzoomplus', [HelperController::class, 'camzoomplus']);
+Route::post('camzoompluscon', [HelperController::class, 'camzoompluscon']);
+Route::post('camleft', [HelperController::class, 'camleft']);
+Route::post('camleftcon', [HelperController::class, 'camleftcon']);
+Route::post('camleftup', [HelperController::class, 'camleftup']);
+Route::post('camleftupcon', [HelperController::class, 'camleftupcon']);
+Route::post('camright', [HelperController::class, 'camright']);
+Route::post('camrightup', [HelperController::class, 'camrightup']);
+Route::post('camdown', [HelperController::class, 'camdown']);
+Route::post('camautopan', [HelperController::class, 'camautopan']);
+Route::post('camautopanstop', [HelperController::class, 'camautopanstop']);
+Route::post('camstop', [HelperController::class, 'camstop']);
+Route::post('camfocusmin', [HelperController::class, 'camfocusmin']);
+Route::post('camfocusplus', [HelperController::class, 'camfocusplus']);
+Route::post('camfocusstop', [HelperController::class, 'camfocusstop']);
+Route::post('camleftdown', [HelperController::class, 'camleftdown']);
+Route::post('camrightdown', [HelperController::class, 'camrightdown']);
+Route::post('camirismin', [HelperController::class, 'camirismin']);
+Route::post('camirisplus', [HelperController::class, 'camirisplus']);
+Route::post('camirisstop', [HelperController::class, 'camirisstop']);
+Route::post('camwiper', [HelperController::class, 'camwiper']);
+Route::post('camstopwiper', [HelperController::class, 'camstopwiper']);
+Route::post('cammenu', [HelperController::class, 'cammenu']);
+Route::post('camstopzoom', [HelperController::class, 'camstopzoom']);
+
+Route::post('movebylatlng', [HelperController::class, 'movebylatlng']);
+Route::post('camset', [HelperController::class, 'camset']);
+Route::post('camcall', [HelperController::class, 'camcall']);
