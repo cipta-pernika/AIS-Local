@@ -10,5 +10,5 @@ class AisDataPositionClickHouse extends BaseModel
 {
     use HasFactory;
 
-    protected $table = 'ais_data_positions';
+    protected $table = 'ais_data_position_clickhouse';
 }
