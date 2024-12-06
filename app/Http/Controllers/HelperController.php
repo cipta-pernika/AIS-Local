@@ -1468,7 +1468,27 @@ class HelperController extends Controller
         curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
         curl_exec($ch);
         curl_close($ch);
+        try {
+            sleep(1);
+            $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
+            '<zoom>0</zoom>' .
+            '</PTZData>';
 
+        // $url = 'http://admin:Amtek2024@10.0.0.64/PTZCtrl/channels/1/momentary';
+        $url = 'http://admin:Amtek2024@10.0.0.64/ISAPI/PTZCtrl/channels/1/continuous';
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+        curl_exec($ch);
+            curl_close($ch);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ], 500);
+        }
         return response()->json([
             'success' => true,
         ], 200);
@@ -1488,7 +1508,27 @@ class HelperController extends Controller
         curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
         curl_exec($ch);
         curl_close($ch);
+        try {
+            sleep(1);
+            $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
+            '<zoom>0</zoom>' .
+            '</PTZData>';
 
+        // $url = 'http://admin:Amtek2024@10.0.0.64/PTZCtrl/channels/1/momentary';
+        $url = 'http://admin:Amtek2024@10.0.0.64/ISAPI/PTZCtrl/channels/1/continuous';
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+        curl_exec($ch);
+            curl_close($ch);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ], 500);
+        }
         return response()->json([
             'success' => true,
         ], 200);
@@ -1531,7 +1571,28 @@ class HelperController extends Controller
         curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
         curl_exec($ch);
         curl_close($ch);
+        try {
+            sleep(1);
+            $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
+            '<tilt>0</tilt>' .
+            '<pan>0</pan>' .
+            '</PTZData>';
 
+        // $url = 'http://admin:Amtek2024@10.0.0.64/PTZCtrl/channels/1/momentary';
+        $url = 'http://admin:Amtek2024@10.0.0.64/ISAPI/PTZCtrl/channels/1/continuous';
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+        curl_exec($ch);
+            curl_close($ch);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ], 500);
+        }
         return response()->json([
             'success' => true,
         ], 200);
@@ -1573,7 +1634,27 @@ class HelperController extends Controller
         curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
         curl_exec($ch);
         curl_close($ch);
+        try {
+            sleep(1);
+            $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
+            '<zoom>0</zoom>' .
+            '</PTZData>';
 
+        // $url = 'http://admin:Amtek2024@10.0.0.64/PTZCtrl/channels/1/momentary';
+        $url = 'http://admin:Amtek2024@10.0.0.64/ISAPI/PTZCtrl/channels/1/continuous';
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+        curl_exec($ch);
+            curl_close($ch);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ], 500);
+        }
         return response()->json([
             'success' => true,
         ], 200);
@@ -1615,6 +1696,27 @@ class HelperController extends Controller
         curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
         curl_exec($ch);
         curl_close($ch);
+        try {
+            sleep(1);
+            $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
+            '<pan>0</pan>' .
+            '</PTZData>';
+
+        // $url = 'http://admin:Amtek2024@10.0.0.64/PTZCtrl/channels/1/momentary';
+        $url = 'http://admin:Amtek2024@10.0.0.64/ISAPI/PTZCtrl/channels/1/continuous';
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+        curl_exec($ch);
+            curl_close($ch);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ], 500);
+        }
         return response()->json([
             'success' => true,
         ], 200);
@@ -1656,6 +1758,28 @@ class HelperController extends Controller
         curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
         curl_exec($ch);
         curl_close($ch);
+        try {
+            sleep(1);
+            $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
+            '<pan>0</pan>' .
+            '<tilt>0</tilt>' .
+            '</PTZData>';
+
+        // $url = 'http://admin:Amtek2024@10.0.0.64/PTZCtrl/channels/1/momentary';
+        $url = 'http://admin:Amtek2024@10.0.0.64/ISAPI/PTZCtrl/channels/1/continuous';
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+        curl_exec($ch);
+            curl_close($ch);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ], 500);
+        }
         return response()->json([
             'success' => true,
         ], 200);
@@ -1676,6 +1800,28 @@ class HelperController extends Controller
         curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
         curl_exec($ch);
         curl_close($ch);
+        try {
+            sleep(1);
+            $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
+            '<pan>0</pan>' .
+            '<tilt>0</tilt>' .
+            '</PTZData>';
+
+        // $url = 'http://admin:Amtek2024@10.0.0.64/PTZCtrl/channels/1/momentary';
+        $url = 'http://admin:Amtek2024@10.0.0.64/ISAPI/PTZCtrl/channels/1/continuous';
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+        curl_exec($ch);
+            curl_close($ch);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ], 500);
+        }
         return response()->json([
             'success' => true,
         ], 200);
@@ -1770,6 +1916,28 @@ class HelperController extends Controller
         curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
         curl_exec($ch);
         curl_close($ch);
+        try {
+            sleep(1);
+            $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
+            '<pan>0</pan>' .
+            '<tilt>0</tilt>' .
+            '</PTZData>';
+
+        // $url = 'http://admin:Amtek2024@10.0.0.64/PTZCtrl/channels/1/momentary';
+        $url = 'http://admin:Amtek2024@10.0.0.64/ISAPI/PTZCtrl/channels/1/continuous';
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+        curl_exec($ch);
+            curl_close($ch);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ], 500);
+        }
         return response()->json([
             'success' => true,
         ], 200);
@@ -1792,6 +1960,28 @@ class HelperController extends Controller
         curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
         curl_exec($ch);
         curl_close($ch);
+        try {
+            sleep(1);
+            $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
+            '<pan>0</pan>' .
+            '<tilt>0</tilt>' .
+            '</PTZData>';
+
+        // $url = 'http://admin:Amtek2024@10.0.0.64/PTZCtrl/channels/1/momentary';
+        $url = 'http://admin:Amtek2024@10.0.0.64/ISAPI/PTZCtrl/channels/1/continuous';
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+        curl_exec($ch);
+            curl_close($ch);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ], 500);
+        }
         return response()->json([
             'success' => true,
         ], 200);
@@ -1813,6 +2003,28 @@ class HelperController extends Controller
         curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
         curl_exec($ch);
         curl_close($ch);
+        try {
+            sleep(1);
+            $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
+            '<pan>0</pan>' .
+            '<tilt>0</tilt>' .
+            '</PTZData>';
+
+        // $url = 'http://admin:Amtek2024@10.0.0.64/PTZCtrl/channels/1/momentary';
+        $url = 'http://admin:Amtek2024@10.0.0.64/ISAPI/PTZCtrl/channels/1/continuous';
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+        curl_exec($ch);
+            curl_close($ch);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ], 500);
+        }
         return response()->json([
             'success' => true,
         ], 200);
@@ -1928,6 +2140,28 @@ class HelperController extends Controller
         curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
         curl_exec($ch);
         curl_close($ch);
+        try {
+            sleep(1);
+            $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
+            '<pan>0</pan>' .
+            '<tilt>0</tilt>' .
+            '</PTZData>';
+
+        // $url = 'http://admin:Amtek2024@10.0.0.64/PTZCtrl/channels/1/momentary';
+        $url = 'http://admin:Amtek2024@10.0.0.64/ISAPI/PTZCtrl/channels/1/continuous';
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+        curl_exec($ch);
+            curl_close($ch);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ], 500);
+        }
         return response()->json([
             'success' => true,
         ], 200);
