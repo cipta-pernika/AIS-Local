@@ -13,14 +13,16 @@ class GeofenceImage extends Model
         'mmsi',
         'geofence_id',
         'vessel_name',
-        'timestamp'
+        'timestamp',
+        'report_geofence_id'
     ];
 
     protected $casts = [
         'image_path' => 'string',
         'mmsi' => 'string',
         'vessel_name' => 'string',
-        'timestamp' => 'datetime'
+        'timestamp' => 'datetime',
+        'report_geofence_id' => 'integer'
     ];
 
     public static array $rules = [
@@ -30,11 +32,17 @@ class GeofenceImage extends Model
         'vessel_name' => 'nullable|string|max:255',
         'timestamp' => 'required',
         'created_at' => 'nullable',
-        'updated_at' => 'nullable'
+        'updated_at' => 'nullable',
+        'report_geofence_id' => 'nullable'
     ];
 
     public function geofence(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(\App\Models\Geofence::class, 'geofence_id');
     }
+
+    public function reportGeofence(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(\App\Models\ReportGeofence::class, 'report_geofence_id');
+    }   
 }

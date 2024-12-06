@@ -11,6 +11,7 @@ use App\Repositories\LocationRepository;
 use Illuminate\Http\Request;
 use Flash;
 use Illuminate\Notifications\DatabaseNotification as DatabaseNotificationModel;
+use Illuminate\Support\Facades\Cache;
 
 class LocationController extends AppBaseController
 {
@@ -157,7 +158,9 @@ class LocationController extends AppBaseController
 
     public function getlocationtype()
     {
-        $loctype = LocationType::all();
+        $loctype = Cache::remember('location_types', 10080, function () {
+            return LocationType::all();
+        });
 
         return response()->json([
             'success' => true,

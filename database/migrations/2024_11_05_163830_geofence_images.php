@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('image_path');
             $table->string('mmsi');
             $table->unsignedBigInteger('geofence_id');
+            $table->unsignedBigInteger('report_geofence_id')->nullable();
             $table->string('vessel_name')->nullable();
             $table->timestamp('timestamp');
             $table->timestamps();
@@ -24,6 +25,10 @@ return new class extends Migration
                   ->references('id')
                   ->on('geofences')
                   ->onDelete('cascade');
+            $table->foreign('report_geofence_id')->references('id')->on('report_geofences')->onDelete('cascade');
+
+            $table->index('report_geofence_id');
+            $table->index('geofence_id');
         });
     }
 

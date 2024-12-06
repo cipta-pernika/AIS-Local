@@ -28,11 +28,14 @@ class GeofenceTypeAPIController extends AppBaseController
      */
     public function index(Request $request): JsonResponse
     {
-        $geofenceTypes = $this->geofenceTypeRepository->all(
-            $request->except(['skip', 'limit']),
-            $request->get('skip'),
-            $request->get('limit')
-        );
+        $cacheKey = 'geofence_types_' . md5(json_encode($request->all()));
+        $geofenceTypes = cache()->remember($cacheKey, 43200, function () use ($request) {
+            return $this->geofenceTypeRepository->all(
+                $request->except(['skip', 'limit']),
+                $request->get('skip'),
+                $request->get('limit')
+            );
+        });
 
         return $this->sendResponse($geofenceTypes->toArray(), 'Geofence Types retrieved successfully');
     }
