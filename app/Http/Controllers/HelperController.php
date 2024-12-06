@@ -1469,7 +1469,7 @@ class HelperController extends Controller
         curl_exec($ch);
         curl_close($ch);
         try {
-            sleep(1);
+            usleep(500000);
             $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
             '<zoom>0</zoom>' .
             '</PTZData>';
@@ -1509,7 +1509,7 @@ class HelperController extends Controller
         curl_exec($ch);
         curl_close($ch);
         try {
-            sleep(1);
+            usleep(500000);
             $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
             '<zoom>0</zoom>' .
             '</PTZData>';
@@ -1572,7 +1572,7 @@ class HelperController extends Controller
         curl_exec($ch);
         curl_close($ch);
         try {
-            sleep(1);
+            usleep(500000);
             $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
             '<tilt>0</tilt>' .
             '<pan>0</pan>' .
@@ -1635,7 +1635,7 @@ class HelperController extends Controller
         curl_exec($ch);
         curl_close($ch);
         try {
-            sleep(1);
+            usleep(500000);
             $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
             '<zoom>0</zoom>' .
             '</PTZData>';
@@ -1697,7 +1697,7 @@ class HelperController extends Controller
         curl_exec($ch);
         curl_close($ch);
         try {
-            sleep(1);
+            usleep(500000);
             $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
             '<pan>0</pan>' .
             '</PTZData>';
@@ -1759,7 +1759,7 @@ class HelperController extends Controller
         curl_exec($ch);
         curl_close($ch);
         try {
-            sleep(1);
+            usleep(500000);
             $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
             '<pan>0</pan>' .
             '<tilt>0</tilt>' .
@@ -1801,7 +1801,7 @@ class HelperController extends Controller
         curl_exec($ch);
         curl_close($ch);
         try {
-            sleep(1);
+            usleep(500000);
             $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
             '<pan>0</pan>' .
             '<tilt>0</tilt>' .
@@ -1873,7 +1873,7 @@ class HelperController extends Controller
         curl_close($ch);
 
         try {
-            sleep(1);
+            usleep(500000);
             $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
             '<pan>0</pan>' .
             '<tilt>0</tilt>' .
@@ -1917,7 +1917,7 @@ class HelperController extends Controller
         curl_exec($ch);
         curl_close($ch);
         try {
-            sleep(1);
+            usleep(500000);
             $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
             '<pan>0</pan>' .
             '<tilt>0</tilt>' .
@@ -1961,7 +1961,7 @@ class HelperController extends Controller
         curl_exec($ch);
         curl_close($ch);
         try {
-            sleep(1);
+            usleep(500000);
             $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
             '<pan>0</pan>' .
             '<tilt>0</tilt>' .
@@ -2004,7 +2004,7 @@ class HelperController extends Controller
         curl_exec($ch);
         curl_close($ch);
         try {
-            sleep(1);
+            usleep(500000);
             $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
             '<pan>0</pan>' .
             '<tilt>0</tilt>' .
@@ -2141,7 +2141,7 @@ class HelperController extends Controller
         curl_exec($ch);
         curl_close($ch);
         try {
-            sleep(1);
+            usleep(500000);
             $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
             '<pan>0</pan>' .
             '<tilt>0</tilt>' .
