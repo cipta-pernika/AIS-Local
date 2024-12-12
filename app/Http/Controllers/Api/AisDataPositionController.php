@@ -22,7 +22,7 @@ class AisDataPositionController extends Controller
         $limit = request()->limit;
         $page = request()->page;
 
-        $query = AisDataPosition::with('aisDataVessel');
+        $query = AisDataPosition::with('aisDataVessel')->orderBy('timestamp', 'desc');
 
         if (!empty($vessels)) {
             $query->whereIn('vessel_id', $vessels);
