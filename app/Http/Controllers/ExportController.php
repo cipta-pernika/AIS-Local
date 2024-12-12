@@ -22,6 +22,7 @@ class ExportController extends Controller
         $dateRange = request('dateRange', []);
         $vessels = request('vessels', []);
         $format = request('format', 'xlsx');
+        $timezone = request('timezone', 'UTC');
 
         if (!empty($dateRange) && is_array($dateRange)) {
             $decodedDateRange = json_decode($dateRange[0], true);
@@ -32,16 +33,21 @@ class ExportController extends Controller
             $startDate = $endDate = null;
         }
 
-        $exportData = AisDataPosition::where(function ($query) use ($startDate, $endDate, $vessels) {
+        $exportData = AisDataPosition::where(function ($query) use ($startDate, $endDate, $vessels, $timezone) {
             if (!empty($startDate) && !empty($endDate)) {
-                $query->whereBetween('timestamp', [$startDate, $endDate]);
+                $startDateTime = Carbon::parse($startDate)->tz($timezone);
+                $endDateTime = Carbon::parse($endDate)->tz($timezone);
+                $query->whereBetween('timestamp', [$startDateTime, $endDateTime]);
             }
             if (!empty($vessels)) {
                 $query->whereIn('vessel_id', $vessels);
             }
         })
-        // ->take(10000) // Batasi hingga 100 baris
-        ->get();
+        ->get()
+        ->map(function($item) use ($timezone) {
+            $item->timestamp = Carbon::parse($item->timestamp)->tz($timezone);
+            return $item;
+        });
 
         if ($format === 'pdf') {
             $pdf = Pdf::loadView('pdf.historyreport', ['data' => $exportData]);
