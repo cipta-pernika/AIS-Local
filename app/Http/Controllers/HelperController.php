@@ -182,13 +182,16 @@ class HelperController extends Controller
                     'geofence',
                     'event',
                     'aisDataPosition.reportGeofences' => function ($query) {
-                        $query->whereNotNull('in'); // Only include records where 'in' is not null
+                        $query->whereNotNull('in')
+                              ->where('total_time', '>', 10); // Add filter for total_time > 10
                     },
                     'aisDataPosition.reportGeofences.geofenceImages'
                 ])
                 ->whereNotNull('mmsi')
                 ->whereNotNull('ais_data_position_id')
-                ->whereHas('aisDataPosition.reportGeofences') // Only include records that have related reportGeofences
+                ->whereHas('aisDataPosition.reportGeofences', function ($query) {
+                    $query->where('total_time', '>', 10); // Add filter in whereHas clause
+                })
                 ->limit(50)
                 ->get();
 
