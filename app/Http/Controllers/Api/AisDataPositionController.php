@@ -21,8 +21,9 @@ class AisDataPositionController extends Controller
         $mmsi = request()->mmsi;
         $limit = request()->limit;
         $page = request()->page;
+        $order = request()->order;
 
-        $query = AisDataPosition::with('aisDataVessel')->orderBy('timestamp', 'desc');
+        $query = AisDataPosition::with('aisDataVessel');
 
         if (!empty($vessels)) {
             $query->whereIn('vessel_id', $vessels);
@@ -38,6 +39,10 @@ class AisDataPositionController extends Controller
             $query->whereHas('aisDataVessel', function ($q) use ($mmsi) {
                 $q->where('mmsi', $mmsi);
             });
+        }
+
+        if ($order) {
+            $query->orderBy('timestamp', $order);
         }
 
         $aisDataPositions = $query->paginate($limit, ['*'], 'page', $page);
