@@ -63,7 +63,7 @@ class AisDataPositionController extends Controller
         //     $event = Cache::get($cacheKey);
         // } else {
         // If not cached, perform the query and store the result in the cache
-        $perPage = 50; // Jumlah item per halaman
+        $perPage = 10; // Jumlah item per halaman
 
         $event = EventTracking::where('event_id', 9)
             ->orderBy('created_at', 'DESC')
