@@ -63,7 +63,7 @@ class AisDataPositionController extends Controller
                 ->orderBy('created_at', 'DESC')
                 ->with([
                     'aisDataPosition',
-                    'aisDataPosition.ais_data_vessel',
+                    'aisDataPosition.aisDataVessel',
                     'geofence',
                     'event',
                     'aisDataPosition.reportGeofences' => function ($query) {
