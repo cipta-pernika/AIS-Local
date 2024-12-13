@@ -138,7 +138,8 @@ class AisDataPosition extends Model
      */
     public function reportGeofences()
     {
-        return $this->hasMany(\App\Models\ReportGeofence::class, 'id', 'ais_data_position_id');
+        // return $this->hasMany(\App\Models\ReportGeofence::class, 'id', 'ais_data_position_id');
+        return $this->hasMany(\App\Models\ReportGeofence::class, 'ais_data_position_id','id');
     }
     
     /**
