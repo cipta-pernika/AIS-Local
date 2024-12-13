@@ -18,38 +18,42 @@ class AisDataPositionController extends Controller
      */
     public function index(Request $request)
     {
-        // $vessels = request()->vessels;
-        // $vessel_name = request()->vessel_name;
-        // $mmsi = request()->mmsi;
-        // $limit = request()->limit;
-        // $page = request()->page;
-        // $order = request()->order;
+        $vessels = request()->vessels;
+        $vessel_name = request()->vessel_name;
+        $mmsi = request()->mmsi;
+        $limit = request()->limit;
+        $page = request()->page;
+        $order = request()->order;
 
-        // $query = AisDataPosition::with('aisDataVessel');
+        $query = AisDataPosition::with('aisDataVessel');
 
-        // if (!empty($vessels)) {
-        //     $query->whereIn('vessel_id', $vessels);
-        // }
+        if (!empty($vessels)) {
+            $query->whereIn('vessel_id', $vessels);
+        }
 
-        // if ($vessel_name) {
-        //     $query->whereHas('aisDataVessel', function ($q) use ($vessel_name) {
-        //         $q->where('vessel_name', $vessel_name);
-        //     });
-        // }
+        if ($vessel_name) {
+            $query->whereHas('aisDataVessel', function ($q) use ($vessel_name) {
+                $q->where('vessel_name', $vessel_name);
+            });
+        }
 
-        // if ($mmsi) {
-        //     $query->whereHas('aisDataVessel', function ($q) use ($mmsi) {
-        //         $q->where('mmsi', $mmsi);
-        //     });
-        // }
+        if ($mmsi) {
+            $query->whereHas('aisDataVessel', function ($q) use ($mmsi) {
+                $q->where('mmsi', $mmsi);
+            });
+        }
 
-        // if ($order) {
-        //     $query->orderBy('timestamp', $order);
-        // }
+        if ($order) {
+            $query->orderBy('timestamp', $order);
+        }
 
-        // $aisDataPositions = $query->paginate($limit, ['*'], 'page', $page);
+        $aisDataPositions = $query->paginate($limit, ['*'], 'page', $page);
 
-        // return AisDataPositionResource::collection($aisDataPositions);
+        return AisDataPositionResource::collection($aisDataPositions);
+    }
+
+    public function getEventTracking(Request $request)
+    {
         // Define a unique cache key for this query
         // $cacheKey = 'event_trackings_cache';
 
@@ -58,30 +62,36 @@ class AisDataPositionController extends Controller
         //     // If cached, return the cached result
         //     $event = Cache::get($cacheKey);
         // } else {
-            // If not cached, perform the query and store the result in the cache
-            $event = EventTracking::where('event_id', 9)
-                ->orderBy('created_at', 'DESC')
-                ->with([
-                    'aisDataPosition',
-                    'aisDataPosition.aisDataVessel',
-                    'geofence',
-                    'event',
-                    'aisDataPosition.reportGeofences' => function ($query) {
-                        $query->whereNotNull('in'); // Only include records where 'in' is not null
-                    }, 
-                    'aisDataPosition.reportGeofences.geofenceImages'
-                ])
-                ->whereNotNull('mmsi')
-                ->whereNotNull('ais_data_position_id')
-                // ->whereHas('aisDataPosition.reportGeofences') // Only include records that have related reportGeofences
-                ->whereHas('aisDataPosition.reportGeofences', function ($query) {
-                    $query->whereNotNull('in');
-                }) // Only include records that have related reportGeofences
-                ->limit(50)
-                ->get();
+        // If not cached, perform the query and store the result in the cache
+        $perPage = 50; // Jumlah item per halaman
 
-            // Cache the result for 60 minutes (you can adjust the duration)
-            // Cache::put($cacheKey, $event, 60);
+        $event = EventTracking::where('event_id', 9)
+            ->orderBy('created_at', 'DESC')
+            ->with([
+                'aisDataPosition',
+                'aisDataPosition.aisDataVessel',
+                'geofence',
+                'event',
+                'aisDataPosition.reportGeofences' => function ($query) {
+                    $query->whereNotNull('in'); // Only include records where 'in' is not null
+                },
+                'aisDataPosition.reportGeofences.geofenceImages'
+            ])
+            ->whereNotNull('mmsi')
+            ->whereNotNull('ais_data_position_id')
+            ->whereHas('aisDataPosition.reportGeofences', function ($query) {
+                $query->whereNotNull('in');
+            }) // Only include records that have related reportGeofences
+            ->paginate($perPage); // Menggunakan paginasi
+
+        return response()->json([
+            'success' => true,
+            'data' => $event,
+        ], 200);
+
+
+        // Cache the result for 60 minutes (you can adjust the duration)
+        // Cache::put($cacheKey, $event, 60);
         // }
 
         return response()->json([
@@ -89,7 +99,6 @@ class AisDataPositionController extends Controller
             'data' => $event,
         ], 200);
     }
-
     /**
      * Store a newly created resource in storage.
      */
