@@ -189,7 +189,7 @@ class HelperController extends Controller
                 ])
                 ->whereNotNull('mmsi')
                 ->whereNotNull('ais_data_position_id')
-                ->whereNotNull('aisDataPosition.reportGeofences.geofenceImages')
+                ->whereHas('aisDataPosition.reportGeofences.geofenceImages')
                 ->whereHas('aisDataPosition.reportGeofences', function ($query) {
                     $query->where('total_time', '>', 10); // Add filter in whereHas clause
                 })
