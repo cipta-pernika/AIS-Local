@@ -324,8 +324,7 @@ Route::get('diagnostics', [DiagnosticController::class, 'runDiagnostics']);
 
 Route::get('tersus/search', [TersusController::class, 'search']);
 
-Route::resource('geofence-images', App\Http\Controllers\API\GeofenceImageAPIController::class)
-    ->except(['create', 'edit']);
+Route::resource('geofence-images', App\Http\Controllers\API\GeofenceImageAPIController::class);
 
 Route::resource('activity-logs', App\Http\Controllers\API\ActivityLogAPIController::class)
     ->except(['create', 'edit']);
