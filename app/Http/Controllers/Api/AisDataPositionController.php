@@ -135,7 +135,7 @@ class AisDataPositionController extends Controller
 
     public function getEventTrackingImage()
     {
-        $event = GeofenceImage::with('geofence', 'reportGeofence')->limit(20)->get();
+        $event = GeofenceImage::with('geofence', 'reportGeofence', 'reportGeofence.aisDataPosition', 'reportGeofence.aisDataPosition.aisDataVessel')->limit(20)->get();
 
         return response()->json([
             'success' => true,
