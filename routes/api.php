@@ -38,6 +38,7 @@ Route::get('tersus/search', [TerminalController::class, 'search']);
 Route::get('aisdataunique', [AisDataController::class, 'unique']);
 Route::apiResource('ais-data-positions', AisDataPositionController::class);
 Route::get('report-geofence', [AisDataPositionController::class, 'getEventTracking']);
+Route::get('report-geofence-image', [AisDataPositionController::class, 'getEventTrackingImage']);
 
 Route::get('roles', RoleController::class)->name('roles.index');
 Route::get('permissions', PermissionController::class)->name('permissions.index');

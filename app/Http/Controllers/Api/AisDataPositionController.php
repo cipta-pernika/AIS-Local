@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\AisDataPositionResource;
 use Illuminate\Support\Facades\Cache;
 use App\Models\EventTracking;
+use App\Models\GeofenceImage;
 
 class AisDataPositionController extends Controller
 {
@@ -130,5 +131,15 @@ class AisDataPositionController extends Controller
         $aisDataPosition->delete();
 
         return response()->noContent();
+    }
+
+    public function getEventTrackingImage()
+    {
+        $event = GeofenceImage::with('geofence', 'reportGeofence')->limit(20)->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => $event,
+        ], 200);
     }
 }
