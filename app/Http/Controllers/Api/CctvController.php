@@ -36,11 +36,11 @@ class CctvController extends Controller
                 $query->whereIn('terminal_id', $terminalIds);
             }
 
-            // Return only the first result
-            return $query->get();
+            // Paginate the results
+            return $query->paginate(10);
         });
 
-        return new CctvResource($cctv);
+        return CctvResource::collection($cctv);
     }
 
     /**
