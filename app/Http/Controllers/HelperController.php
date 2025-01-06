@@ -1567,7 +1567,7 @@ class HelperController extends Controller
 
         // $url = 'http://admin:Amtek2024@10.0.0.64/PTZCtrl/channels/1/momentary';
 
-        $url = 'http://admin:Amtek2024@10.0.0.64/ISAPI/PTZCtrl/channels/1/continuous';
+        $url = env('CAMERA_URL') . '/ISAPI/PTZCtrl/channels/1/continuous';
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -1583,7 +1583,7 @@ class HelperController extends Controller
                 '</PTZData>';
 
             // $url = 'http://admin:Amtek2024@10.0.0.64/PTZCtrl/channels/1/momentary';
-            $url = 'http://admin:Amtek2024@10.0.0.64/ISAPI/PTZCtrl/channels/1/continuous';
+            $url = env('CAMERA_URL') . '/ISAPI/PTZCtrl/channels/1/continuous';
             $ch = curl_init($url);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -1692,7 +1692,7 @@ class HelperController extends Controller
 
         // $url = 'http://admin:Amtek2024@10.0.0.64/PTZCtrl/channels/1/momentary';
 
-        $url = 'http://admin:Amtek2024@10.0.0.64/ISAPI/PTZCtrl/channels/1/continuous';
+        $url = env('CAMERA_URL') . '/ISAPI/PTZCtrl/channels/1/continuous';
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -1707,7 +1707,7 @@ class HelperController extends Controller
                 '</PTZData>';
 
             // $url = 'http://admin:Amtek2024@10.0.0.64/PTZCtrl/channels/1/momentary';
-            $url = 'http://admin:Amtek2024@10.0.0.64/ISAPI/PTZCtrl/channels/1/continuous';
+            $url = env('CAMERA_URL') . '/ISAPI/PTZCtrl/channels/1/continuous';
             $ch = curl_init($url);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -1991,7 +1991,7 @@ class HelperController extends Controller
             '</PTZData>';
 
         // $url = 'http://admin:Amtek2024@10.0.0.64/PTZCtrl/channels/1/momentary';        
-        $url = 'http://admin:Amtek2024@10.0.0.64/ISAPI/PTZCtrl/channels/1/continuous';
+        $url = env('CAMERA_URL') . '/ISAPI/PTZCtrl/channels/1/continuous';
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -2007,7 +2007,7 @@ class HelperController extends Controller
                 '</PTZData>';
 
             // $url = 'http://admin:Amtek2024@10.0.0.64/PTZCtrl/channels/1/momentary';
-            $url = 'http://admin:Amtek2024@10.0.0.64/ISAPI/PTZCtrl/channels/1/continuous';
+            $url = env('CAMERA_URL') . '/ISAPI/PTZCtrl/channels/1/continuous';
             $ch = curl_init($url);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
