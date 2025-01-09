@@ -11,6 +11,8 @@ use App\Http\Resources\AisDataPositionResource;
 use Illuminate\Support\Facades\Cache;
 use App\Models\EventTracking;
 use App\Models\GeofenceImage;
+use Symfony\Component\HttpFoundation\StreamedResponse;
+
 
 class AisDataPositionController extends Controller
 {
@@ -141,5 +143,24 @@ class AisDataPositionController extends Controller
             'success' => true,
             'data' => $event,
         ], 200);
+    }
+
+    public function streamData(Request $request): StreamedResponse
+    {
+        $response = new StreamedResponse(function () {
+            AisDataPosition::chunk(100, function ($positions) {
+                foreach ($positions as $position) {
+                    echo json_encode($position) . "\n";
+                    ob_flush();
+                    flush();
+                }
+            });
+        });
+
+        $response->headers->set('Content-Type', 'text/event-stream');
+        $response->headers->set('Cache-Control', 'no-cache');
+        $response->headers->set('Connection', 'keep-alive');
+
+        return $response;
     }
 }
