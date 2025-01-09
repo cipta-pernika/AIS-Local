@@ -141,6 +141,7 @@ class AisDataPositionController extends Controller
         $date = request('date') ? Carbon::parse(request('date')) : Carbon::now();
         $event = GeofenceImage::with('geofence', 'reportGeofence', 'reportGeofence.aisDataPosition', 'reportGeofence.aisDataPosition.aisDataVessel')
             ->whereDate('timestamp', $date)
+            ->orderBy('timestamp', 'DESC')
             ->limit(2000)->get();
 
         return response()->json([
