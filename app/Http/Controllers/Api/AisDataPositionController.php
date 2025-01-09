@@ -11,6 +11,7 @@ use App\Http\Resources\AisDataPositionResource;
 use Illuminate\Support\Facades\Cache;
 use App\Models\EventTracking;
 use App\Models\GeofenceImage;
+use Carbon\Carbon;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 
@@ -137,7 +138,10 @@ class AisDataPositionController extends Controller
 
     public function getEventTrackingImage()
     {
-        $event = GeofenceImage::with('geofence', 'reportGeofence', 'reportGeofence.aisDataPosition', 'reportGeofence.aisDataPosition.aisDataVessel')->limit(20)->get();
+        $date = request('date') ? Carbon::parse(request('date')) : Carbon::now();
+        $event = GeofenceImage::with('geofence', 'reportGeofence', 'reportGeofence.aisDataPosition', 'reportGeofence.aisDataPosition.aisDataVessel')
+            ->whereDate('timestamp', $date)
+            ->limit(2000)->get();
 
         return response()->json([
             'success' => true,
