@@ -43,6 +43,7 @@ class ExportController extends Controller
                 $query->whereIn('vessel_id', $vessels);
             }
         })
+        ->take(50) // Limit to 50 rows
         ->get()
         ->map(function($item) use ($timezone) {
             $item->timestamp = Carbon::parse($item->timestamp)->tz($timezone);
