@@ -77,7 +77,7 @@
                 <tbody>
                     @foreach ($data as $item)
                     <tr>
-                        <td>{{ $item->image_path }}</td>
+                        <td><a href="https://bebmss.cakrawala.id/storage/{{ $item->image_path }}" target="_blank">{{ $item->image_path }}</a></td>
                         <td>{{ $item->mmsi }}</td>
                         <td>{{ $item->geofence_id }}</td>
                         <td>{{ $item->vessel_name }}</td>
