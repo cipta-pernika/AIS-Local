@@ -139,11 +139,12 @@ class AisDataPositionController extends Controller
     public function getEventTrackingImage()
     {
         $date = request('date') ? Carbon::parse(request('date')) : Carbon::now();
+        $enddate = request('enddate') ? Carbon::parse(request('enddate')) : $date->copy()->subDays(3);
         $cacheKey = 'geofence_images_' . $date->format('Y-m-d');
 
-        $event = Cache::remember($cacheKey, 5 * 60, function () use ($date) {
+        $event = Cache::remember($cacheKey, 5 * 60, function () use ($date, $enddate) {
             return GeofenceImage::with('geofence', 'reportGeofence', 'reportGeofence.aisDataPosition', 'reportGeofence.aisDataPosition.aisDataVessel')
-                ->whereDate('timestamp', $date)
+                ->whereBetween('timestamp', [$enddate, $date])
                 ->orderBy('timestamp', 'DESC')
                 ->limit(2000)->get();
         });
