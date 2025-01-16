@@ -37,7 +37,10 @@ class GeofenceImageAPIController extends AppBaseController
             ['*'],
             'page',
             $page
-        )->orderBy('created_at', 'desc');
+        );
+
+        // Apply orderBy before pagination
+        $geofenceImages = $geofenceImages->sortByDesc('created_at');
 
         $geofenceImages->load(['geofence', 'reportGeofence']);
 
