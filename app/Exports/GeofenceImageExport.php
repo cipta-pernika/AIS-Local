@@ -24,10 +24,12 @@ class GeofenceImageExport implements FromCollection, WithHeadings, WithMapping
     public function map($image): array
     {
         return [
-            $image->id,
-            $image->name,
-            $image->created_at,
-            $image->updated_at,
+            $image->image_path,
+            $image->mmsi,
+            $image->geofence_id,
+            $image->vessel_name,
+            $image->timestamp,
+            $image->report_geofence_id,
             // Add more fields as necessary
         ];
     }
@@ -35,10 +37,12 @@ class GeofenceImageExport implements FromCollection, WithHeadings, WithMapping
     public function headings(): array
     {
         return [
-            "ID",
-            "Name",
-            "Created At",
-            "Updated At",
+            "Image Path",
+            "MMSI",
+            "Geofence ID",
+            "Vessel Name",
+            "Timestamp",
+            "Report Geofence ID",
             // Add more headings as necessary
         ];
     }
