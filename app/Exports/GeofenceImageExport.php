@@ -24,7 +24,7 @@ class GeofenceImageExport implements FromCollection, WithHeadings, WithMapping
     public function map($image): array
     {
         return [
-            $image->image_path,
+            'https://bebmss.cakrawala.id/storage/' . $image->image_path,
             $image->mmsi,
             $image->geofence_id,
             $image->vessel_name,
