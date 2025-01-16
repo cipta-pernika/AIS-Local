@@ -312,6 +312,7 @@ Route::resource('ais-data-positions', App\Http\Controllers\API\AisDataPositionAP
 
     Route::get('ais-data-position/history-export', [ExportController::class, 'aisdatapositionsexport']);
     Route::get('ais-data-position/vessel-export', [ExportController::class, 'aisdatapositionsexportvessel']);
+    Route::get('ais-data-position/kegiatan-export', [ExportController::class, 'aisdatapositionsexportkegiatan']);
 
 
 Route::resource('anomaly-variables', App\Http\Controllers\API\AnomalyVariableAPIController::class)

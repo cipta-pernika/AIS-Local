@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\AisDataPositionExport;
 use App\Exports\AisDataVesselExport;
+use App\Exports\GeofenceImageExport;
 use App\Models\AisDataPosition;
 use App\Models\AisDataVessel;
+use App\Models\GeofenceImage;
 use Carbon\Carbon;
 use Barryvdh\DomPDF\Facade\Pdf;
 
@@ -92,5 +94,41 @@ class ExportController extends Controller
         }
 
         return Excel::download(new AisDataVesselExport($exportData), 'VESSEL-' . Carbon::now() . '.xlsx');
+    }
+
+    public function aisdatapositionsexportkegiatan(){
+        $dateRange = request('dateRange', []);
+        $vessels = request('vessels', []);
+        $format = request('format', 'xlsx');
+        $timezone = request('timezone', 'UTC');
+
+        if (!empty($dateRange) && is_array($dateRange)) {
+            $decodedDateRange = json_decode($dateRange[0], true);
+
+            $startDate = isset($decodedDateRange['startDate']) ? $decodedDateRange['startDate'] : null;
+            $endDate = isset($decodedDateRange['endDate']) ? $decodedDateRange['endDate'] : null;
+        } else {
+            $startDate = $endDate = null;
+        }
+
+        $exportData = GeofenceImage::with('geofence', 'reportGeofence')
+            ->where(function ($query) use ($startDate, $endDate, $vessels) {
+                if (!empty($startDate) && !empty($endDate)) {
+                    $query->whereBetween('timestamp', [$startDate, $endDate]);
+                }
+                if (!empty($vessels)) {
+                    $query->whereIn('mmsi', $vessels);
+                }
+            })
+            ->take(100) // Batasi hingga 100 baris
+            ->get();
+
+        if ($format === 'pdf') {
+            $pdf = Pdf::loadView('pdf.kegiatanreport', ['data' => $exportData]);
+            return $pdf->download('KEGIATAN-' . Carbon::now() . '.pdf');
+        }
+
+        return Excel::download(new GeofenceImageExport($exportData), 'KEGIATAN-' . Carbon::now() . '.xlsx');
+
     }
 }
