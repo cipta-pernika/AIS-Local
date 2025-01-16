@@ -6,6 +6,7 @@ use App\Models\GeofenceImage;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
+use Carbon\Carbon;
 
 class GeofenceImageExport implements FromCollection, WithHeadings, WithMapping
 {
@@ -23,13 +24,18 @@ class GeofenceImageExport implements FromCollection, WithHeadings, WithMapping
 
     public function map($image): array
     {
+        $outTime = $image->reportGeofence->out;
+        if ($image->reportGeofence->total_time < 30) {
+            $outTime = Carbon::parse($image->reportGeofence->in)->addMinutes(30);
+        }
+
         return [
-            'https://bebmss.cakrawala.id/storage/' . $image->image_path,
+            'https://bebmss.cakrawala.id/storage' . $image->image_path,
             $image->mmsi,
-            $image->geofence_id,
             $image->vessel_name,
-            $image->timestamp,
-            $image->report_geofence_id,
+            $image->reportGeofence->in,
+            $outTime,
+            $image->reportGeofence->total_time < 30 ? $image->reportGeofence->total_time + 30 : $image->reportGeofence->total_time,
             // Add more fields as necessary
         ];
     }
@@ -37,12 +43,12 @@ class GeofenceImageExport implements FromCollection, WithHeadings, WithMapping
     public function headings(): array
     {
         return [
-            "Image Path",
+            "Foto",
             "MMSI",
-            "Geofence ID",
-            "Vessel Name",
-            "Timestamp",
-            "Report Geofence ID",
+            "Nama Kapal",
+            "Waktu Masuk",
+            "Waktu Keluar",
+            "Total Waktu",
             // Add more headings as necessary
         ];
     }
