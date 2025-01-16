@@ -34,6 +34,8 @@ class GeofenceImageAPIController extends AppBaseController
             $request->get('limit')
         );
 
+        $geofenceImages->load(['geofence', 'reportGeofence']);
+
         return $this->sendResponse($geofenceImages->toArray(), 'Geofence Images retrieved successfully');
     }
 
