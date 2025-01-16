@@ -37,7 +37,7 @@ class GeofenceImageAPIController extends AppBaseController
             ['*'],
             'page',
             $page
-        );
+        )->orderBy('created_at', 'desc');
 
         $geofenceImages->load(['geofence', 'reportGeofence']);
 
