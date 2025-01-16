@@ -47,24 +47,28 @@ class MapController extends Controller
             $trackQuery = AisDataPosition::orderBy('created_at', 'DESC')
                 ->select('latitude', 'longitude', 'heading', 'vessel_id')
                 ->where('vessel_id', request('vessel_id'))
-                // ->groupBy('vessel_id')
                 ->with('vessel', 'sensorData.sensor.datalogger')
                 ->limit($map_setting->breadcrumb_point);
         } else {
             $trackQuery = AisDataPosition::orderBy('created_at', 'DESC')
                 ->select('latitude', 'longitude', 'heading', 'vessel_id')
                 ->where('vessel_id', request('vessel_id'))
-                // ->groupBy('vessel_id')
                 ->with('vessel', 'sensorData.sensor.datalogger')
                 ->limit(10);
         }
 
-        // if ($map_setting->breadcrumb === 'duration') {
-        //     $trackQuery->whereNotNull('latitude')
-        //         ->whereBetween('created_at', [now()->subMinutes((int)$map_setting->breadcrumb), now()]);
-        // }
-
         $track = $trackQuery->get();
+
+        // Filter the track based on a time interval of 180 seconds
+        $track = $track->filter(function ($position, $key) use (&$lastTimestamp) {
+            $timestamp = Carbon::parse($position->created_at)->timestamp;
+
+            if (!isset($lastTimestamp) || ($timestamp - $lastTimestamp) >= 180) {
+                $lastTimestamp = $timestamp;
+                return true;
+            }
+            return false;
+        });
 
         // Latitude and longitude values from the payload
         $providedLatitude = request('latitude');
