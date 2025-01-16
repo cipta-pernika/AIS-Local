@@ -32,19 +32,13 @@ class GeofenceImageAPIController extends AppBaseController
         $limit = $request->get('limit', $perPage);
         $page = $request->get('page', 1);
 
-        $geofenceImages = $this->geofenceImageRepository->paginate(
-            $limit,
-            ['*'],
-            'page',
-            $page
-        );
+        $geofenceImages = $this->geofenceImageRepository->all()->sortByDesc('created_at');
 
-        // Apply orderBy before pagination
-        $geofenceImages = $geofenceImages->sortByDesc('created_at');
+        $paginatedGeofenceImages = $geofenceImages->forPage($page, $limit);
 
-        $geofenceImages->load(['geofence', 'reportGeofence']);
+        $paginatedGeofenceImages->load(['geofence', 'reportGeofence']);
 
-        return $this->sendResponse($geofenceImages->toArray(), 'Geofence Images retrieved successfully');
+        return $this->sendResponse($paginatedGeofenceImages->toArray(), 'Geofence Images retrieved successfully');
     }
 
     /**
