@@ -66,23 +66,29 @@
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th>Image Path</th>
+                        <th>Foto</th>
                         <th>MMSI</th>
-                        <th>Geofence ID</th>
-                        <th>Vessel Name</th>
-                        <th>Timestamp</th>
-                        <th>Report Geofence ID</th>
+                        <th>Nama Kapal</th>
+                        <th>Waktu Masuk</th>
+                        <th>Waktu Keluar</th>
+                        <th>Total Waktu</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($data as $item)
+                    @php
+                        $outTime = $item->reportGeofence->out;
+                        if ($item->reportGeofence->total_time < 30) {
+                            $outTime = \Carbon\Carbon::parse($item->reportGeofence->in)->addMinutes(30);
+                        }
+                    @endphp
                     <tr>
                         <td><a href="https://bebmss.cakrawala.id/storage/{{ $item->image_path }}" target="_blank">{{ $item->image_path }}</a></td>
                         <td>{{ $item->mmsi }}</td>
-                        <td>{{ $item->geofence_id }}</td>
                         <td>{{ $item->vessel_name }}</td>
-                        <td>{{ $item->timestamp }}</td>
-                        <td>{{ $item->report_geofence_id }}</td>
+                        <td>{{ $item->reportGeofence->in }}</td>
+                        <td>{{ $outTime }}</td>
+                        <td>{{ $item->reportGeofence->total_time < 30 ? $item->reportGeofence->total_time + 30 : $item->reportGeofence->total_time }}</td>
                     </tr>
                     @endforeach
                 </tbody>
