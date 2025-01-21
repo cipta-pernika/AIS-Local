@@ -6,6 +6,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Livewire\Livewire;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,7 +47,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 // Route::resource('assets', App\Http\Controllers\AssetController::class);
 // Route::resource('trackings', App\Http\Controllers\TrackingController::class);
@@ -102,3 +103,11 @@ Route::resource('anomaly-variables', App\Http\Controllers\AnomalyVariableControl
 Route::resource('ais-data-anomalies', App\Http\Controllers\AisDataAnomalyController::class);
 Route::resource('geofence-images', App\Http\Controllers\GeofenceImageController::class);
 Route::resource('activity-logs', App\Http\Controllers\ActivityLogController::class);
+
+Livewire::setScriptRoute(function ($handle) {
+    return Route::get('/AA_hosteleria/public/livewire/livewire.js', $handle);
+});
+
+Livewire::setUpdateRoute(function ($handle) {
+    return Route::post('/AA_hosteleria/public/livewire/update', $handle);
+});
