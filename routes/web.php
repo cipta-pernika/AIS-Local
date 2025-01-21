@@ -105,7 +105,3 @@ Route::resource('activity-logss', App\Http\Controllers\ActivityLogController::cl
 Livewire::setScriptRoute(function ($handle) {
     return Route::get('/AA_hosteleria/public/livewire/livewire.js', $handle);
 });
-
-Livewire::setUpdateRoute(function ($handle) {
-    return Route::post('/AA_hosteleria/public/livewire/update', $handle);
-});
