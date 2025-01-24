@@ -23,3 +23,5 @@ bin\node_modules
 resources\js\node_modules
 database/sqlite/ksop.db
 !public\storage\images\locicon
+public\.user.ini
+public\.well-known\acme-challenge
