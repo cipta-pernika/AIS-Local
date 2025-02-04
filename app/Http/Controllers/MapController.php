@@ -78,9 +78,13 @@ class MapController extends Controller
 
             $aisTracks = $aisTracks->filter(function ($track, $key) use (&$lastTimestamp) {
                 $timestamp = Carbon::parse($track->created_at)->timestamp;
+                $geofence_id = $track->geofence_id;
     
                 if (!isset($lastTimestamp) || ($timestamp - $lastTimestamp) >= 180) {
                     $lastTimestamp = $timestamp;
+                    return true;
+                }
+                if ($geofence_id) {
                     return true;
                 }
                 return false;
