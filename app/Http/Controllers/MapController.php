@@ -57,7 +57,7 @@ class MapController extends Controller
                     'dataloggers.id as datalogger_id'
                 )
                 ->when($date, function ($query) use ($date, $date_until) {
-                    $query->whereBetween('ais_data_positions.created_at', [$date, $date_until]);
+                    $query->whereBetween('ais_data_positions.created_at', [$date->startOfSecond(), $date_until->endOfSecond()]);
                 })
                 ->when($mmsi, function ($query) use ($mmsi) {
                     $query->where('ais_data_vessels.mmsi', $mmsi);
@@ -227,7 +227,7 @@ class MapController extends Controller
                     'geofences.id as geofence_id' // Add this line to select geofence_id
                 )
                 ->when($date, function ($query) use ($date, $date_until) {
-                    $query->whereBetween('ais_data_positions.created_at', [$date, $date_until]);
+                    $query->whereBetween('ais_data_positions.created_at', [$date->startOfSecond(), $date_until->endOfSecond()]);
                 })
                 ->when($mmsi, function ($query) use ($mmsi) {
                     $query->where('ais_data_vessels.mmsi', $mmsi);
