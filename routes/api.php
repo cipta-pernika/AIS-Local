@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\GeofenceController;
 use App\Http\Controllers\Api\LocationController;
 use App\Http\Controllers\Api\LocationTypeController;
 use App\Http\Controllers\Api\GeofenceTypeController;
+use App\Http\Controllers\Api\MuatanController;
 use App\Http\Controllers\Api\PelabuhanController;
 use App\Http\Controllers\Api\SensorController;
 use App\Http\Controllers\Api\AisDataVesselController;
@@ -93,3 +94,5 @@ Route::post('camstopzoom', [HelperController::class, 'camstopzoom']);
 Route::post('movebylatlng', [HelperController::class, 'movebylatlng']);
 Route::post('camset', [HelperController::class, 'camset']);
 Route::post('camcall', [HelperController::class, 'camcall']);
+
+Route::apiResource('muatans', MuatanController::class);
