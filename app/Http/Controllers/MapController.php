@@ -11,7 +11,7 @@ class MapController extends Controller
     public function playback()
     {
         $date = Carbon::parse(request('dateFrom'));
-        $date_until = Carbon::parse(request('dateTo'))->addDays(1);
+        $date_until = Carbon::parse(request('dateTo'));
         $date_until_when = $date->copy()->addHours(3);
         $selectedSensors = request('sensor');
 
@@ -190,7 +190,7 @@ class MapController extends Controller
     public function checkplayback()
     {
         $date = Carbon::parse(request('dateFrom'));
-        $date_until = Carbon::parse(request('dateTo'))->addDays(1);
+        $date_until = Carbon::parse(request('dateTo'));
         $selectedSensors = request('sensor');
 
         $mmsi = request('mmsi'); // Get the MMSI from the request
