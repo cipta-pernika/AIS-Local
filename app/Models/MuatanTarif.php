@@ -30,7 +30,7 @@ class MuatanTarif extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = ['curah_kering_food_grain', 'curah_kering_non_food_grain', 'general_cargo', 'petikemas_20', 'petikemas_40', 'curah_cair'];
+    protected $fillable = ['curah_kering_food_grain', 'curah_kering_non_food_grain', 'general_cargo', 'petikemas_20', 'petikemas_40', 'curah_cair', 'type'];
 
 
 }
