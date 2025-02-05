@@ -76,7 +76,7 @@ class MapController extends Controller
                 return $key % 2 == 0;
             });
 
-            $aisTracks = $aisTracks->filter(function ($track, $key) use (&$lastTimestamp) {
+            $aisTracks = $aisTracks->filter(function ($track, $key) use (&$lastTimestamp, &$aisTracks) {
                 $timestamp = Carbon::parse($track->created_at)->timestamp;
                 $geofence_id = $track->geofence_id;
     
@@ -86,6 +86,17 @@ class MapController extends Controller
                 }
                 if ($geofence_id) {
                     return true;
+                }
+                 // New logic to create dummy data if timestamp > 540
+                if ($timestamp > 540) {
+                    for ($i = 1; $i <= 3; $i++) {
+                        $dummyTimestamp = $timestamp + ($i * 180);
+                        // Create dummy data here (you may need to adjust this part based on your data structure)
+                        $dummyTrack = clone $track; // Clone the original track
+                        $dummyTrack->created_at = Carbon::createFromTimestamp($dummyTimestamp);
+                        // Add the dummy track to the aisTracks collection
+                        $aisTracks->push($dummyTrack);
+                    }
                 }
                 return false;
             });
