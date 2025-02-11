@@ -11,7 +11,7 @@ class Port extends Model
 
     protected $fillable = [
         'port_name',
-        'country',
+        'ownop',
         'un_locode',
         'latitude',
         'longitude',

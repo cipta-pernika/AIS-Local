@@ -1,0 +1,250 @@
+[
+    {
+        "name": "id",
+        "dbType": "bigInteger,true,true",
+        "htmlType": "number",
+        "validations": "",
+        "searchable": false,
+        "fillable": false,
+        "primary": true,
+        "inForm": false,
+        "inIndex": false,
+        "inView": false
+    },
+    {
+        "name": "sensor_data_id",
+        "dbType": "bigInteger,false,true",
+        "htmlType": "number",
+        "validations": "required",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "vessel_id",
+        "dbType": "bigInteger,false,true",
+        "htmlType": "number",
+        "validations": "required",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "latitude",
+        "dbType": "decimal",
+        "htmlType": "number",
+        "validations": "required|numeric|numeric|numeric",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "longitude",
+        "dbType": "decimal",
+        "htmlType": "number",
+        "validations": "required|numeric|numeric|numeric",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "speed",
+        "dbType": "decimal",
+        "htmlType": "number",
+        "validations": "required|numeric|numeric|numeric",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "course",
+        "dbType": "smallInteger,false,true",
+        "htmlType": "number",
+        "validations": "nullable|nullable|nullable",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "heading",
+        "dbType": "smallInteger,false,true",
+        "htmlType": "number",
+        "validations": "nullable|nullable|nullable",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "navigation_status",
+        "dbType": "string",
+        "htmlType": "text",
+        "validations": "nullable|string|max:255|nullable|string|max:255|nullable|string|max:255",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "turning_rate",
+        "dbType": "integer,false",
+        "htmlType": "number",
+        "validations": "nullable|nullable|nullable",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "turning_direction",
+        "dbType": "integer,false",
+        "htmlType": "number",
+        "validations": "nullable|nullable|nullable",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "timestamp",
+        "dbType": "datetime",
+        "htmlType": "date",
+        "validations": "required",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "distance",
+        "dbType": "decimal",
+        "htmlType": "number",
+        "validations": "nullable|numeric|nullable|numeric|nullable|numeric",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "is_inside_geofence",
+        "dbType": "boolean",
+        "htmlType": "checkbox",
+        "validations": "required|boolean|boolean|boolean",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "is_geofence",
+        "dbType": "boolean",
+        "htmlType": "checkbox",
+        "validations": "required|boolean|boolean|boolean",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "created_at",
+        "dbType": "datetime",
+        "htmlType": "date",
+        "validations": "nullable|nullable|nullable",
+        "searchable": false,
+        "fillable": false,
+        "primary": false,
+        "inForm": false,
+        "inIndex": false,
+        "inView": false
+    },
+    {
+        "name": "updated_at",
+        "dbType": "datetime",
+        "htmlType": "date",
+        "validations": "nullable|nullable|nullable",
+        "searchable": false,
+        "fillable": false,
+        "primary": false,
+        "inForm": false,
+        "inIndex": false,
+        "inView": false
+    },
+    {
+        "type": "relation",
+        "relation": "mt1,SensorData,sensor_data_id"
+    },
+    {
+        "type": "relation",
+        "relation": "mt1,AisDataVessel,vessel_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,BongkarMuatTerlambat,ais_data_position_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,DataMandiriKapal,ais_data_position_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,EventTracking,ais_data_position_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,PanduTerlambat,ais_data_position_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,PanduTidakTerjadwal,ais_data_position_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,ReportGeofenceBongkarMuat,ais_data_position_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,ReportGeofencePandu,ais_data_position_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,ReportGeofence,ais_data_position_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,TidakTerjadwal,ais_data_position_id"
+    }
+]

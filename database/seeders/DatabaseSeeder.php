@@ -12,11 +12,28 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        $this->call([DatalogSeeder::class, SensorSeeder::class, ShieldSeeder::class]);
+        $this->call([
+            // RadarDataSeeder::class,
+            LocationTypeSeeder::class,
+            LocationSeeder::class,
+            AssetSeeder::class,
+            // SensorDatasTableSeeder::class,
+            // AisDataVesselsTableSeeder::class,
+            // AisDataPositionsTableSeeder::class,
+            EventSeeder::class,
+            GeofenceTypesTableSeeder::class,
+            UserSeeder::class,
+            MapSettingSeeder::class,
+            ModelHasRolesTableSeeder::class,
+            PermissionsTableSeeder::class,
+            RolesTableSeeder::class,
+            RoleHasPermissionsTableSeeder::class,
+            PelabuhanSeeder::class,
+            IndentificationSeeder::class,
+            //paling akhir
+            RolePermissionSeeder::class,
+            AdsbDataAircraftSeeder::class
+        ]);
     }
 }

@@ -1,0 +1,7 @@
+DELETE FROM data_mandiri_kapals WHERE DATE(created_at) = CURDATE();
+DELETE FROM tidak_terjadwals WHERE DATE(created_at) = CURDATE();
+DELETE FROM pandu_tidak_terjadwals WHERE DATE(created_at) = CURDATE();
+DELETE FROM pandu_terlambats WHERE DATE(created_at) = CURDATE();
+DELETE FROM bongkar_muat_terlambats WHERE DATE(created_at) = CURDATE();
+DELETE FROM report_geofence_bongkar_muats WHERE DATE(created_at) = CURDATE();
+DELETE FROM report_geofence_pandus WHERE DATE(created_at) = CURDATE();

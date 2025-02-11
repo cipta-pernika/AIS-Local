@@ -1,0 +1,39 @@
+- notification geofence local
+- playback per vessel bisa pilih start date & end date
+- Filter / Pencarian Kapal by MMSI, Nama Kapal, Call Sign, Nomor IMO (search di frontend ketika di search arahkan map ke center)
+- search global -> detail information (detail vessel, latest postion, playback)
+- untuk sekarang search menggunakan panel info popup vessel
+- Edit, Hapus Geofence
+- penamaan geofence disable auto complete
+- ais data position tambahkan filter (by mmsi, vessel name, time, navigation status, ) edit di remove
+- tambahkan legend weather
+- breadcrumdb posisinya aneh
+- slide to pergerakan marker
+- Pengaturan Satuan jarak, kecepatan, koordinat, dll (Map)
+- notification agak dibuat ke bwah dan kanan (button atas ke tngah, yg kanan agak bawah)
+- clusterring ais
+- playback max 7 hari
+- playback ngak jalan
+
+List fitur yang sudah
+- Pergerakan Realtime
+- Playback dalam rentang waktu tertentu
+- Filter / Pencarian Kapal by MMSI, Nama Kapal, Call Sign, Nomor IMO
+- Notifikasi Keluar Masuk Geofence
+- Tambah, Edit, Hapus Geofence
+- Penamaan Geofence
+- Kapasitas penyimpanan berdurasi +/- 1 Tahun
+- Data Log pergerkan kapal dalam coverage area AIS Base Station
+- Event dalam coverage Ais Base Station Ais On/Off, Keluar / Masuk jangkauan AIS Receiver, Keluar / Masuk Geofence, Perubahan status navigasi
+- Cuaca 
+- Timezone UTC
+- penambahan field pkk pada table ais data vessel
+--------------------------------------------------------------------------------------------
+List fitur yang belum
+- Pergerakan kapal dari waktu mulai sd realtime atau waktu berjalan dilengkapi line atau path pergerakan kapal
+- Playback dalam rentang waktu tertentu dilengkapi line atau path pergerakan kapal
+- Filter / Pencarian Kapal by Geofence
+- Data Log Pergerakan kapal dalam area geofence
+- Export data excel, pdf, atau image
+- Pengaturan Satuan jarak, kecepatan, koordinat, dll
+- User Account Management

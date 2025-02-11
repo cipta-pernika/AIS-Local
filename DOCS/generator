@@ -1,0 +1,1 @@
+php artisan infyom:api_scaffold GeofenceImage --skip=views,menu,tests --fromTable --table=geofence_images

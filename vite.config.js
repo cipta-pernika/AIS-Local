@@ -10,6 +10,10 @@ export default defineConfig({
             input: "public/frontend/src/index.tsx",
             refresh: true,
         }),
+        laravel({
+            input: 'resources/js/aismaps.js',
+            refresh: true,
+        }),
         react(),
     ],
     build: {
