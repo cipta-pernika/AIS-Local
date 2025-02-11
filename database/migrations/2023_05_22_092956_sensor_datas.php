@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+use Tpetry\PostgresqlEnhanced\Schema\Blueprint;
+use Tpetry\PostgresqlEnhanced\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
@@ -22,24 +22,6 @@ return new class extends Migration
 
             $table->index('sensor_id');
         });
-
-        if (config('database.default') === 'pgsql') {
-            // PostgreSQL implementation for partitioned table
-            DB::statement("
-                CREATE TABLE sensor_datas (
-                    id BIGSERIAL PRIMARY KEY,
-                    sensor_id BIGINT NOT NULL,
-                    payload TEXT NOT NULL,
-                    timestamp TIMESTAMP NOT NULL,
-                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                    CONSTRAINT fk_sensor FOREIGN KEY (sensor_id) REFERENCES sensors(id)
-                ) PARTITION BY RANGE (timestamp);
-            ");
-
-            // Create the first partition for the current month
-            $this->createPartition(date('Y'), date('m'));
-        }
 
         $currentMonth = date('Y_m');
         Schema::create("sensor_datas_{$currentMonth}", function (Blueprint $table) {

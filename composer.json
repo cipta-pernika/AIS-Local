@@ -42,6 +42,7 @@
         "socialiteproviders/keycloak": "^5.3",
         "socialiteproviders/manager": "^4.6",
         "tightenco/ziggy": "v2.0.4",
+        "tpetry/laravel-postgresql-enhanced": "*",
         "vizir/laravel-keycloak-web-guard": "^4.0",
         "z3d0x/filament-logger": "v0.7.0"
     },
