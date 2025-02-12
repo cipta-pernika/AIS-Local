@@ -13,7 +13,6 @@
         "doctrine/dbal": "~3.7.3",
         "dutchcodingcompany/filament-socialite": "^2.1",
         "eightynine/filament-excel-import": "^v3.0.2",
-        "filament/filament": "v3.2.50",
         "flowframe/laravel-trend": "^v0.2.0",
         "guzzlehttp/guzzle": "^7.8.1",
         "http-interop/http-factory-guzzle": "^1.2",
