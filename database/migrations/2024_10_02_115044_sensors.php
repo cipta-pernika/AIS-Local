@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -30,17 +31,32 @@ return new class extends Migration
             });
         } else {
             Schema::table('sensors', function (Blueprint $table) {
-                if (!Schema::hasColumn('sensors', 'latitude')) {
-                    $table->string('latitude');
-                }
-                if (!Schema::hasColumn('sensors', 'longitude')) {
-                    $table->string('longitude');
-                }
-                if (!Schema::hasColumn('sensors', 'altitude')) {
-                    $table->string('altitude');
-                }
-                if (!Schema::hasColumn('sensors', 'kompas')) {
-                    $table->string('kompas');
+                if (DB::getDriverName() == 'pgsql') {
+                    if (!Schema::hasColumn('sensors', 'latitude')) {
+                        $table->string('latitude')->nullable();
+                    }
+                    if (!Schema::hasColumn('sensors', 'longitude')) {
+                        $table->string('longitude')->nullable();
+                    }
+                    if (!Schema::hasColumn('sensors', 'altitude')) {
+                        $table->string('altitude')->nullable();
+                    }
+                    if (!Schema::hasColumn('sensors', 'kompas')) {
+                        $table->string('kompas')->nullable();
+                    }
+                } else {
+                    if (!Schema::hasColumn('sensors', 'latitude')) {
+                        $table->string('latitude');
+                    }
+                    if (!Schema::hasColumn('sensors', 'longitude')) {
+                        $table->string('longitude');
+                    }
+                    if (!Schema::hasColumn('sensors', 'altitude')) {
+                        $table->string('altitude');
+                    }
+                    if (!Schema::hasColumn('sensors', 'kompas')) {
+                        $table->string('kompas');
+                    }
                 }
             });
         }
