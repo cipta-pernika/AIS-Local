@@ -47,50 +47,32 @@ class RolePermissionSeeder extends Seeder
                     );
             }
 
-            // Create roles
-            DB::connection('mongodb')
-                ->selectCollection('roles')
-                ->updateOne(
-                    ['name' => 'user', 'guard_name' => 'web'],
-                    ['$set' => ['name' => 'user', 'guard_name' => 'web']],
-                    ['upsert' => true]
-                );
+            // Create roles with their permissions
+            $roles = [
+                'user' => ['show_cctv', 'show_legend', 'show_poi'],
+                'admin' => $permissions
+            ];
 
-            DB::connection('mongodb')
-                ->selectCollection('roles')
-                ->updateOne(
-                    ['name' => 'admin', 'guard_name' => 'web'],
-                    ['$set' => ['name' => 'admin', 'guard_name' => 'web']],
-                    ['upsert' => true]
-                );
-
-            // Assign permissions to roles
-            $userPermissions = ['show_cctv', 'show_legend', 'show_poi'];
-            DB::connection('mongodb')
-                ->selectCollection('role_has_permissions')
-                ->deleteMany(['role_name' => 'user']);
-            
-            foreach ($userPermissions as $permission) {
+            foreach ($roles as $roleName => $rolePermissions) {
+                // Create/Update role
                 DB::connection('mongodb')
-                    ->selectCollection('role_has_permissions')
-                    ->insertOne([
-                        'role_name' => 'user',
-                        'permission_name' => $permission
-                    ]);
-            }
-
-            // Assign all permissions to admin
-            DB::connection('mongodb')
-                ->selectCollection('role_has_permissions')
-                ->deleteMany(['role_name' => 'admin']);
-            
-            foreach ($permissions as $permission) {
-                DB::connection('mongodb')
-                    ->selectCollection('role_has_permissions')
-                    ->insertOne([
-                        'role_name' => 'admin',
-                        'permission_name' => $permission
-                    ]);
+                    ->selectCollection('roles')
+                    ->updateOne(
+                        ['name' => $roleName, 'guard_name' => 'web'],
+                        [
+                            '$set' => [
+                                'name' => $roleName,
+                                'guard_name' => 'web',
+                                'permissions' => array_map(function($permission) {
+                                    return [
+                                        'name' => $permission,
+                                        'guard_name' => 'web'
+                                    ];
+                                }, $rolePermissions)
+                            ]
+                        ],
+                        ['upsert' => true]
+                    );
             }
         } else {
             if (config('database.default') === 'pgsql') {
