@@ -40,26 +40,28 @@ return new class extends Migration
             DB::table("sensor_datas_{$currentMonth}")->insert((array) $data);
         });
 
-        // Create trigger function for automatic partition creation
-        DB::statement("
-            CREATE OR REPLACE FUNCTION create_sensor_data_partition()
-            RETURNS TRIGGER AS $$
-            BEGIN
-                EXECUTE format('CREATE TABLE IF NOT EXISTS sensor_datas_%s PARTITION OF sensor_datas FOR VALUES FROM (''%s'') TO (''%s'')',
-                    to_char(NEW.timestamp, 'YYYY_MM'),
-                    to_char(NEW.timestamp, 'YYYY-MM-DD HH24:MI:SS'),
-                    to_char(NEW.timestamp + interval '1 month', 'YYYY-MM-DD HH24:MI:SS'));
-                RETURN NEW;
-            END;
-            $$ LANGUAGE plpgsql;
-        ");
+        if (env('DB_CONNECTION') !== 'mysql') {
+            // Create trigger function for automatic partition creation
+            DB::statement("
+CREATE OR REPLACE FUNCTION create_sensor_data_partition()
+RETURNS TRIGGER AS $$
+BEGIN
+    EXECUTE format('CREATE TABLE IF NOT EXISTS sensor_datas_%s PARTITION OF sensor_datas FOR VALUES FROM (''%s'') TO (''%s'')',
+        to_char(NEW.timestamp, 'YYYY_MM'),
+        to_char(NEW.timestamp, 'YYYY-MM-DD HH24:MI:SS'),
+        to_char(NEW.timestamp + interval '1 month', 'YYYY-MM-DD HH24:MI:SS'));
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+");
 
-        // Create trigger for the sensor_datas table
-        DB::statement("
-            CREATE TRIGGER sensor_data_partition_trigger
-            BEFORE INSERT ON sensor_datas
-            FOR EACH ROW EXECUTE FUNCTION create_sensor_data_partition();
-        ");
+            // Create trigger for the sensor_datas table
+            DB::statement("
+CREATE TRIGGER sensor_data_partition_trigger
+BEFORE INSERT ON sensor_datas
+FOR EACH ROW EXECUTE FUNCTION create_sensor_data_partition();
+");
+        }
     }
 
     /**
