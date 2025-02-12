@@ -34,22 +34,16 @@ class EventSeeder extends Seeder
                     ->insertOne($event);
             }
         } else {
-            $events = [
-                ['name' => 'Normal Positions', 'threshold' => 10],
-                ['name' => 'ON AIS', 'threshold' => 10],
-                ['name' => 'OFF AIS', 'threshold' => 10],
-                ['name' => 'ON AIS Receiver Coverage', 'threshold' => 10],
-                ['name' => 'OFF AIS Receiver Coverage', 'threshold' => 10],
-                ['name' => 'Entry coverage AIS (new detected)', 'threshold' => 10],
-                ['name' => 'Navigation status changes', 'threshold' => 10],
-                ['name' => 'Potential Collision', 'threshold' => 10],
-                ['name' => 'Enter Geofence', 'threshold' => 10],
-                ['name' => 'Exit Geofence', 'threshold' => 10],
-            ];
-
-            foreach ($events as $event) {
-                Event::create($event);
-            }
+            Event::create(['name' => 'Normal Positions', 'threshold' => 10]);
+            Event::create(['name' => 'ON AIS', 'threshold' => 10]);
+            Event::create(['name' => 'OFF AIS', 'threshold' => 10]);
+            Event::create(['name' => 'ON AIS Receiver Coverage', 'threshold' => 10]);
+            Event::create(['name' => 'OFF AIS Receiver Coverage', 'threshold' => 10]);
+            Event::create(['name' => 'Entry coverage AIS (new detected)', 'threshold' => 10]);
+            Event::create(['name' => 'Navigation status changes', 'threshold' => 10]);
+            Event::create(['name' => 'Potential Collision', 'threshold' => 10]);
+            Event::create(['name' => 'Enter Geofence', 'threshold' => 10]);
+            Event::create(['name' => 'Exit Geofence', 'threshold' => 10]);
         }
     }
 }
