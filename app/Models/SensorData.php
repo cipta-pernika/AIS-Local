@@ -19,6 +19,10 @@ class SensorData extends Model
         'timestamp',
     ];
 
+    protected $casts = [
+        'timestamp' => 'datetime',
+    ];
+
     // Relationship with AisDataPosition
     public function position()
     {
