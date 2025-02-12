@@ -29,6 +29,7 @@
         "malzariey/filament-daterangepicker-filter": "^2.4.0",
         "meilisearch/meilisearch-php": "v1.7.0",
         "mjaschen/phpgeo": "^5.0.0",
+        "mongodb/laravel-mongodb": "5.1",
         "orangehill/iseed": "^v3.0.3",
         "owenvoke/blade-fontawesome": "*",
         "pxlrbt/filament-excel": "v2.3.1",

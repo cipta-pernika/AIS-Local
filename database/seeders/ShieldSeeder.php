@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use BezhanSalleh\FilamentShield\Support\Utils;
+use Illuminate\Support\Facades\DB;
+
 class ShieldSeeder extends Seeder
 {
     /**
@@ -18,10 +20,81 @@ class ShieldSeeder extends Seeder
         $rolesWithPermissions = '[{"name":"panel_user","guard_name":"web","permissions":[]}]';
         $directPermissions = '[]';
 
-        static::makeRolesWithPermissions($rolesWithPermissions);
-        static::makeDirectPermissions($directPermissions);
+        if (DB::getDriverName() == 'mongodb') {
+            $this->makeMongoRolesWithPermissions($rolesWithPermissions);
+            $this->makeMongoDirectPermissions($directPermissions);
+        } else {
+            static::makeRolesWithPermissions($rolesWithPermissions);
+            static::makeDirectPermissions($directPermissions);
+        }
 
         $this->command->info('Shield Seeding Completed.');
+    }
+
+    protected function makeMongoRolesWithPermissions(string $rolesWithPermissions): void
+    {
+        if (! blank($rolePlusPermissions = json_decode($rolesWithPermissions, true))) {
+            foreach ($rolePlusPermissions as $rolePlusPermission) {
+                DB::connection('mongodb')
+                    ->selectCollection('roles')
+                    ->updateOne(
+                        [
+                            'name' => $rolePlusPermission['name'],
+                            'guard_name' => $rolePlusPermission['guard_name']
+                        ],
+                        [
+                            '$set' => [
+                                'name' => $rolePlusPermission['name'],
+                                'guard_name' => $rolePlusPermission['guard_name']
+                            ]
+                        ],
+                        ['upsert' => true]
+                    );
+
+                if (! blank($rolePlusPermission['permissions'])) {
+                    foreach ($rolePlusPermission['permissions'] as $permission) {
+                        DB::connection('mongodb')
+                            ->selectCollection('permissions')
+                            ->updateOne(
+                                [
+                                    'name' => $permission,
+                                    'guard_name' => 'web'
+                                ],
+                                [
+                                    '$set' => [
+                                        'name' => $permission,
+                                        'guard_name' => 'web'
+                                    ]
+                                ],
+                                ['upsert' => true]
+                            );
+                    }
+                }
+            }
+        }
+    }
+
+    protected function makeMongoDirectPermissions(string $directPermissions): void
+    {
+        if (! blank($permissions = json_decode($directPermissions, true))) {
+            foreach($permissions as $permission) {
+                DB::connection('mongodb')
+                    ->selectCollection('permissions')
+                    ->updateOne(
+                        [
+                            'name' => $permission['name'],
+                            'guard_name' => $permission['guard_name']
+                        ],
+                        [
+                            '$set' => [
+                                'name' => $permission['name'],
+                                'guard_name' => $permission['guard_name']
+                            ]
+                        ],
+                        ['upsert' => true]
+                    );
+            }
+        }
     }
 
     protected static function makeRolesWithPermissions(string $rolesWithPermissions): void

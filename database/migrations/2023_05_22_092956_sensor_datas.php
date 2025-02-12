@@ -42,7 +42,7 @@ return new class extends Migration
             DB::table("sensor_datas_{$currentMonth}")->insert((array) $data);
         });
 
-        if (env('DB_CONNECTION') !== 'mysql') {
+        if (env('DB_CONNECTION') === 'pgsql') {
             // Create trigger function for automatic partition creation
             DB::statement("
 CREATE OR REPLACE FUNCTION create_sensor_data_partition()
@@ -79,10 +79,11 @@ FOR EACH ROW EXECUTE FUNCTION create_sensor_data_partition();
         $partitionName = "sensor_datas_{$year}_{$month}";
         $startDate = "{$year}-{$month}-01 00:00:00";
         $endDate = date('Y-m-d H:i:s', strtotime("+1 month", strtotime($startDate)));
-
-        DB::statement("
+        if (env('DB_CONNECTION') === 'pgsql') {
+            DB::statement("
             CREATE TABLE $partitionName PARTITION OF sensor_datas
             FOR VALUES FROM ('$startDate') TO ('$endDate');
         ");
+        }
     }
 };
