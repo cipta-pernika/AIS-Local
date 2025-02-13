@@ -96,3 +96,5 @@ Route::post('camset', [HelperController::class, 'camset']);
 Route::post('camcall', [HelperController::class, 'camcall']);
 
 Route::apiResource('muatans', MuatanController::class);
+
+Route::post('getgeofence', [GeofenceController::class, 'getgeofence']);

@@ -8,7 +8,7 @@ use App\Http\Requests\GeofenceRequest;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\GeofenceResource;
-
+use Illuminate\Support\Facades\Cache;
 class GeofenceController extends Controller
 {
     /**
@@ -52,5 +52,31 @@ class GeofenceController extends Controller
         $geofence->delete();
 
         return response()->noContent();
+    }
+
+    public function getgeofence()
+    {
+
+        // Create a descriptive cache key
+        $cacheKey = 'all_geofences';
+
+        // Attempt to retrieve data from the cache
+        $cachedData = Cache::get($cacheKey);
+
+        if (!$cachedData) {
+            // If not cached, fetch the data from the database
+            $geo = Geofence::where('isMaster', 0)->where('isHidden', 0)->get();
+
+            // Store the retrieved data in the cache
+            Cache::put($cacheKey, $geo, 60); // Cache for 60 minutes
+        } else {
+            // Data is already cached
+            $geo = $cachedData;
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => $geo,
+        ], 200);
     }
 }
