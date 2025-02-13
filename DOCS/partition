@@ -1,0 +1,32 @@
+DELIMITER $$
+
+CREATE PROCEDURE AddMonthlyPartition()
+BEGIN
+    DECLARE next_month VARCHAR(6);
+    DECLARE next_partition VARCHAR(255);
+    
+    -- Get next month in YYYYMM format
+    SET next_month = DATE_FORMAT(DATE_ADD(NOW(), INTERVAL 1 MONTH), '%Y%m');
+
+    -- Create SQL partition statement
+    SET @sql = CONCAT(
+        'ALTER TABLE ais_data_positions ADD PARTITION (
+            PARTITION p', next_month, ' VALUES LESS THAN (UNIX_TIMESTAMP("', next_month, '-01"))
+        );'
+    );
+
+    -- Execute the SQL
+    PREPARE stmt FROM @sql;
+    EXECUTE stmt;
+    DEALLOCATE PREPARE stmt;
+END $$
+
+DELIMITER ;
+
+
+mysql -u root -p -D bmss -e "CALL AddMonthlyPartition();"
+
+ALTER TABLE ais_data_positions DROP FOREIGN KEY ais_data_positions_sensor_data_id_foreign;
+ALTER TABLE ais_data_positions DROP FOREIGN KEY ais_data_positions_vessel_id_foreign;
+
+
