@@ -27,6 +27,8 @@ class AisDataController extends Controller
                         $feature['properties']['updated_at'] = $vessel->updated_at;
                     }
                 }
+            } else {
+                $feature['properties']['updated_at'] = $feature['properties']['timestamp'];
             }
         }
 
