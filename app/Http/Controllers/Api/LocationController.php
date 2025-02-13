@@ -16,7 +16,7 @@ class LocationController extends Controller
      */
     public function index(Request $request)
     {
-        $locations = Location::paginate();
+        $locations = Location::with('locationType')->paginate();
 
         return LocationResource::collection($locations);
     }
