@@ -19,10 +19,12 @@ class AisDataController extends Controller
                 $vessel = AisDataVessel::where('mmsi', $feature['properties']['mmsi'])->first();
                 if ($vessel) {
                     $feature['properties']['name'] = $vessel->vessel_name;
+                    $feature['properties']['updated_at'] = $vessel->updated_at;
                 } else {
                     $vessel = VesselList20240621::where('mmsi', $feature['properties']['mmsi'])->first();
                     if ($vessel) {
                         $feature['properties']['name'] = $vessel->vessel_name;
+                        $feature['properties']['updated_at'] = $vessel->updated_at;
                     }
                 }
             }
