@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\SensorController;
 use App\Http\Controllers\Api\AisDataVesselController;
 use App\Http\Controllers\Api\TerminalController;
 use App\Http\Controllers\Api\CctvController;
+use App\Http\Controllers\Api\UsersController;
 use App\Http\Controllers\Api\AisDataPositionController;
 use App\Http\Controllers\HelperController;
 use App\Http\Controllers\MapController;
@@ -34,6 +35,7 @@ Route::apiResource('sensors', SensorController::class);
 Route::apiResource('ais_data_vessels', AisDataVesselController::class);
 Route::apiResource('tersus', TerminalController::class);
 Route::apiResource('cctvs', CctvController::class);
+Route::apiResource('users', UsersController::class);
 
 Route::get('tersus/search', [TerminalController::class, 'search']);
 Route::get('aisdataunique', [AisDataController::class, 'unique']);
