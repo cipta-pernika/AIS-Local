@@ -5,11 +5,26 @@ namespace App\Http\Controllers;
 use App\Models\AisDataPosition;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class MapController extends Controller
 {
     public function playback()
     {
+        // Build cache key from request parameters
+        $cacheKey = sprintf(
+            'playback_%s_%s_%s_%s',
+            request('dateFrom'),
+            request('dateTo'), 
+            implode(',', request('sensor')),
+            request('mmsi')
+        );
+
+        // Return cached response if exists
+        if (Cache::has($cacheKey)) {
+            return response()->json(Cache::get($cacheKey), 200);
+        }
+
         $date = Carbon::parse(request('dateFrom'));
         $date_until = Carbon::parse(request('dateTo'));
         $date_until_when = $date->copy()->addHours(3);
@@ -198,6 +213,9 @@ class MapController extends Controller
                 'ais' => $dataAis,
             ],
         ];
+
+        // Cache response for 24 hours
+        Cache::put($cacheKey, $response, now()->addHours(24));
 
         return response()->json($response, 200);
     }
