@@ -463,25 +463,27 @@ class HelperController extends Controller
 
     public function livefeed()
     {
-        $aisData = AisDataPosition::with('vessel')
-            ->groupBy('vessel_id')
-            ->limit(10)
-            ->orderBy('created_at', 'DESC')
-            ->whereBetween('created_at', [now()->subMinutes(5), now()])
-            ->get();
+        return cache()->remember('livefeed', 60, function() {
+            $aisData = AisDataPosition::with('vessel')
+                ->groupBy('vessel_id') 
+                ->limit(10)
+                ->orderBy('created_at', 'DESC')
+                ->whereBetween('created_at', [now()->subMinutes(5), now()])
+                ->get();
 
-        $adsb = AdsbDataPosition::with('aircraft')
-            ->groupBy('aircraft_id')
-            ->limit(10)
-            ->orderBy('created_at', 'DESC')
-            ->whereBetween('created_at', [now()->subMinutes(5), now()])
-            ->get();
+            $adsb = AdsbDataPosition::with('aircraft')
+                ->groupBy('aircraft_id')
+                ->limit(10)
+                ->orderBy('created_at', 'DESC')
+                ->whereBetween('created_at', [now()->subMinutes(5), now()])
+                ->get();
 
-        return response()->json([
-            'success' => true,
-            'message' => $aisData,
-            'liveadsb' => $adsb,
-        ], 201);
+            return response()->json([
+                'success' => true,
+                'message' => $aisData,
+                'liveadsb' => $adsb,
+            ], 201);
+        });
     }
 
     public function adsbunique()
