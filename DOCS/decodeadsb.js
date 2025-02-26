@@ -17,6 +17,10 @@ mqttClient.on('connect', () => {
 
 // Cache MongoDB connection
 let mongoDb;
+let bulkOps = [];
+const BULK_SIZE = 100;
+let bulkTimer = null;
+const BULK_TIMEOUT = 5000; // 5 seconds
 
 // Initialize MongoDB connection
 async function getMongoDb() {
@@ -25,6 +29,24 @@ async function getMongoDb() {
         mongoDb = mongoClient.db('adsbData');
     }
     return mongoDb;
+}
+
+// Execute bulk operations
+async function executeBulkOps() {
+    if (bulkOps.length === 0) return;
+    
+    try {
+        const db = await getMongoDb();
+        await db.collection('aircraft').bulkWrite(bulkOps, { ordered: false });
+        bulkOps = [];
+    } catch (error) {
+        console.error('Bulk write error:', error);
+        if (!mongoClient.topology?.isConnected()) {
+            await initializeMongoDB();
+        }
+    } finally {
+        bulkTimer = null;
+    }
 }
 
 // MongoDB initialization
@@ -58,8 +80,6 @@ async function initializeMongoDB() {
 // Process and save ADSB data
 async function processADSBData(message) {
   try {
-    const db = await getMongoDb();
-    
     // Extract relevant data
     const icao = message.hex_ident || message.hex;
     if (!icao) return;
@@ -89,8 +109,16 @@ async function processADSBData(message) {
       is_on_ground: message.is_on_ground
     };
 
-    // Insert all data into the timeseries collection
-    await db.collection('aircraft').insertOne(aircraftData);
+    // Add to bulk operations instead of immediate insert
+    bulkOps.push({ insertOne: { document: aircraftData } });
+    
+    // Execute bulk operations if we've reached the threshold
+    if (bulkOps.length >= BULK_SIZE) {
+      await executeBulkOps();
+    } else if (!bulkTimer) {
+      // Set a timer to execute remaining operations after timeout
+      bulkTimer = setTimeout(executeBulkOps, BULK_TIMEOUT);
+    }
   } catch (error) {
     console.error('Error processing ADSB data:', error);
     if (!mongoClient.topology?.isConnected()) {
@@ -120,3 +148,14 @@ mqttClient.on('error', (err) => {
 
 // Initialize MongoDB on startup
 initializeMongoDB();
+
+// Clean up on process exit
+process.on('SIGINT', async () => {
+  if (bulkOps.length > 0) {
+    console.log('Flushing remaining operations before exit...');
+    await executeBulkOps();
+  }
+  await mongoClient.close();
+  mqttClient.end();
+  process.exit(0);
+});
