@@ -1,9 +1,10 @@
 const mqtt = require('mqtt');
 const { MongoClient } = require('mongodb');
 const sbs1 = require('sbs1');
+require('dotenv').config();
 
 // Initialize clients/connections
-const mongoClient = new MongoClient('mongodb://localhost:27017');
+const mongoClient = new MongoClient(process.env.MONGODB_URI || 'mongodb://localhost:27017');
 const mqttClient = mqtt.connect('mqtt://mqtt.cakrawala.id:1883', {
   clientId: 'adsb_decoder' 
 });
