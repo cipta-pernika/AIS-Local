@@ -7,7 +7,7 @@ const host = "localhost";
 export default defineConfig({
     plugins: [
         laravel({
-            input: "public/frontend/src/index.tsx",
+            input: ["public/frontend/src/index.tsx", "resources/js/app.jsx"],
             refresh: true,
         }),
         react(),

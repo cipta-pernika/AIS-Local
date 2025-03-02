@@ -49,19 +49,28 @@ class MapController extends Controller
         $date_until = Carbon::parse(request('dateTo'));
         $selectedSensors = request('sensor');
 
-        $mmsi = request('mmsi'); // Get the MMSI from the request
-        $hexIdent = request('hex_ident'); // Get hex_ident from the request
-        $targetId = request('target_id'); // Get target_id from the request
+        $mmsi = request('mmsi');
+        $hexIdent = request('hex_ident');
+        $targetId = request('target_id');
 
-        $dataAis = [];
-        $dataAdsb = [];
-        $dataRadar = [];
+        // Create a cache key based on request parameters
+        $cacheKey = 'playback_' . md5(json_encode([
+            'dateFrom' => $date->toDateTimeString(),
+            'dateTo' => $date_until->toDateTimeString(),
+            'sensors' => $selectedSensors,
+            'mmsi' => $mmsi,
+            'hex_ident' => $hexIdent,
+            'target_id' => $targetId
+        ]));
 
-        if (in_array('ais', $selectedSensors)) {
+        // Try to get data from cache (store for 30 minutes)
+        return cache()->remember($cacheKey, 30 * 60, function () use ($date, $date_until, $selectedSensors, $mmsi, $hexIdent, $targetId) {
+            $dataAis = [];
+            $dataAdsb = [];
+            $dataRadar = [];
 
-            $aisTracks = AisDataPosition::orderBy('ais_data_positions.created_at', 'DESC')
-                ->join('ais_data_vessels', 'ais_data_positions.vessel_id', 'ais_data_vessels.id')
-                ->select(
+            if (in_array('ais', $selectedSensors)) {
+                $aisTracks = AisDataPosition::select(
                     'ais_data_vessels.mmsi',
                     'ais_data_positions.latitude',
                     'ais_data_positions.longitude',
@@ -73,46 +82,47 @@ class MapController extends Controller
                     'ais_data_vessels.imo',
                     'ais_data_vessels.callsign'
                 )
-                ->when($date, function ($query) use ($date, $date_until) {
-                    $query->whereBetween('ais_data_positions.created_at', [$date, $date_until]);
-                })
+                ->join('ais_data_vessels', 'ais_data_positions.vessel_id', 'ais_data_vessels.id')
+                ->whereBetween('ais_data_positions.created_at', [$date, $date_until])
                 ->when($mmsi, function ($query) use ($mmsi) {
-                    $query->where('ais_data_vessels.mmsi', $mmsi); // Filter by MMSI if provided
+                    $query->where('ais_data_vessels.mmsi', $mmsi);
                 })
+                ->orderBy('ais_data_positions.created_at', 'DESC')
                 ->get();
 
-            foreach ($aisTracks as $track) {
-                $mmsi = $track['mmsi'];
-                $dataAis[$mmsi]['mmsi'] = $mmsi;
-                $dataAis[$mmsi]['playback'][] = [
-                    'lat' => (float) $track['latitude'],
-                    'lng' => (float) $track['longitude'],
-                    'dir' => ((int) $track['course'] * M_PI) / 180.0,
-                    'time' => $track['created_at']->timestamp,
-                    'heading' => (int) $track['heading'],
-                    'info' => [
-                        ['key' => 'MMSI', 'value' => $mmsi],
-                        ['key' => 'Name', 'value' => $track['vessel_name']],
-                        ['key' => 'IMO', 'value' => $track['imo']],
-                        ['key' => 'Callsign', 'value' => $track['callsign']],
-                        ['key' => 'SOG', 'value' => $track['speed']],
-                        ['key' => 'COG', 'value' => $track['course']],
-                        ['key' => 'Latitude', 'value' => $track['latitude']],
-                        ['key' => 'Longitude', 'value' => $track['longitude']],
-                        ['key' => 'Time Stamp ', 'value' => Carbon::parse($track['created_at'])->format('Y-m-d H:i:s')],
-                    ],
-                ];
+                foreach ($aisTracks as $track) {
+                    $mmsi = $track['mmsi'];
+                    if (!isset($dataAis[$mmsi])) {
+                        $dataAis[$mmsi] = ['mmsi' => $mmsi, 'playback' => []];
+                    }
+                    
+                    $dataAis[$mmsi]['playback'][] = [
+                        'lat' => (float) $track['latitude'],
+                        'lng' => (float) $track['longitude'],
+                        'dir' => ((int) $track['course'] * M_PI) / 180.0,
+                        'time' => $track['created_at']->timestamp,
+                        'heading' => (int) $track['heading'],
+                        'info' => [
+                            ['key' => 'MMSI', 'value' => $mmsi],
+                            ['key' => 'Name', 'value' => $track['vessel_name']],
+                            ['key' => 'IMO', 'value' => $track['imo']],
+                            ['key' => 'Callsign', 'value' => $track['callsign']],
+                            ['key' => 'SOG', 'value' => $track['speed']],
+                            ['key' => 'COG', 'value' => $track['course']],
+                            ['key' => 'Latitude', 'value' => $track['latitude']],
+                            ['key' => 'Longitude', 'value' => $track['longitude']],
+                            ['key' => 'Time Stamp ', 'value' => Carbon::parse($track['created_at'])->format('Y-m-d H:i:s')],
+                        ],
+                    ];
+                }
+
+                $dataAis = collect($dataAis)->sortByDesc(function ($item) {
+                    return count($item['playback']);
+                })->values()->all();
             }
 
-            $dataAis = collect($dataAis)->sortByDesc(function ($item, $key) {
-                return count($item['playback']);
-            })->values()->all();
-        }
-
-        if (in_array('adsb', $selectedSensors)) {
-
-            $adsbTracks = AdsbDataPosition::join('adsb_data_aircrafts', 'adsb_data_positions.aircraft_id', 'adsb_data_aircrafts.id')
-                ->select(
+            if (in_array('adsb', $selectedSensors)) {
+                $adsbTracks = AdsbDataPosition::select(
                     'adsb_data_positions.latitude',
                     'adsb_data_positions.longitude',
                     'adsb_data_positions.heading',
@@ -122,80 +132,97 @@ class MapController extends Controller
                     'adsb_data_aircrafts.registration',
                     'adsb_data_aircrafts.callsign'
                 )
-                ->orderBy('created_at', 'DESC')
-                ->when($date, function ($query) use ($date, $date_until) {
-                    $query->whereBetween('adsb_data_positions.created_at', [$date, $date_until]);
-                })
+                ->join('adsb_data_aircrafts', 'adsb_data_positions.aircraft_id', 'adsb_data_aircrafts.id')
+                ->whereBetween('adsb_data_positions.created_at', [$date, $date_until])
                 ->when($hexIdent, function ($query) use ($hexIdent) {
-                    $query->where('adsb_data_aircrafts.hex_ident', $hexIdent); // Filter by hex_ident if provided
+                    $query->where('adsb_data_aircrafts.hex_ident', $hexIdent);
                 })
+                ->orderBy('adsb_data_positions.created_at', 'DESC')
                 ->get();
-            foreach ($adsbTracks as $track) {
-                $mmsiAdsb = $track['hex_ident'];
-                $dataAdsb[$mmsiAdsb]['hex_ident'] = $mmsiAdsb;
-                $dataAdsb[$mmsiAdsb]['playback'][] = [
-                    'lat' => (float) $track['latitude'],
-                    'lng' => (float) $track['longitude'],
-                    'dir' => ((int) $track['heading'] * M_PI) / 180.0,
-                    'time' => $track['created_at']->timestamp,
-                    'heading' => (int) $track['heading'],
-                    'info' => [
-                        ['key' => 'hex_ident', 'value' => $mmsiAdsb],
-                        ['key' => 'registration', 'value' => $track['registration']],
-                        ['key' => 'Callsign', 'value' => $track['callsign']],
-                        ['key' => 'ground_speed', 'value' => $track['ground_speed']],
-                        ['key' => 'COG', 'value' => $track['heading']],
-                        ['key' => 'Latitude', 'value' => $track['latitude']],
-                        ['key' => 'Longitude', 'value' => $track['longitude']],
-                        ['key' => 'Time Stamp ', 'value' => Carbon::parse($track['created_at'])->format('Y-m-d H:i:s')],
-                    ],
-                ];
+                
+                foreach ($adsbTracks as $track) {
+                    $hexIdent = $track['hex_ident'];
+                    if (!isset($dataAdsb[$hexIdent])) {
+                        $dataAdsb[$hexIdent] = ['hex_ident' => $hexIdent, 'playback' => []];
+                    }
+                    
+                    $dataAdsb[$hexIdent]['playback'][] = [
+                        'lat' => (float) $track['latitude'],
+                        'lng' => (float) $track['longitude'],
+                        'dir' => ((int) $track['heading'] * M_PI) / 180.0,
+                        'time' => $track['created_at']->timestamp,
+                        'heading' => (int) $track['heading'],
+                        'info' => [
+                            ['key' => 'hex_ident', 'value' => $hexIdent],
+                            ['key' => 'registration', 'value' => $track['registration']],
+                            ['key' => 'Callsign', 'value' => $track['callsign']],
+                            ['key' => 'ground_speed', 'value' => $track['ground_speed']],
+                            ['key' => 'COG', 'value' => $track['heading']],
+                            ['key' => 'Latitude', 'value' => $track['latitude']],
+                            ['key' => 'Longitude', 'value' => $track['longitude']],
+                            ['key' => 'Time Stamp ', 'value' => Carbon::parse($track['created_at'])->format('Y-m-d H:i:s')],
+                        ],
+                    ];
+                }
+
+                $dataAdsb = collect($dataAdsb)->sortByDesc(function ($item) {
+                    return count($item['playback']);
+                })->values()->all();
             }
 
-            $dataAdsb = collect($dataAdsb)->sortByDesc(function ($item, $key) {
-                return count($item['playback']);
-            })->values()->all();
-        }
-
-        if (in_array('radar', $selectedSensors)) {
-            $radarDataTracks = RadarData::orderBy('created_at', 'DESC')
-                ->when($date, function ($query) use ($date, $date_until) {
-                    $query->whereBetween('created_at', [$date, $date_until]);
-                })
+            if (in_array('radar', $selectedSensors)) {
+                $radarDataTracks = RadarData::select(
+                    'target_id',
+                    'latitude',
+                    'longitude',
+                    'course',
+                    'heading',
+                    'created_at',
+                    'speed'
+                )
+                ->whereBetween('created_at', [$date, $date_until])
                 ->when($targetId, function ($query) use ($targetId) {
-                    $query->where('target_id', $targetId); // Filter by target_id if provided
+                    $query->where('target_id', $targetId);
                 })
+                ->orderBy('created_at', 'DESC')
                 ->get();
 
-            foreach ($radarDataTracks as $track) {
-                $mmsiAdsb = $track['target_id'];
-                $dataRadar[$mmsiAdsb]['target_id'] = $mmsiAdsb;
-                $dataRadar[$mmsiAdsb]['playback'][] = [
-                    'lat' => (float) $track['latitude'],
-                    'lng' => (float) $track['longitude'],
-                    'dir' => ((int) $track['course'] * M_PI) / 180.0,
-                    'time' => $track['created_at']->timestamp,
-                    'heading' => (int) $track['heading'],
-                    'info' => [
-                        // Info data here...
-                    ],
-                ];
+                foreach ($radarDataTracks as $track) {
+                    $targetId = $track['target_id'];
+                    if (!isset($dataRadar[$targetId])) {
+                        $dataRadar[$targetId] = ['target_id' => $targetId, 'playback' => []];
+                    }
+                    
+                    $dataRadar[$targetId]['playback'][] = [
+                        'lat' => (float) $track['latitude'],
+                        'lng' => (float) $track['longitude'],
+                        'dir' => ((int) $track['course'] * M_PI) / 180.0,
+                        'time' => $track['created_at']->timestamp,
+                        'heading' => (int) $track['heading'],
+                        'info' => [
+                            ['key' => 'Target ID', 'value' => $targetId],
+                            ['key' => 'Speed', 'value' => $track['speed']],
+                            ['key' => 'Course', 'value' => $track['course']],
+                            ['key' => 'Latitude', 'value' => $track['latitude']],
+                            ['key' => 'Longitude', 'value' => $track['longitude']],
+                            ['key' => 'Time Stamp', 'value' => Carbon::parse($track['created_at'])->format('Y-m-d H:i:s')],
+                        ],
+                    ];
+                }
+
+                $dataRadar = collect($dataRadar)->sortByDesc(function ($item) {
+                    return count($item['playback']);
+                })->values()->all();
             }
 
-            $dataRadar = collect($dataRadar)->sortByDesc(function ($item, $key) {
-                return count($item['playback']);
-            })->values()->all();
-        }
-
-        $response = [
-            'success' => true,
-            'message' => [
-                'ais' => $dataAis,
-                'adsb' => $dataAdsb,
-                'radardata' => $dataRadar,
-            ],
-        ];
-
-        return response()->json($response, 200);
+            return response()->json([
+                'success' => true,
+                'message' => [
+                    'ais' => $dataAis,
+                    'adsb' => $dataAdsb,
+                    'radardata' => $dataRadar,
+                ],
+            ], 200);
+        });
     }
 }
