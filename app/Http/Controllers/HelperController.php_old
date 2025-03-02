@@ -173,6 +173,8 @@ class HelperController extends Controller
 
     public function movebylatlng()
     {
+
+
         $datalogger = Datalogger::find(1);
         $pointA = new Coordinate($datalogger->latitude, $datalogger->longitude);
         $pointB = new Coordinate(request('lat'), request('lng'));
@@ -185,6 +187,9 @@ class HelperController extends Controller
         $tilt = number_format($angleA, 0, '', '') * 10;
         $zoom = 25;
 
+        //selatan
+        // $tilt = -240;
+        // $bearing = 1050;
         $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">
         <AbsoluteHigh>
         <elevation>' . $tilt . ' </elevation>
@@ -193,7 +198,15 @@ class HelperController extends Controller
         </AbsoluteHigh>
         </PTZData>';
 
-        $url = 'http://admin:Amtek12345@192.168.5.222/ISAPI/PTZCtrl/channels/1/absolute';
+        // $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">
+        // <AbsoluteHigh>
+        // <elevation>-240</elevation>
+        // <azimuth>1050</azimuth>
+        // <absoluteZoom>25 </absoluteZoom>
+        // </AbsoluteHigh>
+        // </PTZData>';
+
+        $url = 'http://admin:Amtek12345@192.168.5.222/PTZCtrl/channels/1/absolute';
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -568,10 +581,11 @@ class HelperController extends Controller
 
     public function radardataupdate()
     {
-        $aisData = RadarData::with('sensorData.sensor.datalogger')
-            ->groupBy('target_id')
-            ->whereBetween('created_at', [now()->subMinutes(2), now()])
-            ->limit(10)
+        // $aisData = RadarData::with('sensorData.sensor.datalogger')
+        $aisData = RadarData::select('*')
+        ->whereBetween('timestamp', [now()->subMinutes(2), now()])
+        ->groupBy('target_id')
+            // ->limit(10)
             ->get();
 
         return response()->json([
@@ -750,13 +764,13 @@ class HelperController extends Controller
     public function camzoomminus()
     {
         $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
-            '<zoom>-60</zoom>' .
-            // '<Momentary>' .
-            // '<duration> 1000 </duration>' .
-            // '</Momentary>' .
+            '<zoom>-10</zoom>' .
+            '<Momentary>' .
+            '<duration> 1000 </duration>' .
+            '</Momentary>' .
             '</PTZData>';
 
-        $url = 'http://admin:Amtek12345@192.168.5.222/ISAPI/PTZCtrl/channels/1/continuous';
+        $url = 'http://admin:Amtek12345@192.168.5.222/PTZCtrl/channels/1/momentary';
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -776,7 +790,7 @@ class HelperController extends Controller
             '<zoom>-10</zoom>' .
             '</PTZData>';
 
-        $url = 'http://admin:Amtek12345@192.168.5.222/ISAPI/PTZCtrl/channels/1/continuous';
+        $url = 'http://admin:Amtek12345@192.168.5.222/PTZCtrl/channels/1/continuous';
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -792,9 +806,11 @@ class HelperController extends Controller
 
     public function camstopzoom()
     {
-        $xml_data = '"1.0" encoding="UTF-8"?><PTZData><zoom>0</zoom></PTZData>';
+        $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
+            '<zoom>0</zoom>' .
+            '</PTZData>';
 
-        $url = 'http://admin:Amtek12345@192.168.5.222/ISAPI/PTZCtrl/channels/1/continuous';
+        $url = 'http://admin:Amtek12345@192.168.5.222/PTZCtrl/channels/1/momentary';
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -811,12 +827,13 @@ class HelperController extends Controller
     public function camup()
     {
         $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
-            '<tilt> 60 </tilt>' .
-            // '<duration> 0 </duration>' .
-            // '</tilt>' .
+            '<tilt> 20 </tilt>' .
+            '<Momentary>' .
+            '<duration> 1000 </duration>' .
+            '</Momentary>' .
             '</PTZData>';
 
-        $url = 'http://admin:Amtek12345@192.168.5.222/ISAPI/PTZCtrl/channels/1/continuous';
+        $url = 'http://admin:Amtek12345@192.168.5.222/PTZCtrl/channels/1/momentary';
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -833,10 +850,10 @@ class HelperController extends Controller
     public function camupcon()
     {
         $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
-            '<tilt> 60 </tilt>' .
+            '<tilt> 20 </tilt>' .
             '</PTZData>';
 
-        $url = 'http://admin:Amtek12345@192.168.5.222/ISAPI/PTZCtrl/channels/1/continuous';
+        $url = 'http://admin:Amtek12345@192.168.5.222/PTZCtrl/channels/1/continuous';
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -852,9 +869,14 @@ class HelperController extends Controller
 
     public function camzoomplus()
     {
-        $xml_data = '"1.0" encoding="UTF-8"?><PTZData><zoom>60</zoom></PTZData>';
+        $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
+            '<zoom>10</zoom>' .
+            '<Momentary>' .
+            '<duration> 1000 </duration>' .
+            '</Momentary>' .
+            '</PTZData>';
 
-        $url = 'http://admin:Amtek12345@192.168.5.222/ISAPI/PTZCtrl/channels/1/continuous';
+        $url = 'http://admin:Amtek12345@192.168.5.222/PTZCtrl/channels/1/momentary';
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -871,10 +893,10 @@ class HelperController extends Controller
     public function camzoompluscon()
     {
         $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
-            '<zoom>60</zoom>' .
+            '<zoom>10</zoom>' .
             '</PTZData>';
 
-        $url = 'http://admin:Amtek12345@192.168.5.222/ISAPI/PTZCtrl/channels/1/continuous';
+        $url = 'http://admin:Amtek12345@192.168.5.222/PTZCtrl/channels/1/continuous';
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -891,13 +913,13 @@ class HelperController extends Controller
     public function camleft()
     {
         $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
-            '<pan> -60 </pan>' .
-            '<tilt>' .
-            '<duration> 0 </duration>' .
-            '</tilt>' .
+            '<pan> -20 </pan>' .
+            '<Momentary>' .
+            '<duration> 1000 </duration>' .
+            '</Momentary>' .
             '</PTZData>';
 
-        $url = 'http://admin:Amtek12345@192.168.5.222/ISAPI/PTZCtrl/channels/1/continuous';
+        $url = 'http://admin:Amtek12345@192.168.5.222/PTZCtrl/channels/1/momentary';
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -913,10 +935,10 @@ class HelperController extends Controller
     public function camleftcon()
     {
         $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
-            '<pan> -60 </pan>' .
+            '<pan> -20 </pan>' .
             '</PTZData>';
 
-        $url = 'http://admin:Amtek12345@192.168.5.222/ISAPI/PTZCtrl/channels/1/continuous';
+        $url = 'http://admin:Amtek12345@192.168.5.222/PTZCtrl/channels/1/continuous';
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -936,7 +958,7 @@ class HelperController extends Controller
             '<tilt>60</tilt>' .
             '</PTZData>';
 
-        $url = 'http://admin:Amtek12345@192.168.5.222/ISAPI/PTZCtrl/channels/1/continuous';
+        $url = 'http://admin:Amtek12345@192.168.5.222/PTZCtrl/channels/1/continuous';
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -956,7 +978,7 @@ class HelperController extends Controller
             '<tilt>60</tilt>' .
             '</PTZData>';
 
-        $url = 'http://admin:Amtek12345@192.168.5.222/ISAPI/PTZCtrl/channels/1/continuous';
+        $url = 'http://admin:Amtek12345@192.168.5.222/PTZCtrl/channels/1/continuous';
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -976,7 +998,7 @@ class HelperController extends Controller
             '<tilt> 0 </tilt>' .
             '</PTZData>';
 
-        $url = 'http://admin:Amtek12345@192.168.5.222/ISAPI/PTZCtrl/channels/1/continuous';
+        $url = 'http://admin:Amtek12345@192.168.5.222/PTZCtrl/channels/1/continuous';
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -992,13 +1014,13 @@ class HelperController extends Controller
     public function camright()
     {
         $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
-            '<pan> 60 </pan>' .
-            '<tilt>' .
-            '<duration> 0 </duration>' .
-            '</tilt>' .
+            '<pan> 20 </pan>' .
+            '<Momentary>' .
+            '<duration> 1000 </duration>' .
+            '</Momentary>' .
             '</PTZData>';
 
-        $url = 'http://admin:Amtek12345@192.168.5.222/ISAPI/PTZCtrl/channels/1/continuous';
+        $url = 'http://admin:Amtek12345@192.168.5.222/PTZCtrl/channels/1/momentary';
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -1008,7 +1030,6 @@ class HelperController extends Controller
         curl_close($ch);
         return response()->json([
             'success' => true,
-            'message' => $xml_data
         ], 200);
     }
 
@@ -1019,7 +1040,7 @@ class HelperController extends Controller
             '<tilt>60</tilt>' .
             '</PTZData>';
 
-        $url = 'http://admin:Amtek12345@192.168.5.222/ISAPI/PTZCtrl/channels/1/continuous';
+        $url = 'http://admin:Amtek12345@192.168.5.222/PTZCtrl/channels/1/continuous';
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -1039,7 +1060,7 @@ class HelperController extends Controller
             '<tilt>-60</tilt>' .
             '</PTZData>';
 
-        $url = 'http://admin:Amtek12345@192.168.5.222/ISAPI/PTZCtrl/channels/1/continuous';
+        $url = 'http://admin:Amtek12345@192.168.5.222/PTZCtrl/channels/1/continuous';
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -1055,13 +1076,13 @@ class HelperController extends Controller
     public function camdown()
     {
         $xml_data = '<PTZData version="2.0" xmlns="http://www.isapi.org/ver20/XMLSchema">' .
-            '<tilt> -60 </tilt>' .
-            // '<Momentary>' .
-            // '<duration> 1000 </duration>' .
-            // '</Momentary>' .
+            '<tilt> -20 </tilt>' .
+            '<Momentary>' .
+            '<duration> 1000 </duration>' .
+            '</Momentary>' .
             '</PTZData>';
 
-        $url = 'http://admin:Amtek12345@192.168.5.222/ISAPI/PTZCtrl/channels/1/continuous';
+        $url = 'http://admin:Amtek12345@192.168.5.222/PTZCtrl/channels/1/momentary';
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -1191,7 +1212,7 @@ class HelperController extends Controller
 
     public function camcall()
     {
-        $url = 'http://admin:Amtek12345@192.168.5.222/ISAPI/PTZCtrl/channels/1/presets/1/goto';
+        $url = 'http://admin:Amtek12345@192.168.5.222/ISAPI/PTZCtrl/channels/1/homePosition/goto';
 
         // The request body is empty, as specified in the cURL command
         $xml_data = '';
@@ -1222,13 +1243,13 @@ class HelperController extends Controller
 
     public function camset()
     {
-        $url = 'http://admin:Amtek12345@192.168.5.222/ISAPI/PTZCtrl/channels/1/presets/1';
+        $url = 'http://admin:Amtek12345@192.168.5.222/ISAPI/PTZCtrl/channels/1/homePosition';
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
 
-        curl_setopt($ch, CURLOPT_POSTFIELDS, '"1.0" encoding="UTF-8"?><PTZPreset xmlns="http://www.isapi.org/ver20/XMLSchema" version="2.0"><id>1</id><presetName>Preset 1</presetName></PTZPreset>'); // Empty body as specified in the cURL command
+        curl_setopt($ch, CURLOPT_POSTFIELDS, ''); // Empty body as specified in the cURL command
 
         // Execute cURL request
         curl_exec($ch);
