@@ -160,7 +160,12 @@ class HelperController extends Controller
 
     public function position()
     {
-        $datalogger = Datalogger::find(1);
+        $source = request('source');
+        if ($source == 'hiace') {
+            $datalogger = Datalogger::find(1);
+        } else {
+            $datalogger = Datalogger::find(2);
+        }
         $latitude = request('lat');
         $longitude = request('lng');
         
