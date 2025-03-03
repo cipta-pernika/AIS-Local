@@ -12,6 +12,64 @@ use Illuminate\Support\Facades\Cache;
 
 class MapController extends Controller
 {
+    public function checkplayback()
+    {
+        $date = Carbon::parse(request('dateFrom'));
+        $date_until = Carbon::parse(request('dateTo'));
+        $selectedSensors = request('sensor');
+
+        $mmsi = request('mmsi'); // Get the MMSI from the request
+        $hexIdent = request('hex_ident'); // Get hex_ident from the request
+        $targetId = request('target_id'); // Get target_id from the request
+        $pelabuhanId = request('pelabuhan_id');
+        $geofenceId = request('geofence_id');
+
+        $hasPlaybackData = false;
+        if (in_array('ais', $selectedSensors)) {
+            $aisTracksCount = AisDataPosition::orderBy('ais_data_positions.created_at', 'ASC')
+                ->join('ais_data_vessels', 'ais_data_positions.vessel_id', 'ais_data_vessels.id')
+                ->leftJoin('report_geofences', 'ais_data_positions.id', '=', 'report_geofences.ais_data_position_id')
+                ->leftJoin('geofences', 'report_geofences.geofence_id', '=', 'geofences.id')
+                ->select(
+                    'ais_data_vessels.mmsi',
+                    'ais_data_positions.latitude',
+                    'ais_data_positions.longitude',
+                    'ais_data_positions.course',
+                    'ais_data_positions.heading',
+                    'ais_data_positions.created_at',
+                    'ais_data_positions.speed',
+                    'ais_data_vessels.vessel_name',
+                    'ais_data_vessels.imo',
+                    'ais_data_vessels.callsign',
+                    'ais_data_vessels.draught', // Add more columns as needed
+                    'ais_data_vessels.reported_destination',
+                    'ais_data_vessels.vessel_type',
+                    'ais_data_vessels.no_pkk',
+                    'report_geofences.in',
+                    'report_geofences.out',
+                    'report_geofences.total_time',
+                    'geofences.geofence_name',
+                    'geofences.id as geofence_id' // Add this line to select geofence_id
+                )
+                ->when($date, function ($query) use ($date, $date_until) {
+                    $query->whereBetween('ais_data_positions.created_at', [$date->startOfSecond(), $date_until->endOfSecond()]);
+                })
+                ->when($mmsi, function ($query) use ($mmsi) {
+                    $query->where('ais_data_vessels.mmsi', $mmsi);
+                })
+                ->when($geofenceId, function ($query) use ($geofenceId) {
+                    $query->where('geofence_id', $geofenceId);
+                })
+                ->exists();
+        }
+
+        $response = [
+            'success' => true,
+            'has_playback_data' => $aisTracksCount,
+        ];
+
+        return response()->json($response, 200);
+    }
     public function breadcrumb()
     {
         $vessel_id = request('vessel_id'); // Get the vessel_id from the request

@@ -121,3 +121,5 @@ Route::get('datatransferlogs', [HelperController::class, 'datatransferlogs']);
 Route::post('datatransferlogs', [HelperController::class, 'datatransferlogspost']);
 
 Route::get('search', [HelperController::class, 'search']);
+
+Route::post('checkplayback', [MapController::class, 'checkplayback']);
