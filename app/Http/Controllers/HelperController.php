@@ -162,7 +162,7 @@ class HelperController extends Controller
     {
         $datalogger = Datalogger::find(1);
         $latitude = request('lat');
-        $longitude = request('lon');
+        $longitude = request('lng');
         
         // Validate coordinates using the helper method
         $validatedPosition = HelperController::isValidIndonesianMaritimeCoordinate($latitude, $longitude);
