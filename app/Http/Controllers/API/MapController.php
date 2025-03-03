@@ -56,7 +56,6 @@ class MapController extends Controller
                 }
                 
                 if ($geofenceId) {
-                    // Direct geofence filtering if needed
                     $aisQuery->where('ais_data_positions.geofence_id', $geofenceId);
                 }
                 
@@ -108,7 +107,7 @@ class MapController extends Controller
             
             return response()->json([
                 'success' => true,
-                'message' => $hasPlaybackData,
+                'has_playback_data' => $hasPlaybackData,
             ], 200);
         });
     }
