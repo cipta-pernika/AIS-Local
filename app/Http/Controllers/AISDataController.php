@@ -58,9 +58,24 @@ class AISDataController extends Controller
         try {
             DB::beginTransaction();
 
-            // Cache sensor lookup for 1 hour since it rarely changes
-            $sensor = Cache::remember('sensor_1', 3600, function() {
-                return Sensor::find(1);
+            // Get correct datalogger and sensor based on sourcefak
+            $datalogger_id = 1; // default
+            if (request()->sourcefak === 'hs1') {
+                $datalogger_id = 3;
+            } else if (request()->sourcefak === 'hs2') {
+                $datalogger_id = 2;
+            }
+
+            // Cache datalogger lookup for 5 minutes with sourcefak in key
+            $datalogger = Cache::remember('datalogger_' . request()->sourcefak, 300, function() use ($datalogger_id) {
+                return Datalogger::find($datalogger_id);
+            });
+
+            // Cache sensor lookup for 1 hour with sourcefak in key
+            $sensor = Cache::remember('sensor_' . request()->sourcefak, 3600, function() use ($datalogger_id) {
+                return Sensor::where('datalogger_id', $datalogger_id)
+                            ->where('name', 'AIS')
+                            ->first();
             });
 
             $sensorData = new SensorData([
@@ -77,11 +92,6 @@ class AISDataController extends Controller
                 $longitude = request()->longitude;
                 
                 if ($this->isValidLatitude($latitude) && $this->isValidLongitude($longitude)) {
-                    // Cache datalogger position for 5 minutes
-                    $datalogger = Cache::remember('datalogger_1', 300, function() {
-                        return Datalogger::find(1);
-                    });
-
                     $coordinate1 = new Coordinate($datalogger->latitude, $datalogger->longitude);
                     $coordinate2 = new Coordinate($latitude, $longitude);
                     $distance = $coordinate1->getDistance($coordinate2, new Haversine());
