@@ -8,6 +8,7 @@ use App\Models\AisDataPosition;
 use App\Models\RadarData;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class MapController extends Controller
 {
@@ -16,26 +17,35 @@ class MapController extends Controller
         $vessel_id = request('vessel_id'); // Get the vessel_id from the request
         $hexIdent = request('hex_ident'); // Get hex_ident from the request
         $targetId = request('target_id'); // Get target_id from the request
-
-        if ($vessel_id) {
-
-
-            $track = AisDataPosition::orderBy('created_at', 'DESC')
-                ->select('latitude', 'longitude', 'heading')
-                ->where('vessel_id', $vessel_id)
-                ->get();
-        } else if ($hexIdent) {
-            $track = AdsbDataPosition::orderBy('adsb_data_positions.created_at', 'DESC')
-                ->join('adsb_data_aircrafts', 'adsb_data_positions.aircraft_id', 'adsb_data_aircrafts.id')
-                ->select('adsb_data_positions.latitude', 'adsb_data_positions.longitude', 'adsb_data_positions.heading')
-                ->where('adsb_data_aircrafts.hex_ident', $hexIdent)
-                ->get();
-        } else if ($targetId) {
-            $track = RadarData::orderBy('created_at', 'DESC')
-                ->select('latitude', 'longitude', 'heading')
-                ->where('target_id', $targetId)
-                ->get();
-        }
+        
+        // Define cache key based on request parameters
+        $cacheKey = "breadcrumb_" . ($vessel_id ?? '') . "_" . ($hexIdent ?? '') . "_" . ($targetId ?? '');
+        
+        // Try to get from cache first (cache for 5 minutes)
+        $track = Cache::remember($cacheKey, 300, function () use ($vessel_id, $hexIdent, $targetId) {
+            if ($vessel_id) {
+                return AisDataPosition::orderBy('created_at', 'DESC')
+                    ->select('latitude', 'longitude', 'heading')
+                    ->where('vessel_id', $vessel_id)
+                    ->limit(50)
+                    ->get();
+            } else if ($hexIdent) {
+                return AdsbDataPosition::orderBy('adsb_data_positions.created_at', 'DESC')
+                    ->join('adsb_data_aircrafts', 'adsb_data_positions.aircraft_id', 'adsb_data_aircrafts.id')
+                    ->select('adsb_data_positions.latitude', 'adsb_data_positions.longitude', 'adsb_data_positions.heading')
+                    ->where('adsb_data_aircrafts.hex_ident', $hexIdent)
+                    ->limit(50)
+                    ->get();
+            } else if ($targetId) {
+                return RadarData::orderBy('created_at', 'DESC')
+                    ->select('latitude', 'longitude', 'heading')
+                    ->where('target_id', $targetId)
+                    ->limit(50)
+                    ->get();
+            }
+            
+            return collect(); // Return empty collection if no parameters match
+        });
 
         return response()->json([
             'success' => true,
