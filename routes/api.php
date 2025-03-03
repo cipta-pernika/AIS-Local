@@ -7,6 +7,7 @@ use App\Http\Controllers\DataloggerController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\HelperController;
 use App\Http\Controllers\LocationController;
+use App\Http\Controllers\RadarDataSpxController;
 use App\Http\Controllers\SensorController;
 use Illuminate\Support\Facades\Route;
 
@@ -55,6 +56,7 @@ Route::post('aisdata', [HelperController::class, 'aisdata']);
 Route::post('adsbdatav2', [HelperController::class, 'adsbdatav2']);
 Route::post('adsbdata', [HelperController::class, 'adsbdata']);
 Route::post('radardata', [HelperController::class, 'radardata']);
+Route::post('radardataspx', [RadarDataSpxController::class, 'radardataspx']);
 Route::post('position', [HelperController::class, 'position']);
 
 Route::post('radararpha', [HelperController::class, 'radararpha']);
