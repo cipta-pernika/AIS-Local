@@ -117,16 +117,24 @@ class MapController extends Controller
         $vessel_id = request('vessel_id'); // Get the vessel_id from the request
         $hexIdent = request('hex_ident'); // Get hex_ident from the request
         $targetId = request('target_id'); // Get target_id from the request
+        $mmsi = request('mmsi'); // Get mmsi from the request
         
         // Define cache key based on request parameters
-        $cacheKey = "breadcrumb_" . ($vessel_id ?? '') . "_" . ($hexIdent ?? '') . "_" . ($targetId ?? '');
+        $cacheKey = "breadcrumb_" . ($vessel_id ?? '') . "_" . ($hexIdent ?? '') . "_" . ($targetId ?? '') . "_" . ($mmsi ?? '');
         
         // Try to get from cache first (cache for 5 minutes)
-        $track = Cache::remember($cacheKey, 300, function () use ($vessel_id, $hexIdent, $targetId) {
+        $track = Cache::remember($cacheKey, 300, function () use ($vessel_id, $hexIdent, $targetId, $mmsi) {
             if ($vessel_id) {
                 return AisDataPosition::orderBy('created_at', 'DESC')
                     ->select('latitude', 'longitude', 'heading')
                     ->where('vessel_id', $vessel_id)
+                    ->limit(50)
+                    ->get();
+            } else if ($mmsi) {
+                return AisDataPosition::orderBy('ais_data_positions.created_at', 'DESC')
+                    ->join('ais_data_vessels', 'ais_data_positions.vessel_id', 'ais_data_vessels.id')
+                    ->select('ais_data_positions.latitude', 'ais_data_positions.longitude', 'ais_data_positions.heading')
+                    ->where('ais_data_vessels.mmsi', $mmsi)
                     ->limit(50)
                     ->get();
             } else if ($hexIdent) {
