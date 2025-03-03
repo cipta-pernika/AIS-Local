@@ -5,12 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\Location;
 use App\Models\LocationType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class LocationController extends Controller
 {
     public function getlocationtype()
     {
-        $loctype = LocationType::all();
+        // Cache location types for 24 hours since this data rarely changes
+        $loctype = Cache::remember('location_types', 86400, function () {
+            return LocationType::all();
+        });
 
         return response()->json([
             'success' => true,
