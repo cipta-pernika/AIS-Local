@@ -519,20 +519,32 @@ class HelperController extends Controller
 
     public function adsbunique()
     {
-        $aisData = AdsbDataPosition::with('aircraft', 'sensorData.sensor.datalogger')
-            ->whereRaw('adsb_data_positions.id IN (select MAX(adsb_data_positions.id) FROM adsb_data_positions GROUP BY aircraft_id)')
-            // ->groupBy('aircraft_id')
-            // ->whereBetween('created_at', [now()->subHours(12), now()])
-        // ->groupBy('aircraft_id')
-        // ->whereBetween('created_at', [now()->subHours(12), now()])
-        ->whereBetween('created_at', [now()->subMinutes(1), now()])
-            ->orderBy('created_at', 'DESC')
-            ->limit(500)
-            ->get();
+        // Create cache key with timestamp to ensure fresh data every minute
+        $cacheKey = 'adsb_unique_' . now()->format('Y-m-d_H:i');
+        
+        // Get data from cache or execute query (cache for 1 minute)
+        $adsbData = Cache::remember($cacheKey, 60, function () {
+            return AdsbDataPosition::with([
+                    'aircraft',
+                    'sensorData.sensor.datalogger'
+                ])
+                ->whereRaw('adsb_data_positions.id IN (
+                    select MAX(adsb_data_positions.id) 
+                    FROM adsb_data_positions 
+                    GROUP BY aircraft_id
+                )')
+                ->whereBetween('created_at', [
+                    now()->subMinutes(1),
+                    now()
+                ])
+                ->orderBy('created_at', 'DESC')
+                ->limit(500)
+                ->get();
+        });
 
         return response()->json([
             'success' => true,
-            'message' => $aisData,
+            'message' => $adsbData,
         ], 201);
     }
 
