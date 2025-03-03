@@ -613,15 +613,26 @@ class HelperController extends Controller
 
     public function radardataupdate()
     {
-        $aisData = RadarData::with('sensorData.sensor.datalogger')
-            ->groupBy('target_id')
-            ->whereBetween('created_at', [now()->subMinutes(2), now()])
-            ->limit(10)
-            ->get();
+        // Create cache key with timestamp to ensure fresh data every minute
+        $cacheKey = 'radar_data_update_' . now()->format('Y-m-d_H:i');
+        
+        // Get data from cache or execute query (cache for 1 minute)
+        $radarData = Cache::remember($cacheKey, 60, function () {
+            return RadarData::with([
+                    'sensorData.sensor.datalogger'
+                ])
+                ->groupBy('target_id')
+                ->whereBetween('created_at', [
+                    now()->subMinutes(1),
+                    now()
+                ])
+                ->limit(10)
+                ->get();
+        });
 
         return response()->json([
             'success' => true,
-            'message' => $aisData,
+            'message' => $radarData,
         ], 201);
     }
 
