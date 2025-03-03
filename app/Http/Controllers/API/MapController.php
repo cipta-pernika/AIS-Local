@@ -24,51 +24,94 @@ class MapController extends Controller
         $pelabuhanId = request('pelabuhan_id');
         $geofenceId = request('geofence_id');
 
-        $hasPlaybackData = false;
-        if (in_array('ais', $selectedSensors)) {
-            $aisTracksCount = AisDataPosition::orderBy('ais_data_positions.created_at', 'ASC')
-                ->join('ais_data_vessels', 'ais_data_positions.vessel_id', 'ais_data_vessels.id')
-                ->leftJoin('report_geofences', 'ais_data_positions.id', '=', 'report_geofences.ais_data_position_id')
-                ->leftJoin('geofences', 'report_geofences.geofence_id', '=', 'geofences.id')
-                ->select(
-                    'ais_data_vessels.mmsi',
-                    'ais_data_positions.latitude',
-                    'ais_data_positions.longitude',
-                    'ais_data_positions.course',
-                    'ais_data_positions.heading',
-                    'ais_data_positions.created_at',
-                    'ais_data_positions.speed',
-                    'ais_data_vessels.vessel_name',
-                    'ais_data_vessels.imo',
-                    'ais_data_vessels.callsign',
-                    'ais_data_vessels.draught', // Add more columns as needed
-                    'ais_data_vessels.reported_destination',
-                    'ais_data_vessels.vessel_type',
-                    'ais_data_vessels.no_pkk',
-                    'report_geofences.in',
-                    'report_geofences.out',
-                    'report_geofences.total_time',
-                    'geofences.geofence_name',
-                    'geofences.id as geofence_id' // Add this line to select geofence_id
-                )
-                ->when($date, function ($query) use ($date, $date_until) {
-                    $query->whereBetween('ais_data_positions.created_at', [$date->startOfSecond(), $date_until->endOfSecond()]);
-                })
-                ->when($mmsi, function ($query) use ($mmsi) {
-                    $query->where('ais_data_vessels.mmsi', $mmsi);
-                })
-                ->when($geofenceId, function ($query) use ($geofenceId) {
-                    $query->where('geofence_id', $geofenceId);
-                })
-                ->exists();
-        }
+        // Create a cache key based on all parameters
+        $cacheKey = "checkplayback_" . md5(json_encode([
+            'dateFrom' => $date->toDateTimeString(),
+            'dateTo' => $date_until->toDateTimeString(),
+            'sensors' => $selectedSensors,
+            'mmsi' => $mmsi,
+            'hex_ident' => $hexIdent,
+            'target_id' => $targetId,
+            'pelabuhan_id' => $pelabuhanId,
+            'geofence_id' => $geofenceId
+        ]));
 
-        $response = [
-            'success' => true,
-            'has_playback_data' => $aisTracksCount,
-        ];
-
-        return response()->json($response, 200);
+        // Try to get from cache first (cache for 10 minutes)
+        return Cache::remember($cacheKey, 600, function () use (
+            $date, $date_until, $selectedSensors, $mmsi, $hexIdent, $targetId, $pelabuhanId, $geofenceId
+        ) {
+            $hasPlaybackData = false;
+            
+            if (in_array('ais', $selectedSensors)) {
+                $aisQuery = AisDataPosition::orderBy('ais_data_positions.created_at', 'ASC')
+                    ->join('ais_data_vessels', 'ais_data_positions.vessel_id', 'ais_data_vessels.id')
+                    ->leftJoin('report_geofences', 'ais_data_positions.id', '=', 'report_geofences.ais_data_position_id')
+                    ->leftJoin('geofences', 'report_geofences.geofence_id', '=', 'geofences.id')
+                    ->whereBetween('ais_data_positions.created_at', [$date, $date_until]);
+                
+                if ($mmsi) {
+                    $aisQuery->where('ais_data_vessels.mmsi', $mmsi);
+                }
+                
+                if ($pelabuhanId) {
+                    $aisQuery->where('ais_data_positions.pelabuhan_id', $pelabuhanId);
+                }
+                
+                if ($geofenceId) {
+                    $aisQuery->where('geofences.id', $geofenceId);
+                }
+                
+                $aisTracksCount = $aisQuery->count();
+                
+                if ($aisTracksCount > 0) {
+                    $hasPlaybackData = true;
+                }
+            }
+            
+            if (in_array('adsb', $selectedSensors) && !$hasPlaybackData) {
+                $adsbQuery = AdsbDataPosition::orderBy('adsb_data_positions.created_at', 'ASC')
+                    ->join('adsb_data_aircrafts', 'adsb_data_positions.aircraft_id', 'adsb_data_aircrafts.id')
+                    ->whereBetween('adsb_data_positions.created_at', [$date, $date_until]);
+                
+                if ($hexIdent) {
+                    $adsbQuery->where('adsb_data_aircrafts.hex_ident', $hexIdent);
+                }
+                
+                if ($pelabuhanId) {
+                    $adsbQuery->where('adsb_data_positions.pelabuhan_id', $pelabuhanId);
+                }
+                
+                $adsbTracksCount = $adsbQuery->count();
+                
+                if ($adsbTracksCount > 0) {
+                    $hasPlaybackData = true;
+                }
+            }
+            
+            if (in_array('radar', $selectedSensors) && !$hasPlaybackData) {
+                $radarQuery = RadarData::orderBy('created_at', 'ASC')
+                    ->whereBetween('created_at', [$date, $date_until]);
+                
+                if ($targetId) {
+                    $radarQuery->where('target_id', $targetId);
+                }
+                
+                if ($pelabuhanId) {
+                    $radarQuery->where('pelabuhan_id', $pelabuhanId);
+                }
+                
+                $radarTracksCount = $radarQuery->count();
+                
+                if ($radarTracksCount > 0) {
+                    $hasPlaybackData = true;
+                }
+            }
+            
+            return response()->json([
+                'success' => true,
+                'message' => $hasPlaybackData,
+            ], 200);
+        });
     }
     public function breadcrumb()
     {
