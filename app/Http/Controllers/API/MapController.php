@@ -45,8 +45,6 @@ class MapController extends Controller
             if (in_array('ais', $selectedSensors)) {
                 $aisQuery = AisDataPosition::orderBy('ais_data_positions.created_at', 'ASC')
                     ->join('ais_data_vessels', 'ais_data_positions.vessel_id', 'ais_data_vessels.id')
-                    ->leftJoin('report_geofences', 'ais_data_positions.id', '=', 'report_geofences.ais_data_position_id')
-                    ->leftJoin('geofences', 'report_geofences.geofence_id', '=', 'geofences.id')
                     ->whereBetween('ais_data_positions.created_at', [$date, $date_until]);
                 
                 if ($mmsi) {
@@ -58,7 +56,8 @@ class MapController extends Controller
                 }
                 
                 if ($geofenceId) {
-                    $aisQuery->where('geofences.id', $geofenceId);
+                    // Direct geofence filtering if needed
+                    $aisQuery->where('ais_data_positions.geofence_id', $geofenceId);
                 }
                 
                 $aisTracksCount = $aisQuery->count();
