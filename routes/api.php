@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AISDataController;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\MapController;
 use App\Http\Controllers\API\UserController;
@@ -52,7 +53,7 @@ Route::get('radardatalist', [HelperController::class, 'radardatalist']);
 
 //dari sensor
 Route::post('aisstatic', [HelperController::class, 'aisstatic']);
-Route::post('aisdata', [HelperController::class, 'aisdata']);
+Route::post('aisdata', [AISDataController::class, 'aisdata']);
 Route::post('adsbdatav2', [HelperController::class, 'adsbdatav2']);
 Route::post('adsbdata', [HelperController::class, 'adsbdata']);
 Route::post('radardata', [HelperController::class, 'radardata']);
