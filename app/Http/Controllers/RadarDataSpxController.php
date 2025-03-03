@@ -32,17 +32,24 @@ class RadarDataSpxController extends Controller
             $radarPosition = null;
             
             foreach ($data['features'] as $feature) {
-                $properties = $feature->properties;
-                $geometry = $feature->geometry->coordinates;
+                // Convert feature data to object for consistent access
+                $properties = (object)$feature['properties'];
+                $geometry = (object)$feature['geometry'];
+                $coordinates = $geometry->coordinates;
                 
-                $coordinate2 = new Coordinate($geometry[1], $geometry[0]);
+                // Skip invalid coordinates (0,0)
+                if ($coordinates[0] == 0 && $coordinates[1] == 0) {
+                    continue;
+                }
+                
+                $coordinate2 = new Coordinate($coordinates[1], $coordinates[0]);
                 $distance = $coordinate1->getDistance($coordinate2, new Haversine());
                 $distanceInNauticalMiles = ($distance / 1000) * 0.539957;
                 
                 $updates[] = [
                     'target_id' => $properties->name,
-                    'latitude' => $geometry[1],
-                    'longitude' => $geometry[0],
+                    'latitude' => $coordinates[1],
+                    'longitude' => $coordinates[0],
                     'altitude' => $properties->altitude,
                     'speed' => $properties->speed,
                     'course' => $properties->course,
@@ -56,8 +63,8 @@ class RadarDataSpxController extends Controller
                 // Store radar position for datalogger update
                 if ($properties->type === 'Radar') {
                     $radarPosition = [
-                        'latitude' => $geometry[1],
-                        'longitude' => $geometry[0]
+                        'latitude' => $coordinates[1],
+                        'longitude' => $coordinates[0]
                     ];
                 }
             }
