@@ -21,6 +21,7 @@ use Location\Bearing\BearingSpherical;
 use Location\Coordinate;
 use Location\Distance\Haversine;
 use Location\Distance\Vincenty;
+use Illuminate\Support\Facades\Cache;
 
 class HelperController extends Controller
 {
@@ -385,12 +386,23 @@ class HelperController extends Controller
 
     public function aisdataunique()
     {
-        $aisData = AisDataPosition::with('vessel', 'sensorData.sensor.datalogger')
-            ->orderBy('created_at', 'DESC')
-            ->groupBy('vessel_id')
-            ->whereBetween('created_at', [now()->subMinutes(1), now()])
-            // ->whereBetween('created_at', [now()->subHours(124), now()])
-            ->get();
+        // Create cache key with timestamp to ensure fresh data every minute
+        $cacheKey = 'ais_data_unique_' . now()->format('Y-m-d_H:i');
+        
+        // Get data from cache or execute query (cache for 1 minute)
+        $aisData = Cache::remember($cacheKey, 60, function () {
+            return AisDataPosition::with([
+                    'vessel',
+                    'sensorData.sensor.datalogger'
+                ])
+                ->orderBy('created_at', 'DESC')
+                ->groupBy('vessel_id')
+                ->whereBetween('created_at', [
+                    now()->subMinutes(1),
+                    now()
+                ])
+                ->get();
+        });
 
         return response()->json([
             'success' => true,
