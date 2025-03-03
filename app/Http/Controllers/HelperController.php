@@ -164,8 +164,10 @@ class HelperController extends Controller
         $source = request('source');
         if ($source == 'hiace') {
             $datalogger = Datalogger::find(1);
-        } else {
+        } else if ($source == 'hs2') {
             $datalogger = Datalogger::find(2);
+        } else {
+            $datalogger = Datalogger::find(3);
         }
         $latitude = request('lat');
         $longitude = request('lng');
