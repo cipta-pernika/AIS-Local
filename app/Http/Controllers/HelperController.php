@@ -161,8 +161,22 @@ class HelperController extends Controller
     public function position()
     {
         $datalogger = Datalogger::find(1);
-        $datalogger->latitude = request('lat');
-        $datalogger->longitude = request('lon');
+        $latitude = request('lat');
+        $longitude = request('lon');
+        
+        // Validate coordinates using the helper method
+        $validatedPosition = HelperController::isValidIndonesianMaritimeCoordinate($latitude, $longitude);
+        
+        if (!$validatedPosition) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Invalid coordinates or outside Indonesian maritime area',
+            ], 400);
+        }
+        
+        // Update with validated coordinates
+        $datalogger->latitude = $latitude;
+        $datalogger->longitude = $longitude;
         $datalogger->update();
 
         return response()->json([
@@ -1441,5 +1455,47 @@ class HelperController extends Controller
             'success' => true,
             'message' => 'http://172.16.172.8/radarfolder/radar.png',
         ], 201);
+    }
+
+    /**
+     * Check if coordinates are valid for maritime tracking in Indonesian waters
+     * Extends the bounding box to include nearby waters and exclusive economic zone
+     * 
+     * @param float|string|null $latitude
+     * @param float|string|null $longitude
+     * @return bool
+     */
+    public static function isValidIndonesianMaritimeCoordinate($latitude, $longitude)
+    {
+        // Check if coordinates are null or empty
+        if ($latitude === null || $longitude === null || $latitude === '' || $longitude === '') {
+            return false;
+        }
+        
+        // Check if coordinates are valid numbers
+        if (!is_numeric($latitude) || !is_numeric($longitude)) {
+            return false;
+        }
+        
+        // Convert to float to ensure proper comparison
+        $latitude = (float)$latitude;
+        $longitude = (float)$longitude;
+        
+        // Check if coordinates are within valid ranges
+        if ($latitude < -90 || $latitude > 90 || $longitude < -180 || $longitude > 180) {
+            return false;
+        }
+        
+        // Indonesia's maritime area (extended bounding box including EEZ)
+        // Latitude: -15.0 to 10.0
+        // Longitude: 90.0 to 145.0
+        $minLat = -15.0;
+        $maxLat = 10.0;
+        $minLon = 90.0;
+        $maxLon = 145.0;
+        
+        // Check if coordinates are within Indonesia's extended maritime bounding box
+        return ($latitude >= $minLat && $latitude <= $maxLat && 
+                $longitude >= $minLon && $longitude <= $maxLon);
     }
 }
