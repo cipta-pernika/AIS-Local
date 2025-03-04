@@ -446,27 +446,43 @@ class HelperController extends Controller
 
     public function livefeed()
     {
-        return cache()->remember('livefeed', 60, function () {
-            $aisData = AisDataPosition::with('vessel')
-                ->groupBy('vessel_id')
-                ->limit(10)
-                ->orderBy('created_at', 'DESC')
-                ->whereBetween('created_at', [now()->subMinutes(1), now()])
-                ->get();
+        // Create cache key with timestamp to ensure fresh data every minute
+        $cacheKey = 'livefeed_' . now()->format('Y-m-d_H:i');
+        
+        // Get data from cache or execute query (cache for 1 minute)
+        $data = Cache::remember($cacheKey, 60, function () {
+            // Get AIS data
+            $aisData = Cache::remember('ais_livefeed', 30, function () {
+                return AisDataPosition::with('vessel')
+                    ->groupBy('vessel_id')
+                    ->limit(10)
+                    ->orderBy('created_at', 'DESC')
+                    ->whereBetween('created_at', [now()->subMinutes(1), now()])
+                    ->get();
+            });
 
-            $adsb = AdsbDataPosition::with('aircraft')
-                ->groupBy('aircraft_id')
-                ->limit(10)
-                ->orderBy('created_at', 'DESC')
-                ->whereBetween('created_at', [now()->subMinutes(1), now()])
-                ->get();
+            // Get ADSB data
+            $adsbData = Cache::remember('adsb_livefeed', 30, function () {
+                return AdsbDataPosition::with('aircraft')
+                    ->groupBy('aircraft_id')
+                    ->limit(10)
+                    ->orderBy('created_at', 'DESC')
+                    ->whereBetween('created_at', [now()->subMinutes(1), now()])
+                    ->get();
+            });
 
-            return response()->json([
-                'success' => true,
-                'message' => $aisData,
-                'liveadsb' => $adsb,
-            ], 201);
+            return [
+                'ais' => $aisData,
+                'adsb' => $adsbData
+            ];
         });
+
+        return response()->json([
+            'success' => true,
+            'message' => $data['ais'],
+            'liveadsb' => $data['adsb'],
+            'cached' => Cache::has($cacheKey)
+        ], 201);
     }
 
     public function adsbunique()
