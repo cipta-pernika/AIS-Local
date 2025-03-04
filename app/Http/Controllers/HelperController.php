@@ -171,17 +171,17 @@ class HelperController extends Controller
         }
         $latitude = request('lat');
         $longitude = request('lng');
-        
+
         // Validate coordinates using the helper method
         $validatedPosition = HelperController::isValidIndonesianMaritimeCoordinate($latitude, $longitude);
-        
+
         if (!$validatedPosition) {
             return response()->json([
                 'success' => false,
                 'message' => 'Invalid coordinates or outside Indonesian maritime area',
             ], 400);
         }
-        
+
         // Update with validated coordinates
         $datalogger->latitude = $latitude;
         $datalogger->longitude = $longitude;
@@ -273,7 +273,7 @@ class HelperController extends Controller
         return ($longitude >= -180 && $longitude <= 180);
     }
 
-    
+
 
     public function aisstatic()
     {
@@ -313,13 +313,13 @@ class HelperController extends Controller
     {
         // Create cache key with timestamp to ensure fresh data every minute
         $cacheKey = 'ais_data_unique_' . now()->format('Y-m-d_H:i');
-        
+
         // Get data from cache or execute query (cache for 1 minute)
         $aisData = Cache::remember($cacheKey, 60, function () {
             return AisDataPosition::with([
-                    'vessel',
-                    'sensorData.sensor.datalogger'
-                ])
+                'vessel',
+                'sensorData.sensor.datalogger'
+            ])
                 ->orderBy('created_at', 'DESC')
                 ->groupBy('vessel_id')
                 ->whereBetween('created_at', [
@@ -369,7 +369,7 @@ class HelperController extends Controller
     {
         // Create cache key with timestamp to ensure fresh data every minute
         $cacheKey = 'ais_data_list_' . now()->format('Y-m-d_H:i');
-        
+
         // Get data from cache or execute query (cache for 1 minute)
         $aisData = Cache::remember($cacheKey, 60, function () {
             return AisDataPosition::with(['vessel', 'sensorData.sensor.datalogger'])
@@ -402,13 +402,13 @@ class HelperController extends Controller
     {
         // Create cache key with timestamp to ensure fresh data every minute
         $cacheKey = 'adsb_data_list_' . now()->format('Y-m-d_H:i');
-        
+
         // Get data from cache or execute query (cache for 1 minute)
         $adsbData = Cache::remember($cacheKey, 60, function () {
             return AdsbDataPosition::with([
-                    'aircraft',
-                    'sensorData.sensor.datalogger'
-                ])
+                'aircraft',
+                'sensorData.sensor.datalogger'
+            ])
                 ->orderBy('created_at', 'DESC')
                 ->whereBetween('created_at', [now()->subMinutes(5), now()]) // Only get last 5 minutes of data
                 ->limit(200)
@@ -424,21 +424,31 @@ class HelperController extends Controller
 
     public function radardatalist()
     {
-        $aisData = RadarData::with('sensorData.sensor.datalogger')
-            ->orderBy('created_at', 'DESC')
-            ->get();
+        // Create cache key with timestamp to ensure fresh data every minute
+        $cacheKey = 'radar_data_list_' . now()->format('Y-m-d_H:i');
+
+        // Get data from cache or execute query (cache for 1 minute)
+        $radarData = Cache::remember($cacheKey, 60, function () {
+            return RadarData::with([
+                'sensorData.sensor.datalogger'
+            ])
+                ->orderBy('created_at', 'DESC')
+                ->whereBetween('created_at', [now()->subMinutes(5), now()]) // Only get last 5 minutes of data
+                ->get();
+        });
 
         return response()->json([
             'success' => true,
-            'message' => $aisData,
+            'message' => $radarData,
+            'cached' => Cache::has($cacheKey)
         ], 201);
     }
 
     public function livefeed()
     {
-        return cache()->remember('livefeed', 60, function() {
+        return cache()->remember('livefeed', 60, function () {
             $aisData = AisDataPosition::with('vessel')
-                ->groupBy('vessel_id') 
+                ->groupBy('vessel_id')
                 ->limit(10)
                 ->orderBy('created_at', 'DESC')
                 ->whereBetween('created_at', [now()->subMinutes(1), now()])
@@ -463,13 +473,13 @@ class HelperController extends Controller
     {
         // Create cache key with timestamp to ensure fresh data every minute
         $cacheKey = 'adsb_unique_' . now()->format('Y-m-d_H:i');
-        
+
         // Get data from cache or execute query (cache for 1 minute)
         $adsbData = Cache::remember($cacheKey, 60, function () {
             return AdsbDataPosition::with([
-                    'aircraft',
-                    'sensorData.sensor.datalogger'
-                ])
+                'aircraft',
+                'sensorData.sensor.datalogger'
+            ])
                 ->whereRaw('adsb_data_positions.id IN (
                     select MAX(adsb_data_positions.id) 
                     FROM adsb_data_positions 
@@ -509,10 +519,10 @@ class HelperController extends Controller
     public function adsbupdate()
     {
         $aisData = AdsbDataPosition::with('aircraft', 'sensorData.sensor.datalogger')
-        // ->groupBy('aircraft_id')
+            // ->groupBy('aircraft_id')
             ->whereRaw('adsb_data_positions.id IN (select MAX(adsb_data_positions.id) FROM adsb_data_positions GROUP BY aircraft_id)')
             ->whereBetween('created_at', [now()->subMinutes(2), now()])
-        // ->orderBy('created_at', 'DESC')
+            // ->orderBy('created_at', 'DESC')
             ->limit(20)
             ->get();
 
@@ -557,12 +567,12 @@ class HelperController extends Controller
     {
         // Create cache key with timestamp to ensure fresh data every minute
         $cacheKey = 'radar_data_update_' . now()->format('Y-m-d_H:i');
-        
+
         // Get data from cache or execute query (cache for 1 minute)
         $radarData = Cache::remember($cacheKey, 60, function () {
             return RadarData::with([
-                    'sensorData.sensor.datalogger'
-                ])
+                'sensorData.sensor.datalogger'
+            ])
                 ->groupBy('target_id')
                 ->whereBetween('created_at', [
                     now()->subMinutes(1),
@@ -1453,21 +1463,21 @@ class HelperController extends Controller
         if ($latitude === null || $longitude === null || $latitude === '' || $longitude === '') {
             return false;
         }
-        
+
         // Check if coordinates are valid numbers
         if (!is_numeric($latitude) || !is_numeric($longitude)) {
             return false;
         }
-        
+
         // Convert to float to ensure proper comparison
         $latitude = (float)$latitude;
         $longitude = (float)$longitude;
-        
+
         // Check if coordinates are within valid ranges
         if ($latitude < -90 || $latitude > 90 || $longitude < -180 || $longitude > 180) {
             return false;
         }
-        
+
         // Indonesia's maritime area (extended bounding box including EEZ)
         // Latitude: -15.0 to 10.0
         // Longitude: 90.0 to 145.0
@@ -1475,9 +1485,9 @@ class HelperController extends Controller
         $maxLat = 10.0;
         $minLon = 90.0;
         $maxLon = 145.0;
-        
+
         // Check if coordinates are within Indonesia's extended maritime bounding box
-        return ($latitude >= $minLat && $latitude <= $maxLat && 
-                $longitude >= $minLon && $longitude <= $maxLon);
+        return ($latitude >= $minLat && $latitude <= $maxLat &&
+            $longitude >= $minLon && $longitude <= $maxLon);
     }
 }
