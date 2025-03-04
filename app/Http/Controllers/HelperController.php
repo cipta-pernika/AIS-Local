@@ -367,28 +367,34 @@ class HelperController extends Controller
 
     public function aisdatalist()
     {
-        $aisData = AisDataPosition::with(['vessel', 'sensorData.sensor.datalogger'])
-            ->orderBy('created_at', 'DESC')
-            ->select('vessel_id', 'latitude', 'longitude', 'speed', 'course', 'heading', 'navigation_status', 'timestamp', 'id')
-            ->get()
-            ->groupBy('vessel_id')
-            ->map(function ($groupedData) {
-                $firstData = $groupedData->first();
-                $vesselData = $firstData->vessel;
+        // Create cache key with timestamp to ensure fresh data every minute
+        $cacheKey = 'ais_data_list_' . now()->format('Y-m-d_H:i');
+        
+        // Get data from cache or execute query (cache for 1 minute)
+        $aisData = Cache::remember($cacheKey, 60, function () {
+            return AisDataPosition::with(['vessel', 'sensorData.sensor.datalogger'])
+                ->orderBy('created_at', 'DESC')
+                ->select('vessel_id', 'latitude', 'longitude', 'speed', 'course', 'heading', 'navigation_status', 'timestamp', 'id')
+                ->whereBetween('created_at', [now()->subMinutes(5), now()]) // Only get last 5 minutes of data
+                ->get()
+                ->groupBy('vessel_id')
+                ->map(function ($groupedData) {
+                    $firstData = $groupedData->first();
+                    $vesselData = $firstData->vessel;
 
-                return array_merge(
-                    $vesselData->only(['mmsi', 'imo', 'vessel_name']),
-                    $firstData->only(['latitude', 'longitude', 'speed', 'course', 'heading', 'navigation_status', 'timestamp', 'id'])
-                );
-            })
-            ->values() // Reset the keys and convert back to a simple array.
-            ->toArray();
-
-        // Now $aisData is an array of arrays, each representing the properties of a vessel.
+                    return array_merge(
+                        $vesselData->only(['mmsi', 'imo', 'vessel_name']),
+                        $firstData->only(['latitude', 'longitude', 'speed', 'course', 'heading', 'navigation_status', 'timestamp', 'id'])
+                    );
+                })
+                ->values()
+                ->toArray();
+        });
 
         return response()->json([
             'success' => true,
             'message' => $aisData,
+            'cached' => Cache::has($cacheKey)
         ], 201);
     }
 
