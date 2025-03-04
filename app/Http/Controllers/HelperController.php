@@ -400,14 +400,25 @@ class HelperController extends Controller
 
     public function adsbdatalist()
     {
-        $aisData = AdsbDataPosition::with('aircraft', 'sensorData.sensor.datalogger')
-            ->orderBy('created_at', 'DESC')
-            ->limit(200)
-            ->get();
+        // Create cache key with timestamp to ensure fresh data every minute
+        $cacheKey = 'adsb_data_list_' . now()->format('Y-m-d_H:i');
+        
+        // Get data from cache or execute query (cache for 1 minute)
+        $adsbData = Cache::remember($cacheKey, 60, function () {
+            return AdsbDataPosition::with([
+                    'aircraft',
+                    'sensorData.sensor.datalogger'
+                ])
+                ->orderBy('created_at', 'DESC')
+                ->whereBetween('created_at', [now()->subMinutes(5), now()]) // Only get last 5 minutes of data
+                ->limit(200)
+                ->get();
+        });
 
         return response()->json([
             'success' => true,
-            'message' => $aisData,
+            'message' => $adsbData,
+            'cached' => Cache::has($cacheKey)
         ], 201);
     }
 
