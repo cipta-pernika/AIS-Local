@@ -81,11 +81,13 @@ return new class extends Migration
             $table->string('foto_di_kapal')->nullable();
             $table->string('bpjp')->nullable();
             $table->timestamps();
-            
+
             $table->index('id');
-            $table->index('no_pkk');
+            if (DB::getDriverName() !== 'mongodb') {
+                $table->index('no_pkk');
+            }
         });
-        
+
     }
 
     /**

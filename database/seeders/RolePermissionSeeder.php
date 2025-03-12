@@ -6,6 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Illuminate\Support\Facades\DB;
 
 class RolePermissionSeeder extends Seeder
 {
@@ -17,53 +18,86 @@ class RolePermissionSeeder extends Seeder
         // Reset cached roles and permissions
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
-        // Create permissions
         $permissions = [
-            // Notifikasi
             'show_notifikasi',
-            
-            // Playback
             'show_playback',
-            
-            // Kamera
             'show_cctv',
             'is_controlled_ptz',
-            
-            // Legend
             'show_legend',
-            
-            // POI
             'show_poi',
-            
-            // Jenis Map
             'show_layer_map',
-            
-            // Server Status
             'show_server_status',
-            
-            // Report
             'show_report',
             'export_report',
-            
-            // User Management
             'show_user_management',
             'add_user',
             'delete_user',
             'edit_user',
         ];
 
-        foreach ($permissions as $permission) {
-            Permission::firstOrCreate(['name' => $permission]);
+        if (DB::getDriverName() == 'mongodb') {
+            // Create permissions
+            foreach ($permissions as $permission) {
+                DB::connection('mongodb')
+                    ->selectCollection('permissions')
+                    ->updateOne(
+                        ['name' => $permission, 'guard_name' => 'web'],
+                        ['$set' => ['name' => $permission, 'guard_name' => 'web', 'updated_at' => now()]],
+                        ['upsert' => true]
+                    );
+            }
+
+            // Create roles with their permissions
+            $roles = [
+                'user' => ['show_cctv', 'show_legend', 'show_poi'],
+                'admin' => $permissions
+            ];
+
+            foreach ($roles as $roleName => $rolePermissions) {
+                // Create/Update role
+                DB::connection('mongodb')
+                    ->selectCollection('roles')
+                    ->updateOne(
+                        ['name' => $roleName, 'guard_name' => 'web'],
+                        [
+                            '$set' => [
+                                'name' => $roleName,
+                                'guard_name' => 'web',
+                                'permissions' => array_map(function($permission) {
+                                    return [
+                                        'name' => $permission,
+                                        'guard_name' => 'web'
+                                    ];
+                                }, $rolePermissions)
+                            ]
+                        ],
+                        ['upsert' => true]
+                    );
+            }
+        } else {
+            if (config('database.default') === 'pgsql') {
+                DB::statement("SELECT setval('permissions_id_seq', (SELECT COALESCE(MAX(id), 0) FROM permissions));");
+            }
+
+            foreach ($permissions as $permission) {
+                Permission::updateOrCreate(
+                    ['name' => $permission, 'guard_name' => 'web'],
+                    ['updated_at' => now()]
+                );
+            }
+
+            if (config('database.default') === 'pgsql') {
+                DB::statement("SELECT setval('roles_id_seq', (SELECT COALESCE(MAX(id), 0) FROM roles));");
+            }
+
+            $userRole = Role::firstOrCreate(['name' => 'user']);
+            $userRole->syncPermissions(['show_cctv', 'show_legend', 'show_poi']);
+
+            $adminRole = Role::firstOrCreate(['name' => 'admin']);
+            $adminRole->syncPermissions(Permission::all());
         }
 
         // Reset cached roles and permissions
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
-
-        // Create roles and assign permissions
-        $userRole = Role::firstOrCreate(['name' => 'user']);
-        $userRole->syncPermissions(['show_cctv', 'show_legend', 'show_poi']);
-
-        $adminRole = Role::firstOrCreate(['name' => 'admin']);
-        $adminRole->syncPermissions(Permission::all());
     }
 }

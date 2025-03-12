@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class UserSeeder extends Seeder
 {
@@ -27,8 +28,16 @@ class UserSeeder extends Seeder
             ],
         ];
 
-        foreach ($users as $user) {
-            User::create($user);
+        if (DB::getDriverName() == 'mongodb') {
+            foreach ($users as $user) {
+                DB::connection('mongodb')
+                    ->selectCollection('users')
+                    ->insertOne($user);
+            }
+        } else {
+            foreach ($users as $user) {
+                User::create($user);
+            }
         }
     }
 }

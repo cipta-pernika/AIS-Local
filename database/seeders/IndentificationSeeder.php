@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Identification;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class IndentificationSeeder extends Seeder
 {
@@ -13,25 +14,39 @@ class IndentificationSeeder extends Seeder
      */
     public function run(): void
     {
-        Identification::create([
-            'name' => 'At Anchor',
-            'desc' => '',
-        ]);
-        Identification::create([
-            'name' => 'Moored',
-            'desc' => '',
-        ]);
-        Identification::create([
-            'name' => 'Kapal Asing',
-            'desc' => 'Mengelola lalu lintas kapal asing dan lokal dengan memastikan kepatuhan terhadap peraturan dan prosedur pelabuhan.',
-        ]);
-        Identification::create([
-            'name' => 'Transhipment',
-            'desc' => 'Memantau dan mengelola proses transhipment (pemindahan kargo dari satu kapal ke kapal lain) yang mungkin terjadi di pelabuhan.',
-        ]);
-        Identification::create([
-            'name' => 'Bongkar Muat',
-            'desc' => 'Memastikan efisiensi dan keamanan proses bongkar muat kargo dari dan ke kapal.',
-        ]);
+        $identifications = [
+            [
+                'name' => 'At Anchor',
+                'desc' => '',
+            ],
+            [
+                'name' => 'Moored',
+                'desc' => '',
+            ],
+            [
+                'name' => 'Kapal Asing',
+                'desc' => 'Mengelola lalu lintas kapal asing dan lokal dengan memastikan kepatuhan terhadap peraturan dan prosedur pelabuhan.',
+            ],
+            [
+                'name' => 'Transhipment',
+                'desc' => 'Memantau dan mengelola proses transhipment (pemindahan kargo dari satu kapal ke kapal lain) yang mungkin terjadi di pelabuhan.',
+            ],
+            [
+                'name' => 'Bongkar Muat',
+                'desc' => 'Memastikan efisiensi dan keamanan proses bongkar muat kargo dari dan ke kapal.',
+            ]
+        ];
+
+        if (DB::getDriverName() == 'mongodb') {
+            foreach ($identifications as $identification) {
+                DB::connection('mongodb')
+                    ->selectCollection('identifications')
+                    ->insertOne($identification);
+            }
+        } else {
+            foreach ($identifications as $identification) {
+                Identification::create($identification);
+            }
+        }
     }
 }
