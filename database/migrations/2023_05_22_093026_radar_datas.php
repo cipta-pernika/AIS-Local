@@ -26,6 +26,7 @@ return new class extends Migration
             $table->float('distance_from_fak')->nullable();
             $table->tinyInteger('is_inside_geofence')->default(0);
             $table->timestamp('timestamp');
+            $table->tinyInteger('is_inside_geofence')->default(0);
             $table->timestamps();
 
             $table->index('target_id');

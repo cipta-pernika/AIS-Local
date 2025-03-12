@@ -25,7 +25,10 @@ use App\Models\PanduTidakTerjadwal;
 use App\Models\PbkmKegiatanPemanduan;
 use App\Models\RadarData;
 use App\Models\ReportGeofence;
+<<<<<<< HEAD
 use App\Models\ReportGeofenceBongkarMuat;
+=======
+>>>>>>> coastal
 use App\Models\Sensor;
 use App\Models\SensorData;
 use App\Models\TidakTerjadwal;
@@ -36,6 +39,7 @@ use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Http;
@@ -2382,6 +2386,180 @@ class HelperController extends Controller
         ]);
         $radarData->save();
 
+        $defaultValue = env('APP_ENV_CHECK', 'local');
+        $url = $defaultValue == 'local'
+            ? 'http://localhost:1880/sendgeofencealarmgmk'
+            : 'https://nr.monitormyvessel.com/sendgeofencealarmgmk';
+        $geofenceDatas = Geofence::all();
+        foreach ($geofenceDatas as $value) {
+            if ($value->geometry) {
+                $geoParse = json_decode($value->geometry);
+
+                if ($geoParse && $value->type_geo === 'circle') {
+                    $jarak = $this->distance(
+                        request()->latitude,
+                        request()->longitude,
+                        $geoParse->geometry->coordinates[1],
+                        $geoParse->geometry->coordinates[0],
+                        'K'
+                    );
+                    if ($jarak <= (float) $value['radius'] / 1000) {
+                        if ($value['type'] === 'in' || $value['type'] === 'both') {
+                            $lastEventTimestamp = EventTracking::where('target_id', $radarData->target_id)
+                                ->where('geofence_id', $value['id'])
+                                ->whereDate('created_at', Carbon::today())
+                                ->value('created_at');
+
+                            // If no event recorded today, create a new event
+                            if (!$lastEventTimestamp || Carbon::parse($lastEventTimestamp)->diffInHours($radarData->timestamp) > 5) {
+                                EventTracking::create([
+                                    'event_id' => 9,
+                                    'target_id' => $radarData->target_id,
+                                    'geofence_id' => $value['id']
+                                ]);
+                                $radarData->is_inside_geofence = 1;
+                                $radarData->update();
+
+                                try {
+                                    Http::post($url, [
+                                        'msg' => $radarData->target_id . ' Inside ' . $value['geofence_name'] . ' Geofence'
+                                    ]);
+                                } catch (\Exception $e) {
+                                    // Handle the exception here, you can log it or take appropriate action
+                                    // For example:
+                                    // Log::error('HTTP POST failed: ' . $e->getMessage());
+                                }
+                            }
+                        }
+                        $existingReport = ReportGeofence::where('geofence_id', $value['id'])
+                            ->where('target_id', $radarData->target_id)
+                            ->orderBy('in', 'desc')
+                            ->first();
+                        if (!$existingReport || $existingReport->in->diffInHours(Carbon::parse($radarData->timestamp)) > 5) {
+                            ReportGeofence::updateOrCreate(
+                                [
+                                    'target_id' => $radarData->target_id,
+                                ],
+                                [
+                                    'event_id' => 9,
+                                    'geofence_id' => $value['id'],
+                                    'in' => Carbon::parse($radarData->timestamp)
+                                ]
+                            );
+                        }
+                    } else {
+                        $washere = EventTracking::where('target_id', $radarData->target_id)
+                            ->where('event_id', 9)->where('geofence_id', $value['id'])->first();
+                        if ($washere) {
+                            $existingReport = ReportGeofence::where('target_id', $radarData->target_id)
+                                ->where('geofence_id', $value['id'])
+                                ->whereNull('out')
+                                ->whereNotNull('in')
+                                ->first();
+
+                            if ($existingReport) {
+                                $existingReport->update([
+                                    'out' => Carbon::parse($radarData->timestamp),
+                                    'total_time' => $existingReport->in->diffInMinutes($radarData->timestamp)
+                                ]);
+                                EventTracking::create([
+                                    'event_id' => 10,
+                                    'target_id' => $radarData->target_id,
+                                    'geofence_id' => $value['id']
+                                ]);
+
+                                $message = $radarData->target_id . ' Outside ' . $value['geofence_name'] . ' Geofence';
+                                try {
+                                    Http::post($url, ['msg' => $message]);
+                                } catch (\Exception $e) {
+                                }
+                            }
+                        }
+                    }
+                } else if ($geoParse && ($value->type_geo === 'polygon' || $value->type_geo === 'rectangle')) {
+                    // Handle polygon or rectangle case
+                    $geofence = new Polygon();
+                    foreach ($geoParse as $valGeo) {
+                        $geofence->addPoint(new Coordinate($valGeo[0], $valGeo[1]));
+                    }
+                    $insidePoint = new Coordinate(request()->latitude,  request()->longitude);
+                    if ($geofence->contains($insidePoint)) {
+                        if ($value['type'] === 'in' || $value['type'] === 'both') {
+                            $lastEventTimestamp = EventTracking::where('target_id', $radarData->target_id)
+                                ->where('geofence_id', $value['id'])
+                                ->whereDate('created_at', Carbon::today())
+                                ->value('created_at');
+
+                            // If no event recorded today, create a new event
+                            if (!$lastEventTimestamp || Carbon::parse($lastEventTimestamp)->diffInHours($radarData->timestamp) > 5) {
+                                EventTracking::create([
+                                    'event_id' => 9,
+                                    'target_id' => $radarData->target_id,
+                                    'geofence_id' => $value['id']
+                                ]);
+                                $radarData->is_inside_geofence = 1;
+                                $radarData->update();
+                                try {
+                                    Http::post($url, [
+                                        'msg' => $radarData->target_id . ' Inside ' . $value['geofence_name'] . ' Geofence'
+                                    ]);
+                                } catch (\Exception $e) {
+                                }
+                            }
+                        }
+                        $existingReport = ReportGeofence::where('geofence_id', $value['id'])
+                            ->where('target_id', $radarData->target_id)
+                            ->orderBy('in', 'desc')
+                            ->first();
+                        if (!$existingReport || $existingReport->in->diffInHours(Carbon::parse($radarData->timestamp)) > 5) {
+                            ReportGeofence::updateOrCreate(
+                                [
+                                    'target_id' => $radarData->target_id,
+                                ],
+                                [
+                                    'event_id' => 9,
+                                    'geofence_id' => $value['id'],
+                                    'in' => Carbon::parse($radarData->timestamp)
+                                ]
+                            );
+                        }
+                    } else {
+                        $washere = EventTracking::where('target_id', $radarData->target_id)
+                            ->where('event_id', 9)->where('geofence_id', $value['id'])->first();
+                        if ($washere) {
+                            $existingReport = ReportGeofence::where('target_id', $radarData->target_id)
+                                ->where('geofence_id', $value['id'])
+                                ->whereNull('out')
+                                ->whereNotNull('in')
+                                ->first();
+
+                            if ($existingReport) {
+                                $existingReport->update([
+                                    'out' => Carbon::parse($radarData->timestamp),
+                                    'total_time' => $existingReport->in->diffInMinutes($radarData->timestamp)
+                                ]);
+
+                                EventTracking::create([
+                                    'event_id' => 10,
+                                    'target_id' => $radarData->target_id,
+                                    'geofence_id' => $value['id']
+                                ]);
+                                try {
+                                    Http::post($url, [
+                                        'msg' => $radarData->target_id . ' Outside ' . $value['geofence_name'] . ' Geofence'
+                                    ]);
+                                } catch (\Exception $e) {
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    // Handle other cases
+                    $isInside = [];
+                }
+            }
+        }
+
         return response()->json([
             'radarData' => $radarData ?? null,
         ], 201);
@@ -2719,6 +2897,7 @@ class HelperController extends Controller
             );
 
             $defaultValue = env('APP_ENV_CHECK', 'local');
+<<<<<<< HEAD
             $url = $defaultValue == 'local'
                 ? 'http://localhost:1880/sendgeofencealarmksop'
                 : 'https://nr.monitormyvessel.com/sendgeofencealarmksop';
@@ -2926,6 +3105,180 @@ class HelperController extends Controller
                     }
                 }
             }
+=======
+                $url = $defaultValue == 'local'
+                    ? 'http://localhost:1880/sendgeofencealarmgmk'
+                    : 'https://nr.monitormyvessel.com/sendgeofencealarmgmk';
+                $geofenceDatas = Geofence::all();
+                foreach ($geofenceDatas as $value) {
+                    if ($value->geometry) {
+                        $geoParse = json_decode($value->geometry);
+
+                        if ($geoParse && $value->type_geo === 'circle') {
+                            $jarak = $this->distance(
+                                request()->latitude,
+                                request()->longitude,
+                                $geoParse->geometry->coordinates[1],
+                                $geoParse->geometry->coordinates[0],
+                                'K'
+                            );
+                            if ($jarak <= (float) $value['radius'] / 1000) {
+                                if ($value['type'] === 'in' || $value['type'] === 'both') {
+                                    $lastEventTimestamp = EventTracking::where('target_id', $radarData->target_id)
+                                        ->where('geofence_id', $value['id'])
+                                        ->whereDate('created_at', Carbon::today())
+                                        ->value('created_at');
+
+                                    // If no event recorded today, create a new event
+                                    if (!$lastEventTimestamp || Carbon::parse($lastEventTimestamp)->diffInHours($radarData->timestamp) > 5) {
+                                        EventTracking::create([
+                                            'event_id' => 9,
+                                            'target_id' => $radarData->target_id,
+                                            'geofence_id' => $value['id']
+                                        ]);
+                                        $radarData->is_inside_geofence = 1;
+                                        $radarData->update();
+
+                                        try {
+                                            Http::post($url, [
+                                                'msg' => $radarData->target_id . ' Inside ' . $value['geofence_name'] . ' Geofence ~ Speed  ' . $radarData->speed
+                                            ]);
+                                        } catch (\Exception $e) {
+                                            // Handle the exception here, you can log it or take appropriate action
+                                            // For example:
+                                            // Log::error('HTTP POST failed: ' . $e->getMessage());
+                                        }
+                                    }
+                                }
+                                $existingReport = ReportGeofence::where('geofence_id', $value['id'])
+                                    ->where('target_id', $radarData->target_id)
+                                    ->orderBy('in', 'desc')
+                                    ->first();
+                                if (!$existingReport || $existingReport->in->diffInHours(Carbon::parse($radarData->timestamp)) > 5) {
+                                    ReportGeofence::updateOrCreate(
+                                        [
+                                            'target_id' => $radarData->target_id,
+                                        ],
+                                        [
+                                            'event_id' => 9,
+                                            'geofence_id' => $value['id'],
+                                            'in' => Carbon::parse($radarData->timestamp)
+                                        ]
+                                    );
+                                }
+                            } else {
+                                $washere = EventTracking::where('target_id', $radarData->target_id)
+                                    ->where('event_id', 9)->where('geofence_id', $value['id'])->first();
+                                if ($washere) {
+                                    $existingReport = ReportGeofence::where('target_id', $radarData->target_id)
+                                        ->where('geofence_id', $value['id'])
+                                        ->whereNull('out')
+                                        ->whereNotNull('in')
+                                        ->first();
+
+                                    if ($existingReport) {
+                                        $existingReport->update([
+                                            'out' => Carbon::parse($radarData->timestamp),
+                                            'total_time' => $existingReport->in->diffInMinutes($radarData->timestamp)
+                                        ]);
+                                        EventTracking::create([
+                                            'event_id' => 10,
+                                            'target_id' => $radarData->target_id,
+                                            'geofence_id' => $value['id']
+                                        ]);
+
+                                        $message = $radarData->target_id . ' Outside ' . $value['geofence_name'] . ' Geofence ~ Speed  ' . $radarData->speed;
+                                        try {
+                                            Http::post($url, ['msg' => $message]);
+                                        } catch (\Exception $e) {
+                                        }
+                                    }
+                                }
+                            }
+                        } else if ($geoParse && ($value->type_geo === 'polygon' || $value->type_geo === 'rectangle')) {
+                            // Handle polygon or rectangle case
+                            $geofence = new Polygon();
+                            foreach ($geoParse as $valGeo) {
+                                $geofence->addPoint(new Coordinate($valGeo[0], $valGeo[1]));
+                            }
+                            $insidePoint = new Coordinate($radarData->latitude, $radarData->longitude);
+                            if ($geofence->contains($insidePoint)) {
+                                if ($value['type'] === 'in' || $value['type'] === 'both') {
+                                    $lastEventTimestamp = EventTracking::where('target_id', $radarData->target_id)
+                                        ->where('geofence_id', $value['id'])
+                                        ->whereDate('created_at', Carbon::today())
+                                        ->value('created_at');
+
+                                    // If no event recorded today, create a new event
+                                    if (!$lastEventTimestamp || Carbon::parse($lastEventTimestamp)->diffInHours($radarData->timestamp) > 5) {
+                                        EventTracking::create([
+                                            'event_id' => 9,
+                                            'target_id' => $radarData->target_id,
+                                            'geofence_id' => $value['id']
+                                        ]);
+                                        $radarData->is_inside_geofence = 1;
+                                        $radarData->update();
+                                        try {
+                                            Http::post($url, [
+                                                'msg' => $radarData->target_id . ' Inside ' . $value['geofence_name'] . ' Geofence ~ Speed  ' . $radarData->speed
+                                            ]);
+                                        } catch (\Exception $e) {
+                                        }
+                                    }
+                                }
+                                $existingReport = ReportGeofence::where('geofence_id', $value['id'])
+                                    ->where('target_id', $radarData->target_id)
+                                    ->orderBy('in', 'desc')
+                                    ->first();
+                                if (!$existingReport || $existingReport->in->diffInHours(Carbon::parse($radarData->timestamp)) > 5) {
+                                    ReportGeofence::updateOrCreate(
+                                        [
+                                            'target_id' => $radarData->target_id,
+                                        ],
+                                        [
+                                            'event_id' => 9,
+                                            'geofence_id' => $value['id'],
+                                            'in' => Carbon::parse($radarData->timestamp)
+                                        ]
+                                    );
+                                }
+                            } else {
+                                $washere = EventTracking::where('target_id', $radarData->target_id)
+                                    ->where('event_id', 9)->where('geofence_id', $value['id'])->first();
+                                if ($washere) {
+                                    $existingReport = ReportGeofence::where('target_id', $radarData->target_id)
+                                        ->where('geofence_id', $value['id'])
+                                        ->whereNull('out')
+                                        ->whereNotNull('in')
+                                        ->first();
+
+                                    if ($existingReport) {
+                                        $existingReport->update([
+                                            'out' => Carbon::parse($radarData->timestamp),
+                                            'total_time' => $existingReport->in->diffInMinutes($radarData->timestamp)
+                                        ]);
+
+                                        EventTracking::create([
+                                            'event_id' => 10,
+                                            'target_id' => $radarData->target_id,
+                                            'geofence_id' => $value['id']
+                                        ]);
+                                        try {
+                                            Http::post($url, [
+                                                'msg' => $radarData->target_id . ' Outside ' . $value['geofence_name'] . ' Geofence ~ Speed  ' . $radarData->speed
+                                            ]);
+                                        } catch (\Exception $e) {
+                                        }
+                                    }
+                                }
+                            }
+                        } else {
+                            // Handle other cases
+                            $isInside = [];
+                        }
+                    }
+                }
+>>>>>>> coastal
         }
 
         return response()->json([

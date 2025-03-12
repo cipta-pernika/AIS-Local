@@ -24,6 +24,14 @@
         "env": []
     },
     {
+        "id": "b7365955a007c1cd",
+        "type": "tab",
+        "label": "crontab",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "4f90a3ebd122d18b",
         "type": "subflow",
         "name": "GPRMC Handler ",
@@ -185,7 +193,11 @@
         "id": "0960ae41486c6ef0",
         "type": "serial-port",
         "name": "",
+<<<<<<< HEAD
         "serialport": "COM4",
+=======
+        "serialport": "COM3",
+>>>>>>> coastal
         "serialbaud": "38400",
         "databits": "8",
         "parity": "none",
@@ -878,8 +890,12 @@
         "y": 120,
         "wires": [
             [
+<<<<<<< HEAD
                 "91f07b0b1beac785",
                 "11913f59a4f89c5a"
+=======
+                "91f07b0b1beac785"
+>>>>>>> coastal
             ]
         ]
     },
@@ -1317,6 +1333,139 @@
         "id": "d772b56317b3bac6",
         "type": "serial in",
         "z": "80f8a74d09dd9b8e",
+<<<<<<< HEAD
+=======
+        "name": "",
+        "serial": "0960ae41486c6ef0",
+        "x": 110,
+        "y": 100,
+        "wires": [
+            [
+                "87113fc21a601501"
+            ]
+        ]
+    },
+    {
+        "id": "621512a36bdfb88d",
+        "type": "cronplus",
+        "z": "80f8a74d09dd9b8e",
+        "d": true,
+        "name": "sendata",
+        "outputField": "payload",
+        "timeZone": "",
+        "persistDynamic": false,
+        "storeName": "",
+        "commandResponseMsgOutput": "output1",
+        "outputs": 1,
+        "options": [
+            {
+                "name": "schedule1",
+                "topic": "topic1",
+                "payloadType": "str",
+                "payload": "C:\\laragon\\bin\\php\\php-8.1.10-Win32-vs16-x64\\php \"C:\\Users\\user\\Documents\\GitHub\\AIS-Local\\artisan\" app:sendata",
+                "expressionType": "cron",
+                "expression": "0 * * * * * *",
+                "location": "",
+                "offset": "0",
+                "solarType": "all",
+                "solarEvents": "sunrise,sunset"
+            }
+        ],
+        "x": 100,
+        "y": 260,
+        "wires": [
+            [
+                "c3cbb809cc8f24bb"
+            ]
+        ]
+    },
+    {
+        "id": "10d976203d571979",
+        "type": "cronplus",
+        "z": "80f8a74d09dd9b8e",
+        "d": true,
+        "name": "radar image",
+        "outputField": "payload",
+        "timeZone": "",
+        "persistDynamic": false,
+        "commandResponseMsgOutput": "output1",
+        "outputs": 1,
+        "options": [
+            {
+                "name": "schedule1",
+                "topic": "topic1",
+                "payloadType": "str",
+                "payload": "C:\\laragon\\bin\\php\\php-8.1.10-Win32-vs16-x64\\php \"C:\\Users\\user\\Documents\\GitHub\\AIS-Local\\artisan\" radarpng",
+                "expressionType": "cron",
+                "expression": "0 * * * * * *",
+                "location": "",
+                "offset": "0",
+                "solarType": "all",
+                "solarEvents": "sunrise,sunset"
+            }
+        ],
+        "x": 110,
+        "y": 360,
+        "wires": [
+            [
+                "10d8acc802b0e40a"
+            ]
+        ]
+    },
+    {
+        "id": "51e2b2b920a3d855",
+        "type": "cronplus",
+        "z": "80f8a74d09dd9b8e",
+        "d": true,
+        "name": "radar data",
+        "outputField": "payload",
+        "timeZone": "",
+        "persistDynamic": false,
+        "commandResponseMsgOutput": "output1",
+        "outputs": 1,
+        "options": [
+            {
+                "name": "schedule1",
+                "topic": "topic1",
+                "payloadType": "str",
+                "payload": "C:\\laragon\\bin\\php\\php-8.1.10-Win32-vs16-x64\\php \"C:\\Users\\user\\Documents\\GitHub\\AIS-Local\\artisan\" fetchradar",
+                "expressionType": "cron",
+                "expression": "0 * * * * * *",
+                "location": "",
+                "offset": "0",
+                "solarType": "all",
+                "solarEvents": "sunrise,sunset"
+            }
+        ],
+        "x": 110,
+        "y": 440,
+        "wires": [
+            [
+                "011fbe527e649aab"
+            ]
+        ]
+    },
+    {
+        "id": "8e574384b6ad5386",
+        "type": "debug",
+        "z": "80f8a74d09dd9b8e",
+        "name": "debug 27",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1580,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "1186826edd0e7d88",
+        "type": "tcp in",
+        "z": "f0783bcaf66e4e3f",
+>>>>>>> coastal
         "name": "",
         "serial": "0960ae41486c6ef0",
         "x": 110,
@@ -2213,10 +2362,77 @@
         ]
     },
     {
+<<<<<<< HEAD
         "id": "dabaf47753121232",
         "type": "debug",
         "z": "07d42c4895448327",
         "name": "",
+=======
+        "id": "24877ff6cd79cc8e",
+        "type": "cronplus",
+        "z": "b7365955a007c1cd",
+        "name": "",
+        "outputField": "payload",
+        "timeZone": "",
+        "storeName": "",
+        "commandResponseMsgOutput": "output1",
+        "defaultLocation": "",
+        "defaultLocationType": "default",
+        "outputs": 1,
+        "options": [
+            {
+                "name": "schedule1",
+                "topic": "topic1",
+                "payloadType": "str",
+                "payload": "C:\\laragon\\bin\\php\\php-8.2.13-Win32-vs16-x64\\php \"C:\\Users\\user\\Documents\\AIS-Local\\artisan\" app:checkgeofence",
+                "expressionType": "cron",
+                "expression": "0 0/2 * * * *",
+                "location": "",
+                "offset": "0",
+                "solarType": "all",
+                "solarEvents": "sunrise,sunset"
+            }
+        ],
+        "x": 140,
+        "y": 80,
+        "wires": [
+            [
+                "802e71f52371a4d6"
+            ]
+        ]
+    },
+    {
+        "id": "802e71f52371a4d6",
+        "type": "exec",
+        "z": "b7365955a007c1cd",
+        "command": "",
+        "addpay": "payload",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 310,
+        "y": 80,
+        "wires": [
+            [
+                "4e7008b74e28ec83"
+            ],
+            [
+                "4e7008b74e28ec83"
+            ],
+            [
+                "4e7008b74e28ec83"
+            ]
+        ]
+    },
+    {
+        "id": "4e7008b74e28ec83",
+        "type": "debug",
+        "z": "b7365955a007c1cd",
+        "name": "debug 28",
+>>>>>>> coastal
         "active": true,
         "tosidebar": true,
         "console": false,
@@ -2224,8 +2440,165 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
+<<<<<<< HEAD
         "x": 740,
         "y": 420,
+=======
+        "x": 500,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "e281c4259617e005",
+        "type": "cronplus",
+        "z": "b7365955a007c1cd",
+        "name": "",
+        "outputField": "payload",
+        "timeZone": "",
+        "storeName": "",
+        "commandResponseMsgOutput": "output1",
+        "defaultLocation": "",
+        "defaultLocationType": "default",
+        "outputs": 1,
+        "options": [
+            {
+                "name": "schedule1",
+                "topic": "topic1",
+                "payloadType": "str",
+                "payload": "C:\\laragon\\bin\\php\\php-8.2.13-Win32-vs16-x64\\php \"C:\\Users\\user\\Documents\\AIS-Local\\artisan\" eventtrigger",
+                "expressionType": "cron",
+                "expression": "0 0/2 * * * *",
+                "location": "",
+                "offset": "0",
+                "solarType": "all",
+                "solarEvents": "sunrise,sunset"
+            }
+        ],
+        "x": 140,
+        "y": 180,
+        "wires": [
+            [
+                "5e0b5cd581c67630"
+            ]
+        ]
+    },
+    {
+        "id": "5e0b5cd581c67630",
+        "type": "exec",
+        "z": "b7365955a007c1cd",
+        "command": "",
+        "addpay": "payload",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 310,
+        "y": 180,
+        "wires": [
+            [
+                "f1f322fc792d5e81"
+            ],
+            [
+                "f1f322fc792d5e81"
+            ],
+            [
+                "f1f322fc792d5e81"
+            ]
+        ]
+    },
+    {
+        "id": "f1f322fc792d5e81",
+        "type": "debug",
+        "z": "b7365955a007c1cd",
+        "name": "debug 29",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 500,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "93fcdba921be1b64",
+        "type": "cronplus",
+        "z": "b7365955a007c1cd",
+        "name": "",
+        "outputField": "payload",
+        "timeZone": "",
+        "storeName": "",
+        "commandResponseMsgOutput": "output1",
+        "defaultLocation": "",
+        "defaultLocationType": "default",
+        "outputs": 1,
+        "options": [
+            {
+                "name": "schedule1",
+                "topic": "topic1",
+                "payloadType": "str",
+                "payload": "C:\\laragon\\bin\\php\\php-8.2.13-Win32-vs16-x64\\php \"C:\\Users\\user\\Documents\\AIS-Local\\artisan\" app:outofrange",
+                "expressionType": "cron",
+                "expression": "0 0/2 * * * *",
+                "location": "",
+                "offset": "0",
+                "solarType": "all",
+                "solarEvents": "sunrise,sunset"
+            }
+        ],
+        "x": 140,
+        "y": 280,
+        "wires": [
+            [
+                "30277634ba42bbdb"
+            ]
+        ]
+    },
+    {
+        "id": "30277634ba42bbdb",
+        "type": "exec",
+        "z": "b7365955a007c1cd",
+        "command": "",
+        "addpay": "payload",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 310,
+        "y": 280,
+        "wires": [
+            [
+                "a37fda1cfd30c1cc"
+            ],
+            [
+                "a37fda1cfd30c1cc"
+            ],
+            [
+                "a37fda1cfd30c1cc"
+            ]
+        ]
+    },
+    {
+        "id": "a37fda1cfd30c1cc",
+        "type": "debug",
+        "z": "b7365955a007c1cd",
+        "name": "debug 30",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 500,
+        "y": 280,
+>>>>>>> coastal
         "wires": []
     }
 ]

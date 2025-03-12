@@ -1,0 +1,4172 @@
+[
+    {
+        "id": "785fbe44960f2465",
+        "type": "tab",
+        "label": "AIS",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "3da1de5861934e0d",
+        "type": "tab",
+        "label": "ADS-B",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "5e5625e8d53aba69",
+        "type": "tab",
+        "label": "Radar",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "92c554d0a080b681",
+        "type": "tab",
+        "label": "Scrapping",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "59f2fb85.60b2e4",
+        "type": "subflow",
+        "name": "GPRMC Handler ",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 40,
+                "y": 40,
+                "wires": [
+                    {
+                        "id": "c9dd6738.3bfe08"
+                    }
+                ]
+            }
+        ],
+        "out": [],
+        "env": [],
+        "color": "#DDAA99",
+        "status": {
+            "x": 560,
+            "y": 120,
+            "wires": []
+        }
+    },
+    {
+        "id": "c44913aa.a602b",
+        "type": "subflow",
+        "name": "AIVDM Decoder",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 40,
+                "y": 60,
+                "wires": [
+                    {
+                        "id": "77ef9bbe.07f324"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 940,
+                "y": 120,
+                "wires": [
+                    {
+                        "id": "2c7e7714.bc3828",
+                        "port": 1
+                    },
+                    {
+                        "id": "4896d655.646db8",
+                        "port": 1
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "color": "#DDAA99",
+        "status": {
+            "x": 940,
+            "y": 220,
+            "wires": [
+                {
+                    "id": "2c7e7714.bc3828",
+                    "port": 1
+                }
+            ]
+        }
+    },
+    {
+        "id": "89f5bb6f20c9d7b5",
+        "type": "subflow",
+        "name": "GPRMC Handler  (2)",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 40,
+                "y": 40,
+                "wires": [
+                    {
+                        "id": "de0e511f932c6f30"
+                    }
+                ]
+            }
+        ],
+        "out": [],
+        "env": [],
+        "color": "#DDAA99",
+        "status": {
+            "x": 560,
+            "y": 120,
+            "wires": []
+        }
+    },
+    {
+        "id": "2c168e20b48ca5f8",
+        "type": "subflow",
+        "name": "AIVDM Decoder (2)",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 40,
+                "y": 60,
+                "wires": [
+                    {
+                        "id": "eee67eab3b25b0c3"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 940,
+                "y": 120,
+                "wires": [
+                    {
+                        "id": "cb242c7d41c5c6f7",
+                        "port": 1
+                    },
+                    {
+                        "id": "da2146dc65d7cae8",
+                        "port": 1
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "color": "#DDAA99",
+        "status": {
+            "x": 940,
+            "y": 220,
+            "wires": [
+                {
+                    "id": "cb242c7d41c5c6f7",
+                    "port": 1
+                }
+            ]
+        }
+    },
+    {
+        "id": "63572183d44540bc",
+        "type": "subflow",
+        "name": "AIVDM Decoder (3)",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 40,
+                "y": 60,
+                "wires": []
+            }
+        ],
+        "out": [
+            {
+                "x": 940,
+                "y": 120,
+                "wires": [
+                    {
+                        "id": "1a7b5c0b8ca7fdaa",
+                        "port": 1
+                    },
+                    {
+                        "id": "0be0e02489c18286",
+                        "port": 1
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "color": "#DDAA99",
+        "status": {
+            "x": 940,
+            "y": 220,
+            "wires": [
+                {
+                    "id": "1a7b5c0b8ca7fdaa",
+                    "port": 1
+                }
+            ]
+        }
+    },
+    {
+        "id": "93bb4802e003860b",
+        "type": "subflow",
+        "name": "AIVDM Decoder (2) (2)",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 40,
+                "y": 60,
+                "wires": [
+                    {
+                        "id": "4a4310e0689c2661"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 940,
+                "y": 120,
+                "wires": [
+                    {
+                        "id": "45e1eb111ae5ac3c",
+                        "port": 1
+                    },
+                    {
+                        "id": "6792d9d2c5ae3a7b",
+                        "port": 1
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "color": "#DDAA99",
+        "status": {
+            "x": 940,
+            "y": 220,
+            "wires": [
+                {
+                    "id": "45e1eb111ae5ac3c",
+                    "port": 1
+                }
+            ]
+        }
+    },
+    {
+        "id": "2eaa5987be6446cd",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "mqtt.cakrawala.id",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": ""
+    },
+    {
+        "id": "9871d6e44d7a6a87",
+        "type": "websocket-listener",
+        "path": "/ws/sensordata",
+        "wholemsg": "false"
+    },
+    {
+        "id": "9821ed2c003bd755",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "mqtt.cakrawala.id",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "b87b2e5a6c9c7a97",
+        "type": "websocket-listener",
+        "d": true,
+        "path": "/ws/sensordata",
+        "wholemsg": "false"
+    },
+    {
+        "id": "0cd44d4311772c09",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "mqtt.cakrawala.id",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "f446fd9394e31ea8",
+        "type": "websocket-listener",
+        "path": "/ws/geofence",
+        "wholemsg": "false"
+    },
+    {
+        "id": "7a514ac7e4bcf6eb",
+        "type": "serial-port",
+        "serialport": "COM3",
+        "serialbaud": "38400",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": "10000"
+    },
+    {
+        "id": "28f444b0.30a18c",
+        "type": "serial-port",
+        "serialport": "/dev/ttyUSB0",
+        "serialbaud": "38400",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": "10000"
+    },
+    {
+        "id": "72574d1.98c5bb4",
+        "type": "serial-port",
+        "serialport": "COM3",
+        "serialbaud": "38400",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": "10000"
+    },
+    {
+        "id": "399277c2f994d299",
+        "type": "serial-port",
+        "serialport": "/dev/ttyACM0",
+        "serialbaud": "9600",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": "10000"
+    },
+    {
+        "id": "b925949e0d43a33a",
+        "type": "serial-port",
+        "name": "",
+        "serialport": "COM3",
+        "serialbaud": "38400",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": "10000"
+    },
+    {
+        "id": "88803de7b24633ba",
+        "type": "serial-port",
+        "serialport": "COM1",
+        "serialbaud": "38400",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": "10000"
+    },
+    {
+        "id": "41d7844fb87907c5",
+        "type": "serial-port",
+        "serialport": "/dev/ttyUSB0",
+        "serialbaud": "38400",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": "10000"
+    },
+    {
+        "id": "bc4860da.1ccfe",
+        "type": "MySQLdatabase",
+        "name": "bst_op",
+        "host": "localhost",
+        "port": "3306",
+        "db": "bst_op",
+        "tz": "UTC",
+        "charset": "UTF8"
+    },
+    {
+        "id": "1cb5874.894b0f9",
+        "type": "MySQLdatabase",
+        "name": "bst_op_decoder",
+        "host": "127.0.0.1",
+        "port": "3306",
+        "db": "bst_op",
+        "tz": "UTC",
+        "charset": "UTF8"
+    },
+    {
+        "id": "5416d43d.0ba9d4",
+        "type": "MySQLdatabase",
+        "d": true,
+        "name": "bst_op_decoder_insert",
+        "host": "localhost",
+        "port": "3306",
+        "db": "bst_op",
+        "tz": "UTC",
+        "charset": "UTF8"
+    },
+    {
+        "id": "3c9674f98eede628",
+        "type": "MySQLdatabase",
+        "d": true,
+        "name": "bst_op",
+        "host": "localhost",
+        "port": "3306",
+        "db": "bst_op",
+        "tz": "UTC",
+        "charset": "UTF8"
+    },
+    {
+        "id": "cec82572fadbefa4",
+        "type": "MySQLdatabase",
+        "d": true,
+        "name": "bst_op_decoder",
+        "host": "127.0.0.1",
+        "port": "3306",
+        "db": "bst_op",
+        "tz": "UTC",
+        "charset": "UTF8"
+    },
+    {
+        "id": "3e0ad9615de1feee",
+        "type": "MySQLdatabase",
+        "d": true,
+        "name": "bst_op_decoder_insert",
+        "host": "localhost",
+        "port": "3306",
+        "db": "bst_op",
+        "tz": "UTC",
+        "charset": "UTF8"
+    },
+    {
+        "id": "5d2afcfd.611a14",
+        "type": "Hikvision-config",
+        "d": true,
+        "host": "192.168.55.222",
+        "port": "80",
+        "name": "ptz",
+        "authentication": "basic",
+        "protocol": "http",
+        "heartbeattimerdisconnectionlimit": "1",
+        "deviceinfo": "[object Object]"
+    },
+    {
+        "id": "988865ca.0ab6a8",
+        "type": "Hikvision-config",
+        "d": true,
+        "host": "192.168.1.63",
+        "port": "80",
+        "name": "IP CAMERA",
+        "authentication": "digest",
+        "protocol": "http",
+        "heartbeattimerdisconnectionlimit": "1",
+        "deviceinfo": "{\"DeviceInfo\":{\"$\":{\"version\":\"2.0\",\"xmlns\":\"http://www.hikvision.com/ver20/XMLSchema\"},\"deviceName\":\"IP CAMERA\",\"deviceID\":\"6aff4000-1f90-11b3-8148-807c625433a2\",\"deviceDescription\":\"IPCamera\",\"deviceLocation\":\"hangzhou\",\"systemContact\":\"Hikvision.China\",\"model\":\"DS-2CD2T26G2-4I\",\"serialNumber\":\"DS-2CD2T26G2-4I20220328AAWRJ73844404\",\"macAddress\":\"80:7c:62:54:33:a2\",\"firmwareVersion\":\"V5.7.3\",\"firmwareReleasedDate\":\"build 220112\",\"encoderVersion\":\"V7.3\",\"encoderReleasedDate\":\"build 211223\",\"bootVersion\":\"V1.3.4\",\"bootReleasedDate\":\"100316\",\"hardwareVersion\":\"0x0\",\"deviceType\":\"IPCamera\",\"telecontrolID\":\"88\",\"supportBeep\":\"false\",\"supportVideoLoss\":\"false\",\"firmwareVersionInfo\":\"B-R-G5-0\"}}"
+    },
+    {
+        "id": "254fffa1.cb281",
+        "type": "Hikvision-config",
+        "d": true,
+        "host": "192.168.1.64",
+        "port": "80",
+        "name": "IP CAMERA",
+        "authentication": "digest",
+        "protocol": "http",
+        "heartbeattimerdisconnectionlimit": "1",
+        "deviceinfo": "{\"DeviceInfo\":{\"$\":{\"version\":\"2.0\",\"xmlns\":\"http://www.hikvision.com/ver20/XMLSchema\"},\"deviceName\":\"IP CAMERA\",\"deviceID\":\"6aff4000-1f90-11b3-8148-807c625433bb\",\"deviceDescription\":\"IPCamera\",\"deviceLocation\":\"hangzhou\",\"systemContact\":\"Hikvision.China\",\"model\":\"DS-2CD2T26G2-4I\",\"serialNumber\":\"DS-2CD2T26G2-4I20220328AAWRJ73844429\",\"macAddress\":\"80:7c:62:54:33:bb\",\"firmwareVersion\":\"V5.7.3\",\"firmwareReleasedDate\":\"build 220112\",\"encoderVersion\":\"V7.3\",\"encoderReleasedDate\":\"build 211223\",\"bootVersion\":\"V1.3.4\",\"bootReleasedDate\":\"100316\",\"hardwareVersion\":\"0x0\",\"deviceType\":\"IPCamera\",\"telecontrolID\":\"88\",\"supportBeep\":\"false\",\"supportVideoLoss\":\"false\",\"firmwareVersionInfo\":\"B-R-G5-0\"}}"
+    },
+    {
+        "id": "61cb5c58f04299da",
+        "type": "Hikvision-config",
+        "d": true,
+        "host": "192.168.1.63",
+        "port": "80",
+        "name": "Cam01",
+        "authentication": "digest",
+        "protocol": "http",
+        "heartbeattimerdisconnectionlimit": "1",
+        "deviceinfo": "[object Object]"
+    },
+    {
+        "id": "016b6f639f48c603",
+        "type": "Hikvision-config",
+        "d": true,
+        "host": "192.168.1.64",
+        "port": "80",
+        "name": "Cam02",
+        "authentication": "digest",
+        "protocol": "http",
+        "heartbeattimerdisconnectionlimit": "1",
+        "deviceinfo": "[object Object]"
+    },
+    {
+        "id": "54d2656c.98870c",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-light",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#00cec4",
+                "baseFont": "Century Gothic,CenturyGothic,AppleGothic,sans-serif",
+                "edited": true,
+                "reset": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#097479",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#4B7930",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#0094CE",
+                    "value": "#00cec4",
+                    "edited": true
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#00cec4",
+                    "edited": false
+                },
+                "page-backgroundColor": {
+                    "value": "#fafafa",
+                    "edited": false
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#1bfff4",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#111111",
+                    "edited": false
+                },
+                "widget-backgroundColor": {
+                    "value": "#00cec4",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "base-font": {
+                    "value": "Century Gothic,CenturyGothic,AppleGothic,sans-serif"
+                }
+            },
+            "angularTheme": {
+                "primary": "indigo",
+                "accents": "blue",
+                "warn": "red",
+                "background": "grey"
+            }
+        },
+        "site": {
+            "name": "Node-RED Dashboard",
+            "hideToolbar": "false",
+            "allowSwipe": "false",
+            "lockMenu": "false",
+            "allowTempTheme": "true",
+            "dateFormat": "DD/MM/YYYY",
+            "sizes": {
+                "sx": 48,
+                "sy": 48,
+                "gx": 6,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
+            }
+        }
+    },
+    {
+        "id": "8c97334d.4dd3",
+        "type": "ui_tab",
+        "name": "Cakrawala",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "12ba0ec5.41e919",
+        "type": "ui_tab",
+        "name": "Camera",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "c90233bd.e033c",
+        "type": "ui_tab",
+        "name": "Diagnostic",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "acea1d6a.d8396",
+        "type": "ui_group",
+        "name": "Default",
+        "tab": "8c97334d.4dd3",
+        "order": 1,
+        "disp": false,
+        "width": "9",
+        "collapse": false
+    },
+    {
+        "id": "1aa13968.48e06f",
+        "type": "ui_group",
+        "name": "",
+        "tab": "12ba0ec5.41e919",
+        "order": 1,
+        "disp": false,
+        "width": "16",
+        "collapse": false
+    },
+    {
+        "id": "10c12a4b.7fe94e",
+        "type": "ui_group",
+        "name": "",
+        "tab": "c90233bd.e033c",
+        "order": 2,
+        "disp": false,
+        "width": "16",
+        "collapse": false
+    },
+    {
+        "id": "7e6488c246171f07",
+        "type": "sqlitedb",
+        "db": "/media/cpn/TRANSCEND/dataCamera.sql",
+        "mode": "RWC"
+    },
+    {
+        "id": "33c070c2.8ed358",
+        "type": "json-db-collection",
+        "name": "gps",
+        "collection": "gps",
+        "save": true
+    },
+    {
+        "id": "5fa3516b39e862f6",
+        "type": "key-value-store",
+        "filepath": "store.json",
+        "namespace": "",
+        "name": ""
+    },
+    {
+        "id": "4b3b9486aa138da6",
+        "type": "key-value-store",
+        "filepath": "store.json",
+        "namespace": "",
+        "name": ""
+    },
+    {
+        "id": "3fc79fb51f6c9891",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "mqtt.cakrawala.id",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "fd6c7b332ea17c4c",
+        "type": "serial-port",
+        "serialport": "COM1",
+        "serialbaud": "38400",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": "10000"
+    },
+    {
+        "id": "4ad77bf5a8ff492f",
+        "type": "serial-port",
+        "serialport": "COM6",
+        "serialbaud": "38400",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": "10000"
+    },
+    {
+        "id": "f48d1f3d21b305bc",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "mqtt.cakrawala.id",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "f09d0c3c5a0eba37",
+        "type": "serial-port",
+        "serialport": "COM7",
+        "serialbaud": "38400",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": "10000"
+    },
+    {
+        "id": "06844854f10d4e3a",
+        "type": "serial-port",
+        "serialport": "COM1",
+        "serialbaud": "38400",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": "10000"
+    },
+    {
+        "id": "95485fbc1d45c621",
+        "type": "serial-port",
+        "serialport": "/dev/ttyUSB0",
+        "serialbaud": "38400",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": "10000"
+    },
+    {
+        "id": "cb01e5310e6b8d94",
+        "type": "websocket-listener",
+        "d": true,
+        "path": "/ws/sensordata",
+        "wholemsg": "false"
+    },
+    {
+        "id": "b34a538f3e7db39a",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "mqtt.cakrawala.id",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "17a1499b89871303",
+        "type": "MySQLdatabase",
+        "d": true,
+        "name": "bst_op",
+        "host": "localhost",
+        "port": "3306",
+        "db": "bst_op",
+        "tz": "UTC",
+        "charset": "UTF8"
+    },
+    {
+        "id": "482a28b2c8b87532",
+        "type": "MySQLdatabase",
+        "d": true,
+        "name": "bst_op_decoder",
+        "host": "127.0.0.1",
+        "port": "3306",
+        "db": "bst_op",
+        "tz": "UTC",
+        "charset": "UTF8"
+    },
+    {
+        "id": "5738905bf623ee8b",
+        "type": "MySQLdatabase",
+        "d": true,
+        "name": "bst_op_decoder_insert",
+        "host": "localhost",
+        "port": "3306",
+        "db": "bst_op",
+        "tz": "UTC",
+        "charset": "UTF8"
+    },
+    {
+        "id": "3c59434a9a3a711a",
+        "type": "serial-port",
+        "serialport": "COM1",
+        "serialbaud": "38400",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": "10000"
+    },
+    {
+        "id": "5c59afdff990005f",
+        "type": "serial-port",
+        "serialport": "/dev/ttyUSB0",
+        "serialbaud": "38400",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": "10000"
+    },
+    {
+        "id": "40e07db818b339f6",
+        "type": "MySQLdatabase",
+        "d": true,
+        "name": "bst_op",
+        "host": "localhost",
+        "port": "3306",
+        "db": "bst_op",
+        "tz": "UTC",
+        "charset": "UTF8"
+    },
+    {
+        "id": "765c746fd8e7dd28",
+        "type": "MySQLdatabase",
+        "d": true,
+        "name": "bst_op_decoder",
+        "host": "127.0.0.1",
+        "port": "3306",
+        "db": "bst_op",
+        "tz": "UTC",
+        "charset": "UTF8"
+    },
+    {
+        "id": "27ce79b27916abe7",
+        "type": "MySQLdatabase",
+        "d": true,
+        "name": "bst_op_decoder_insert",
+        "host": "localhost",
+        "port": "3306",
+        "db": "bst_op",
+        "tz": "UTC",
+        "charset": "UTF8"
+    },
+    {
+        "id": "1c7651f8d6e70d8f",
+        "type": "websocket-listener",
+        "path": "/ws/sensordatas",
+        "wholemsg": "false"
+    },
+    {
+        "id": "ae9163ecdd8b7fae",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "mqtt.cakrawala.id",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "672b6b60.482154",
+        "type": "function",
+        "z": "59f2fb85.60b2e4",
+        "name": "",
+        "func": "function convertLat(latitude,north_south){\n    var splitLat=latitude.split(\".\"),\n    secLat=splitLat[0].substring(splitLat[0].length - 2, splitLat[0].length)+'.'+splitLat[1],\n    degLat=splitLat[0].substring(0,splitLat[0].length - 2),\n    minLat=parseFloat(secLat)/60;\n    if(north_south=='S'){\n    \tnorth_south=-1;\n    }else{\n    \tnorth_south=1;\n    }\n    return String((parseFloat(degLat)+minLat)*north_south);\n}\n\nfunction convertLng(longitude,east_west){\n    var splitLng=longitude.split(\".\"),\n    secLng=splitLng[0].substring(splitLng[0].length - 2, splitLng[0].length)+'.'+splitLng[1],\n    degLng=splitLng[0].substring(0,splitLng[0].length - 2),\n    minLng=parseFloat(secLng)/60;\n    if(east_west=='W'){\n    \teast_west=-1;\n    }else{\n    \teast_west=1;\n    }\n    return String((parseFloat(degLng)+minLng)*east_west);\n}\n\nfunction fixDateTime(date_stamp,time_stamp){\n    var d = new Date(), date = date_stamp.substring(0,2), month = date_stamp.substring(2,4);\n    var fixDateStamp=String(d.getUTCFullYear())+'-'+month+'-'+date;\n    var fixTimeStamp=time_stamp.substring(0,2)+':'+time_stamp.substring(2,4)+':'+time_stamp.substring(4,6);\n    return String(fixDateStamp+' '+fixTimeStamp);\n}\n\n// var msgText=String(msg.payload);\nvar msgText=String(msg.gprmc);\nvar m=msgText.split(\",\");\nvar time_stamp=String(m[1]),validity=m[2],latitude=m[3],north_south=m[4],longitude=m[5],east_west=m[6],sog=m[7],cog=m[8],\ndate_stamp=String(m[9]),variation=m[10],fillbits=m[11];\n\nif(String(sog)!==''){\n    sog=String(parseFloat(sog));\n}else{\n    sog=\"0\";\n}\nif(String(cog)!==''){\n    cog=String(parseFloat(cog));\n}else{\n    cog=\"0\";\n}\nvar heading=cog;\nvar lat=convertLat(latitude,north_south);\nvar lng=convertLng(longitude,east_west);\nvar fixDT=fixDateTime(date_stamp,time_stamp);\n\nmsg.topic=\"INSERT INTO bst_mbs VALUES(0,\"+global.get('stationId')+\",\"+lat+\",\"+lng+\",\"+heading+\",\"+sog+\",\"+cog+\",'\"+fixDT+\"','\"+fixDT+\"')\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 480,
+        "y": 40,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c9dd6738.3bfe08",
+        "type": "function",
+        "z": "59f2fb85.60b2e4",
+        "name": "",
+        "func": "var msgText=String(msg.payload);\nmsg.gprmc=msgText;\nmsg.topic=\"INSERT INTO gprmc_msg VALUES (0,'\"+msgText+\"',\"+global.get('stationId')+\",1,UTC_TIMESTAMP())\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 140,
+        "y": 40,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c421af40.2cbc8",
+        "type": "debug",
+        "z": "59f2fb85.60b2e4",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 690,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "30cf3cce.a394c4",
+        "type": "debug",
+        "z": "59f2fb85.60b2e4",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "topic",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 420,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "ccdbd10b.f8613",
+        "type": "debug",
+        "z": "59f2fb85.60b2e4",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 140,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "f982e0d4.a3675",
+        "type": "function",
+        "z": "c44913aa.a602b",
+        "name": "",
+        "func": "// var parsed={\"static\":{\"mmsi\":\"525019645\"},\"dynamic\":{\"station_id\":\"1\",\"sog\":0.3,\"cog\":15.6,\"bearing\":0,\"nav_status\":0,\"latitude\":-6.062245,\"longitude\":106.87224833333333,\"raim\":false,\"msg_type\":1,\"repeat_indicator\":0,\"position_accuracy\":0},\"destination\":{},\"draught\":{},\"ship_id\":0,\"time_stamp\":\"2020-10-01 10:27:50\",\"exists\":false};\nif(msg.parsed.ship_id===0){\n    msg.parsed.ship_id=msg.payload.insertId;\n}\nvar parsed=msg.parsed;\n\nObject.size = function(obj) {\n    var size = 0, key;\n    for (key in obj) {\n        if (obj.hasOwnProperty(key)) size++;\n    }\n    return size;\n};\n\nfunction addZero(i) {\n    if (i < 10) {\n      i = \"0\" + i;\n    }\n    return i;\n}\n\nvar dynamic=parsed.dynamic;\nvar destination=parsed.destination;\nvar draught=parsed.draught;\nvar dynamicSize = Object.size(dynamic);\nvar destinationSize = Object.size(destination);\nvar draughtSize = Object.size(draught);\n\nmsg.parsed.size={};\nmsg.parsed.size.dynamic=dynamicSize;\nmsg.parsed.size.destination=destinationSize;\nmsg.parsed.size.draught=draughtSize;\n\nvar d = new Date();\nvar suffix = String(d.getUTCFullYear())+String(addZero(d.getUTCMonth()+1));\nvar insertDynamic=\"INSERT INTO ais_dynamic_\"+suffix+\" set ship_id=\"+parsed.ship_id+\",\";\nvar updateDynamic=\"INSERT INTO ais_dynamic set ship_id=\"+parsed.ship_id+\",\";\nif(parsed.exists){\n    updateDynamic=\"UPDATE ais_dynamic set \";\n}\ni=1;\nObject.keys(dynamic).forEach(key => {\n\t// console.log(key, static[key]);\n    if(i>1){\n    \tinsertDynamic+=\",\";\n    \tupdateDynamic+=\",\";\n    }\n    var column = String(key);\n    var value = String(dynamic[key]);\n    if(value===\"undefined\"){\n        value=\"0\";\n    }\n    if(column===\"raim\"){\n        if(value===\"false\"){\n            value=\"0\";\n        }else{\n            value=\"1\";\n        }\n    }\n    if(column===\"latitude\" || column===\"longitude\"){\n        if(value!==\"0\" && value!==\"undefined\"){\n            insertDynamic+=column+\"='\"+value+\"'\";\n            updateDynamic+=column+\"='\"+value+\"'\";\n        }\n    }else{\n        insertDynamic+=column+\"='\"+value+\"'\";\n        updateDynamic+=column+\"='\"+value+\"'\";\n    }\n    i++;\n});\ninsertDynamic+=\",created_at=UTC_TIMESTAMP(),updated_at=UTC_TIMESTAMP()\";\nif(!parsed.exists){\n    updateDynamic+=\",created_at=UTC_TIMESTAMP(),updated_at=UTC_TIMESTAMP()\";\n}else{\n    updateDynamic+=\",updated_at=UTC_TIMESTAMP() WHERE ship_id=\"+parsed.ship_id;\n}\n\nmsg.insertDynamic=insertDynamic.replace(\",,,\", \",\");\nmsg.updateDynamic=updateDynamic.replace(\",,,\", \",\");\n\nvar insertDestination=0;\ni=1;\nif(destination.destination!==undefined){\n    var tempEta = destination.eta.toISOString().slice(0, 19).replace('T', ' ');\n    destination.eta = tempEta;\n    insertDestination=\"INSERT INTO ais_destination set ship_id=\"+parsed.ship_id+\",\";\n    Object.keys(destination).forEach(key => {\n    \t// console.log(key, static[key]);\n        if(i>1){\n        \tinsertDestination+=\",\";\n        }\n        var column = String(key);\n        var value = String(destination[key]);\n        // if(value===\"undefined\"){\n        //     value=\"0\";\n        // }\n        insertDestination+=column+\"='\"+value+\"'\";\n        i++;\n    });\n    insertDestination+=\",updated_at='\"+parsed.time_stamp+\"'\";\n    insertDestination=insertDestination.replace(\"\\\\\", \"\\\\\\\\\");\n}\nmsg.insertDestination=insertDestination;\n\nvar insertDraught=0;\ni=1;\nif(draught.draught!==undefined){\n    insertDraught=\"INSERT INTO ais_draught set ship_id=\"+parsed.ship_id+\",\";\n    Object.keys(draught).forEach(key => {\n    \t// console.log(key, static[key]);\n        if(i>1){\n        \tinsertDraught+=\",\";\n        }\n        var column = String(key);\n        var value = String(draught[key]);\n        // if(value===\"undefined\"){\n        //     value=\"0\";\n        // }\n        insertDraught+=column+\"='\"+value+\"'\";\n        i++;\n    });\n    insertDraught+=\",updated_at='\"+parsed.time_stamp+\"'\";\n}\nmsg.insertDraught=insertDraught;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 140,
+        "y": 180,
+        "wires": [
+            [
+                "7e576ba3.c222dc"
+            ]
+        ]
+    },
+    {
+        "id": "7e576ba3.c222dc",
+        "type": "change",
+        "z": "c44913aa.a602b",
+        "name": "insertDynamic",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "insertDynamic",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 340,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2f22b443.2cd2dc",
+        "type": "change",
+        "z": "c44913aa.a602b",
+        "name": "updateDynamic",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "updateDynamic",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 340,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "825c61a3.ee5ff8",
+        "type": "change",
+        "z": "c44913aa.a602b",
+        "name": "insertDestination",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "insertDestination",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 570,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "327efe48.d65622",
+        "type": "change",
+        "z": "c44913aa.a602b",
+        "name": "insertDraught",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "insertDraught",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 540,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "80326aa1.b61fb8",
+        "type": "switch",
+        "z": "c44913aa.a602b",
+        "name": "checkDestination",
+        "property": "insertDestination",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "neq",
+                "v": "0",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "num"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 2,
+        "x": 350,
+        "y": 300,
+        "wires": [
+            [
+                "825c61a3.ee5ff8"
+            ],
+            [
+                "2c7e7714.bc3828"
+            ]
+        ]
+    },
+    {
+        "id": "2c7e7714.bc3828",
+        "type": "switch",
+        "z": "c44913aa.a602b",
+        "name": "checkDraught",
+        "property": "insertDraught",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "neq",
+                "v": "0",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "num"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 2,
+        "x": 340,
+        "y": 380,
+        "wires": [
+            [
+                "327efe48.d65622"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "fd146afe.46855",
+        "type": "function",
+        "z": "c44913aa.a602b",
+        "name": "",
+        "func": "var decoded=msg.payload;\nmsg.decoded=decoded;\nif(decoded!==undefined){\n    msg.sqlStatic=\"SELECT * from ais_static where mmsi='\"+msg.payload.senderMmsi+\"'\";\n    // msg.sqlDynamic=\"SELECT count() as total from ais_dynamic where mmsi='\"+msg.payload.senderMmsi+\"'\";\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 560,
+        "y": 60,
+        "wires": [
+            [
+                "cc58a25b.853748"
+            ]
+        ]
+    },
+    {
+        "id": "4896d655.646db8",
+        "type": "switch",
+        "z": "c44913aa.a602b",
+        "name": "If !Undefined",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "neq",
+                "v": "0",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "str"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 2,
+        "x": 410,
+        "y": 60,
+        "wires": [
+            [
+                "fd146afe.46855"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "cc58a25b.853748",
+        "type": "change",
+        "z": "c44913aa.a602b",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "sqlStatic",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 710,
+        "y": 60,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "35c43afb.30e5b6",
+        "type": "function",
+        "z": "c44913aa.a602b",
+        "name": "",
+        "func": "// if (msg.payload && !msg.payload.length){\n//     msg.result=\"No Data\";\n// }else{\n//     msg.result=msg.payload.length;\n// }\n// return msg;\n\nfunction addZero(i) {\n    if (i < 10) {\n      i = \"0\" + i;\n    }\n    return i;\n}\n\nvar isDataExists=true;\nvar ship_id=0;\nvar aisData={static:{},dynamic:{},destination:{},draught:{}};\n\nif (msg.payload && !msg.payload.length){\n    isDataExists=false;\n}\n\nvar d = new Date();\nvar time_stamp = String(d.getUTCFullYear())+'-'+String(addZero(d.getUTCMonth()+1))+'-'+String(addZero(d.getUTCDate()))+' ';\ntime_stamp += String(addZero(d.getUTCHours()))+':'+String(addZero(d.getUTCMinutes()))+':'+String(addZero(d.getUTCSeconds()));\n\n//Init Ship ID\nif(!isDataExists){\n    ship_id=0;\n}else{\n    ship_id=msg.payload[0].id;\n}\naisData.ship_id=ship_id;\n//Static Data\naisData.static.mmsi=msg.decoded.senderMmsi,\naisData.static.callsign=msg.decoded.callsign,\naisData.static.vessel_name=msg.decoded.name,\naisData.static.imo=msg.decoded.shipId,\naisData.static.ship_type=msg.decoded.shipType,\naisData.static.dimension_a=msg.decoded.dimensionToBow,\naisData.static.dimension_b=msg.decoded.dimensionToStern,\naisData.static.dimension_c=msg.decoded.dimensionToPort,\naisData.static.dimension_d=msg.decoded.dimensionToStarboard,\naisData.static.fix_type=msg.decoded.fix_type,\n//Dynamic Data\naisData.dynamic.station_id=global.get('stationId'),\naisData.dynamic.sog=msg.decoded.speedOverGround,\naisData.dynamic.cog=msg.decoded.courseOverGround,\naisData.dynamic.heading=msg.decoded.trueHeading,\naisData.dynamic.turning_direction=msg.decoded.turningDirection,\naisData.dynamic.rot=msg.decoded.turningRate,\naisData.dynamic.bearing=0,\naisData.dynamic.nav_status=msg.decoded.navigationStatus,\naisData.dynamic.latitude=msg.decoded.latitude,\naisData.dynamic.longitude=msg.decoded.longitude,\naisData.dynamic.raim=msg.decoded.raim,\naisData.dynamic.msg_type=msg.decoded.messageType,\naisData.dynamic.repeat_indicator=msg.decoded.repeatIndicator,\naisData.dynamic.position_accuracy=msg.decoded.positionAccuracy,\n//Destination\naisData.destination.destination=msg.decoded.destination,\naisData.destination.eta=msg.decoded.eta,\n//Draught\naisData.draught.draught=msg.decoded.draught;\n//Timestamp\naisData.time_stamp=time_stamp;\n//isExists?\naisData.exists=isDataExists;\n\nmsg.parsed=aisData;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 360,
+        "y": 120,
+        "wires": [
+            [
+                "5e90d679.f169a"
+            ]
+        ]
+    },
+    {
+        "id": "5e90d679.f169a",
+        "type": "function",
+        "z": "c44913aa.a602b",
+        "name": "",
+        "func": "// var parsed={\"static\":{\"mmsi\":\"525019645\"},\"dynamic\":{\"station_id\":\"1\",\"sog\":0.3,\"cog\":15.6,\"bearing\":0,\"nav_status\":0,\"latitude\":-6.062245,\"longitude\":106.87224833333333,\"raim\":false,\"msg_type\":1,\"repeat_indicator\":0,\"position_accuracy\":0},\"destination\":{},\"draught\":{},\"ship_id\":0,\"time_stamp\":\"2020-10-01 10:27:50\",\"exists\":false};\nvar parsed=msg.parsed;\nObject.size = function(obj) {\n    var size = 0, key;\n    for (key in obj) {\n        if (obj.hasOwnProperty(key)) size++;\n    }\n    return size;\n};\nvar astatic=parsed.static;\nvar staticSize = Object.size(astatic);\n\nvar insertStatic;\nvar isUpdate=false;\nif(!parsed.exists){\n\tinsertStatic=\"INSERT INTO ais_static set \";\n}else{\n    insertStatic=\"UPDATE ais_static set \";\n    isUpdate=true;\n}\nvar i=1;\nObject.keys(astatic).forEach(key => {\n    // console.log(key, astatic[key]);\n    if(i>1){\n        insertStatic+=\",\";\n    }\n    var column = String(key);\n    var value = String(astatic[key]);\n    if(value===\"undefined\"){\n        value=0;\n        if(column==\"vessel_name\"){\n            value=\"\";\n        }else if(column==\"imo\"){\n            value=\"\";\n        }else if(column==\"callsign\"){\n            value=\"\";\n        }\n    }\n    insertStatic+=column+\"='\"+value+\"'\";\n    i++;\n});\n// console.log(insertStatic);\nif(isUpdate){\n    insertStatic+=\",updated_at=UTC_TIMESTAMP() WHERE id=\"+parsed.ship_id;\n}else{\n    insertStatic+=\",created_at=UTC_TIMESTAMP(),updated_at=UTC_TIMESTAMP()\";\n}\nmsg.topic=insertStatic;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 500,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "36ff1f65.fbc868",
+        "type": "function",
+        "z": "c44913aa.a602b",
+        "name": "",
+        "func": "if(msg.payload===undefined){\n    msg.payload=0;\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 260,
+        "y": 60,
+        "wires": [
+            [
+                "4896d655.646db8"
+            ]
+        ]
+    },
+    {
+        "id": "77ef9bbe.07f324",
+        "type": "ais-decoder",
+        "z": "c44913aa.a602b",
+        "name": "",
+        "x": 130,
+        "y": 60,
+        "wires": [
+            [
+                "36ff1f65.fbc868"
+            ]
+        ]
+    },
+    {
+        "id": "2ecf077352c28f1a",
+        "type": "function",
+        "z": "89f5bb6f20c9d7b5",
+        "name": "",
+        "func": "function convertLat(latitude,north_south){\n    var splitLat=latitude.split(\".\"),\n    secLat=splitLat[0].substring(splitLat[0].length - 2, splitLat[0].length)+'.'+splitLat[1],\n    degLat=splitLat[0].substring(0,splitLat[0].length - 2),\n    minLat=parseFloat(secLat)/60;\n    if(north_south=='S'){\n    \tnorth_south=-1;\n    }else{\n    \tnorth_south=1;\n    }\n    return String((parseFloat(degLat)+minLat)*north_south);\n}\n\nfunction convertLng(longitude,east_west){\n    var splitLng=longitude.split(\".\"),\n    secLng=splitLng[0].substring(splitLng[0].length - 2, splitLng[0].length)+'.'+splitLng[1],\n    degLng=splitLng[0].substring(0,splitLng[0].length - 2),\n    minLng=parseFloat(secLng)/60;\n    if(east_west=='W'){\n    \teast_west=-1;\n    }else{\n    \teast_west=1;\n    }\n    return String((parseFloat(degLng)+minLng)*east_west);\n}\n\nfunction fixDateTime(date_stamp,time_stamp){\n    var d = new Date(), date = date_stamp.substring(0,2), month = date_stamp.substring(2,4);\n    var fixDateStamp=String(d.getUTCFullYear())+'-'+month+'-'+date;\n    var fixTimeStamp=time_stamp.substring(0,2)+':'+time_stamp.substring(2,4)+':'+time_stamp.substring(4,6);\n    return String(fixDateStamp+' '+fixTimeStamp);\n}\n\n// var msgText=String(msg.payload);\nvar msgText=String(msg.gprmc);\nvar m=msgText.split(\",\");\nvar time_stamp=String(m[1]),validity=m[2],latitude=m[3],north_south=m[4],longitude=m[5],east_west=m[6],sog=m[7],cog=m[8],\ndate_stamp=String(m[9]),variation=m[10],fillbits=m[11];\n\nif(String(sog)!==''){\n    sog=String(parseFloat(sog));\n}else{\n    sog=\"0\";\n}\nif(String(cog)!==''){\n    cog=String(parseFloat(cog));\n}else{\n    cog=\"0\";\n}\nvar heading=cog;\nvar lat=convertLat(latitude,north_south);\nvar lng=convertLng(longitude,east_west);\nvar fixDT=fixDateTime(date_stamp,time_stamp);\n\nmsg.topic=\"INSERT INTO bst_mbs VALUES(0,\"+global.get('stationId')+\",\"+lat+\",\"+lng+\",\"+heading+\",\"+sog+\",\"+cog+\",'\"+fixDT+\"','\"+fixDT+\"')\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 480,
+        "y": 40,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "de0e511f932c6f30",
+        "type": "function",
+        "z": "89f5bb6f20c9d7b5",
+        "name": "",
+        "func": "var msgText=String(msg.payload);\nmsg.gprmc=msgText;\nmsg.topic=\"INSERT INTO gprmc_msg VALUES (0,'\"+msgText+\"',\"+global.get('stationId')+\",1,UTC_TIMESTAMP())\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 140,
+        "y": 40,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "405b495a02e049a3",
+        "type": "debug",
+        "z": "89f5bb6f20c9d7b5",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 690,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "94b1a7858b506911",
+        "type": "debug",
+        "z": "89f5bb6f20c9d7b5",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "topic",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 420,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "ab14cb025bf05f26",
+        "type": "debug",
+        "z": "89f5bb6f20c9d7b5",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 140,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "2057fe7d1026cc7c",
+        "type": "function",
+        "z": "2c168e20b48ca5f8",
+        "name": "",
+        "func": "// var parsed={\"static\":{\"mmsi\":\"525019645\"},\"dynamic\":{\"station_id\":\"1\",\"sog\":0.3,\"cog\":15.6,\"bearing\":0,\"nav_status\":0,\"latitude\":-6.062245,\"longitude\":106.87224833333333,\"raim\":false,\"msg_type\":1,\"repeat_indicator\":0,\"position_accuracy\":0},\"destination\":{},\"draught\":{},\"ship_id\":0,\"time_stamp\":\"2020-10-01 10:27:50\",\"exists\":false};\nif(msg.parsed.ship_id===0){\n    msg.parsed.ship_id=msg.payload.insertId;\n}\nvar parsed=msg.parsed;\n\nObject.size = function(obj) {\n    var size = 0, key;\n    for (key in obj) {\n        if (obj.hasOwnProperty(key)) size++;\n    }\n    return size;\n};\n\nfunction addZero(i) {\n    if (i < 10) {\n      i = \"0\" + i;\n    }\n    return i;\n}\n\nvar dynamic=parsed.dynamic;\nvar destination=parsed.destination;\nvar draught=parsed.draught;\nvar dynamicSize = Object.size(dynamic);\nvar destinationSize = Object.size(destination);\nvar draughtSize = Object.size(draught);\n\nmsg.parsed.size={};\nmsg.parsed.size.dynamic=dynamicSize;\nmsg.parsed.size.destination=destinationSize;\nmsg.parsed.size.draught=draughtSize;\n\nvar d = new Date();\nvar suffix = String(d.getUTCFullYear())+String(addZero(d.getUTCMonth()+1));\nvar insertDynamic=\"INSERT INTO ais_dynamic_\"+suffix+\" set ship_id=\"+parsed.ship_id+\",\";\nvar updateDynamic=\"INSERT INTO ais_dynamic set ship_id=\"+parsed.ship_id+\",\";\nif(parsed.exists){\n    updateDynamic=\"UPDATE ais_dynamic set \";\n}\ni=1;\nObject.keys(dynamic).forEach(key => {\n\t// console.log(key, static[key]);\n    if(i>1){\n    \tinsertDynamic+=\",\";\n    \tupdateDynamic+=\",\";\n    }\n    var column = String(key);\n    var value = String(dynamic[key]);\n    if(value===\"undefined\"){\n        value=\"0\";\n    }\n    if(column===\"raim\"){\n        if(value===\"false\"){\n            value=\"0\";\n        }else{\n            value=\"1\";\n        }\n    }\n    if(column===\"latitude\" || column===\"longitude\"){\n        if(value!==\"0\" && value!==\"undefined\"){\n            insertDynamic+=column+\"='\"+value+\"'\";\n            updateDynamic+=column+\"='\"+value+\"'\";\n        }\n    }else{\n        insertDynamic+=column+\"='\"+value+\"'\";\n        updateDynamic+=column+\"='\"+value+\"'\";\n    }\n    i++;\n});\ninsertDynamic+=\",created_at=UTC_TIMESTAMP(),updated_at=UTC_TIMESTAMP()\";\nif(!parsed.exists){\n    updateDynamic+=\",created_at=UTC_TIMESTAMP(),updated_at=UTC_TIMESTAMP()\";\n}else{\n    updateDynamic+=\",updated_at=UTC_TIMESTAMP() WHERE ship_id=\"+parsed.ship_id;\n}\n\nmsg.insertDynamic=insertDynamic.replace(\",,,\", \",\");\nmsg.updateDynamic=updateDynamic.replace(\",,,\", \",\");\n\nvar insertDestination=0;\ni=1;\nif(destination.destination!==undefined){\n    var tempEta = destination.eta.toISOString().slice(0, 19).replace('T', ' ');\n    destination.eta = tempEta;\n    insertDestination=\"INSERT INTO ais_destination set ship_id=\"+parsed.ship_id+\",\";\n    Object.keys(destination).forEach(key => {\n    \t// console.log(key, static[key]);\n        if(i>1){\n        \tinsertDestination+=\",\";\n        }\n        var column = String(key);\n        var value = String(destination[key]);\n        // if(value===\"undefined\"){\n        //     value=\"0\";\n        // }\n        insertDestination+=column+\"='\"+value+\"'\";\n        i++;\n    });\n    insertDestination+=\",updated_at='\"+parsed.time_stamp+\"'\";\n    insertDestination=insertDestination.replace(\"\\\\\", \"\\\\\\\\\");\n}\nmsg.insertDestination=insertDestination;\n\nvar insertDraught=0;\ni=1;\nif(draught.draught!==undefined){\n    insertDraught=\"INSERT INTO ais_draught set ship_id=\"+parsed.ship_id+\",\";\n    Object.keys(draught).forEach(key => {\n    \t// console.log(key, static[key]);\n        if(i>1){\n        \tinsertDraught+=\",\";\n        }\n        var column = String(key);\n        var value = String(draught[key]);\n        // if(value===\"undefined\"){\n        //     value=\"0\";\n        // }\n        insertDraught+=column+\"='\"+value+\"'\";\n        i++;\n    });\n    insertDraught+=\",updated_at='\"+parsed.time_stamp+\"'\";\n}\nmsg.insertDraught=insertDraught;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 140,
+        "y": 180,
+        "wires": [
+            [
+                "799a4606065f1c33"
+            ]
+        ]
+    },
+    {
+        "id": "799a4606065f1c33",
+        "type": "change",
+        "z": "2c168e20b48ca5f8",
+        "name": "insertDynamic",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "insertDynamic",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 340,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "aabfb555aad2037f",
+        "type": "change",
+        "z": "2c168e20b48ca5f8",
+        "name": "updateDynamic",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "updateDynamic",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 340,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "37e991c65fb61e2a",
+        "type": "change",
+        "z": "2c168e20b48ca5f8",
+        "name": "insertDestination",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "insertDestination",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 570,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "049edeab9ce66290",
+        "type": "change",
+        "z": "2c168e20b48ca5f8",
+        "name": "insertDraught",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "insertDraught",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 540,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "dbd397309f335d0b",
+        "type": "switch",
+        "z": "2c168e20b48ca5f8",
+        "name": "checkDestination",
+        "property": "insertDestination",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "neq",
+                "v": "0",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "num"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 2,
+        "x": 350,
+        "y": 300,
+        "wires": [
+            [
+                "37e991c65fb61e2a"
+            ],
+            [
+                "cb242c7d41c5c6f7"
+            ]
+        ]
+    },
+    {
+        "id": "cb242c7d41c5c6f7",
+        "type": "switch",
+        "z": "2c168e20b48ca5f8",
+        "name": "checkDraught",
+        "property": "insertDraught",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "neq",
+                "v": "0",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "num"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 2,
+        "x": 340,
+        "y": 380,
+        "wires": [
+            [
+                "049edeab9ce66290"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "f4cc969d855fdf38",
+        "type": "function",
+        "z": "2c168e20b48ca5f8",
+        "name": "",
+        "func": "var decoded=msg.payload;\nmsg.decoded=decoded;\nif(decoded!==undefined){\n    msg.sqlStatic=\"SELECT * from ais_static where mmsi='\"+msg.payload.senderMmsi+\"'\";\n    // msg.sqlDynamic=\"SELECT count() as total from ais_dynamic where mmsi='\"+msg.payload.senderMmsi+\"'\";\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 560,
+        "y": 60,
+        "wires": [
+            [
+                "98a6e2edc30b0da3"
+            ]
+        ]
+    },
+    {
+        "id": "da2146dc65d7cae8",
+        "type": "switch",
+        "z": "2c168e20b48ca5f8",
+        "name": "If !Undefined",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "neq",
+                "v": "0",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "str"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 2,
+        "x": 410,
+        "y": 60,
+        "wires": [
+            [
+                "f4cc969d855fdf38"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "98a6e2edc30b0da3",
+        "type": "change",
+        "z": "2c168e20b48ca5f8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "sqlStatic",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 710,
+        "y": 60,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "766b79b923d3aea6",
+        "type": "function",
+        "z": "2c168e20b48ca5f8",
+        "name": "",
+        "func": "// if (msg.payload && !msg.payload.length){\n//     msg.result=\"No Data\";\n// }else{\n//     msg.result=msg.payload.length;\n// }\n// return msg;\n\nfunction addZero(i) {\n    if (i < 10) {\n      i = \"0\" + i;\n    }\n    return i;\n}\n\nvar isDataExists=true;\nvar ship_id=0;\nvar aisData={static:{},dynamic:{},destination:{},draught:{}};\n\nif (msg.payload && !msg.payload.length){\n    isDataExists=false;\n}\n\nvar d = new Date();\nvar time_stamp = String(d.getUTCFullYear())+'-'+String(addZero(d.getUTCMonth()+1))+'-'+String(addZero(d.getUTCDate()))+' ';\ntime_stamp += String(addZero(d.getUTCHours()))+':'+String(addZero(d.getUTCMinutes()))+':'+String(addZero(d.getUTCSeconds()));\n\n//Init Ship ID\nif(!isDataExists){\n    ship_id=0;\n}else{\n    ship_id=msg.payload[0].id;\n}\naisData.ship_id=ship_id;\n//Static Data\naisData.static.mmsi=msg.decoded.senderMmsi,\naisData.static.callsign=msg.decoded.callsign,\naisData.static.vessel_name=msg.decoded.name,\naisData.static.imo=msg.decoded.shipId,\naisData.static.ship_type=msg.decoded.shipType,\naisData.static.dimension_a=msg.decoded.dimensionToBow,\naisData.static.dimension_b=msg.decoded.dimensionToStern,\naisData.static.dimension_c=msg.decoded.dimensionToPort,\naisData.static.dimension_d=msg.decoded.dimensionToStarboard,\naisData.static.fix_type=msg.decoded.fix_type,\n//Dynamic Data\naisData.dynamic.station_id=global.get('stationId'),\naisData.dynamic.sog=msg.decoded.speedOverGround,\naisData.dynamic.cog=msg.decoded.courseOverGround,\naisData.dynamic.heading=msg.decoded.trueHeading,\naisData.dynamic.turning_direction=msg.decoded.turningDirection,\naisData.dynamic.rot=msg.decoded.turningRate,\naisData.dynamic.bearing=0,\naisData.dynamic.nav_status=msg.decoded.navigationStatus,\naisData.dynamic.latitude=msg.decoded.latitude,\naisData.dynamic.longitude=msg.decoded.longitude,\naisData.dynamic.raim=msg.decoded.raim,\naisData.dynamic.msg_type=msg.decoded.messageType,\naisData.dynamic.repeat_indicator=msg.decoded.repeatIndicator,\naisData.dynamic.position_accuracy=msg.decoded.positionAccuracy,\n//Destination\naisData.destination.destination=msg.decoded.destination,\naisData.destination.eta=msg.decoded.eta,\n//Draught\naisData.draught.draught=msg.decoded.draught;\n//Timestamp\naisData.time_stamp=time_stamp;\n//isExists?\naisData.exists=isDataExists;\n\nmsg.parsed=aisData;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 360,
+        "y": 120,
+        "wires": [
+            [
+                "ac1fc11743fc9cd6"
+            ]
+        ]
+    },
+    {
+        "id": "ac1fc11743fc9cd6",
+        "type": "function",
+        "z": "2c168e20b48ca5f8",
+        "name": "",
+        "func": "// var parsed={\"static\":{\"mmsi\":\"525019645\"},\"dynamic\":{\"station_id\":\"1\",\"sog\":0.3,\"cog\":15.6,\"bearing\":0,\"nav_status\":0,\"latitude\":-6.062245,\"longitude\":106.87224833333333,\"raim\":false,\"msg_type\":1,\"repeat_indicator\":0,\"position_accuracy\":0},\"destination\":{},\"draught\":{},\"ship_id\":0,\"time_stamp\":\"2020-10-01 10:27:50\",\"exists\":false};\nvar parsed=msg.parsed;\nObject.size = function(obj) {\n    var size = 0, key;\n    for (key in obj) {\n        if (obj.hasOwnProperty(key)) size++;\n    }\n    return size;\n};\nvar astatic=parsed.static;\nvar staticSize = Object.size(astatic);\n\nvar insertStatic;\nvar isUpdate=false;\nif(!parsed.exists){\n\tinsertStatic=\"INSERT INTO ais_static set \";\n}else{\n    insertStatic=\"UPDATE ais_static set \";\n    isUpdate=true;\n}\nvar i=1;\nObject.keys(astatic).forEach(key => {\n    // console.log(key, astatic[key]);\n    if(i>1){\n        insertStatic+=\",\";\n    }\n    var column = String(key);\n    var value = String(astatic[key]);\n    if(value===\"undefined\"){\n        value=0;\n        if(column==\"vessel_name\"){\n            value=\"\";\n        }else if(column==\"imo\"){\n            value=\"\";\n        }else if(column==\"callsign\"){\n            value=\"\";\n        }\n    }\n    insertStatic+=column+\"='\"+value+\"'\";\n    i++;\n});\n// console.log(insertStatic);\nif(isUpdate){\n    insertStatic+=\",updated_at=UTC_TIMESTAMP() WHERE id=\"+parsed.ship_id;\n}else{\n    insertStatic+=\",created_at=UTC_TIMESTAMP(),updated_at=UTC_TIMESTAMP()\";\n}\nmsg.topic=insertStatic;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 500,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2c5511dfb74c3f98",
+        "type": "function",
+        "z": "2c168e20b48ca5f8",
+        "name": "",
+        "func": "if(msg.payload===undefined){\n    msg.payload=0;\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 260,
+        "y": 60,
+        "wires": [
+            [
+                "da2146dc65d7cae8"
+            ]
+        ]
+    },
+    {
+        "id": "eee67eab3b25b0c3",
+        "type": "ais-decoder",
+        "z": "2c168e20b48ca5f8",
+        "name": "",
+        "x": 130,
+        "y": 60,
+        "wires": [
+            [
+                "2c5511dfb74c3f98"
+            ]
+        ]
+    },
+    {
+        "id": "2a47c09963f56974",
+        "type": "function",
+        "z": "63572183d44540bc",
+        "name": "",
+        "func": "// var parsed={\"static\":{\"mmsi\":\"525019645\"},\"dynamic\":{\"station_id\":\"1\",\"sog\":0.3,\"cog\":15.6,\"bearing\":0,\"nav_status\":0,\"latitude\":-6.062245,\"longitude\":106.87224833333333,\"raim\":false,\"msg_type\":1,\"repeat_indicator\":0,\"position_accuracy\":0},\"destination\":{},\"draught\":{},\"ship_id\":0,\"time_stamp\":\"2020-10-01 10:27:50\",\"exists\":false};\nif(msg.parsed.ship_id===0){\n    msg.parsed.ship_id=msg.payload.insertId;\n}\nvar parsed=msg.parsed;\n\nObject.size = function(obj) {\n    var size = 0, key;\n    for (key in obj) {\n        if (obj.hasOwnProperty(key)) size++;\n    }\n    return size;\n};\n\nfunction addZero(i) {\n    if (i < 10) {\n      i = \"0\" + i;\n    }\n    return i;\n}\n\nvar dynamic=parsed.dynamic;\nvar destination=parsed.destination;\nvar draught=parsed.draught;\nvar dynamicSize = Object.size(dynamic);\nvar destinationSize = Object.size(destination);\nvar draughtSize = Object.size(draught);\n\nmsg.parsed.size={};\nmsg.parsed.size.dynamic=dynamicSize;\nmsg.parsed.size.destination=destinationSize;\nmsg.parsed.size.draught=draughtSize;\n\nvar d = new Date();\nvar suffix = String(d.getUTCFullYear())+String(addZero(d.getUTCMonth()+1));\nvar insertDynamic=\"INSERT INTO ais_dynamic_\"+suffix+\" set ship_id=\"+parsed.ship_id+\",\";\nvar updateDynamic=\"INSERT INTO ais_dynamic set ship_id=\"+parsed.ship_id+\",\";\nif(parsed.exists){\n    updateDynamic=\"UPDATE ais_dynamic set \";\n}\ni=1;\nObject.keys(dynamic).forEach(key => {\n\t// console.log(key, static[key]);\n    if(i>1){\n    \tinsertDynamic+=\",\";\n    \tupdateDynamic+=\",\";\n    }\n    var column = String(key);\n    var value = String(dynamic[key]);\n    if(value===\"undefined\"){\n        value=\"0\";\n    }\n    if(column===\"raim\"){\n        if(value===\"false\"){\n            value=\"0\";\n        }else{\n            value=\"1\";\n        }\n    }\n    if(column===\"latitude\" || column===\"longitude\"){\n        if(value!==\"0\" && value!==\"undefined\"){\n            insertDynamic+=column+\"='\"+value+\"'\";\n            updateDynamic+=column+\"='\"+value+\"'\";\n        }\n    }else{\n        insertDynamic+=column+\"='\"+value+\"'\";\n        updateDynamic+=column+\"='\"+value+\"'\";\n    }\n    i++;\n});\ninsertDynamic+=\",created_at=UTC_TIMESTAMP(),updated_at=UTC_TIMESTAMP()\";\nif(!parsed.exists){\n    updateDynamic+=\",created_at=UTC_TIMESTAMP(),updated_at=UTC_TIMESTAMP()\";\n}else{\n    updateDynamic+=\",updated_at=UTC_TIMESTAMP() WHERE ship_id=\"+parsed.ship_id;\n}\n\nmsg.insertDynamic=insertDynamic.replace(\",,,\", \",\");\nmsg.updateDynamic=updateDynamic.replace(\",,,\", \",\");\n\nvar insertDestination=0;\ni=1;\nif(destination.destination!==undefined){\n    var tempEta = destination.eta.toISOString().slice(0, 19).replace('T', ' ');\n    destination.eta = tempEta;\n    insertDestination=\"INSERT INTO ais_destination set ship_id=\"+parsed.ship_id+\",\";\n    Object.keys(destination).forEach(key => {\n    \t// console.log(key, static[key]);\n        if(i>1){\n        \tinsertDestination+=\",\";\n        }\n        var column = String(key);\n        var value = String(destination[key]);\n        // if(value===\"undefined\"){\n        //     value=\"0\";\n        // }\n        insertDestination+=column+\"='\"+value+\"'\";\n        i++;\n    });\n    insertDestination+=\",updated_at='\"+parsed.time_stamp+\"'\";\n    insertDestination=insertDestination.replace(\"\\\\\", \"\\\\\\\\\");\n}\nmsg.insertDestination=insertDestination;\n\nvar insertDraught=0;\ni=1;\nif(draught.draught!==undefined){\n    insertDraught=\"INSERT INTO ais_draught set ship_id=\"+parsed.ship_id+\",\";\n    Object.keys(draught).forEach(key => {\n    \t// console.log(key, static[key]);\n        if(i>1){\n        \tinsertDraught+=\",\";\n        }\n        var column = String(key);\n        var value = String(draught[key]);\n        // if(value===\"undefined\"){\n        //     value=\"0\";\n        // }\n        insertDraught+=column+\"='\"+value+\"'\";\n        i++;\n    });\n    insertDraught+=\",updated_at='\"+parsed.time_stamp+\"'\";\n}\nmsg.insertDraught=insertDraught;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 140,
+        "y": 180,
+        "wires": [
+            [
+                "ff84a3de37cf1a6c"
+            ]
+        ]
+    },
+    {
+        "id": "ff84a3de37cf1a6c",
+        "type": "change",
+        "z": "63572183d44540bc",
+        "name": "insertDynamic",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "insertDynamic",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 340,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "08f4555f8c324cbf",
+        "type": "change",
+        "z": "63572183d44540bc",
+        "name": "updateDynamic",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "updateDynamic",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 340,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ff59a822a2991aa3",
+        "type": "change",
+        "z": "63572183d44540bc",
+        "name": "insertDestination",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "insertDestination",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 570,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "350ba63c84924ed1",
+        "type": "change",
+        "z": "63572183d44540bc",
+        "name": "insertDraught",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "insertDraught",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 540,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "690da1ad21693f8f",
+        "type": "switch",
+        "z": "63572183d44540bc",
+        "name": "checkDestination",
+        "property": "insertDestination",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "neq",
+                "v": "0",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "num"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 2,
+        "x": 350,
+        "y": 300,
+        "wires": [
+            [
+                "ff59a822a2991aa3"
+            ],
+            [
+                "1a7b5c0b8ca7fdaa"
+            ]
+        ]
+    },
+    {
+        "id": "1a7b5c0b8ca7fdaa",
+        "type": "switch",
+        "z": "63572183d44540bc",
+        "name": "checkDraught",
+        "property": "insertDraught",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "neq",
+                "v": "0",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "num"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 2,
+        "x": 340,
+        "y": 380,
+        "wires": [
+            [
+                "350ba63c84924ed1"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "c3fcce6b53df2fab",
+        "type": "function",
+        "z": "63572183d44540bc",
+        "name": "",
+        "func": "var decoded=msg.payload;\nmsg.decoded=decoded;\nif(decoded!==undefined){\n    msg.sqlStatic=\"SELECT * from ais_static where mmsi='\"+msg.payload.senderMmsi+\"'\";\n    // msg.sqlDynamic=\"SELECT count() as total from ais_dynamic where mmsi='\"+msg.payload.senderMmsi+\"'\";\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 560,
+        "y": 60,
+        "wires": [
+            [
+                "538233721b6beedb"
+            ]
+        ]
+    },
+    {
+        "id": "0be0e02489c18286",
+        "type": "switch",
+        "z": "63572183d44540bc",
+        "name": "If !Undefined",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "neq",
+                "v": "0",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "str"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 2,
+        "x": 410,
+        "y": 60,
+        "wires": [
+            [
+                "c3fcce6b53df2fab"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "538233721b6beedb",
+        "type": "change",
+        "z": "63572183d44540bc",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "sqlStatic",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 710,
+        "y": 60,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3b962be05beb2c47",
+        "type": "function",
+        "z": "63572183d44540bc",
+        "name": "",
+        "func": "// if (msg.payload && !msg.payload.length){\n//     msg.result=\"No Data\";\n// }else{\n//     msg.result=msg.payload.length;\n// }\n// return msg;\n\nfunction addZero(i) {\n    if (i < 10) {\n      i = \"0\" + i;\n    }\n    return i;\n}\n\nvar isDataExists=true;\nvar ship_id=0;\nvar aisData={static:{},dynamic:{},destination:{},draught:{}};\n\nif (msg.payload && !msg.payload.length){\n    isDataExists=false;\n}\n\nvar d = new Date();\nvar time_stamp = String(d.getUTCFullYear())+'-'+String(addZero(d.getUTCMonth()+1))+'-'+String(addZero(d.getUTCDate()))+' ';\ntime_stamp += String(addZero(d.getUTCHours()))+':'+String(addZero(d.getUTCMinutes()))+':'+String(addZero(d.getUTCSeconds()));\n\n//Init Ship ID\nif(!isDataExists){\n    ship_id=0;\n}else{\n    ship_id=msg.payload[0].id;\n}\naisData.ship_id=ship_id;\n//Static Data\naisData.static.mmsi=msg.decoded.senderMmsi,\naisData.static.callsign=msg.decoded.callsign,\naisData.static.vessel_name=msg.decoded.name,\naisData.static.imo=msg.decoded.shipId,\naisData.static.ship_type=msg.decoded.shipType,\naisData.static.dimension_a=msg.decoded.dimensionToBow,\naisData.static.dimension_b=msg.decoded.dimensionToStern,\naisData.static.dimension_c=msg.decoded.dimensionToPort,\naisData.static.dimension_d=msg.decoded.dimensionToStarboard,\naisData.static.fix_type=msg.decoded.fix_type,\n//Dynamic Data\naisData.dynamic.station_id=global.get('stationId'),\naisData.dynamic.sog=msg.decoded.speedOverGround,\naisData.dynamic.cog=msg.decoded.courseOverGround,\naisData.dynamic.heading=msg.decoded.trueHeading,\naisData.dynamic.turning_direction=msg.decoded.turningDirection,\naisData.dynamic.rot=msg.decoded.turningRate,\naisData.dynamic.bearing=0,\naisData.dynamic.nav_status=msg.decoded.navigationStatus,\naisData.dynamic.latitude=msg.decoded.latitude,\naisData.dynamic.longitude=msg.decoded.longitude,\naisData.dynamic.raim=msg.decoded.raim,\naisData.dynamic.msg_type=msg.decoded.messageType,\naisData.dynamic.repeat_indicator=msg.decoded.repeatIndicator,\naisData.dynamic.position_accuracy=msg.decoded.positionAccuracy,\n//Destination\naisData.destination.destination=msg.decoded.destination,\naisData.destination.eta=msg.decoded.eta,\n//Draught\naisData.draught.draught=msg.decoded.draught;\n//Timestamp\naisData.time_stamp=time_stamp;\n//isExists?\naisData.exists=isDataExists;\n\nmsg.parsed=aisData;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 360,
+        "y": 120,
+        "wires": [
+            [
+                "556f5bfc24de2faa"
+            ]
+        ]
+    },
+    {
+        "id": "556f5bfc24de2faa",
+        "type": "function",
+        "z": "63572183d44540bc",
+        "name": "",
+        "func": "// var parsed={\"static\":{\"mmsi\":\"525019645\"},\"dynamic\":{\"station_id\":\"1\",\"sog\":0.3,\"cog\":15.6,\"bearing\":0,\"nav_status\":0,\"latitude\":-6.062245,\"longitude\":106.87224833333333,\"raim\":false,\"msg_type\":1,\"repeat_indicator\":0,\"position_accuracy\":0},\"destination\":{},\"draught\":{},\"ship_id\":0,\"time_stamp\":\"2020-10-01 10:27:50\",\"exists\":false};\nvar parsed=msg.parsed;\nObject.size = function(obj) {\n    var size = 0, key;\n    for (key in obj) {\n        if (obj.hasOwnProperty(key)) size++;\n    }\n    return size;\n};\nvar astatic=parsed.static;\nvar staticSize = Object.size(astatic);\n\nvar insertStatic;\nvar isUpdate=false;\nif(!parsed.exists){\n\tinsertStatic=\"INSERT INTO ais_static set \";\n}else{\n    insertStatic=\"UPDATE ais_static set \";\n    isUpdate=true;\n}\nvar i=1;\nObject.keys(astatic).forEach(key => {\n    // console.log(key, astatic[key]);\n    if(i>1){\n        insertStatic+=\",\";\n    }\n    var column = String(key);\n    var value = String(astatic[key]);\n    if(value===\"undefined\"){\n        value=0;\n        if(column==\"vessel_name\"){\n            value=\"\";\n        }else if(column==\"imo\"){\n            value=\"\";\n        }else if(column==\"callsign\"){\n            value=\"\";\n        }\n    }\n    insertStatic+=column+\"='\"+value+\"'\";\n    i++;\n});\n// console.log(insertStatic);\nif(isUpdate){\n    insertStatic+=\",updated_at=UTC_TIMESTAMP() WHERE id=\"+parsed.ship_id;\n}else{\n    insertStatic+=\",created_at=UTC_TIMESTAMP(),updated_at=UTC_TIMESTAMP()\";\n}\nmsg.topic=insertStatic;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 500,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "733a2133f263a4bd",
+        "type": "function",
+        "z": "63572183d44540bc",
+        "name": "",
+        "func": "if(msg.payload===undefined){\n    msg.payload=0;\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 260,
+        "y": 60,
+        "wires": [
+            [
+                "0be0e02489c18286"
+            ]
+        ]
+    },
+    {
+        "id": "f77fd496750b6373",
+        "type": "function",
+        "z": "93bb4802e003860b",
+        "name": "",
+        "func": "// var parsed={\"static\":{\"mmsi\":\"525019645\"},\"dynamic\":{\"station_id\":\"1\",\"sog\":0.3,\"cog\":15.6,\"bearing\":0,\"nav_status\":0,\"latitude\":-6.062245,\"longitude\":106.87224833333333,\"raim\":false,\"msg_type\":1,\"repeat_indicator\":0,\"position_accuracy\":0},\"destination\":{},\"draught\":{},\"ship_id\":0,\"time_stamp\":\"2020-10-01 10:27:50\",\"exists\":false};\nif(msg.parsed.ship_id===0){\n    msg.parsed.ship_id=msg.payload.insertId;\n}\nvar parsed=msg.parsed;\n\nObject.size = function(obj) {\n    var size = 0, key;\n    for (key in obj) {\n        if (obj.hasOwnProperty(key)) size++;\n    }\n    return size;\n};\n\nfunction addZero(i) {\n    if (i < 10) {\n      i = \"0\" + i;\n    }\n    return i;\n}\n\nvar dynamic=parsed.dynamic;\nvar destination=parsed.destination;\nvar draught=parsed.draught;\nvar dynamicSize = Object.size(dynamic);\nvar destinationSize = Object.size(destination);\nvar draughtSize = Object.size(draught);\n\nmsg.parsed.size={};\nmsg.parsed.size.dynamic=dynamicSize;\nmsg.parsed.size.destination=destinationSize;\nmsg.parsed.size.draught=draughtSize;\n\nvar d = new Date();\nvar suffix = String(d.getUTCFullYear())+String(addZero(d.getUTCMonth()+1));\nvar insertDynamic=\"INSERT INTO ais_dynamic_\"+suffix+\" set ship_id=\"+parsed.ship_id+\",\";\nvar updateDynamic=\"INSERT INTO ais_dynamic set ship_id=\"+parsed.ship_id+\",\";\nif(parsed.exists){\n    updateDynamic=\"UPDATE ais_dynamic set \";\n}\ni=1;\nObject.keys(dynamic).forEach(key => {\n\t// console.log(key, static[key]);\n    if(i>1){\n    \tinsertDynamic+=\",\";\n    \tupdateDynamic+=\",\";\n    }\n    var column = String(key);\n    var value = String(dynamic[key]);\n    if(value===\"undefined\"){\n        value=\"0\";\n    }\n    if(column===\"raim\"){\n        if(value===\"false\"){\n            value=\"0\";\n        }else{\n            value=\"1\";\n        }\n    }\n    if(column===\"latitude\" || column===\"longitude\"){\n        if(value!==\"0\" && value!==\"undefined\"){\n            insertDynamic+=column+\"='\"+value+\"'\";\n            updateDynamic+=column+\"='\"+value+\"'\";\n        }\n    }else{\n        insertDynamic+=column+\"='\"+value+\"'\";\n        updateDynamic+=column+\"='\"+value+\"'\";\n    }\n    i++;\n});\ninsertDynamic+=\",created_at=UTC_TIMESTAMP(),updated_at=UTC_TIMESTAMP()\";\nif(!parsed.exists){\n    updateDynamic+=\",created_at=UTC_TIMESTAMP(),updated_at=UTC_TIMESTAMP()\";\n}else{\n    updateDynamic+=\",updated_at=UTC_TIMESTAMP() WHERE ship_id=\"+parsed.ship_id;\n}\n\nmsg.insertDynamic=insertDynamic.replace(\",,,\", \",\");\nmsg.updateDynamic=updateDynamic.replace(\",,,\", \",\");\n\nvar insertDestination=0;\ni=1;\nif(destination.destination!==undefined){\n    var tempEta = destination.eta.toISOString().slice(0, 19).replace('T', ' ');\n    destination.eta = tempEta;\n    insertDestination=\"INSERT INTO ais_destination set ship_id=\"+parsed.ship_id+\",\";\n    Object.keys(destination).forEach(key => {\n    \t// console.log(key, static[key]);\n        if(i>1){\n        \tinsertDestination+=\",\";\n        }\n        var column = String(key);\n        var value = String(destination[key]);\n        // if(value===\"undefined\"){\n        //     value=\"0\";\n        // }\n        insertDestination+=column+\"='\"+value+\"'\";\n        i++;\n    });\n    insertDestination+=\",updated_at='\"+parsed.time_stamp+\"'\";\n    insertDestination=insertDestination.replace(\"\\\\\", \"\\\\\\\\\");\n}\nmsg.insertDestination=insertDestination;\n\nvar insertDraught=0;\ni=1;\nif(draught.draught!==undefined){\n    insertDraught=\"INSERT INTO ais_draught set ship_id=\"+parsed.ship_id+\",\";\n    Object.keys(draught).forEach(key => {\n    \t// console.log(key, static[key]);\n        if(i>1){\n        \tinsertDraught+=\",\";\n        }\n        var column = String(key);\n        var value = String(draught[key]);\n        // if(value===\"undefined\"){\n        //     value=\"0\";\n        // }\n        insertDraught+=column+\"='\"+value+\"'\";\n        i++;\n    });\n    insertDraught+=\",updated_at='\"+parsed.time_stamp+\"'\";\n}\nmsg.insertDraught=insertDraught;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 140,
+        "y": 180,
+        "wires": [
+            [
+                "c6296a32f21a82b6"
+            ]
+        ]
+    },
+    {
+        "id": "c6296a32f21a82b6",
+        "type": "change",
+        "z": "93bb4802e003860b",
+        "name": "insertDynamic",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "insertDynamic",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 340,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c251725145209103",
+        "type": "change",
+        "z": "93bb4802e003860b",
+        "name": "updateDynamic",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "updateDynamic",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 340,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c213bd895c4c2a9f",
+        "type": "change",
+        "z": "93bb4802e003860b",
+        "name": "insertDestination",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "insertDestination",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 570,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a4fe81703274726d",
+        "type": "change",
+        "z": "93bb4802e003860b",
+        "name": "insertDraught",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "insertDraught",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 540,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0aec8b3a2223e0e2",
+        "type": "switch",
+        "z": "93bb4802e003860b",
+        "name": "checkDestination",
+        "property": "insertDestination",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "neq",
+                "v": "0",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "num"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 2,
+        "x": 350,
+        "y": 300,
+        "wires": [
+            [
+                "c213bd895c4c2a9f"
+            ],
+            [
+                "45e1eb111ae5ac3c"
+            ]
+        ]
+    },
+    {
+        "id": "45e1eb111ae5ac3c",
+        "type": "switch",
+        "z": "93bb4802e003860b",
+        "name": "checkDraught",
+        "property": "insertDraught",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "neq",
+                "v": "0",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "num"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 2,
+        "x": 340,
+        "y": 380,
+        "wires": [
+            [
+                "a4fe81703274726d"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "433698a90f6ecf32",
+        "type": "function",
+        "z": "93bb4802e003860b",
+        "name": "",
+        "func": "var decoded=msg.payload;\nmsg.decoded=decoded;\nif(decoded!==undefined){\n    msg.sqlStatic=\"SELECT * from ais_static where mmsi='\"+msg.payload.senderMmsi+\"'\";\n    // msg.sqlDynamic=\"SELECT count() as total from ais_dynamic where mmsi='\"+msg.payload.senderMmsi+\"'\";\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 560,
+        "y": 60,
+        "wires": [
+            [
+                "7d6577451a164114"
+            ]
+        ]
+    },
+    {
+        "id": "6792d9d2c5ae3a7b",
+        "type": "switch",
+        "z": "93bb4802e003860b",
+        "name": "If !Undefined",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "neq",
+                "v": "0",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "str"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 2,
+        "x": 410,
+        "y": 60,
+        "wires": [
+            [
+                "433698a90f6ecf32"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "7d6577451a164114",
+        "type": "change",
+        "z": "93bb4802e003860b",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "sqlStatic",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 710,
+        "y": 60,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d00bd12b3de1fc25",
+        "type": "function",
+        "z": "93bb4802e003860b",
+        "name": "",
+        "func": "// if (msg.payload && !msg.payload.length){\n//     msg.result=\"No Data\";\n// }else{\n//     msg.result=msg.payload.length;\n// }\n// return msg;\n\nfunction addZero(i) {\n    if (i < 10) {\n      i = \"0\" + i;\n    }\n    return i;\n}\n\nvar isDataExists=true;\nvar ship_id=0;\nvar aisData={static:{},dynamic:{},destination:{},draught:{}};\n\nif (msg.payload && !msg.payload.length){\n    isDataExists=false;\n}\n\nvar d = new Date();\nvar time_stamp = String(d.getUTCFullYear())+'-'+String(addZero(d.getUTCMonth()+1))+'-'+String(addZero(d.getUTCDate()))+' ';\ntime_stamp += String(addZero(d.getUTCHours()))+':'+String(addZero(d.getUTCMinutes()))+':'+String(addZero(d.getUTCSeconds()));\n\n//Init Ship ID\nif(!isDataExists){\n    ship_id=0;\n}else{\n    ship_id=msg.payload[0].id;\n}\naisData.ship_id=ship_id;\n//Static Data\naisData.static.mmsi=msg.decoded.senderMmsi,\naisData.static.callsign=msg.decoded.callsign,\naisData.static.vessel_name=msg.decoded.name,\naisData.static.imo=msg.decoded.shipId,\naisData.static.ship_type=msg.decoded.shipType,\naisData.static.dimension_a=msg.decoded.dimensionToBow,\naisData.static.dimension_b=msg.decoded.dimensionToStern,\naisData.static.dimension_c=msg.decoded.dimensionToPort,\naisData.static.dimension_d=msg.decoded.dimensionToStarboard,\naisData.static.fix_type=msg.decoded.fix_type,\n//Dynamic Data\naisData.dynamic.station_id=global.get('stationId'),\naisData.dynamic.sog=msg.decoded.speedOverGround,\naisData.dynamic.cog=msg.decoded.courseOverGround,\naisData.dynamic.heading=msg.decoded.trueHeading,\naisData.dynamic.turning_direction=msg.decoded.turningDirection,\naisData.dynamic.rot=msg.decoded.turningRate,\naisData.dynamic.bearing=0,\naisData.dynamic.nav_status=msg.decoded.navigationStatus,\naisData.dynamic.latitude=msg.decoded.latitude,\naisData.dynamic.longitude=msg.decoded.longitude,\naisData.dynamic.raim=msg.decoded.raim,\naisData.dynamic.msg_type=msg.decoded.messageType,\naisData.dynamic.repeat_indicator=msg.decoded.repeatIndicator,\naisData.dynamic.position_accuracy=msg.decoded.positionAccuracy,\n//Destination\naisData.destination.destination=msg.decoded.destination,\naisData.destination.eta=msg.decoded.eta,\n//Draught\naisData.draught.draught=msg.decoded.draught;\n//Timestamp\naisData.time_stamp=time_stamp;\n//isExists?\naisData.exists=isDataExists;\n\nmsg.parsed=aisData;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 360,
+        "y": 120,
+        "wires": [
+            [
+                "8e68c8591ad7aec3"
+            ]
+        ]
+    },
+    {
+        "id": "8e68c8591ad7aec3",
+        "type": "function",
+        "z": "93bb4802e003860b",
+        "name": "",
+        "func": "// var parsed={\"static\":{\"mmsi\":\"525019645\"},\"dynamic\":{\"station_id\":\"1\",\"sog\":0.3,\"cog\":15.6,\"bearing\":0,\"nav_status\":0,\"latitude\":-6.062245,\"longitude\":106.87224833333333,\"raim\":false,\"msg_type\":1,\"repeat_indicator\":0,\"position_accuracy\":0},\"destination\":{},\"draught\":{},\"ship_id\":0,\"time_stamp\":\"2020-10-01 10:27:50\",\"exists\":false};\nvar parsed=msg.parsed;\nObject.size = function(obj) {\n    var size = 0, key;\n    for (key in obj) {\n        if (obj.hasOwnProperty(key)) size++;\n    }\n    return size;\n};\nvar astatic=parsed.static;\nvar staticSize = Object.size(astatic);\n\nvar insertStatic;\nvar isUpdate=false;\nif(!parsed.exists){\n\tinsertStatic=\"INSERT INTO ais_static set \";\n}else{\n    insertStatic=\"UPDATE ais_static set \";\n    isUpdate=true;\n}\nvar i=1;\nObject.keys(astatic).forEach(key => {\n    // console.log(key, astatic[key]);\n    if(i>1){\n        insertStatic+=\",\";\n    }\n    var column = String(key);\n    var value = String(astatic[key]);\n    if(value===\"undefined\"){\n        value=0;\n        if(column==\"vessel_name\"){\n            value=\"\";\n        }else if(column==\"imo\"){\n            value=\"\";\n        }else if(column==\"callsign\"){\n            value=\"\";\n        }\n    }\n    insertStatic+=column+\"='\"+value+\"'\";\n    i++;\n});\n// console.log(insertStatic);\nif(isUpdate){\n    insertStatic+=\",updated_at=UTC_TIMESTAMP() WHERE id=\"+parsed.ship_id;\n}else{\n    insertStatic+=\",created_at=UTC_TIMESTAMP(),updated_at=UTC_TIMESTAMP()\";\n}\nmsg.topic=insertStatic;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 500,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4a4310e0689c2661",
+        "type": "ais-decoder",
+        "z": "93bb4802e003860b",
+        "name": "",
+        "x": 130,
+        "y": 60,
+        "wires": [
+            [
+                "fee914e2f60e9fa8"
+            ]
+        ]
+    },
+    {
+        "id": "fee914e2f60e9fa8",
+        "type": "function",
+        "z": "93bb4802e003860b",
+        "name": "",
+        "func": "if(msg.payload===undefined){\n    msg.payload=0;\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 260,
+        "y": 60,
+        "wires": [
+            [
+                "6792d9d2c5ae3a7b"
+            ]
+        ]
+    },
+    {
+        "id": "38242fcd666320fb",
+        "type": "http request",
+        "z": "785fbe44960f2465",
+        "name": "",
+        "method": "use",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1370,
+        "y": 120,
+        "wires": [
+            [
+                "a6e9b389b787ee3a"
+            ]
+        ]
+    },
+    {
+        "id": "4f5d08ea21aa05ea",
+        "type": "function",
+        "z": "785fbe44960f2465",
+        "name": "function 1",
+        "func": "msg.method = \"POST\"\nmsg.url = \"http://localhost/AIS-Local-Lumen/public/api/aisdata\"\nconst aisdata1 = flow.get(\"dataais\")\nconst aisdata2 = msg.payload\nconst joinedObject = { ...aisdata2, ...aisdata1 };\nmsg.payload = joinedObject;\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1200,
+        "y": 120,
+        "wires": [
+            [
+                "38242fcd666320fb",
+                "1b0ca282780460d2",
+                "a6e9b389b787ee3a"
+            ]
+        ]
+    },
+    {
+        "id": "6378b55d46c1aef6",
+        "type": "split",
+        "z": "785fbe44960f2465",
+        "name": "",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": true,
+        "addname": "",
+        "x": 310,
+        "y": 100,
+        "wires": [
+            [
+                "8c8e9127f60b2969",
+                "0eaa5eb9fdfb34ca",
+                "78c7b9ee6691b900"
+            ]
+        ]
+    },
+    {
+        "id": "af64aad9d4abd176",
+        "type": "function",
+        "z": "785fbe44960f2465",
+        "name": "function 2",
+        "func": "flow.set(\"dataais\", msg.payload)\nmsg.payload = msg.payload.source\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 900,
+        "y": 120,
+        "wires": [
+            [
+                "0c5c77bd078a96d6"
+            ]
+        ]
+    },
+    {
+        "id": "2d8d926f48805679",
+        "type": "debug",
+        "z": "785fbe44960f2465",
+        "name": "debug 4",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 460,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "97ec2cb5bc26175e",
+        "type": "exec",
+        "z": "785fbe44960f2465",
+        "command": "",
+        "addpay": "payload",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 270,
+        "y": 260,
+        "wires": [
+            [
+                "2d8d926f48805679"
+            ],
+            [
+                "2d8d926f48805679"
+            ],
+            [
+                "2d8d926f48805679"
+            ]
+        ]
+    },
+    {
+        "id": "b85479f0781cc3ab",
+        "type": "http in",
+        "z": "785fbe44960f2465",
+        "name": "",
+        "url": "/api/nampungdata",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 120,
+        "y": 540,
+        "wires": [
+            [
+                "1daeef59c62d020c",
+                "78e9813f7dfa28cb"
+            ]
+        ]
+    },
+    {
+        "id": "78e9813f7dfa28cb",
+        "type": "debug",
+        "z": "785fbe44960f2465",
+        "name": "debug 5",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 380,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "1daeef59c62d020c",
+        "type": "http response",
+        "z": "785fbe44960f2465",
+        "name": "",
+        "statusCode": "200",
+        "headers": {},
+        "x": 340,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "1b0ca282780460d2",
+        "type": "mqtt out",
+        "z": "785fbe44960f2465",
+        "name": "",
+        "topic": "aiskabellaut",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "0cd44d4311772c09",
+        "x": 1370,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "8c8e9127f60b2969",
+        "type": "function",
+        "z": "785fbe44960f2465",
+        "name": "function 6",
+        "func": "var pl = String(msg.payload);\nmsg.payload = pl;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 60,
+        "wires": [
+            [
+                "4d89d4e253db5122",
+                "3c0fb15b245776f9"
+            ]
+        ]
+    },
+    {
+        "id": "ea82637e7ddb85eb",
+        "type": "switch",
+        "z": "785fbe44960f2465",
+        "name": "",
+        "property": "payload.mmsi",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "regex",
+                "v": "^(0\\d{8}|1\\d{8}|2\\d{8}|3\\d{8}|4\\d{8}|5\\d{8}|6\\d{8}|7\\d{8}|8\\d{8}|9\\d{8})$",
+                "vt": "str",
+                "case": false
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 750,
+        "y": 120,
+        "wires": [
+            [
+                "af64aad9d4abd176"
+            ]
+        ]
+    },
+    {
+        "id": "18d1a188201f22b8",
+        "type": "switch",
+        "z": "785fbe44960f2465",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nnull"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 750,
+        "y": 20,
+        "wires": [
+            [
+                "e9654a1a66c74bed"
+            ]
+        ]
+    },
+    {
+        "id": "e9654a1a66c74bed",
+        "type": "switch",
+        "z": "785fbe44960f2465",
+        "name": "",
+        "property": "payload.name",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nnull"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 890,
+        "y": 20,
+        "wires": [
+            [
+                "a61b320933e5558c",
+                "453f8aba25253dbb",
+                "571e9bc4976885b9"
+            ]
+        ]
+    },
+    {
+        "id": "a61b320933e5558c",
+        "type": "function",
+        "z": "785fbe44960f2465",
+        "name": "function 11",
+        "func": "msg.method = \"POST\"\nmsg.url = \"http://localhost/AIS-Local-Lumen/public/api/aisstatic\"\nconst aisdata2 = msg.payload\nmsg.payload = aisdata2;\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1070,
+        "y": 20,
+        "wires": [
+            [
+                "598bf4f035b69d29"
+            ]
+        ]
+    },
+    {
+        "id": "598bf4f035b69d29",
+        "type": "http request",
+        "z": "785fbe44960f2465",
+        "name": "",
+        "method": "use",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1230,
+        "y": 20,
+        "wires": [
+            [
+                "f5307e7871069ee4"
+            ]
+        ]
+    },
+    {
+        "id": "453f8aba25253dbb",
+        "type": "mqtt out",
+        "z": "785fbe44960f2465",
+        "name": "",
+        "topic": "aisdatastatickabellaut",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "0cd44d4311772c09",
+        "x": 1100,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "d8c6605999e24b0e",
+        "type": "debug",
+        "z": "785fbe44960f2465",
+        "name": "debug 23",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 460,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "05abe60b55748bac",
+        "type": "exec",
+        "z": "785fbe44960f2465",
+        "command": "",
+        "addpay": "payload",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 270,
+        "y": 360,
+        "wires": [
+            [
+                "d8c6605999e24b0e"
+            ],
+            [
+                "d8c6605999e24b0e"
+            ],
+            [
+                "d8c6605999e24b0e"
+            ]
+        ]
+    },
+    {
+        "id": "95b2911726af19e9",
+        "type": "debug",
+        "z": "785fbe44960f2465",
+        "name": "debug 24",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 460,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "bd674c2a1bfdb483",
+        "type": "exec",
+        "z": "785fbe44960f2465",
+        "command": "",
+        "addpay": "payload",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 270,
+        "y": 440,
+        "wires": [
+            [
+                "95b2911726af19e9"
+            ],
+            [
+                "95b2911726af19e9"
+            ],
+            [
+                "95b2911726af19e9"
+            ]
+        ]
+    },
+    {
+        "id": "86bd4ec62c668ee3",
+        "type": "switch",
+        "z": "785fbe44960f2465",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "regex",
+                "v": "GPRMC",
+                "vt": "str",
+                "case": false
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 630,
+        "y": 180,
+        "wires": [
+            [
+                "f87ae6b72bedc83e"
+            ]
+        ]
+    },
+    {
+        "id": "f87ae6b72bedc83e",
+        "type": "function",
+        "z": "785fbe44960f2465",
+        "name": "function 14",
+        "func": "var pl = String(msg.payload);\nmsg.payload = pl;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 770,
+        "y": 180,
+        "wires": [
+            [
+                "fab8e8ee44e4894c"
+            ]
+        ]
+    },
+    {
+        "id": "0eaa5eb9fdfb34ca",
+        "type": "delay",
+        "z": "785fbe44960f2465",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "25",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 480,
+        "y": 180,
+        "wires": [
+            [
+                "86bd4ec62c668ee3"
+            ]
+        ]
+    },
+    {
+        "id": "3d582d1a5d233547",
+        "type": "function",
+        "z": "785fbe44960f2465",
+        "name": "function 15",
+        "func": "msg.method = \"POST\"\nmsg.url = \"http://127.0.0.1:8000/api/position\"\nmsg.payload = msg.payload;\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1070,
+        "y": 180,
+        "wires": [
+            [
+                "7df89e3a8dde9d67"
+            ]
+        ]
+    },
+    {
+        "id": "7df89e3a8dde9d67",
+        "type": "http request",
+        "z": "785fbe44960f2465",
+        "name": "",
+        "method": "use",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1250,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a6e9b389b787ee3a",
+        "type": "debug",
+        "z": "785fbe44960f2465",
+        "name": "debug 25",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1420,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "571e9bc4976885b9",
+        "type": "debug",
+        "z": "785fbe44960f2465",
+        "name": "debug 26",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 900,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "78c7b9ee6691b900",
+        "type": "debug",
+        "z": "785fbe44960f2465",
+        "name": "debug 29",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "f5307e7871069ee4",
+        "type": "debug",
+        "z": "785fbe44960f2465",
+        "name": "debug 31",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1440,
+        "y": 20,
+        "wires": []
+    },
+    {
+        "id": "14e608f073399ec8",
+        "type": "serial in",
+        "z": "785fbe44960f2465",
+        "name": "",
+        "serial": "b925949e0d43a33a",
+        "x": 110,
+        "y": 100,
+        "wires": [
+            [
+                "6378b55d46c1aef6"
+            ]
+        ]
+    },
+    {
+        "id": "2b34c3f405e14410",
+        "type": "cronplus",
+        "z": "785fbe44960f2465",
+        "d": true,
+        "name": "sendata",
+        "outputField": "payload",
+        "timeZone": "",
+        "persistDynamic": false,
+        "commandResponseMsgOutput": "output1",
+        "outputs": 1,
+        "options": [
+            {
+                "name": "schedule1",
+                "topic": "topic1",
+                "payloadType": "str",
+                "payload": "C:\\laragon\\bin\\php\\php-8.1.10-Win32-vs16-x64\\php \"C:\\Users\\user\\Documents\\GitHub\\AIS-Local\\artisan\" app:sendata",
+                "expressionType": "cron",
+                "expression": "0 * * * * * *",
+                "location": "",
+                "offset": "0",
+                "solarType": "all",
+                "solarEvents": "sunrise,sunset"
+            }
+        ],
+        "x": 100,
+        "y": 260,
+        "wires": [
+            [
+                "97ec2cb5bc26175e"
+            ]
+        ]
+    },
+    {
+        "id": "be5648b371b0f00b",
+        "type": "cronplus",
+        "z": "785fbe44960f2465",
+        "d": true,
+        "name": "radar image",
+        "outputField": "payload",
+        "timeZone": "",
+        "persistDynamic": false,
+        "commandResponseMsgOutput": "output1",
+        "outputs": 1,
+        "options": [
+            {
+                "name": "schedule1",
+                "topic": "topic1",
+                "payloadType": "str",
+                "payload": "C:\\laragon\\bin\\php\\php-8.1.10-Win32-vs16-x64\\php \"C:\\Users\\user\\Documents\\GitHub\\AIS-Local\\artisan\" radarpng",
+                "expressionType": "cron",
+                "expression": "0 * * * * * *",
+                "location": "",
+                "offset": "0",
+                "solarType": "all",
+                "solarEvents": "sunrise,sunset"
+            }
+        ],
+        "x": 110,
+        "y": 360,
+        "wires": [
+            [
+                "05abe60b55748bac"
+            ]
+        ]
+    },
+    {
+        "id": "7e69f3b7e3a2a1f1",
+        "type": "cronplus",
+        "z": "785fbe44960f2465",
+        "d": true,
+        "name": "radar data",
+        "outputField": "payload",
+        "timeZone": "",
+        "persistDynamic": false,
+        "commandResponseMsgOutput": "output1",
+        "outputs": 1,
+        "options": [
+            {
+                "name": "schedule1",
+                "topic": "topic1",
+                "payloadType": "str",
+                "payload": "C:\\laragon\\bin\\php\\php-8.1.10-Win32-vs16-x64\\php \"C:\\Users\\user\\Documents\\GitHub\\AIS-Local\\artisan\" fetchradar",
+                "expressionType": "cron",
+                "expression": "0 * * * * * *",
+                "location": "",
+                "offset": "0",
+                "solarType": "all",
+                "solarEvents": "sunrise,sunset"
+            }
+        ],
+        "x": 110,
+        "y": 440,
+        "wires": [
+            [
+                "bd674c2a1bfdb483"
+            ]
+        ]
+    },
+    {
+        "id": "fab8e8ee44e4894c",
+        "type": "nmea",
+        "z": "785fbe44960f2465",
+        "name": "",
+        "property": "payload",
+        "outputProperty": "payload",
+        "x": 910,
+        "y": 180,
+        "wires": [
+            [
+                "3d582d1a5d233547"
+            ]
+        ]
+    },
+    {
+        "id": "4d89d4e253db5122",
+        "type": "ais",
+        "z": "785fbe44960f2465",
+        "name": "",
+        "x": 610,
+        "y": 120,
+        "wires": [
+            [
+                "ea82637e7ddb85eb"
+            ]
+        ]
+    },
+    {
+        "id": "0c5c77bd078a96d6",
+        "type": "ais-decoder",
+        "z": "785fbe44960f2465",
+        "name": "",
+        "x": 1050,
+        "y": 120,
+        "wires": [
+            [
+                "4f5d08ea21aa05ea",
+                "f20f2324f818ace3"
+            ]
+        ]
+    },
+    {
+        "id": "3c0fb15b245776f9",
+        "type": "ais-decoder",
+        "z": "785fbe44960f2465",
+        "name": "",
+        "x": 610,
+        "y": 20,
+        "wires": [
+            [
+                "18d1a188201f22b8"
+            ]
+        ]
+    },
+    {
+        "id": "f20f2324f818ace3",
+        "type": "debug",
+        "z": "785fbe44960f2465",
+        "name": "debug 32",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1300,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "e7652ac4b97c47c6",
+        "type": "tcp in",
+        "z": "3da1de5861934e0d",
+        "name": "",
+        "server": "client",
+        "host": "192.168.5.150",
+        "port": "32459",
+        "datamode": "stream",
+        "datatype": "utf8",
+        "newline": "",
+        "topic": "",
+        "trim": false,
+        "base64": false,
+        "tls": "",
+        "x": 210,
+        "y": 100,
+        "wires": [
+            [
+                "0888acabf48ea07a"
+            ]
+        ]
+    },
+    {
+        "id": "92d0aba787751fc3",
+        "type": "debug",
+        "z": "3da1de5861934e0d",
+        "name": "debug 6",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1040,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "0888acabf48ea07a",
+        "type": "delay",
+        "z": "3da1de5861934e0d",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "2",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 450,
+        "y": 100,
+        "wires": [
+            [
+                "530424d44e42d19c"
+            ]
+        ]
+    },
+    {
+        "id": "dde4650dbd8c7b93",
+        "type": "tcp in",
+        "z": "3da1de5861934e0d",
+        "name": "",
+        "server": "client",
+        "host": "192.168.100.2",
+        "port": "32457",
+        "datamode": "stream",
+        "datatype": "buffer",
+        "newline": "",
+        "topic": "",
+        "trim": false,
+        "base64": false,
+        "tls": "",
+        "x": 210,
+        "y": 320,
+        "wires": [
+            [
+                "043d9c14d5fa6942"
+            ]
+        ]
+    },
+    {
+        "id": "6121bae0b0c029c3",
+        "type": "tcp in",
+        "z": "3da1de5861934e0d",
+        "name": "",
+        "server": "client",
+        "host": "192.168.100.4",
+        "port": "32458",
+        "datamode": "stream",
+        "datatype": "utf8",
+        "newline": "",
+        "topic": "",
+        "trim": false,
+        "base64": false,
+        "tls": "",
+        "x": 210,
+        "y": 400,
+        "wires": [
+            [
+                "043d9c14d5fa6942",
+                "e485e1e5fb100ee7"
+            ]
+        ]
+    },
+    {
+        "id": "5d4912085bc140ce",
+        "type": "debug",
+        "z": "3da1de5861934e0d",
+        "name": "debug 7",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 680,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "c168704aad2ca3a4",
+        "type": "debug",
+        "z": "3da1de5861934e0d",
+        "name": "debug 8",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 700,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "3b50bc7cf4addea5",
+        "type": "inject",
+        "z": "3da1de5861934e0d",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 200,
+        "y": 460,
+        "wires": [
+            [
+                "a0e5a3c9ef20a101"
+            ]
+        ]
+    },
+    {
+        "id": "098f096108a31873",
+        "type": "function",
+        "z": "3da1de5861934e0d",
+        "name": "function 3",
+        "func": "msg.method = \"POST\"\nmsg.url = \"http://127.0.0.1:8000/api/adsbdatav2\"\nconst aisdata1 = { msgSbs: flow.get(\"dataadsb\") }\nconst aisdata2 = msg.payload\nconst joinedObject = { ...aisdata2, ...aisdata1 };\nmsg.payload = joinedObject;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 980,
+        "y": 140,
+        "wires": [
+            [
+                "133be0ef45f84639",
+                "184c763e25bab11b"
+            ]
+        ]
+    },
+    {
+        "id": "133be0ef45f84639",
+        "type": "http request",
+        "z": "3da1de5861934e0d",
+        "name": "",
+        "method": "use",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 390,
+        "y": 220,
+        "wires": [
+            [
+                "5f4335fc566bdf0c"
+            ]
+        ]
+    },
+    {
+        "id": "5f4335fc566bdf0c",
+        "type": "debug",
+        "z": "3da1de5861934e0d",
+        "name": "debug 9",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 560,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "530424d44e42d19c",
+        "type": "function",
+        "z": "3da1de5861934e0d",
+        "name": "function 4",
+        "func": "flow.set(\"dataadsb\", msg.payload)\nmsg.payload = msg.payload\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 620,
+        "y": 100,
+        "wires": [
+            [
+                "c414e3d8efaa0cab"
+            ]
+        ]
+    },
+    {
+        "id": "043d9c14d5fa6942",
+        "type": "debug",
+        "z": "3da1de5861934e0d",
+        "name": "debug 19",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 220,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "d5ccc77627c47db2",
+        "type": "tcp in",
+        "z": "3da1de5861934e0d",
+        "name": "",
+        "server": "client",
+        "host": "192.168.100.4",
+        "port": "32459",
+        "datamode": "stream",
+        "datatype": "utf8",
+        "newline": "",
+        "topic": "",
+        "trim": false,
+        "base64": false,
+        "tls": "",
+        "x": 210,
+        "y": 40,
+        "wires": [
+            [
+                "80964d9f591c396e",
+                "0888acabf48ea07a",
+                "611c39d1fc59b274"
+            ]
+        ]
+    },
+    {
+        "id": "80964d9f591c396e",
+        "type": "function",
+        "z": "3da1de5861934e0d",
+        "name": "function 13",
+        "func": "flow.set(\"dataadsb\", msg.payload)\nmsg.payload = msg.payload\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 450,
+        "y": 40,
+        "wires": [
+            [
+                "b1f25231041b428a"
+            ]
+        ]
+    },
+    {
+        "id": "184c763e25bab11b",
+        "type": "mqtt out",
+        "z": "3da1de5861934e0d",
+        "name": "",
+        "topic": "adsbdataloggerfak",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "0cd44d4311772c09",
+        "x": 1170,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "e485e1e5fb100ee7",
+        "type": "debug",
+        "z": "3da1de5861934e0d",
+        "name": "debug 20",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 460,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "611c39d1fc59b274",
+        "type": "debug",
+        "z": "3da1de5861934e0d",
+        "name": "debug 21",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 440,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "c18dd45d04a08962",
+        "type": "switch",
+        "z": "3da1de5861934e0d",
+        "name": "",
+        "property": "payload.lat",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nnull"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 810,
+        "y": 40,
+        "wires": [
+            [
+                "92d0aba787751fc3"
+            ]
+        ]
+    },
+    {
+        "id": "c414e3d8efaa0cab",
+        "type": "npm",
+        "z": "3da1de5861934e0d",
+        "name": "",
+        "func": "// NPM module exposed as variable, npm_module\nreturn npm_module(msg.payload);",
+        "npm_module": "sbs1",
+        "module_style": "function",
+        "msg_payload": "return_val",
+        "function_name": "parseSbs1Message",
+        "x": 770,
+        "y": 100,
+        "wires": [
+            [
+                "098f096108a31873"
+            ]
+        ]
+    },
+    {
+        "id": "3105dd7145e64d04",
+        "type": "npm",
+        "z": "3da1de5861934e0d",
+        "name": "",
+        "func": "// NPM module exposed as variable, npm_module\nreturn npm_module(msg.payload);",
+        "npm_module": "mode-s-decoder",
+        "module_style": "function",
+        "msg_payload": "return_val",
+        "function_name": "parse",
+        "x": 470,
+        "y": 320,
+        "wires": [
+            [
+                "5d4912085bc140ce"
+            ]
+        ]
+    },
+    {
+        "id": "8f7b73a0803854db",
+        "type": "npm",
+        "z": "3da1de5861934e0d",
+        "name": "",
+        "func": "// NPM module exposed as variable, npm_module\nreturn npm_module(msg.payload);",
+        "npm_module": "ads-b",
+        "module_style": "function",
+        "msg_payload": "return_val",
+        "function_name": "decode",
+        "x": 470,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9aad9839094c28c1",
+        "type": "npm",
+        "z": "3da1de5861934e0d",
+        "d": true,
+        "name": "",
+        "func": "// NPM module exposed as variable, npm_module\nreturn npm_module(msg.payload);",
+        "npm_module": "decoder1090-c",
+        "module_style": "cstr",
+        "msg_payload": "return_val",
+        "function_name": "",
+        "x": 450,
+        "y": 540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b1f25231041b428a",
+        "type": "npm",
+        "z": "3da1de5861934e0d",
+        "name": "",
+        "func": "// NPM module exposed as variable, npm_module\nreturn npm_module(msg.payload);",
+        "npm_module": "sbs1",
+        "module_style": "function",
+        "msg_payload": "return_val",
+        "function_name": "parseSbs1Message",
+        "x": 610,
+        "y": 40,
+        "wires": [
+            [
+                "c18dd45d04a08962"
+            ]
+        ]
+    },
+    {
+        "id": "a0e5a3c9ef20a101",
+        "type": "function-npm",
+        "z": "3da1de5861934e0d",
+        "name": "",
+        "func": "const decoder = require('decoder1090-c')\nmsg.payload = decoder.decodeMsg(msg.payload)\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 430,
+        "y": 460,
+        "wires": [
+            [
+                "c168704aad2ca3a4"
+            ]
+        ]
+    },
+    {
+        "id": "86f3eaf7d7c67e1b",
+        "type": "exec",
+        "z": "5e5625e8d53aba69",
+        "d": true,
+        "command": "",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": true,
+        "oldrc": false,
+        "name": "",
+        "x": 310,
+        "y": 60,
+        "wires": [
+            [
+                "b7249332c6ea28a6"
+            ],
+            [
+                "b7249332c6ea28a6"
+            ],
+            [
+                "b7249332c6ea28a6"
+            ]
+        ]
+    },
+    {
+        "id": "b7249332c6ea28a6",
+        "type": "debug",
+        "z": "5e5625e8d53aba69",
+        "name": "debug 27",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 480,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "fb47a779e99901a1",
+        "type": "http in",
+        "z": "5e5625e8d53aba69",
+        "name": "",
+        "url": "/sendgeofencealarm",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 750,
+        "y": 100,
+        "wires": [
+            [
+                "e885ad348bd33fb9",
+                "74054f9f696c361a",
+                "dc5463f170f6206a"
+            ]
+        ]
+    },
+    {
+        "id": "e885ad348bd33fb9",
+        "type": "http response",
+        "z": "5e5625e8d53aba69",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 1050,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "74054f9f696c361a",
+        "type": "change",
+        "z": "5e5625e8d53aba69",
+        "name": "",
+        "rules": [
+            {
+                "t": "move",
+                "p": "payload.msg",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1030,
+        "y": 160,
+        "wires": [
+            [
+                "563e5f7a01f879c1"
+            ]
+        ]
+    },
+    {
+        "id": "563e5f7a01f879c1",
+        "type": "websocket out",
+        "z": "5e5625e8d53aba69",
+        "name": "",
+        "server": "f446fd9394e31ea8",
+        "client": "",
+        "x": 1230,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "dc5463f170f6206a",
+        "type": "debug",
+        "z": "5e5625e8d53aba69",
+        "name": "debug 28",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1040,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "20c9f4e479cceb7c",
+        "type": "http request",
+        "z": "5e5625e8d53aba69",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://localhost/AIS-Local-Lumen/public/api/radardata",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 330,
+        "y": 140,
+        "wires": [
+            [
+                "b7249332c6ea28a6"
+            ]
+        ]
+    },
+    {
+        "id": "4f41ca3abb80bbe2",
+        "type": "cronplus",
+        "z": "5e5625e8d53aba69",
+        "name": "",
+        "outputField": "payload",
+        "timeZone": "",
+        "persistDynamic": false,
+        "commandResponseMsgOutput": "output1",
+        "outputs": 1,
+        "options": [
+            {
+                "name": "schedule1",
+                "topic": "topic1",
+                "payloadType": "str",
+                "payload": "C:\\laragon\\bin\\php\\php-8.2.14-Win32-vs16-x64\\php \"C:\\Users\\PC LAB PERNIKA\\Documents\\AIS-Local\\artisan\" fetchradar",
+                "expressionType": "cron",
+                "expression": "0 * * * * *",
+                "location": "",
+                "offset": "0",
+                "solarType": "all",
+                "solarEvents": "sunrise,sunset"
+            }
+        ],
+        "x": 120,
+        "y": 60,
+        "wires": [
+            [
+                "86f3eaf7d7c67e1b",
+                "20c9f4e479cceb7c"
+            ]
+        ]
+    },
+    {
+        "id": "9f67de93ab5eb029",
+        "type": "http in",
+        "z": "5e5625e8d53aba69",
+        "name": "",
+        "url": "/radardatamateng",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 160,
+        "y": 320,
+        "wires": [
+            [
+                "ec3d8250ec253784",
+                "790ecf162d353146",
+                "5fe623bc202bf466"
+            ]
+        ]
+    },
+    {
+        "id": "790ecf162d353146",
+        "type": "http response",
+        "z": "5e5625e8d53aba69",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 370,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "ec3d8250ec253784",
+        "type": "debug",
+        "z": "5e5625e8d53aba69",
+        "name": "debug 33",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 380,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "e2524e3daf2ccfed",
+        "type": "mqtt out",
+        "z": "5e5625e8d53aba69",
+        "name": "",
+        "topic": "radardatakabellaut",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "0cd44d4311772c09",
+        "x": 610,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "5fe623bc202bf466",
+        "type": "function",
+        "z": "5e5625e8d53aba69",
+        "name": "function 16",
+        "func": "// Initialize dataArray if not already done (assuming global context)\nvar dataArray = [];\n\n// Add msg.payload to the array\ndataArray.push(msg.payload);\n\n// Set the entire array as the payload\nmsg.payload = dataArray;\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 320,
+        "wires": [
+            [
+                "e2524e3daf2ccfed"
+            ]
+        ]
+    },
+    {
+        "id": "b30b0f59613486e7",
+        "type": "http request",
+        "z": "92c554d0a080b681",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://ais-local-lumen.test/api/imotion",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 290,
+        "y": 80,
+        "wires": [
+            [
+                "8796f0d409a855c6"
+            ]
+        ]
+    },
+    {
+        "id": "8796f0d409a855c6",
+        "type": "debug",
+        "z": "92c554d0a080b681",
+        "name": "debug 30",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 480,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "198880d685e9b83e",
+        "type": "cronplus",
+        "z": "92c554d0a080b681",
+        "name": "imotion",
+        "outputField": "payload",
+        "timeZone": "",
+        "persistDynamic": false,
+        "commandResponseMsgOutput": "output1",
+        "outputs": 1,
+        "options": [
+            {
+                "name": "schedule1",
+                "topic": "topic1",
+                "payloadType": "default",
+                "payload": "",
+                "expressionType": "cron",
+                "expression": "0 */10 * * * *",
+                "location": "",
+                "offset": "0",
+                "solarType": "all",
+                "solarEvents": "sunrise,sunset"
+            }
+        ],
+        "x": 120,
+        "y": 80,
+        "wires": [
+            [
+                "b30b0f59613486e7"
+            ]
+        ]
+    }
+]

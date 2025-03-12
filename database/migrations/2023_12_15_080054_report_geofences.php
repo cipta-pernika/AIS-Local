@@ -17,6 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('ais_data_position_id')->nullable();
             $table->unsignedBigInteger('geofence_id')->nullable();
             $table->string('mmsi')->nullable();
+            $table->string('target_id')->nullable();
             $table->timestamp('in')->nullable();
             $table->timestamp('out')->nullable();
             $table->string('total_time')->nullable();

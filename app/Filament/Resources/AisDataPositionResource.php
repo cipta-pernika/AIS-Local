@@ -7,7 +7,10 @@ use App\Filament\Resources\AisDataPositionResource\RelationManagers;
 use App\Models\AisDataPosition;
 use App\Models\AisDataVessel;
 use App\Models\Pelabuhan;
+<<<<<<< HEAD
 use Carbon\Carbon;
+=======
+>>>>>>> coastal
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -78,10 +81,13 @@ class AisDataPositionResource extends Resource
                 Tables\Columns\TextColumn::make('vessel.mmsi')
                     ->label('MMSI')
                     ->searchable()
+<<<<<<< HEAD
                     ->sortable(),
                 Tables\Columns\TextColumn::make('vessel.vessel_name')
                     ->label('Nama Kapal')
                     ->searchable()
+=======
+>>>>>>> coastal
                     ->sortable(),
                 Tables\Columns\TextColumn::make('latitude')
                     ->numeric()
@@ -124,11 +130,14 @@ class AisDataPositionResource extends Resource
                 Tables\Filters\SelectFilter::make('vessel_id')
                     ->searchable()
                     ->options(AisDataVessel::whereNotNull('vessel_name')->get()->pluck('vessel_name', 'id')),
+<<<<<<< HEAD
                 DateRangeFilter::make('updated_at')->startDate(Carbon::now()->subDays(7))->endDate(Carbon::now()),
                 QueryBuilder::make()
                     ->constraints([
                         TextConstraint::make('vessel.mmsi'),
                     ])
+=======
+>>>>>>> coastal
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

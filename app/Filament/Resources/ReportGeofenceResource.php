@@ -57,8 +57,14 @@ class ReportGeofenceResource extends Resource
                 Tables\Columns\TextColumn::make('aisDataPosition.vessel.vessel_name')
                     ->searchable()
                     ->sortable(),
+<<<<<<< HEAD
                 Tables\Columns\TextColumn::make('geofence.geofence_name')
                     ->searchable()
+=======
+                Tables\Columns\TextColumn::make('target_id')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('geofence.geofence_name')
+>>>>>>> coastal
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('in')
@@ -72,6 +78,7 @@ class ReportGeofenceResource extends Resource
                 Tables\Columns\TextColumn::make('total_time')
                     ->label('Total Time (Minute)')
                     ->sortable(),
+<<<<<<< HEAD
                 Tables\Columns\TextColumn::make('aisDataPosition.vessel.no_pkk')
                     ->searchable()
                     ->label('No PKK')
@@ -84,6 +91,8 @@ class ReportGeofenceResource extends Resource
                     ->searchable()
                     ->label('Nama Pandu')
                     ->sortable(),
+=======
+>>>>>>> coastal
                 Tables\Columns\TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()
@@ -103,12 +112,18 @@ class ReportGeofenceResource extends Resource
                     ->relationship('geofence', 'geofence_name')
                     ->preload()
                     ->searchable(),
+<<<<<<< HEAD
                 DateRangeFilter::make('updated_at')->startDate(Carbon::now()->subDays(7))->endDate(Carbon::now()),
             ])
             ->actions([
                 // Tables\Actions\EditAction::make(),
                 Action::make('playback')
                     ->label('Playback')->url(fn (Model $record): string => route('playback', ['record' => $record, 'source' => 'report-geofence']))->openUrlInNewTab()
+=======
+            ])
+            ->actions([
+                // Tables\Actions\EditAction::make(),
+>>>>>>> coastal
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

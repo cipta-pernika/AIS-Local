@@ -57,6 +57,8 @@ class EventTrackingResource extends Resource
                     ->numeric()
                     ->searchable()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('target_id')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('aisDataPosition.vessel.mmsi')
                     ->label('MMSI')
                     ->sortable(),
@@ -67,11 +69,20 @@ class EventTrackingResource extends Resource
                 Tables\Columns\TextColumn::make('aisDataPosition.speed')
                     ->label('Speed')
                     ->sortable(),
+                Tables\Columns\TextColumn::make('target.speed')
+                    ->label('Speed (Radar)')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('aisDataPosition.latitude')
                     ->label('Latitude')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('aisDataPosition.longitude')
                     ->label('Longitude')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('target.latitude')
+                    ->label('Latitude (Radar)')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('target.longitude')
+                    ->label('Longitude (Radar)')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('aisDataPosition.created_at')
                     ->label('Timestamp')
